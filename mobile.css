@@ -1,0 +1,166 @@
+/* === Responsive refinement v2 === */
+img,svg,video,canvas{max-width:100%;height:auto}
+.hero-grid>*,.section-head>*,.system>*,.diag>*,.why>*,.booking>*,.final-grid>*{min-width:0}
+button,a,input,textarea,select{max-width:100%}
+input,textarea,select{min-width:0}
+
+@media (max-width:1100px){
+  .wrap{width:min(calc(100% - 32px),var(--max))}
+  .hero-grid{grid-template-columns:1fr .82fr;gap:28px}
+  h1{font-size:clamp(4rem,8.7vw,7.5rem)}
+  .machine{min-height:520px}
+  .section-head{gap:34px}
+  .problem h3{font-size:1.58rem}
+  .why-copy h3{font-size:clamp(2.2rem,4vw,3.9rem)}
+}
+
+@media (max-width:920px){
+  nav{top:10px}
+  .nav{padding:9px 10px 9px 14px}
+  .links{display:none}
+  .hero{min-height:auto;padding:112px 0 64px}
+  .hero-grid,.section-head,.system,.diag,.why,.booking,.final-grid{grid-template-columns:1fr}
+  .hero-grid{gap:28px}
+  .hero p{max-width:720px}
+  .machine{min-height:430px}
+  .problem-grid{grid-template-columns:1fr;gap:12px}
+  .problem{min-height:230px}
+  .section-head{gap:18px;margin-bottom:34px}
+  .system,.diag,.why,.booking{gap:12px}
+  .flow,.diag-points{position:relative;left:auto;right:auto;bottom:auto;margin-top:30px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stage,.diag-right{min-height:auto}
+  .portrait{min-height:500px;background-position:center 18%}
+  .final-grid{gap:22px}
+}
+
+@media (max-width:768px){
+  :root{--mobile-pad:16px}
+  .wrap{width:min(calc(100% - 28px),var(--max))}
+  .brand{font-size:.92rem;gap:7px}
+  .brand i{width:9px;height:9px}
+  .lang,.wa{padding:8px 11px;font-size:.82rem}
+  .hero{padding-top:100px;padding-bottom:54px}
+  .eyebrow{font-size:.8rem;line-height:1.35;margin-bottom:18px;align-items:flex-start}
+  .eyebrow i{flex:0 0 8px;width:8px;height:8px;margin-top:3px}
+  h1{font-size:clamp(3.6rem,14vw,5.4rem);line-height:.82;letter-spacing:-.07em}
+  .hero p{font-size:1.04rem;line-height:1.55;margin-top:22px}
+  .hero-cta{gap:8px;margin-top:22px}
+  .hero-cta .btn{flex:1 1 220px;text-align:center;justify-content:center}
+  .machine{min-height:380px;border-radius:24px}
+  .orb{width:190px;height:190px;top:39%}
+  .orb:before{inset:-34px}.orb:after{inset:-70px}
+  .machine-label{left:14px;right:14px;bottom:14px;padding:16px;border-radius:16px}
+  .machine-label small{font-size:.66rem;letter-spacing:.11em}
+  .machine-label h3{font-size:1.16rem;line-height:1.2}
+  .track{padding:12px 0;gap:18px}
+  .track span{font-size:.92rem}
+  section{padding:72px 0}
+  h2{font-size:clamp(2.4rem,10.5vw,4.1rem);line-height:.95;letter-spacing:-.055em}
+  .lead{font-size:1rem;line-height:1.55}
+  .problem{padding:22px;border-radius:22px;min-height:210px}
+  .problem h3{font-size:1.5rem}
+  .menu{display:flex;overflow-x:auto;gap:7px;padding:8px;border-radius:20px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .menu::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;width:auto;min-width:max-content;padding:12px 14px;border-radius:13px;gap:18px;scroll-snap-align:start;font-size:.9rem}
+  .stage{padding:22px;border-radius:22px}
+  .stage h3{font-size:clamp(2rem,8vw,3rem)}
+  .stage p{font-size:.98rem;line-height:1.55}
+  .flow{gap:8px;margin-top:24px}
+  .flow div{padding:12px;border-radius:14px}
+  .diag-left,.diag-right{padding:22px;border-radius:22px}
+  .diag-left h3{font-size:1.72rem;line-height:1.05}
+  .opt{padding:13px;border-radius:13px;font-size:.92rem;gap:12px}
+  .diag-right h3{font-size:clamp(2rem,8.2vw,3.1rem)}
+  .diag-right p{font-size:.98rem;line-height:1.55}
+  .diag-points{gap:8px;margin-top:24px}
+  .diag-points div{padding:12px;border-radius:14px}
+  .portrait{min-height:440px;border-radius:22px}
+  .why-copy{padding:24px;border-radius:22px}
+  .why-copy h3{font-size:clamp(2.15rem,8.6vw,3.3rem)}
+  .why-copy p{font-size:1rem;line-height:1.58}
+  .why-list{gap:8px}
+  .book-copy,.book-ui{padding:22px;border-radius:22px}
+  .book-copy h3{font-size:clamp(2.15rem,8.5vw,3.4rem)}
+  .book-ui input,.book-ui textarea,.book-ui select{font-size:16px;padding:13px;border-radius:13px}
+  .slots{gap:7px}
+  .slot{padding:12px 8px}
+  .book-actions .btn{flex:1 1 220px;text-align:center;justify-content:center}
+  .status-pill{font-size:.82rem;line-height:1.35}
+  .final{padding:60px 0}
+  .final h2{font-size:clamp(2.7rem,11vw,4.4rem)}
+  .final .hero-cta .btn{flex-basis:100%}
+  footer{padding:26px 0 36px;gap:8px}
+}
+
+@media (max-width:560px){
+  .wrap{width:min(calc(100% - 22px),var(--max))}
+  nav{top:7px}
+  .nav{min-height:50px;padding:7px 8px 7px 11px}
+  .brand{font-size:.84rem;letter-spacing:-.02em;white-space:nowrap}
+  .nav .actions{gap:6px;min-width:0}
+  .lang{padding:7px 9px}
+  .nav .wa{font-size:0;width:37px;height:37px;padding:0;display:grid;place-items:center;position:relative}
+  .nav .wa::after{content:'↗';font-size:1rem;font-weight:900}
+  .hero{padding-top:88px;padding-bottom:46px}
+  h1{font-size:clamp(3.15rem,13.7vw,4.35rem);line-height:.84;letter-spacing:-.065em}
+  h1 span{white-space:nowrap}
+  .hero p{font-size:.98rem;margin-top:20px}
+  .hero-cta{display:grid;grid-template-columns:1fr;margin-top:20px}
+  .hero-cta .btn{width:100%;padding:13px 15px}
+  .machine{min-height:330px;border-radius:20px}
+  .orb{width:160px;height:160px;top:38%}
+  .machine-label{padding:14px}
+  .machine-label h3{font-size:1.03rem}
+  section{padding:62px 0}
+  .section-head{margin-bottom:28px}
+  .kicker{font-size:.69rem;letter-spacing:.14em}
+  h2{font-size:clamp(2.25rem,11vw,3.2rem);letter-spacing:-.05em}
+  .problem{min-height:190px;padding:20px}
+  .problem h3{font-size:1.42rem}
+  .problem p{font-size:.94rem}
+  .menu{margin-inline:-1px}
+  .tab{padding:11px 13px;font-size:.86rem}
+  .stage,.diag-left,.diag-right,.why-copy,.book-copy,.book-ui{padding:19px}
+  .stage h3,.diag-right h3{font-size:clamp(1.9rem,9vw,2.7rem)}
+  .flow,.diag-points{grid-template-columns:1fr 1fr}
+  .portrait{min-height:390px;background-position:center 14%}
+  .why-list{grid-template-columns:1fr}
+  .slots{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .book-actions{display:grid;grid-template-columns:1fr}
+  .book-actions .btn{width:100%}
+  .status-pill{display:flex;width:100%;justify-content:flex-start}
+  .final{padding:52px 0}
+  footer{flex-direction:column;text-align:left}
+}
+
+@media (max-width:390px){
+  .wrap{width:calc(100% - 18px)}
+  .brand{font-size:.78rem}
+  h1{font-size:clamp(2.9rem,13.2vw,3.75rem)}
+  .hero p{font-size:.94rem}
+  .machine{min-height:305px}
+  .orb{width:145px;height:145px}
+  h2{font-size:clamp(2.05rem,10.8vw,2.8rem)}
+  .flow,.diag-points{grid-template-columns:1fr}
+  .portrait{min-height:350px}
+  .why-copy h3,.book-copy h3{font-size:clamp(2rem,10vw,2.7rem)}
+}
+
+@media (hover:none) and (pointer:coarse){
+  .btn:hover,.problem:hover{transform:none;box-shadow:none}
+  .tab:hover{background:transparent;color:#9f9b92}
+  .tab.active:hover{background:var(--acid);color:#090909}
+}
+
+@media (orientation:landscape) and (max-height:560px) and (max-width:900px){
+  .hero{padding-top:84px}
+  .hero-grid{grid-template-columns:1.05fr .95fr;align-items:center}
+  h1{font-size:clamp(3rem,8vw,4.5rem)}
+  .machine{min-height:320px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
