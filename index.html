@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Samuel Acuña — Marketing Digital, Paid Media, E-commerce, Ventas, Diseño e Inteligencia Artificial." />
+  <meta name="theme-color" content="#090909" />
+  <title>Samuel Acuña | Marketing Digital · Paid Media · E-commerce · IA</title>
+  <style>
+    :root{
+      --bg:#090909;
+      --bg2:#111111;
+      --card:rgba(255,255,255,.055);
+      --line:rgba(255,255,255,.10);
+      --text:#f7f7f5;
+      --muted:#a9a9a3;
+      --orange:#ff6a18;
+      --orange2:#ff9a52;
+      --max:1180px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:
+        radial-gradient(circle at 78% 8%, rgba(255,106,24,.16), transparent 26%),
+        radial-gradient(circle at 8% 55%, rgba(255,106,24,.08), transparent 30%),
+        var(--bg);
+      color:var(--text);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(calc(100% - 40px),var(--max));margin:auto}
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:20;
+      background:rgba(9,9,9,.72);backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:800;letter-spacing:-.03em;font-size:1.05rem}
+    .brand span{color:var(--orange)}
+    .nav-links{display:flex;gap:26px;color:#c8c8c2;font-size:.92rem}
+    .nav-links a:hover{color:white}
+    .nav-cta{padding:10px 15px;border:1px solid var(--line);border-radius:999px}
+
+    header{min-height:100vh;display:flex;align-items:center;padding:125px 0 70px;position:relative}
+    .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:70px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;color:#d1d1cb;font-size:.92rem;margin-bottom:24px}
+    .dot{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 22px var(--orange)}
+    h1{font-size:clamp(4rem,9vw,8.5rem);line-height:.86;letter-spacing:-.075em;font-weight:850;max-width:900px}
+    h1 span{color:var(--orange)}
+    .hero-sub{font-size:clamp(1.25rem,2.3vw,2rem);letter-spacing:-.035em;color:#d3d3ce;max-width:860px;margin-top:30px}
+    .hero-sub strong{color:white;font-weight:650}
+    .hero-copy{color:var(--muted);max-width:740px;margin-top:22px;font-size:1.04rem}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 19px;border-radius:999px;font-weight:650;font-size:.95rem;border:1px solid var(--line);transition:.25s ease}
+    .btn.primary{background:var(--orange);color:#0c0c0c;border-color:var(--orange)}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary:hover{box-shadow:0 10px 45px rgba(255,106,24,.25)}
+    .orbit-card{height:440px;border:1px solid rgba(255,255,255,.09);border-radius:34px;position:relative;overflow:hidden;background:linear-gradient(145deg,#111,#080808);box-shadow:inset 0 0 80px rgba(255,106,24,.05)}
+    .planet{position:absolute;width:440px;height:440px;border-radius:50%;right:-175px;top:-15px;background:radial-gradient(circle at 35% 35%,#ffb06e 0,#ff6a18 22%,#8a2e00 55%,#1a0b05 72%,transparent 73%);filter:drop-shadow(0 0 40px rgba(255,106,24,.24))}
+    .ring,.ring2,.ring3{position:absolute;border:1px solid rgba(255,133,68,.45);border-radius:50%;transform:rotate(-17deg)}
+    .ring{width:540px;height:120px;right:-180px;top:125px}
+    .ring2{width:440px;height:86px;right:-120px;top:142px;border-color:rgba(255,255,255,.18)}
+    .ring3{width:620px;height:150px;right:-250px;top:108px;border-color:rgba(255,106,24,.23)}
+    .mini-card{position:absolute;left:26px;bottom:26px;right:26px;padding:22px;border-radius:22px;background:rgba(255,255,255,.055);backdrop-filter:blur(14px);border:1px solid var(--line)}
+    .mini-card small{color:var(--orange);font-weight:700;text-transform:uppercase;letter-spacing:.13em}
+    .mini-card p{font-size:1.2rem;margin-top:7px;font-weight:600;letter-spacing:-.025em}
+
+    section{padding:105px 0;border-top:1px solid rgba(255,255,255,.065)}
+    .section-top{display:grid;grid-template-columns:.55fr 1fr;gap:60px;margin-bottom:54px}
+    .kicker{color:var(--orange);font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;font-weight:750;margin-bottom:10px}
+    h2{font-size:clamp(2.35rem,5vw,4.7rem);line-height:.95;letter-spacing:-.055em}
+    .lead{color:#c6c6c0;font-size:1.14rem;max-width:720px}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .stat{padding:27px;border:1px solid var(--line);border-radius:24px;background:var(--card)}
+    .stat strong{display:block;font-size:2.35rem;letter-spacing:-.05em;color:white}
+    .stat span{display:block;color:var(--muted);margin-top:4px;font-size:.92rem}
+
+    .expertise{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .service{padding:32px;border-radius:26px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));transition:.25s ease}
+    .service:hover{transform:translateY(-4px);border-color:rgba(255,106,24,.35)}
+    .num{color:var(--orange);font-size:.78rem;letter-spacing:.16em;font-weight:800}
+    .service h3{font-size:1.65rem;margin:11px 0 9px;letter-spacing:-.035em}
+    .service p{color:var(--muted)}
+
+    .timeline{display:grid;gap:14px}
+    .job{display:grid;grid-template-columns:180px 1fr;gap:38px;padding:28px 0;border-bottom:1px solid var(--line)}
+    .job:last-child{border-bottom:0}
+    .years{color:var(--orange);font-weight:700}
+    .job h3{font-size:1.35rem;letter-spacing:-.025em}
+    .role{color:#d2d2cc;margin:3px 0 8px;font-weight:600}
+    .job p{color:var(--muted);max-width:780px}
+
+    .chips{display:flex;flex-wrap:wrap;gap:9px}
+    .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 13px;color:#d4d4ce;font-size:.9rem}
+
+    .contact-panel{border-radius:34px;border:1px solid rgba(255,106,24,.24);padding:52px;background:radial-gradient(circle at 90% 50%,rgba(255,106,24,.15),transparent 34%),rgba(255,255,255,.025)}
+    .contact-panel h2{max-width:780px}
+    .contact-panel p{color:var(--muted);max-width:680px;margin-top:18px}
+
+    footer{padding:34px 0 50px;color:#7f7f7a;font-size:.86rem;display:flex;justify-content:space-between;gap:20px}
+
+    .reveal{opacity:0;transform:translateY(18px);transition:.7s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    @media (max-width:900px){
+      .nav-links{display:none}
+      .hero-grid,.section-top{grid-template-columns:1fr}
+      .orbit-card{height:320px}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .expertise{grid-template-columns:1fr}
+      .job{grid-template-columns:1fr;gap:8px}
+      h1{font-size:clamp(4rem,18vw,6.5rem)}
+    }
+    @media (max-width:560px){
+      .wrap{width:min(calc(100% - 26px),var(--max))}
+      .stats{grid-template-columns:1fr 1fr}
+      .stat{padding:20px}
+      .stat strong{font-size:1.8rem}
+      .contact-panel{padding:30px 22px}
+      footer{flex-direction:column}
+      header{padding-top:110px}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="brand" href="#inicio">Samuel<span>.</span></a>
+      <div class="nav-links">
+        <a href="#perfil">Perfil</a>
+        <a href="#especialidades">Especialidades</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#herramientas">Herramientas</a>
+        <a class="nav-cta" href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="inicio">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Disponible para oportunidades internacionales</div>
+        <h1>Samuel<br><span>Acuña</span></h1>
+        <div class="hero-sub"><strong>Marketing Digital · Paid Media · E-commerce · Ventas · IA</strong></div>
+        <p class="hero-copy">Perfil multidisciplinario con experiencia real conectando marketing, creatividad, ventas, tecnología y operaciones para hacer crecer negocios.</p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:samuelatuna@gmail.com">Hablemos</a>
+          <a class="btn" href="https://www.behance.net/creatiart" target="_blank" rel="noopener">Ver Behance</a>
+          <a class="btn" href="#experiencia">Ver experiencia</a>
+        </div>
+      </div>
+      <div class="orbit-card" aria-hidden="true">
+        <div class="planet"></div><div class="ring"></div><div class="ring2"></div><div class="ring3"></div>
+        <div class="mini-card">
+          <small>Perfil híbrido</small>
+          <p>Estrategia + ejecución + creatividad + performance.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="perfil">
+    <div class="wrap">
+      <div class="section-top reveal">
+        <div><div class="kicker">Perfil</div><h2>No me quedo solo en la campaña.</h2></div>
+        <p class="lead">He trabajado en ventas, servicio al cliente, marketing, diseño, e-commerce, automatización y dirección de equipos. Esa combinación me permite entender el negocio completo: desde captar la atención hasta convertir, atender y fidelizar al cliente.</p>
+      </div>
+      <div class="stats reveal">
+        <div class="stat"><strong>8+</strong><span>años de experiencia</span></div>
+        <div class="stat"><strong>C1</strong><span>inglés profesional</span></div>
+        <div class="stat"><strong>50+</strong><span>personas coordinadas</span></div>
+        <div class="stat"><strong>B2B/B2C</strong><span>experiencia comercial</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="especialidades">
+    <div class="wrap">
+      <div class="section-top reveal">
+        <div><div class="kicker">Especialidades</div><h2>Lo que puedo aportar.</h2></div>
+        <p class="lead">No busco encajar en una sola etiqueta. Mi fortaleza está en unir áreas que normalmente trabajan separadas.</p>
+      </div>
+      <div class="expertise">
+        <article class="service reveal"><div class="num">01</div><h3>Paid Media & Performance</h3><p>Meta Ads, Google Ads, adquisición, remarketing, análisis de CPA, CPC, CTR, ROAS, conversión, funnels y optimización continua.</p></article>
+        <article class="service reveal"><div class="num">02</div><h3>Marketing Digital</h3><p>Estrategia, campañas, contenidos, email marketing, SEO, Google Analytics, Search Console, CRO y ejecución multicanal.</p></article>
+        <article class="service reveal"><div class="num">03</div><h3>E-commerce</h3><p>Shopify, WordPress, experiencia de compra, ofertas, landings, operaciones digitales, CRM, seguimiento y recuperación de clientes.</p></article>
+        <article class="service reveal"><div class="num">04</div><h3>Branding & Diseño</h3><p>Identidad visual, diseño gráfico, web, UX/UI, Figma, packaging, contenido, video y dirección creativa.</p></article>
+        <article class="service reveal"><div class="num">05</div><h3>Ventas & Customer Experience</h3><p>Ventas B2B y B2C, prospección, negociación, cierre, postventa, fidelización, customer service y gestión de equipos.</p></article>
+        <article class="service reveal"><div class="num">06</div><h3>IA & Automatización</h3><p>Bots, agentes de IA, automatización comercial, contenido generado con IA, video hiperrealista, CRM y optimización de procesos.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div class="wrap">
+      <div class="section-top reveal">
+        <div><div class="kicker">Experiencia</div><h2>Trayectoria profesional.</h2></div>
+        <p class="lead">Experiencia desarrollada entre dirección, ejecución, gestión comercial, creatividad y servicio al cliente.</p>
+      </div>
+      <div class="timeline">
+        <div class="job reveal"><div class="years">2022 — 2026</div><div><h3>Universo Invicto</h3><div class="role">Director de Operaciones y Marketing</div><p>Responsabilidad integral sobre ventas, operaciones, marketing, producción y equipos. Coordinación directa e indirecta de más de 50 personas.</p></div></div>
+        <div class="job reveal"><div class="years">2021 — 2025</div><div><h3>Nicho Agencia Digital</h3><div class="role">Director de Marketing</div><p>Gestión de clientes, estrategia, campañas, contenido, ventas y coordinación de equipos de marketing y creatividad.</p></div></div>
+        <div class="job reveal"><div class="years">2021 — 2023</div><div><h3>Fiallo Holdings</h3><div class="role">Supervisor de Marketing</div><p>Supervisión de equipo, campañas, ventas, contenido, clientes e indicadores de desempeño.</p></div></div>
+        <div class="job reveal"><div class="years">2018 — 2023</div><div><h3>Creatiart</h3><div class="role">Diseño Gráfico · Diseño Web · Branding</div><p>Diseño de marcas, sitios web, Shopify, WordPress, productos, contenido digital, UX/UI y comunicación visual.</p></div></div>
+        <div class="job reveal"><div class="years">2018 — 2021</div><div><h3>Arts Publicidad</h3><div class="role">Diseñador Gráfico</div><p>Diseño publicitario, piezas digitales e impresas, identidad visual y desarrollo de materiales de comunicación.</p></div></div>
+        <div class="job reveal"><div class="years">2016 — 2019</div><div><h3>Accedo</h3><div class="role">Team Leader — Customer Service en Inglés</div><p>Liderazgo de equipos de servicio al cliente en inglés, seguimiento de KPIs, calidad, satisfacción y resolución de casos complejos.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="herramientas">
+    <div class="wrap">
+      <div class="section-top reveal">
+        <div><div class="kicker">Stack</div><h2>Herramientas que manejo.</h2></div>
+        <p class="lead">Mi enfoque es práctico: utilizo la herramienta que mejor resuelva el problema, no la herramienta por sí misma.</p>
+      </div>
+      <div class="chips reveal">
+        <span class="chip">Meta Ads</span><span class="chip">Google Ads</span><span class="chip">Google Analytics</span><span class="chip">Search Console</span><span class="chip">Shopify</span><span class="chip">WordPress</span><span class="chip">Figma</span><span class="chip">Adobe Illustrator</span><span class="chip">Photoshop</span><span class="chip">Premiere Pro</span><span class="chip">After Effects</span><span class="chip">Affinity</span><span class="chip">Canva</span><span class="chip">CapCut</span><span class="chip">CRM</span><span class="chip">Email Marketing</span><span class="chip">CRO</span><span class="chip">SEO</span><span class="chip">ChatGPT</span><span class="chip">IA Generativa</span><span class="chip">Bots</span><span class="chip">Agentes IA</span><span class="chip">Automatización</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="formacion">
+    <div class="wrap">
+      <div class="section-top reveal">
+        <div><div class="kicker">Formación</div><h2>Negocio + creatividad + tecnología.</h2></div>
+        <div class="lead">
+          <strong style="color:white">Estudios en Gestión Empresarial y Administración de Empresas</strong><br>
+          Unidades Tecnológicas de Santander (UTS) · 2017–2020<br><br>
+          Formación complementaria en ventas, branding, diseño web, marketing digital, bots, agentes de IA y áreas relacionadas en programas de Javeriana, SENA, UTS, UDES y UIS.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="wrap">
+      <div class="contact-panel reveal">
+        <div class="kicker">Contacto</div>
+        <h2>¿Hay un reto interesante? Hablemos.</h2>
+        <p>Actualmente en Colombia, con disponibilidad inmediata y abierto a oportunidades remotas e internacionales, incluyendo movilidad a España.</p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:samuelatuna@gmail.com">samuelatuna@gmail.com</a>
+          <a class="btn" href="https://wa.me/573028289997" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn" href="https://www.behance.net/creatiart" target="_blank" rel="noopener">Behance</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <span>© <span id="year"></span> Samuel Acuña</span>
+    <span>Marketing · Performance · E-commerce · IA</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('show'); });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
