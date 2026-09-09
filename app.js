@@ -1,3 +1,11 @@
+// Responsive layer
+const responsiveCSS=document.createElement('link');
+responsiveCSS.rel='stylesheet';
+responsiveCSS.href='mobile.css?v=2';
+document.head.appendChild(responsiveCSS);
+const vp=document.querySelector('meta[name="viewport"]');
+if(vp) vp.setAttribute('content','width=device-width,initial-scale=1,viewport-fit=cover');
+
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 addEventListener('scroll',()=>{const d=document.documentElement;$('#progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
