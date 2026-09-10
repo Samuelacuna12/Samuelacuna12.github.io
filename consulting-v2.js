@@ -1,3 +1,11 @@
+// Brand + favicon fix
+(function(){
+  document.querySelectorAll('.brand .mark').forEach(el=>el.remove());
+  const addIcon=(rel)=>{const link=document.createElement('link');link.rel=rel;link.type='image/svg+xml';link.href='favicon.svg?v=3';document.head.appendChild(link)};
+  if(!document.querySelector('link[rel="icon"]')) addIcon('icon');
+  if(!document.querySelector('link[rel="shortcut icon"]')) addIcon('shortcut icon');
+})();
+
 const langBtns=[...document.querySelectorAll('[data-lang]')];
 function setLang(lang){document.documentElement.lang=lang;langBtns.forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));document.querySelectorAll('[data-es][data-en]').forEach(el=>{el.textContent=el.dataset[lang]});renderXray();}
 langBtns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
