@@ -1,3 +1,4 @@
+@import url('portrait-hq.css?v=1');
 /* Hero v4 — concise, sales-first */
 .hero-v4{padding-top:118px;padding-bottom:74px}
 .hero-v4 .hero-grid{grid-template-columns:1.18fr .82fr;gap:42px}

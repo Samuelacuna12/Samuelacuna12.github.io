@@ -1,0 +1,4 @@
+.portrait{background-image:linear-gradient(to top,rgba(8,8,8,.72),transparent 58%),url('portrait.webp')!important;background-size:cover!important;background-repeat:no-repeat!important;image-rendering:auto!important}
+@media(min-width:921px){.portrait{background-position:center center!important}}
+@media(max-width:920px){.portrait{background-position:center 18%!important}}
+@media(max-width:560px){.portrait{background-position:center 14%!important}}
