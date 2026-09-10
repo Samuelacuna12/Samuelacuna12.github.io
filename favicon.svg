@@ -1,1 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#080808"/><rect x="7" y="7" width="50" height="50" rx="13" fill="#ff5b1f"/><text x="32" y="42" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="34" font-weight="900" fill="#080808">S</text><circle cx="50" cy="14" r="5" fill="#efff3d"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="10" y1="5" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#171717"/>
+      <stop offset="0.48" stop-color="#090909"/>
+      <stop offset="1" stop-color="#160803"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="7" y1="4" x2="56" y2="61" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff9a58"/>
+      <stop offset="0.22" stop-color="#ff5b1f"/>
+      <stop offset="0.58" stop-color="#53200d"/>
+      <stop offset="1" stop-color="#ff731f"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="16" y1="12" x2="47" y2="55" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffad73"/>
+      <stop offset="0.28" stop-color="#ff5b1f"/>
+      <stop offset="0.53" stop-color="#151515"/>
+      <stop offset="0.75" stop-color="#ff5b1f"/>
+      <stop offset="1" stop-color="#ffab69"/>
+    </linearGradient>
+    <filter id="outerGlow" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="2.8" result="b"/>
+      <feFlood flood-color="#ff5b1f" flood-opacity=".68" result="c"/>
+      <feComposite in="c" in2="b" operator="in" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="sGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-color="#ff6b25" flood-opacity=".58" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="warm" cx="50%" cy="78%" r="65%">
+      <stop offset="0" stop-color="#ff5b1f" stop-opacity=".25"/>
+      <stop offset=".58" stop-color="#ff5b1f" stop-opacity=".03"/>
+      <stop offset="1" stop-color="#ff5b1f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <g style="transform-origin:32px 32px;animation:iconBreath 2.8s ease-in-out infinite">
+    <rect x="3.1" y="3.1" width="57.8" height="57.8" rx="15.2" fill="url(#bg)" stroke="url(#edge)" stroke-width="1.55" filter="url(#outerGlow)"/>
+    <rect x="4.8" y="4.8" width="54.4" height="54.4" rx="13.7" fill="url(#warm)" opacity=".9"/>
+    <path d="M43.8 17.1C39.7 12.9 33.9 11.6 28.5 13.4C23.2 15.2 19.2 19.4 18.8 24.2C18.3 29.7 22.1 33 28.9 35.7L35.7 38.3C41.6 40.6 45.2 44.1 44.3 49.1C43.4 54.3 38.5 57.7 32.6 57.6C26.9 57.5 22.2 54.7 19.2 50.8" fill="none" stroke="#111214" stroke-width="9.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#sGlow)"/>
+    <path d="M43.8 17.1C39.7 12.9 33.9 11.6 28.5 13.4C23.2 15.2 19.2 19.4 18.8 24.2C18.3 29.7 22.1 33 28.9 35.7L35.7 38.3C41.6 40.6 45.2 44.1 44.3 49.1C43.4 54.3 38.5 57.7 32.6 57.6C26.9 57.5 22.2 54.7 19.2 50.8" fill="none" stroke="url(#shine)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="17 95" style="animation:sweep 2.4s linear infinite"/>
+  </g>
+
+  <style>
+    @keyframes iconBreath{0%,100%{transform:scale(.965);filter:brightness(.92)}50%{transform:scale(1.018);filter:brightness(1.12)}}
+    @keyframes sweep{from{stroke-dashoffset:112}to{stroke-dashoffset:0}}
+    @media (prefers-reduced-motion:reduce){g,path{animation:none!important}}
+  </style>
+</svg>
