@@ -16,14 +16,10 @@ function normalizeSize(v=''){
   return s;
 }
 function normalizeColor(v=''){
+  // Conservador: no fusionar colores distintos entre operadores sin una equivalencia confirmada.
+  // Solo corregimos el orden evidente "CLARO GRIS" -> "GRIS CLARO".
   let c=cleanText(v).replace(/^\d+\s+/,'').replace(/\bT-?(S|M|L|XL|2XL|3XL|4XL)\b/g,'').replace(/^[\s\-|]+|[\s\-|]+$/g,'');
-  c=c.replace('CLARO GRIS','GRIS CLARO');
-  const map={
-    'VINOTINTO':'VINO','MARFIL CRUDO':'MARFIL','MARFILT':'MARFIL','AZUL PETROLEOT':'AZUL PETROLEO',
-    'AZUL OSCUROT':'AZUL OSCURO','VERDE CROSS':'VERDE OSCURO','VERDE BOTELLA':'VERDE OSCURO',
-    'VERDE PETROLEO':'AZUL PETROLEO','GRIS':'GRIS CLARO'
-  };
-  return map[c]||c;
+  return c==='CLARO GRIS'?'GRIS CLARO':c;
 }
 function productLabelFromRow(r){
   const material=r.material?` · ${r.material}`:'';
