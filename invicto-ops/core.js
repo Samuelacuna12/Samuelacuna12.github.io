@@ -1,10 +1,10 @@
-/* INVICTO OPS · Frontend operativo v2
+/* INVICTO OPS · Frontend operativo v3
    Modo actual: almacenamiento local del navegador.
    El backend/auth real se conecta posteriormente con Supabase. */
 
-const STORAGE_KEY = 'invicto_ops_v2_state';
-const SESSION_KEY = 'invicto_ops_v2_session';
-const APP_VERSION = '2.0-local';
+const STORAGE_KEY = 'invicto_ops_v3_state';
+const SESSION_KEY = 'invicto_ops_v3_session';
+const APP_VERSION = '3.0-catalog';
 
 const USERS = [
   {username:'omar', password:'invicto', name:'Omar Gonzalez', role:'Gerente'},
@@ -27,17 +27,9 @@ const DEFAULT_STATE = {
     'LogiGho Medellín': null,
     'Bucaramanga': null
   },
-  sales: [
-    {id:'V-001',createdAt:new Date().toISOString(),name:'Cliente Demo 1',phone:'3000000001',city:'Soacha',department:'Cundinamarca',address:'Cra 7 # 18-42',source:'Shopify',advisor:'Fernanda',status:'Confirmada',attempts:1,qty:6,price:149900,size:'L',summary:'6 bóxers estampados · L',warehouse:'Hoko Bogotá',carrier:'Go Envíos',cutId:null,items:[]},
-    {id:'V-002',createdAt:new Date().toISOString(),name:'Cliente Demo 2',phone:'3000000002',city:'Medellín',department:'Antioquia',address:'Calle 10 # 20-30',source:'WhatsApp',advisor:'Keiner',status:'No contesta',attempts:1,qty:12,price:199900,size:'M',summary:'12 unicolor · M',warehouse:'',carrier:'',cutId:null,items:[]},
-    {id:'V-003',createdAt:new Date().toISOString(),name:'Cliente Demo 3',phone:'3000000003',city:'Bucaramanga',department:'Santander',address:'Cra 33 # 45-20',source:'Shopify',advisor:'Sebastian',status:'Confirmada',attempts:1,qty:3,price:99900,size:'XL',summary:'3 estampados · XL',warehouse:'Bucaramanga',carrier:'Domientrega',cutId:null,items:[]}
-  ],
-  guarantees: [
-    {id:'G-001',saleId:'V-001',advisor:'Fernanda',client:'Cliente Demo 1',reason:'Talla equivocada',status:'Abierta',external:'Hoko',lastUpdate:new Date().toISOString(),proposedSolution:'',adminDecision:''}
-  ],
-  novelties: [
-    {id:'N-001',saleId:'V-002',advisor:'Keiner',client:'Cliente Demo 2',phone:'3000000002',date:new Date().toISOString().slice(0,10),guide:'',type:'Reclama en oficina',status:'Abierta',lastUpdate:new Date().toISOString()}
-  ],
+  sales: [],
+  guarantees: [],
+  novelties: [],
   cuts: [],
   settings:{workStart:'08:00',workEnd:'18:00',cut1:'11:00',cut2:'17:00',yellowMinutes:5,redMinutes:10}
 };
@@ -45,8 +37,7 @@ const DEFAULT_STATE = {
 let state = loadState();
 let session = loadSession();
 let currentView = 'home';
-let assortmentMode = 'estampado';
-let currentUnits = [];
+let currentGroups = [];
 let editingSaleId = null;
 
 function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
@@ -224,4 +215,3 @@ function renderPendingList(arr){
   const sales=arr.map(s=>({type:'Venta',title:`${s.id} · ${s.name}`,meta:`${s.status} · ${s.city}`,view:'sales',sale:s}));
   return [...sales,...extra].slice(0,10).map(x=>`<div class="pending"><strong>${x.type} · ${esc(x.title)}</strong><div class="meta">${esc(x.meta)}</div><div class="alert-row"><span></span><span class="spacer"></span><button class="btn light sm" onclick="${x.sale?`openOrder('${x.sale.id}')`:`switchView('${x.view}')`}">Gestionar</button></div></div>`).join('')||'<div class="muted">No tienes pendientes en este momento.</div>';
 }
-
