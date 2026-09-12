@@ -1,36 +1,55 @@
 # INVICTO OPS
 
-Centro de operaciones de Universo Invicto.
+Centro de operaciones interno de Universo Invicto.
 
-## Estado actual
+## Estado actual · v21
 
-MVP operativo desplegable en GitHub Pages. La versión actual usa almacenamiento local del navegador para validar el flujo antes de conectar Supabase.
+Aplicación operativa desplegada en GitHub Pages con autenticación real en Supabase Auth, datos compartidos en PostgreSQL, RLS por rol, sincronización de Shopify mediante webhooks y agente interno INVICTO I.A. ejecutado desde Supabase Edge Functions.
 
-Incluye:
-- Inicio de sesión de prueba.
-- Dashboard principal y pendientes iniciales.
-- Ventas del día y confirmación de pedidos.
-- Surtidos automáticos y edición unidad por unidad.
-- Importador de inventario Hoko, LogiGho y Bucaramanga.
-- Reserva de stock al confirmar.
-- Recuperación.
-- Cortes y agrupación por bodega.
-- Garantías.
-- Novedades logísticas e importación por Excel.
-- Dashboard de reportes.
-- KPIs globales e individuales con control por rol.
-- Panel INVICTO I.A. para alertas operativas.
+## Módulos operativos
 
-## Seguridad
+- Inicio con cola automática de prioridades y alertas.
+- Ventas Shopify, Draft Orders y ventas manuales.
+- Asignación equitativa de asesores.
+- Gestión comercial con SLA hábil Lun–Sáb 08:00–18:00.
+- Mapeo de pedido a referencias exactas por talla/diseño/color.
+- Inventario persistente separado en Hoko Bogotá, Hoko Medellín, LogiGho Medellín y Bucaramanga.
+- Validación preventiva de archivos de stock y trazabilidad de cargas.
+- Reserva transaccional de stock únicamente al confirmar.
+- Recuperación y seguimientos programados.
+- Cortes de despacho con validación de reserva completa.
+- Exportación MASSIVE Hoko y LogiGho.
+- Guías, despacho y devolución física.
+- Garantías y novedades logísticas.
+- Dashboard, meta mensual y KPIs.
+- Diagnóstico interno de integraciones y salud operativa.
+- INVICTO I.A. con contexto vivo de ventas, stock, alertas, recuperación, logística y KPIs.
+- Búsqueda global con Ctrl/Cmd + K.
 
-No se deben subir al repositorio credenciales, contraseñas reales, tokens de API ni datos sensibles de clientes. El acceso real, la base compartida y los inventarios persistentes se migrarán a Supabase Auth + PostgreSQL con RLS.
+## Arquitectura
 
-## Próxima fase
+- Frontend: GitHub Pages.
+- Auth y base de datos: Supabase.
+- Seguridad: RLS + permisos por rol + funciones operativas con validación de `auth.uid()` y permisos.
+- Shopify: webhooks con validación HMAC desde Supabase Edge Functions.
+- I.A.: OpenAI API consumida únicamente desde una Edge Function; la clave no se expone al navegador ni al repositorio.
+- Inventario: PostgreSQL como fuente de verdad; `localStorage` solo se conserva como capa de compatibilidad/cache para módulos heredados mientras se termina la consolidación de frontend.
 
-1. Crear proyecto Supabase.
-2. Aplicar el esquema de base de datos.
-3. Crear usuarios reales y permisos.
-4. Migrar inventario inicial.
-5. Reemplazar localStorage por Supabase.
-6. Integrar Hoko API.
-7. Integrar LogiGho cuando disponga de API.
+## Reglas críticas
+
+- No reservar inventario al recibir una venta; reservar únicamente cuando se confirma.
+- No confirmar si no existe stock exacto suficiente para toda la orden en una sola bodega.
+- Una venta solo puede pertenecer a un corte de despacho.
+- Un corte solo admite ventas confirmadas con reserva completa.
+- El stock físico se descuenta al despachar y se restaura únicamente al recibir físicamente una devolución.
+- Nunca inventar IDs externos de Hoko/LogiGho.
+- No subir credenciales, tokens, service-role keys ni secretos al repositorio.
+
+## Pendientes externos
+
+- Integración directa con API de Hoko cuando se disponga de documentación oficial/endpoints y credenciales adecuadas.
+- LogiGho permanece con MASSIVE/manual mientras no exista una API disponible para esta operación.
+
+## Operación
+
+URL: https://samuelacuna12.github.io/invicto-ops/
