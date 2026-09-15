@@ -1,4 +1,4 @@
-/* INVICTO OPS v38.1 · importador Bucaramanga validado contra archivo real */
+/* INVICTO OPS v38.2 · importador Bucaramanga validado contra archivo real */
 (function(){
   const baseStage=window.stageInventoryV20;
 
@@ -27,11 +27,10 @@
     if(typeof v==='number'&&excelDateSizeMap[Math.round(v)])return excelDateSizeMap[Math.round(v)];
     let s=h(v);
     if(/^\d{1,5}$/.test(s)&&excelDateSizeMap[Number(s)])return excelDateSizeMap[Number(s)];
-    // Excel suele convertir 2-4, 6-8 y 10-12 a fechas. Aceptamos esas representaciones visibles.
-    const dateText=s.replace(/\s+/g,'');
-    if(/^(0?2[\/\-.]0?4|0?4[\/\-.]0?2)([\/\-.]\d{2,4})?$/.test(dateText))return '2-4';
-    if(/^(0?6[\/\-.]0?8|0?8[\/\-.]0?6)([\/\-.]\d{2,4})?$/.test(dateText))return '6-8';
-    if(/^(10[\/\-.]12|12[\/\-.]10)([\/\-.]\d{2,4})?$/.test(dateText))return '10-12';
+    const compact=s.replace(/\s+/g,'');
+    if(/^(0?2[\/\-.]0?4|0?4[\/\-.]0?2)([\/\-.]\d{2,4})?$/.test(compact))return '2-4';
+    if(/^(0?6[\/\-.]0?8|0?8[\/\-.]0?6)([\/\-.]\d{2,4})?$/.test(compact))return '6-8';
+    if(/^(10[\/\-.]12|12[\/\-.]10)([\/\-.]\d{2,4})?$/.test(compact))return '10-12';
     s=s.replace(/^TALLA\s*/,'').replace(/\s+/g,'');
     s=s.replace(/^14-?16$/,'14-16').replace(/^2-?4$/,'2-4').replace(/^6-?8$/,'6-8').replace(/^10-?12$/,'10-12');
     return s;
@@ -81,15 +80,39 @@
     }
     return out;
   }
-  function normalizeBgaV381(r){
-    let n=normalizeBgaRow(r);if(n)return n;
-    const size=sizeToken(r['TALLA']),ref=h(r['REFERENCIA']),kind=h(r['DISEÑO']),stock=num(r['STOCK ACTUAL']);
-    // Referencia real presente en el maestro: AMARILLO DICIEMBRE también existe en tallas infantiles.
-    if(ref==='AMARILLO DICIEMBRE'&&kind==='LICRA'&&childSizes.has(size)){
-      return baseInventoryRecord({operator:'Invicto',warehouse:'Bucaramanga',externalId:'',name:'AMARILLO DICIEMBRE',reference:'AMARILLO DICIEMBRE',stock,status:stock>0?'Disponible':'Agotado',product:'Bóxer niño',material:'licra',style:'unicolor',size,design:'AMARILLO DICIEMBRE'});
-    }
-    return null;
+
+  // Normalizador propio: evita la función legacy que reasignaba una variable const.
+  function normalizeBgaV382(r){
+    const reference=r['REFERENCIA']??r['Referencia'];
+    const kind=h(r['DISEÑO']??r['Diseño']??'');
+    const stock=num(r['STOCK ACTUAL']??r['Stock actual']??0);
+    let size=sizeToken(r['TALLA']??r['Talla']??r['__EMPTY']??'');
+    const name=String(reference??'').trim();
+    const u=cleanText(name);
+    if(reference==null&&stock===0)return null;
+
+    let product,material,style,design,m;
+    if(size==='MEDIAS'||kind==='MEDIAS'){
+      product='Medias';material='textil';style='pack';size='UNICA';design='PACK 3';
+    }else if(childSizes.has(size)&&kind==='ESTAMPADO'){
+      product='Bóxer niño';material='licra';style='estampado';design=cleanText(reference);
+    }else if(adultSizes.has(size)&&kind==='ESTAMPADO'){
+      product='Bóxer hombre';material='licra';style='estampado';design=cleanText(reference);
+    }else if(['S','M','L','XL','2XL'].includes(size)&&kind==='ALGODON'&&/^DAMA ALGODON/.test(u)){
+      m=u.match(/^DAMA ALGODON\s+(.+?)-\s*(S|M|L|XL|2XL)$/);if(!m)return null;
+      product='Bóxer mujer';material='algodón';style='unicolor';design=normalizeColor(m[1]);size=m[2];
+    }else if(adultSizes.has(size)&&['LICRA','ALGODON'].includes(kind)){
+      m=u.match(/^BOXER\s+(.+?)\s*T-?\s*(S|M|L|XL|2XL|3XL|4XL)$/);
+      if(m){product='Bóxer hombre';material=kind==='LICRA'?'licra':'algodón';style='unicolor';design=normalizeColor(m[1]);size=m[2];}
+      else if(u==='AMARILLO DICIEMBRE'){product='Bóxer hombre';material='licra';style='unicolor';design='AMARILLO DICIEMBRE';}
+      else return null;
+    }else if(childSizes.has(size)&&kind==='LICRA'&&u==='AMARILLO DICIEMBRE'){
+      product='Bóxer niño';material='licra';style='unicolor';design='AMARILLO DICIEMBRE';
+    }else return null;
+
+    return baseInventoryRecord({operator:'Invicto',warehouse:'Bucaramanga',externalId:'',name,reference:name,stock,status:stock>0?'Disponible':'Agotado',product,material,style,size,design});
   }
+
   async function parseBga(file){
     if(typeof XLSX==='undefined')throw new Error('No está disponible el lector de Excel');
     const data=await file.arrayBuffer(),wb=XLSX.read(data,{type:'array',cellDates:false}),layout=findLayout(wb);
@@ -100,7 +123,7 @@
     const normalized=[];
     for(const r of rows){
       const raw=num(r['STOCK ACTUAL']);report.sourcePositive+=Math.max(0,raw);if(raw<0)report.negativeRows++;
-      const n=normalizeBgaV381(r);
+      const n=normalizeBgaV382(r);
       if(n){normalized.push(n);report.acceptedRows++;report.acceptedPhysical+=Math.max(0,num(n.sourceStock));}
       else if(raw===0){report.ignoredRows++;if(report.ignoredExamples.length<5)report.ignoredExamples.push(`${r['TALLA']??''} · ${r['REFERENCIA']??''}`);}
       else{report.invalidRows++;if(report.invalidExamples.length<5)report.invalidExamples.push(`${r['TALLA']??''} · ${r['REFERENCIA']??''} · ${r['DISEÑO']??''}`);}
@@ -123,12 +146,12 @@
       const r=parsed.report;
       toast(r.hardErrors.length?'Archivo revisado · hay filas que requieren revisión':`Bucaramanga listo · ${r.acceptedRows} variantes · ${r.acceptedPhysical.toLocaleString('es-CO')} uds${r.negativeRows?` · ${r.negativeRows} negativos→0`:''}`);
     }catch(e){
-      console.error('BGA v38.1',e);
+      console.error('BGA v38.2',e);
       inventoryPendingV20.set(warehouse,{report:{warehouse,fileName:file.name,kind:'bga',hardErrors:[e.message||String(e)],targetRows:0,acceptedRows:0,acceptedPhysical:0,negativeRows:0,ignoredRows:0,invalidRows:0,ignoredExamples:[],invalidExamples:[]},payload:[]});
       renderInventory();toast('No se pudo validar Bucaramanga: '+(e.message||e));
     }finally{
       const i=document.getElementById('invFileV20-'+warehouse.replace(/\W+/g,'-'));if(i)i.value='';
     }
   };
-  console.info('INVICTO OPS v38.1 · Bucaramanga validado contra STOCK BUCARAMANGA');
+  console.info('INVICTO OPS v38.2 · Bucaramanga parser estable');
 })();
