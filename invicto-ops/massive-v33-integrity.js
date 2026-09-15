@@ -1,0 +1,113 @@
+/* INVICTO OPS v33 · MASSIVE validado antes de exportar */
+const OPS_MASSIVE_VERSION_V33='33.0';
+
+function excelDateSerialV33(days=0){
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Bogota',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const m=Object.fromEntries(parts.map(x=>[x.type,x.value]));
+  const utc=Date.UTC(Number(m.year),Number(m.month)-1,Number(m.day)+Number(days||0));
+  return Math.floor((utc-Date.UTC(1899,11,30))/86400000);
+}
+function moneyIntV33(v){return Math.max(0,Math.round(Number(v||0)))}
+function nonEmptyV33(v){return v!==null&&v!==undefined&&String(v).trim()!==''}
+function numericIdV33(v){return /^\d+$/.test(String(v??'').trim())}
+function unitRowsV33(s){return exactUnitsV17(s).map(u=>({unit:u,inv:inventoryRowForUnitV17(u,s.warehouse)}))}
+function sumStockPricesV33(row,start,max){let total=0;for(let i=0;i<max;i++){const qty=Number(row[start+i*3+1]||0),price=Number(row[start+i*3+2]||0);total+=qty*price}return Math.round(total)}
+
+function preflightSaleV33(s,warehouse,maxLines){
+  if(s.status!=='Confirmada')return 'La venta no está confirmada';
+  const units=exactUnitsV17(s);
+  if(!units.length)return 'Faltan referencias exactas de talla/diseño/color';
+  if(units.length>maxLines)return `${units.length} unidades exceden las ${maxLines} líneas automáticas`;
+  if(!nonEmptyV33(s.name))return 'Falta nombre del cliente';
+  const phone=digitsV17(s.phone);if(phone.length<7||phone.length>15)return 'Teléfono inválido';
+  if(!nonEmptyV33(s.city))return 'Falta ciudad';
+  if(!nonEmptyV33(s.address))return 'Falta dirección';
+  if(!nonEmptyV33(s.warehouse)||s.warehouse!==warehouse)return 'La bodega de la venta no coincide con el MASSIVE';
+  for(const {unit,inv} of unitRowsV33(s)){
+    if(!inv)return `No existe la variante ${unit.size||''} ${unit.design||''} en ${warehouse}`;
+    if(!numericIdV33(inv.externalId))return `ID externo inválido para ${unit.size||''} ${unit.design||''}`;
+  }
+  if(warehouse==='LogiGho Medellín'&&!resolveLogighoCityV17(s))return `Sin código LogiGho: ${s.city||'—'} / ${s.department||'—'}`;
+  return '';
+}
+
+window.hokoRowV17=function(s){
+  const units=exactUnitsV17(s),prices=linePricesV17(s.price,units.length),stock=[];
+  units.forEach((u,i)=>{const r=inventoryRowForUnitV17(u,s.warehouse);stock.push(String(r.externalId),1,prices[i])});
+  while(stock.length<45)stock.push(null);
+  return [
+    s.name||'',null,s.email||null,digitsV17(s.phone),`${String(s.city||'').toUpperCase()}${s.department?` - ${String(s.department).toUpperCase()}`:''}`,String(s.department||'').toUpperCase(),s.address||'',s.notes||null,hokoCarrierV17(s),null,excelDateSerialV33(5),paymentHokoV17(s),10,10,10,1,containsTextV17(units,units.length),null,...stock
+  ];
+};
+
+window.logighoRowV17=async function(s){
+  const city=resolveLogighoCityV17(s);if(!city)throw new Error(`Sin código LogiGho para ${s.city||'—'} / ${s.department||'—'}`);
+  const units=exactUnitsV17(s),prices=linePricesV17(s.price,units.length),stock=[];
+  units.forEach((u,i)=>{const r=inventoryRowForUnitV17(u,s.warehouse);stock.push(String(r.externalId),1,prices[i])});
+  while(stock.length<36)stock.push(null);
+  return [s.name||'',null,s.email||null,digitsV17(s.phone),String(city.code),String(city.label),s.address||'',s.notes||null,logiCarrierV17(s),excelDateSerialV33(5),'CONTADO',null,10,10,10,1,isCODV17(s)?'SI':'NO',s.deliveryMode==='Reclama en oficina'?2:1,String(s.advisor||'').toUpperCase(),containsTextV17(units,units.length),'SI',moneyIntV33(s.price),null,12083,...stock,containsTextV17(units,units.length),null,null,null,null,null];
+};
+
+function validateRowV33(row,warehouse,s){
+  const isHoko=warehouse.startsWith('Hoko'),isLogi=warehouse==='LogiGho Medellín';
+  const headers=isHoko?HOKO_HEADERS_V17:isLogi?LOGIGHO_HEADERS_V17:null;
+  if(headers&&row.length!==headers.length)return `Estructura inválida: ${row.length}/${headers.length} columnas`;
+  if(!headers)return '';
+  const max=isHoko?15:12,start=isHoko?18:24,total=moneyIntV33(s.price);
+  let lines=0;
+  for(let i=0;i<max;i++){
+    const id=row[start+i*3],qty=row[start+i*3+1],price=row[start+i*3+2];
+    const any=nonEmptyV33(id)||nonEmptyV33(qty)||nonEmptyV33(price);
+    if(!any)continue;
+    lines++;
+    if(!numericIdV33(id))return `ID STOCK ${i+1} inválido`;
+    if(!Number.isInteger(Number(qty))||Number(qty)<=0)return `CANTIDAD STOCK ${i+1} inválida`;
+    if(!Number.isFinite(Number(price))||Number(price)<0)return `PRECIO STOCK ${i+1} inválido`;
+  }
+  if(lines!==exactUnitsV17(s).length)return `Líneas de stock ${lines}/${exactUnitsV17(s).length}`;
+  if(sumStockPricesV33(row,start,max)!==total)return `La suma de líneas no cuadra: ${sumStockPricesV33(row,start,max)}/${total}`;
+  if(!Number.isInteger(Number(row[isHoko?10:9]))||Number(row[isHoko?10:9])<40000)return 'Fecha de entrega no es fecha Excel válida';
+  if(isLogi){
+    if(!numericIdV33(row[4]))return 'Código LogiGho de ciudad inválido';
+    if(Number(row[21])!==total)return `Valor declarado ${row[21]}/${total}`;
+    if(Number(row[23])!==12083)return 'ID TIENDA LogiGho inválido';
+  }
+  return '';
+}
+
+function formatMassiveSheetV33(ws,warehouse,rowCount){
+  const dateCol=warehouse.startsWith('Hoko')?10:warehouse==='LogiGho Medellín'?9:null;
+  if(dateCol!==null){for(let r=1;r<=rowCount;r++){const addr=XLSX.utils.encode_cell({r,c:dateCol}),cell=ws[addr];if(cell){cell.t='n';cell.z='dd/mm/yyyy'}}}
+  ws['!freeze']={xSplit:0,ySplit:1};
+  if(ws['!ref'])ws['!autofilter']={ref:ws['!ref']};
+}
+
+window.exportCutV17=async function(cutId,warehouse){
+  if(!isAdmin())return toast('Solo administración o gerencia puede generar massives');
+  if(typeof XLSX==='undefined')return toast('No está disponible el generador Excel');
+  const cut=state.cuts.find(c=>c.id===cutId);if(!cut)return toast('Corte no encontrado');
+  const sales=cutSalesV17(cut).filter(s=>s.warehouse===warehouse),manual=[],rows=[];
+  if(!sales.length)return toast('Este corte no tiene pedidos para '+warehouse);
+  try{
+    if(warehouse==='LogiGho Medellín')await loadLogighoCitiesV17();
+    const max=warehouse==='LogiGho Medellín'?12:warehouse.startsWith('Hoko')?15:9999;
+    for(const s of sales){
+      let reason=preflightSaleV33(s,warehouse,max);
+      if(reason){manual.push([s.id,s.name,warehouse,reason,s.qty||exactUnitsV17(s).length]);continue}
+      const row=warehouse==='LogiGho Medellín'?await logighoRowV17(s):warehouse.startsWith('Hoko')?hokoRowV17(s):bgaRowV17(s);
+      reason=validateRowV33(row,warehouse,s);
+      if(reason){manual.push([s.id,s.name,warehouse,'Validación MASSIVE: '+reason,s.qty||exactUnitsV17(s).length]);continue}
+      rows.push(row);
+    }
+    const wb=XLSX.utils.book_new();let headers,operator;
+    if(warehouse==='LogiGho Medellín'){headers=LOGIGHO_HEADERS_V17;operator='LogiGho'}else if(warehouse.startsWith('Hoko')){headers=HOKO_HEADERS_V17;operator='Hoko'}else{headers=['PEDIDO','NOMBRE','TELEFONO','CIUDAD','DEPARTAMENTO','DIRECCION','ASESOR','UNIDADES','DETALLE EXACTO','VALOR','PAGO','OBSERVACIONES'];operator='Bucaramanga'}
+    const ws=XLSX.utils.aoa_to_sheet([headers,...rows]);formatMassiveSheetV33(ws,warehouse,rows.length);XLSX.utils.book_append_sheet(wb,ws,'ordenes');
+    if(manual.length){const m=XLSX.utils.aoa_to_sheet([['PEDIDO','CLIENTE','BODEGA','MOTIVO','UNIDADES'],...manual]);XLSX.utils.book_append_sheet(wb,m,'PENDIENTES_MANUAL')}
+    const label=cut.displayId||`C-${String(cut.id).slice(0,6)}`,file=`${safeFileV17(label)}_${safeFileV17(operator)}_${safeFileV17(warehouse)}.xlsx`;
+    XLSX.writeFile(wb,file,{bookType:'xlsx',compression:true});
+    try{await invictoSupabaseV12.rpc('log_dispatch_export',{p_cut_id:cut.id,p_warehouse_name:warehouse,p_operator:operator,p_file_name:file,p_sale_count:rows.length,p_notes:manual.length?`${manual.length} pedidos quedaron en PENDIENTES_MANUAL`:null})}catch(e){console.warn('No export log',e)}
+    toast(`${file}: ${rows.length} pedidos validados${manual.length?` · ${manual.length} manuales`:''}`);
+  }catch(e){console.error(e);toast('No se pudo generar MASSIVE: '+(e.message||e))}
+};
+
+console.info('INVICTO OPS v33 · MASSIVE con preflight, fechas Excel e integridad activa');
