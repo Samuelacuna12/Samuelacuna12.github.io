@@ -1,0 +1,19 @@
+/* INVICTO OPS v32.1 · limpieza del encabezado */
+/* El botón ☰ solo tiene sentido cuando el sidebar está oculto. */
+@media (min-width:801px){
+  .topbar > button.btn.light.sm:first-child{display:none!important}
+  .topbar{padding-left:22px}
+}
+@media (max-width:800px){
+  .topbar > button.btn.light.sm:first-child{
+    display:inline-flex!important;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    padding:0;
+    flex:0 0 42px;
+    font-size:18px;
+    border-radius:12px;
+  }
+}
