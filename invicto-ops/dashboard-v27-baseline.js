@@ -55,4 +55,7 @@ window.goalPanelV18=function(){
   return `<div class="panel" style="margin-bottom:14px"><div class="panel-head"><div><h3>Meta mensual · ${g.target.toLocaleString('es-CO')} confirmadas</h3><div class="muted">${g.confirmed.toLocaleString('es-CO')} ventas contabilizadas · ${g.pct}% de cumplimiento</div>${breakdown}</div><div class="spacer"></div>${isAdmin()?'<button class="btn light sm" onclick="setMonthlyTargetV18()">Editar meta</button>':''}</div><div class="panel-body"><div style="height:12px;background:#e8edf3;border-radius:99px;overflow:hidden"><div style="height:100%;width:${Math.min(100,g.pct)}%;background:#00cfa8"></div></div><div class="mini-grid" style="margin-top:14px"><div class="mini"><small>Faltan</small><b>${g.remaining.toLocaleString('es-CO')}</b><div class="muted">para llegar a la meta</div></div><div class="mini"><small>Necesarias / día</small><b>${g.required.toLocaleString('es-CO')}</b><div class="muted">días hábiles Lun–Sáb restantes</div></div><div class="mini"><small>Proyección</small><b>${g.projection.toLocaleString('es-CO')}</b><div class="muted">al cierre del mes</div></div><div class="mini"><small>Días operativos</small><b>${g.elapsed}/${g.totalDays}</b><div class="muted">transcurridos</div></div></div></div></div>`;
 };
 
+if(typeof session!=='undefined' && session){
+  try{render();}catch(e){console.warn('v27 goal rerender',e);}
+}
 console.info('INVICTO OPS v27 · base mensual acumulada activa');
