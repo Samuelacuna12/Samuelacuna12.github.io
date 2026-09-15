@@ -1,5 +1,5 @@
 /* INVICTO OPS v29 · cierre diario de stock + solicitud flotante al iniciar el día */
-const OPS_DAILY_STOCK_VERSION_V29='29.0';
+const OPS_DAILY_STOCK_VERSION_V29='29.3';
 let dailyStockCheckingV29=false;
 let dailyStockLastCheckV29=0;
 let dailyStockRowsV29=[];
@@ -23,7 +23,7 @@ function dailyStockStylesV29(){
 }
 
 async function fetchDailyStockStatusV29(force=false){
-  if(!window.invictoSupabaseV12||!window.session||!isAdmin())return [];
+  if(typeof invictoSupabaseV12==='undefined'||!session||!isAdmin())return [];
   const now=Date.now();if(!force&&now-dailyStockLastCheckV29<15000)return dailyStockRowsV29;
   if(dailyStockCheckingV29)return dailyStockRowsV29;
   dailyStockCheckingV29=true;
@@ -66,7 +66,7 @@ window.uploadDailyStockV29=async function(warehouse,input){
   try{
     if(typeof window.stageInventoryV20!=='function'||typeof window.applyInventoryV20!=='function')throw new Error('El módulo de inventario aún no está listo.');
     await window.stageInventoryV20(warehouse,file);
-    const pending=window.inventoryPendingV20?.get?.(warehouse)||inventoryPendingV20?.get?.(warehouse);
+    const pending=inventoryPendingV20?.get?.(warehouse);
     const errors=pending?.report?.hardErrors||[];
     if(errors.length)throw new Error(errors.join(' '));
     if(msg)msg.textContent='Archivo válido. Aplicando y verificando…';
@@ -82,7 +82,7 @@ window.uploadDailyStockV29=async function(warehouse,input){
 };
 
 async function dailyStockTickV29(){
-  if(!window.session||!isAdmin()){document.getElementById('dailyStockBackV29')?.remove();removeDailyStockReminderV29();return}
+  if(!session||!isAdmin()){document.getElementById('dailyStockBackV29')?.remove();removeDailyStockReminderV29();return}
   const rows=await fetchDailyStockStatusV29();if(!rows.length)return;
   if(!dailyStockPendingV29().length){document.getElementById('dailyStockBackV29')?.remove();removeDailyStockReminderV29();return}
   if(dailyStockDismissedV29)showDailyStockReminderV29();else renderDailyStockModalV29();
@@ -90,4 +90,4 @@ async function dailyStockTickV29(){
 
 setTimeout(dailyStockTickV29,1200);
 setInterval(dailyStockTickV29,60000);
-console.info('INVICTO OPS v29 · stock diario a cero 23:59 + ventana de carga activa');
+console.info('INVICTO OPS v29.3 · stock diario a cero 23:59 + ventana de carga activa');
