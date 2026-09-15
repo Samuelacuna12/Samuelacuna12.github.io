@@ -26,5 +26,5 @@ window.refreshPerformanceV32=function(){perf32Data=null;loadPerformanceV33(true)
 window.changePerformanceV32=function(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v))return;perf32Date=v;perf32Data=null;loadPerformanceV33(true)};
 
 const renderShellBaseV33=window.renderShell;
-window.renderShell=function(){renderShellBaseV33();const foot=document.querySelector('.sidebar-foot');if(foot)foot.innerHTML=foot.innerHTML.replace(/Versión\s+[^<]+/,'Versión 33.0')};
+window.renderShell=function(){renderShellBaseV33();const foot=document.querySelector('.sidebar-foot');if(foot)foot.innerHTML=foot.innerHTML.replace(/Versión\s+[^<]+/,'Versión 35.0')};
 console.info('INVICTO OPS v33 · Rendimiento diario exacto activo');
