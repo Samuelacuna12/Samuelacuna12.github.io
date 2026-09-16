@@ -1,4 +1,4 @@
-/* INVICTO OPS v51 · alinea Rendimiento con la fuente canónica sin mezclar conceptos */
+/* INVICTO OPS v51 · alinea Rendimiento e I.A. con la fuente canónica */
 (function(){
   function E(v){return typeof esc==='function'?esc(v??''):String(v??'')}
   function N(v){return Number(v||0)}
@@ -10,15 +10,20 @@
   window.applyCanonicalPerformanceV51=function(){const host=document.getElementById('view-performance');if(!host||!canon())return;host.querySelector('[data-canon-perf-v51]')?.remove();const date=typeof perf32Date!=='undefined'&&perf32Date?perf32Date:today();if(String(date)!==String(today()))return;host.insertAdjacentHTML('afterbegin',canonicalPerformanceBlock());
     const cards=[...host.querySelectorAll('.perf32-card')];cards.forEach(c=>{const s=c.querySelector('small');if(!s)return;const x=s.textContent.trim();if(x==='Asignadas hoy')s.textContent='Ventas recibidas hoy';else if(x==='Carga total')s.textContent='Carga comercial de ventas';else if(x==='Pendientes')s.textContent='Pendientes comerciales';});
     const th=[...host.querySelectorAll('.perf32-table thead th')];th.forEach(x=>{const t=x.textContent.trim();if(t==='Asignadas')x.textContent='Ventas recibidas';else if(t==='Carga total')x.textContent='Carga comercial';else if(t==='Pendientes')x.textContent='Pendientes ventas';});
-    const head=host.querySelector('.perf32-head p');if(head)head.textContent=(head.textContent||'')+' La carga total de tareas se muestra arriba desde la fuente canónica.';
+    const head=host.querySelector('.perf32-head p');if(head&&!head.dataset.canonNote){head.dataset.canonNote='1';head.textContent=(head.textContent||'')+' La carga total de tareas se muestra arriba desde la fuente canónica.';}
   };
 
   const basePaint=window.paintPerformanceV32;
   if(typeof basePaint==='function')window.paintPerformanceV32=function(){const r=basePaint.apply(this,arguments);const apply=()=>window.applyCanonicalPerformanceV51();if(canon())setTimeout(apply,0);else window.loadCanonicalV51?.(false).then(()=>setTimeout(apply,0));return r};
 
-  const oldFilter=window.setCanonicalFilterV51;window.setCanonicalFilterV51=function(v){window.opsCanonicalV51.filter=v;if(typeof currentView!=='undefined'&&currentView!=='sales'){if(typeof switchView==='function')switchView('sales');setTimeout(()=>window.renderSalesV51?.(),20)}else window.renderSalesV51?.()};
-  const oldAdvisor=window.setCanonicalAdvisorV51;window.setCanonicalAdvisorV51=function(v){window.opsCanonicalV51.selectedAdvisor=String(v||'all');window.opsCanonicalV51.filter='all';if(typeof currentView!=='undefined'&&currentView!=='sales'){if(typeof switchView==='function')switchView('sales');setTimeout(()=>window.renderSalesV51?.(),20)}else window.renderSalesV51?.()};
+  window.setCanonicalFilterV51=function(v){window.opsCanonicalV51.filter=v;if(typeof currentView!=='undefined'&&currentView!=='sales'){if(typeof switchView==='function')switchView('sales');setTimeout(()=>window.renderSalesV51?.(),20)}else window.renderSalesV51?.()};
+  window.setCanonicalAdvisorV51=function(v){window.opsCanonicalV51.selectedAdvisor=String(v||'all');window.opsCanonicalV51.filter='all';if(typeof currentView!=='undefined'&&currentView!=='sales'){if(typeof switchView==='function')switchView('sales');setTimeout(()=>window.renderSalesV51?.(),20)}else window.renderSalesV51?.()};
 
-  setInterval(()=>{if(typeof currentView!=='undefined'&&currentView==='performance')window.applyCanonicalPerformanceV51()},30000);
-  console.info('INVICTO OPS v51 · Rendimiento etiquetado y sincronizado con fuente canónica');
+  /* El panel visual de la I.A. también toma las mismas cifras. */
+  window.aiLiveStatsV20=function(){const d=canon(),t=d?.totals||{};const red=(typeof state!=='undefined'?(state.alerts||[]):[]).filter(a=>a.status==='open'&&a.severity==='roja'&&(!(typeof isAdvisor==='function'&&isAdvisor())||!a.user_id||a.user_id===session?.id)).length;const critical=(typeof state!=='undefined'?(state.inventory||[]):[]).filter(r=>typeof availableStock==='function'&&availableStock(r)<=3).length;return {today:N(t.asignadas_hoy),pending:N(t.total_tareas),red,critical}}
+  const aiBase=window.renderAI;
+  if(typeof aiBase==='function')window.renderAI=function(){const r=aiBase.apply(this,arguments);const d=canon(),t=d?.totals||{};const p=document.getElementById('aiPanel');if(!p||!d)return r;const boxes=[...p.querySelectorAll('.ai-context-v20')];if(boxes[0]){const s=boxes[0].querySelector('small'),b=boxes[0].querySelector('b');if(s)s.textContent='Ventas asignadas hoy';if(b)b.textContent=String(N(t.asignadas_hoy))}if(boxes[1]){const s=boxes[1].querySelector('small'),b=boxes[1].querySelector('b');if(s)s.textContent='Tareas por gestionar';if(b)b.textContent=String(N(t.total_tareas))}let detail=p.querySelector('[data-ai-canon-v51]');if(!detail){detail=document.createElement('div');detail.dataset.aiCanonV51='1';detail.className='ai-cap-v20';const side=p.querySelector('.ai-side-v20');side?.appendChild(detail)}if(detail)detail.innerHTML=`<b>Tu carga desde la fuente única</b><br>Ventas nuevas: ${N(t.ventas_nuevas)} · Recuperaciones: ${N(t.recuperaciones)}<br>Borradores: ${N(t.borradores)} · Garantías: ${N(t.garantias)}<br><b>Total: ${N(t.total_tareas)}</b>`;return r};
+
+  setInterval(()=>{if(typeof currentView!=='undefined'&&currentView==='performance')window.applyCanonicalPerformanceV51();if(document.getElementById('aiPanel')?.classList.contains('open'))window.renderAI?.()},30000);
+  console.info('INVICTO OPS v51 · Rendimiento e I.A. sincronizados con fuente canónica');
 })();
