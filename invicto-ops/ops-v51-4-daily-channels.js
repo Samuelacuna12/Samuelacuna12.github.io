@@ -12,15 +12,22 @@
     @media(max-width:1200px){.channels514-grid{grid-template-columns:repeat(4,1fr)}}@media(max-width:760px){.channels514-grid{grid-template-columns:repeat(2,1fr)}.channels514-total{grid-column:1/-1}}
   `;document.head.appendChild(s)}
   function card(label,obj,cls=''){return `<div class="channels514-card ${cls}"><small>${E(label)}</small><b>${N(obj?.total)}</b><span>${N(obj?.confirmadas)} confirmadas${N(obj?.canceladas)?` · ${N(obj.canceladas)} canceladas`:''}</span></div>`}
+  function setHomeDailyCards(total,drafts,confirmed){
+    const cards=document.querySelectorAll('#view-home .home512-daily .card');
+    const values=[total,Math.max(0,total-drafts),drafts,confirmed,total?((confirmed/total)*100).toFixed(1)+'%':'0.0%'];
+    values.forEach((v,i)=>{const b=cards[i]?.querySelector('b');if(b)b.textContent=String(v)});
+  }
   function inject(){
     styles();const host=document.getElementById('view-home');if(!host)return;
     host.querySelector('[data-daily-channels-v514]')?.remove();
     const m=map(),primary=['Shopify','WhatsApp','Borradores','Recuperación','Bot'];
     const others=rows().filter(r=>!primary.includes(String(r.canal))).reduce((a,r)=>({total:a.total+N(r.total),confirmadas:a.confirmadas+N(r.confirmadas),canceladas:a.canceladas+N(r.canceladas)}),{total:0,confirmadas:0,canceladas:0});
     const total=N(data()?.totals?.total_recibidas_hoy ?? rows().reduce((a,r)=>a+N(r.total),0));
-    const totalConfirmed=rows().reduce((a,r)=>a+N(r.confirmadas),0), totalCancelled=rows().reduce((a,r)=>a+N(r.canceladas),0);
-    const wrap=document.createElement('section');wrap.className='channels514';wrap.dataset.dailyChannelsV514='1';wrap.innerHTML=`<div class="channels514-head"><div><h2>Origen de las ventas de hoy</h2><p>Entradas reales del día, sin duplicados. Se reinicia automáticamente a las 00:00 hora Colombia.</p></div><div class="spacer"></div><div class="channels514-date">${E(data().business_date||'')}</div></div><div class="channels514-grid">${card('Shopify',m.Shopify)}${card('WhatsApp',m.WhatsApp)}${card('Borradores',m.Borradores)}${card('Recuperación',m['Recuperación'])}${card('Bot',m.Bot)}${card('Otros',others,'channels514-other')}${card('TOTAL DEL DÍA',{total,confirmadas:totalConfirmed,canceladas:totalCancelled},'channels514-total')}</div>`;
+    const totalConfirmed=rows().reduce((a,r)=>a+N(r.confirmadas),0), totalCancelled=rows().reduce((a,r)=>a+N(r.canceladas),0), drafts=N(m.Borradores?.total);
+    setHomeDailyCards(total,drafts,totalConfirmed);
+    const wrap=document.createElement('section');wrap.className='channels514';wrap.dataset.dailyChannelsV514='1';wrap.innerHTML=`<div class="channels514-head"><div><h2>Origen de las ventas de hoy</h2><p>Entradas reales del día, sin duplicados. Se reinicia automáticamente a las 00:00 hora Colombia y aumenta con cada venta nueva.</p></div><div class="spacer"></div><div class="channels514-date">${E(data().business_date||'')}</div></div><div class="channels514-grid">${card('Shopify',m.Shopify)}${card('WhatsApp',m.WhatsApp)}${card('Borradores',m.Borradores)}${card('Recuperación',m['Recuperación'])}${card('Bot',m.Bot)}${card('Otros',others,'channels514-other')}${card('TOTAL DEL DÍA',{total,confirmadas:totalConfirmed,canceladas:totalCancelled},'channels514-total')}</div>`;
     const sections=host.querySelectorAll('.home512-section');const anchor=sections[0];if(anchor)anchor.insertAdjacentElement('afterend',wrap);else host.appendChild(wrap);
+    const foot=document.querySelector('.sidebar-foot');if(foot)foot.innerHTML=foot.innerHTML.replace(/Versión\s+[^<]+/,'Versión 51.4');
   }
   const base=window.renderHomeV51||window.renderHome;
   if(typeof base==='function'){
