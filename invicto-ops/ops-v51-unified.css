@@ -1,7 +1,0 @@
-/* INVICTO OPS v51 · tablero unificado */
-.unified-cards-v51{grid-template-columns:repeat(5,minmax(140px,1fr));margin-bottom:14px}
-.unified-cards-v51 .total-v51{background:#08152f;color:#fff;border-color:#08152f}
-.unified-cards-v51 .total-v51 small{color:#b9c4d8}.unified-cards-v51 .total-v51 b{color:#fff}
-.unified-team-v51{margin:14px 0}.canonical-strip-v51{border-left:4px solid #00cfa8}
-@media(max-width:1100px){.unified-cards-v51{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:700px){.unified-cards-v51{grid-template-columns:repeat(2,1fr)}}
