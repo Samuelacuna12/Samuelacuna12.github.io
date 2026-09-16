@@ -1,4 +1,4 @@
-/* INVICTO OPS v44 · Documento Invicto manda la meta; Shopify queda separado */
+/* INVICTO OPS v44.2 · Documento Invicto manda la meta; Shopify queda separado */
 (function(){
   let d=null,loading=false,last=0;
   const baseHome=window.renderHome,baseReports=window.renderReports,basePanel=window.goalPanelV18;
@@ -23,7 +23,13 @@
     loading=true;
     try{const r=await invictoSupabaseV12.rpc('get_monthly_goal_v43',{p_month:month()});if(r.error)throw r.error;d=r.data;last=Date.now();}
     catch(e){console.error('monthly goal v44',e)}
-    finally{loading=false;try{if(document.getElementById('view-home')?.classList.contains('active'))baseHome();if(document.getElementById('view-reports')?.classList.contains('active'))baseReports();}catch(e){}}
+    finally{
+      loading=false;
+      try{
+        if(document.getElementById('view-home')?.classList.contains('active')&&typeof window.renderHome==='function')window.renderHome();
+        if(document.getElementById('view-reports')?.classList.contains('active')&&typeof window.renderReports==='function')window.renderReports();
+      }catch(e){console.warn('monthly goal repaint',e)}
+    }
   }
   window.renderHome=function(){baseHome();load(false)};
   window.renderReports=function(){baseReports();load(false)};
