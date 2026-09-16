@@ -1,0 +1,15 @@
+/* INVICTO OPS v49.0 · marcador de versión seguro */
+(function(){
+  const VERSION='49.0';
+  function apply(){
+    const foot=document.querySelector('.sidebar-foot');
+    if(!foot)return;
+    const before=foot.innerHTML;
+    const after=before.replace(/Versión\s+[^<]+/,'Versión '+VERSION);
+    if(after!==before)foot.innerHTML=after;
+  }
+  const base=window.renderShell;
+  if(typeof base==='function')window.renderShell=function(){const r=base.apply(this,arguments);apply();return r;};
+  setTimeout(apply,120);setTimeout(apply,1200);
+  console.info('INVICTO OPS v'+VERSION+' · IA privada activa');
+})();
