@@ -39,7 +39,7 @@
     host.querySelector('[data-pending-v524]')?.remove();
     const s=summary(), rows=Array.isArray(data().advisors)?data().advisors:[];
     const box=document.createElement('section');box.className='pending524';box.dataset.pendingV524='1';
-    box.innerHTML=`<div class="pending524-head"><div><h3>Control real de pendientes</h3><div class="muted">Cada cifra abre exactamente las ventas que la componen.</div></div><div class="muted">Fuente única · Supabase</div></div>
+    box.innerHTML=`<div class="pending524-head"><div><h3>Pendientes</h3><div class="muted">Aquí ves exactamente qué ventas faltan por gestionar.</div></div><div class="muted"></div></div>
       <div class="pending524-grid">
         ${card('never','SIN GESTIONAR',s.sin_gestionar,'red')}
         ${card('today','SIN GESTIÓN HOY',s.sin_gestion_hoy,'amber')}
@@ -59,7 +59,7 @@
   window.closePendingV524=function(){document.getElementById('pendingV524Wrap')?.remove()};
   window.openPendingV524=async function(kind='never',advisorId='',label='Pendientes'){
     document.getElementById('pendingV524Wrap')?.remove();
-    const w=document.createElement('div');w.id='pendingV524Wrap';w.innerHTML=`<div class="pending524-back" onclick="closePendingV524()"></div><aside class="pending524-modal"><div class="pending524-modal-head"><div><div class="eyebrow">VENTAS DEL DÍA · DETALLE REAL</div><h2>${E(label)}</h2><div class="muted">Cargando ventas…</div></div><button class="btn light" onclick="closePendingV524()">×</button></div><div class="pending524-body">Sincronizando…</div></aside>`;document.body.appendChild(w);
+    const w=document.createElement('div');w.id='pendingV524Wrap';w.innerHTML=`<div class="pending524-back" onclick="closePendingV524()"></div><aside class="pending524-modal"><div class="pending524-modal-head"><div><div class="eyebrow">VENTAS DEL DÍA · PENDIENTES</div><h2>${E(label)}</h2><div class="muted">Cargando ventas…</div></div><button class="btn light" onclick="closePendingV524()">×</button></div><div class="pending524-body">Sincronizando…</div></aside>`;document.body.appendChild(w);
     try{
       const {data:rows,error}=await invictoSupabaseV12.rpc('get_ops_pending_detail_v524',{p_kind:kind,p_advisor_id:advisorId||null}); if(error)throw error;
       const arr=Array.isArray(rows)?rows:[];
@@ -79,5 +79,5 @@
     const fn=function(){const r=base.apply(this,arguments);setTimeout(inject,0);return r};fn.__v524=true;window.renderSalesV51=fn;
   }
   wrap();setTimeout(()=>{wrap();if(typeof currentView!=='undefined'&&currentView==='sales')inject()},250);setTimeout(()=>{if(typeof currentView!=='undefined'&&currentView==='sales')inject()},1200);
-  console.info('INVICTO OPS v52.4 · pendientes reales clicables');
+  console.info('INVICTO OPS v52.4 · pendientes clicables');
 })();
