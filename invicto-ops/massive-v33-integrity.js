@@ -1,5 +1,5 @@
 /* INVICTO OPS v33 · MASSIVE validado antes de exportar */
-const OPS_MASSIVE_VERSION_V33='33.0';
+const OPS_MASSIVE_VERSION_V33='54.0';
 
 function excelDateSerialV33(days=0){
   const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Bogota',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
@@ -23,9 +23,11 @@ function preflightSaleV33(s,warehouse,maxLines){
   if(!nonEmptyV33(s.city))return 'Falta ciudad';
   if(!nonEmptyV33(s.address))return 'Falta dirección';
   if(!nonEmptyV33(s.warehouse)||s.warehouse!==warehouse)return 'La bodega de la venta no coincide con el MASSIVE';
-  for(const {unit,inv} of unitRowsV33(s)){
-    if(!inv)return `No existe la variante ${unit.size||''} ${unit.design||''} en ${warehouse}`;
-    if(!numericIdV33(inv.externalId))return `ID externo inválido para ${unit.size||''} ${unit.design||''}`;
+  if(warehouse!=='Bucaramanga'){
+    for(const {unit,inv} of unitRowsV33(s)){
+      if(!inv)return `No existe la variante ${unit.size||''} ${unit.design||''} en ${warehouse}`;
+      if(!numericIdV33(inv.externalId))return `ID externo inválido para ${unit.size||''} ${unit.design||''}`;
+    }
   }
   if(warehouse==='LogiGho Medellín'&&!resolveLogighoCityV17(s))return `Sin código LogiGho: ${s.city||'—'} / ${s.department||'—'}`;
   return '';
@@ -86,28 +88,54 @@ window.exportCutV17=async function(cutId,warehouse){
   if(!isAdmin())return toast('Solo administración o gerencia puede generar massives');
   if(typeof XLSX==='undefined')return toast('No está disponible el generador Excel');
   const cut=state.cuts.find(c=>c.id===cutId);if(!cut)return toast('Corte no encontrado');
-  const sales=cutSalesV17(cut).filter(s=>s.warehouse===warehouse),manual=[],rows=[];
+  const sales=cutSalesV17(cut).filter(s=>s.warehouse===warehouse),manual=[],manualMeta=[],rows=[],includedSaleIds=[];
   if(!sales.length)return toast('Este corte no tiene pedidos para '+warehouse);
   try{
     if(warehouse==='LogiGho Medellín')await loadLogighoCitiesV17();
     const max=warehouse==='LogiGho Medellín'?12:warehouse.startsWith('Hoko')?15:9999;
     for(const s of sales){
       let reason=preflightSaleV33(s,warehouse,max);
-      if(reason){manual.push([s.id,s.name,warehouse,reason,s.qty||exactUnitsV17(s).length]);continue}
+      if(reason){
+        manual.push([s.id,s.name,warehouse,reason,s.qty||exactUnitsV17(s).length]);
+        manualMeta.push({sale_id:s.dbId||null,reason});
+        continue;
+      }
       const row=warehouse==='LogiGho Medellín'?await logighoRowV17(s):warehouse.startsWith('Hoko')?hokoRowV17(s):bgaRowV17(s);
       reason=validateRowV33(row,warehouse,s);
-      if(reason){manual.push([s.id,s.name,warehouse,'Validación MASSIVE: '+reason,s.qty||exactUnitsV17(s).length]);continue}
+      if(reason){
+        const msg='Validación MASSIVE: '+reason;
+        manual.push([s.id,s.name,warehouse,msg,s.qty||exactUnitsV17(s).length]);
+        manualMeta.push({sale_id:s.dbId||null,reason:msg});
+        continue;
+      }
       rows.push(row);
+      if(s.dbId)includedSaleIds.push(s.dbId);
     }
     const wb=XLSX.utils.book_new();let headers,operator;
-    if(warehouse==='LogiGho Medellín'){headers=LOGIGHO_HEADERS_V17;operator='LogiGho'}else if(warehouse.startsWith('Hoko')){headers=HOKO_HEADERS_V17;operator='Hoko'}else{headers=['PEDIDO','NOMBRE','TELEFONO','CIUDAD','DEPARTAMENTO','DIRECCION','ASESOR','UNIDADES','DETALLE EXACTO','VALOR','PAGO','OBSERVACIONES'];operator='Bucaramanga'}
+    if(warehouse==='LogiGho Medellín'){headers=LOGIGHO_HEADERS_V17;operator='LogiGho'}
+    else if(warehouse.startsWith('Hoko')){headers=HOKO_HEADERS_V17;operator='Hoko'}
+    else{headers=['PEDIDO','NOMBRE','TELEFONO','CIUDAD','DEPARTAMENTO','DIRECCION','ASESOR','UNIDADES','DETALLE EXACTO','VALOR','PAGO','OBSERVACIONES'];operator='Bucaramanga'}
     const ws=XLSX.utils.aoa_to_sheet([headers,...rows]);formatMassiveSheetV33(ws,warehouse,rows.length);XLSX.utils.book_append_sheet(wb,ws,'ordenes');
     if(manual.length){const m=XLSX.utils.aoa_to_sheet([['PEDIDO','CLIENTE','BODEGA','MOTIVO','UNIDADES'],...manual]);XLSX.utils.book_append_sheet(wb,m,'PENDIENTES_MANUAL')}
     const label=cut.displayId||`C-${String(cut.id).slice(0,6)}`,file=`${safeFileV17(label)}_${safeFileV17(operator)}_${safeFileV17(warehouse)}.xlsx`;
     XLSX.writeFile(wb,file,{bookType:'xlsx',compression:true});
-    try{await invictoSupabaseV12.rpc('log_dispatch_export',{p_cut_id:cut.id,p_warehouse_name:warehouse,p_operator:operator,p_file_name:file,p_sale_count:rows.length,p_notes:manual.length?`${manual.length} pedidos quedaron en PENDIENTES_MANUAL`:null})}catch(e){console.warn('No export log',e)}
-    toast(`${file}: ${rows.length} pedidos validados${manual.length?` · ${manual.length} manuales`:''}`);
-  }catch(e){console.error(e);toast('No se pudo generar MASSIVE: '+(e.message||e))}
+
+    const cleanManual=manualMeta.filter(x=>x.sale_id);
+    const {data:logData,error:logError}=await invictoSupabaseV12.rpc('log_dispatch_export_v54',{
+      p_cut_id:cut.id,
+      p_warehouse_name:warehouse,
+      p_operator:operator,
+      p_file_name:file,
+      p_included_sale_ids:includedSaleIds,
+      p_manual:cleanManual
+    });
+    if(logError)throw new Error('El archivo se descargó, pero no se pudo registrar su trazabilidad: '+logError.message);
+
+    if(typeof hydrateOpsV13==='function')await hydrateOpsV13(true);
+    if(typeof renderCuts==='function'&&currentView==='cuts')setTimeout(()=>renderCuts(),50);
+    toast(`${file}: ${rows.length} pedidos exportados${manual.length?` · ${manual.length} bloqueados vuelven al próximo corte`:''}`);
+    return logData;
+  }catch(e){console.error(e);toast('No se pudo completar la exportación MASSIVE: '+(e.message||e))}
 };
 
-console.info('INVICTO OPS v33 · MASSIVE con preflight, fechas Excel e integridad activa');
+console.info('INVICTO OPS v54 · MASSIVE con trazabilidad individual y reintento automático');
