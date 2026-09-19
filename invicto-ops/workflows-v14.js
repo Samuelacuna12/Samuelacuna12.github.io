@@ -7,7 +7,7 @@ async function refreshAndStayV14(view){await hydrateOpsV13(true);switchView(view
 
 window.createCut=async function(){
   if(!isAdmin())return toast('Solo administración o gerencia puede crear cortes');
-  const pending=state.sales.filter(s=>s.status==='Confirmada'&&!s.cutId&&s.dbId);
+  const pending=state.sales.filter(s=>s.status==='Confirmada'&&!s.cutId&&s.dbId&&!String(s.guide||s.manualGuideNumber||'').trim());
   if(!pending.length)return toast('No hay pedidos confirmados pendientes de corte');
   try{
     const {data,error}=await invictoSupabaseV12.rpc('create_ops_dispatch_cut',{p_sale_ids:pending.map(s=>s.dbId),p_cut_type:'manual'});if(error)throw error;
