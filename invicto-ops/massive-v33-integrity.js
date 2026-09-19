@@ -102,9 +102,15 @@ window.exportCutV17=async function(cutId,warehouse){
   if(!isAdmin())return toast('Solo administración o gerencia puede generar massives');
   if(typeof XLSX==='undefined')return toast('No está disponible el generador Excel');
   const cut=state.cuts.find(c=>c.id===cutId);if(!cut)return toast('Corte no encontrado');
-  const sales=cutSalesV17(cut).filter(s=>s.warehouse===warehouse),manual=[],manualMeta=[],rows=[],includedSaleIds=[];
-  if(!sales.length)return toast('Este corte no tiene pedidos para '+warehouse);
+  const allSales=cutSalesV17(cut).filter(s=>s.warehouse===warehouse);
+  if(!allSales.length)return toast('Este corte no tiene pedidos para '+warehouse);
   try{
+    const {data:already,error:alreadyErr}=await invictoSupabaseV12.rpc('get_massive_exported_sale_ids_v55',{p_cut_id:cut.id,p_warehouse_name:warehouse});
+    if(alreadyErr)throw alreadyErr;
+    const exportedSet=new Set((already||[]).map(String));
+    const sales=allSales.filter(s=>!exportedSet.has(String(s.dbId||'')));
+    if(!sales.length)return toast('Esta bodega ya fue exportada completamente. No se generará otra vez.');
+    const manual=[],manualMeta=[],rows=[],includedSaleIds=[];
     if(warehouse==='LogiGho Medellín')await loadLogighoCitiesV17();
     const max=warehouse==='LogiGho Medellín'?12:warehouse.startsWith('Hoko')?15:9999;
     for(const s of sales){
