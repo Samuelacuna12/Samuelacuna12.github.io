@@ -123,7 +123,9 @@
     const host=document.getElementById('view-cuts');if(!host)return;
     const old=host.querySelector('#massiveStatusV55');if(old)old.remove();
     const d=data55||{},sum=d.summary||{};
-    const pending=(d.pending||[]).filter(function(r){return r.massive_status!=='guide_already_present'});
+    const allPending=(d.pending||[]).filter(function(r){return r.massive_status!=='guide_already_present'});
+    const historical=allPending.filter(function(r){return r.massive_status==='historical_unknown'});
+    const pending=allPending.filter(function(r){return r.massive_status!=='historical_unknown'});
     const ready=pending.filter(function(r){return r.massive_status==='ready'});
     const blocked=pending.filter(function(r){return r.massive_status==='blocked'||!!extraReason55(r)});
     const exported=d.exported||[];
@@ -141,7 +143,8 @@
       '<div class="ms55-sec"><div class="ms55-title"><h3>Guías en corte listas para descargar</h3><span class="ms55-count">'+Number(sum.in_cut||0)+'</span></div>'+groups55(pending)+'</div>'+
       '<div class="ms55-sec"><div class="ms55-title"><h3>Confirmadas listas para el próximo corte</h3><span class="ms55-count">'+ready.length+'</span><div class="spacer"></div>'+(ready.length?'<button class="btn navy sm" onclick="createMassiveCutV55()">Crear corte con las listas</button>':'')+'</div>'+table55(ready,false)+'</div>'+
       (blocked.length?'<div class="ms55-sec"><div class="ms55-title"><h3>Bloqueadas antes de exportar</h3><span class="ms55-count">'+blocked.length+'</span></div>'+table55(blocked,false)+'</div>':'')+
-      '<div class="ms55-sec"><div class="ms55-title"><h3>Guías exportadas masivamente</h3><span class="ms55-count">'+exported.length+'</span></div>'+table55(exported.slice(0,150),true)+'</div>';
+      '<div class="ms55-sec"><div class="ms55-title"><h3>Guías exportadas masivamente</h3><span class="ms55-count">'+exported.length+'</span></div>'+table55(exported.slice(0,150),true)+'</div>'+ 
+      (historical.length?'<div class="ms55-sec"><div class="ms55-title"><h3>Histórico anterior a v55 · revisión</h3><span class="ms55-count">'+historical.length+'</span></div><div class="ms55-empty">Estos pedidos pertenecen a archivos antiguos donde no existía trazabilidad fila por fila. No se reexportan automáticamente para evitar duplicados.</div>'+table55(historical,false)+'</div>':'');
     host.prepend(box);
     if(!data55&&!loading55)setTimeout(function(){load55(false)},20);
   }
