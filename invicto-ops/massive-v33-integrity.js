@@ -1,5 +1,5 @@
 /* INVICTO OPS v33 · MASSIVE validado antes de exportar */
-const OPS_MASSIVE_VERSION_V33='54.0';
+const OPS_MASSIVE_VERSION_V33='55.0';
 
 function excelDateSerialV33(days=0){
   const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Bogota',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
@@ -10,21 +10,31 @@ function excelDateSerialV33(days=0){
 function moneyIntV33(v){return Math.max(0,Math.round(Number(v||0)))}
 function nonEmptyV33(v){return v!==null&&v!==undefined&&String(v).trim()!==''}
 function numericIdV33(v){return /^\d+$/.test(String(v??'').trim())}
-function unitRowsV33(s){return exactUnitsV17(s).map(u=>({unit:u,inv:inventoryRowForUnitV17(u,s.warehouse)}))}
+function stockLinesV54(s){
+  const units=exactUnitsV17(s), prices=linePricesV17(s.price,units.length), by=new Map();
+  units.forEach((u,i)=>{
+    const inv=inventoryRowForUnitV17(u,s.warehouse), price=Number(prices[i]||0);
+    const key=[u.variantKey,inv?.externalId||'',price].join('|');
+    const x=by.get(key)||{unit:u,inv,qty:0,unitPrice:price};
+    x.qty++;by.set(key,x);
+  });
+  return [...by.values()];
+}
+function unitRowsV33(s){return stockLinesV54(s)}
 function sumStockPricesV33(row,start,max){let total=0;for(let i=0;i<max;i++){const qty=Number(row[start+i*3+1]||0),price=Number(row[start+i*3+2]||0);total+=qty*price}return Math.round(total)}
 
 function preflightSaleV33(s,warehouse,maxLines){
   if(s.status!=='Confirmada')return 'La venta no está confirmada';
-  const units=exactUnitsV17(s);
+  const units=exactUnitsV17(s), lines=stockLinesV54(s);
   if(!units.length)return 'Faltan referencias exactas de talla/diseño/color';
-  if(units.length>maxLines)return `${units.length} unidades exceden las ${maxLines} líneas automáticas`;
+  if(lines.length>maxLines)return `${lines.length} referencias/precios exceden las ${maxLines} líneas del MASSIVE`;
   if(!nonEmptyV33(s.name))return 'Falta nombre del cliente';
   const phone=digitsV17(s.phone);if(phone.length<7||phone.length>15)return 'Teléfono inválido';
   if(!nonEmptyV33(s.city))return 'Falta ciudad';
   if(!nonEmptyV33(s.address))return 'Falta dirección';
   if(!nonEmptyV33(s.warehouse)||s.warehouse!==warehouse)return 'La bodega de la venta no coincide con el MASSIVE';
   if(warehouse!=='Bucaramanga'){
-    for(const {unit,inv} of unitRowsV33(s)){
+    for(const {unit,inv} of stockLinesV54(s)){
       if(!inv)return `No existe la variante ${unit.size||''} ${unit.design||''} en ${warehouse}`;
       if(!numericIdV33(inv.externalId))return `ID externo inválido para ${unit.size||''} ${unit.design||''}`;
     }
@@ -34,8 +44,8 @@ function preflightSaleV33(s,warehouse,maxLines){
 }
 
 window.hokoRowV17=function(s){
-  const units=exactUnitsV17(s),prices=linePricesV17(s.price,units.length),stock=[];
-  units.forEach((u,i)=>{const r=inventoryRowForUnitV17(u,s.warehouse);stock.push(String(r.externalId),1,prices[i])});
+  const units=exactUnitsV17(s),lines=stockLinesV54(s),stock=[];
+  lines.forEach(x=>stock.push(String(x.inv.externalId),x.qty,x.unitPrice));
   while(stock.length<45)stock.push(null);
   return [
     s.name||'',null,s.email||null,digitsV17(s.phone),`${String(s.city||'').toUpperCase()}${s.department?` - ${String(s.department).toUpperCase()}`:''}`,String(s.department||'').toUpperCase(),s.address||'',s.notes||null,hokoCarrierV17(s),null,excelDateSerialV33(5),paymentHokoV17(s),10,10,10,1,containsTextV17(units,units.length),null,...stock
@@ -44,8 +54,8 @@ window.hokoRowV17=function(s){
 
 window.logighoRowV17=async function(s){
   const city=resolveLogighoCityV17(s);if(!city)throw new Error(`Sin código LogiGho para ${s.city||'—'} / ${s.department||'—'}`);
-  const units=exactUnitsV17(s),prices=linePricesV17(s.price,units.length),stock=[];
-  units.forEach((u,i)=>{const r=inventoryRowForUnitV17(u,s.warehouse);stock.push(String(r.externalId),1,prices[i])});
+  const units=exactUnitsV17(s),lines=stockLinesV54(s),stock=[];
+  lines.forEach(x=>stock.push(String(x.inv.externalId),x.qty,x.unitPrice));
   while(stock.length<36)stock.push(null);
   return [s.name||'',null,s.email||null,digitsV17(s.phone),String(city.code),String(city.label),s.address||'',s.notes||null,logiCarrierV17(s),excelDateSerialV33(5),'CONTADO',null,10,10,10,1,isCODV17(s)?'SI':'NO',s.deliveryMode==='Reclama en oficina'?2:1,String(s.advisor||'').toUpperCase(),containsTextV17(units,units.length),'SI',moneyIntV33(s.price),null,12083,...stock,containsTextV17(units,units.length),null,null,null,null,null];
 };
@@ -66,7 +76,11 @@ function validateRowV33(row,warehouse,s){
     if(!Number.isInteger(Number(qty))||Number(qty)<=0)return `CANTIDAD STOCK ${i+1} inválida`;
     if(!Number.isFinite(Number(price))||Number(price)<0)return `PRECIO STOCK ${i+1} inválido`;
   }
-  if(lines!==exactUnitsV17(s).length)return `Líneas de stock ${lines}/${exactUnitsV17(s).length}`;
+  const expected=stockLinesV54(s).length;
+  if(lines!==expected)return `Líneas de stock ${lines}/${expected}`;
+  const expectedQty=exactUnitsV17(s).length;
+  let rowQty=0;for(let i=0;i<max;i++)rowQty+=Number(row[start+i*3+1]||0);
+  if(rowQty!==expectedQty)return `Cantidad MASSIVE ${rowQty}/${expectedQty}`;
   if(sumStockPricesV33(row,start,max)!==total)return `La suma de líneas no cuadra: ${sumStockPricesV33(row,start,max)}/${total}`;
   if(!Number.isInteger(Number(row[isHoko?10:9]))||Number(row[isHoko?10:9])<40000)return 'Fecha de entrega no es fecha Excel válida';
   if(isLogi){
@@ -138,4 +152,4 @@ window.exportCutV17=async function(cutId,warehouse){
   }catch(e){console.error(e);toast('No se pudo completar la exportación MASSIVE: '+(e.message||e))}
 };
 
-console.info('INVICTO OPS v54 · MASSIVE con trazabilidad individual y reintento automático');
+console.info('INVICTO OPS v55 · MASSIVE una sola vez + cantidades agrupadas + trazabilidad exacta');
