@@ -1,5 +1,6 @@
 /* INVICTO OPS v20 · inventario por 4 fuentes + validación previa */
 const inventoryPendingV20=new Map();
+const OPS_INVENTORY_PARSER_VERSION_V57='57.0';
 const INVENTORY_UPLOADS_V20={
   'Hoko Bogotá':{kind:'hoko',label:'Hoko Bogotá',hint:'Export de stock Hoko. Esta tarjeta toma únicamente FULFILLMENT BOGOTA.',accent:'HOKO BOG'},
   'Hoko Medellín':{kind:'hoko',label:'Hoko Medellín',hint:'Export de stock Hoko. Esta tarjeta toma únicamente FULFILLMENT MEDELLIN.',accent:'HOKO MED'},
@@ -16,15 +17,23 @@ function invInternalPayloadV20(r){return {internal_sku:canonicalVariantKey(r.pro
 async function parseInventoryFileV20(file,warehouse){
   const cfg=INVENTORY_UPLOADS_V20[warehouse];if(!cfg)throw new Error('Bodega no reconocida');
   if(typeof XLSX==='undefined')throw new Error('No está disponible el lector de Excel');
-  const data=await file.arrayBuffer(),wb=XLSX.read(data,{type:'array'}),ws=wb.Sheets[wb.SheetNames[0]],rows=XLSX.utils.sheet_to_json(ws,{defval:null});
+  const data=await file.arrayBuffer(),wb=XLSX.read(data,{type:'array'}),ws=wb.Sheets[wb.SheetNames[0]];
+  // Normalizar encabezados reales del Excel: Hoko/BGA pueden traer espacios finales.
+  const rawRows=XLSX.utils.sheet_to_json(ws,{defval:null});
+  const rows=rawRows.map(row=>Object.fromEntries(Object.entries(row).map(([k,v])=>[String(k).replace(/^\uFEFF/,'').trim(),v])));
   if(!rows.length)throw new Error('El archivo está vacío');
-  const keys=Object.keys(rows[0]).map(x=>String(x).trim());
+  const keys=Object.keys(rows[0]);
   const report={warehouse,fileName:file.name,kind:cfg.kind,sourceRows:rows.length,targetRows:0,acceptedRows:0,ignoredRows:0,invalidRows:0,negativeRows:0,duplicateRows:0,sourcePositive:0,acceptedPhysical:0,externalIds:0,invalidExamples:[],ignoredExamples:[],hardErrors:[]};
   let normalized=[];
   if(cfg.kind==='hoko'){
-    if(!(keys.includes('Nombre del producto')&&keys.includes('Bodega')&&keys.includes('Stock actual')))throw new Error('Este archivo no corresponde al formato de stock Hoko');
+    if(!(keys.includes('Nombre del producto')&&keys.includes('Stock actual')))throw new Error('Este archivo no corresponde al formato de stock Hoko');
     const token=warehouse==='Hoko Medellín'?'MEDELLIN':'BOGOTA';
-    const target=rows.filter(r=>cleanText(r['Bodega']).includes(token));report.targetRows=target.length;
+    // Hoko exporta dos formatos válidos:
+    // 1) consolidado con columna Bodega; 2) archivo individual por bodega sin esa columna.
+    const target=keys.includes('Bodega')
+      ? rows.filter(r=>cleanText(r['Bodega']).includes(token))
+      : rows;
+    report.targetRows=target.length;
     for(const r of target){
       const raw=invNumV20(r['Stock actual']);report.sourcePositive+=Math.max(0,raw);if(raw<0)report.negativeRows++;
       const n=normalizeHokoRow(r,warehouse);
