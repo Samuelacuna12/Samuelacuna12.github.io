@@ -10,7 +10,7 @@ window.applyInventoryV20=async function(warehouse){
     inventoryHistoryCacheV21={at:0,rows:[]};await hydrateOpsV13(true);const actual=invWarehouseStatsV20(warehouse).physical,conf=Number(data?.reservation_conflicts||0);r.applied=true;r.actualPhysical=actual;r.appliedAt=new Date().toISOString();
     if(actual!==r.acceptedPhysical&&!conf)r.hardErrors=[`Después de importar, Supabase reporta ${actual} unidades y el archivo validado ${r.acceptedPhysical}. No continúes sin revisar.`];
     renderInventory();if(typeof renderAI==='function')renderAI();
-    if(conf)toast(`${warehouse}: actualizado · ${conf} referencias protegidas por reservas activas`);else toast(actual===r.acceptedPhysical?`${warehouse}: ${actual.toLocaleString('es-CO')} unidades verificadas`:`${warehouse}: diferencia detectada después de importar`);
+    if(conf)toast(`${warehouse}: actualizado · ${conf} referencias protegidas por reservas activas`);else toast(actual===r.acceptedPhysical?`${warehouse}: ${Number(actual||0).toLocaleString('es-CO')} unidades verificadas`:`${warehouse}: diferencia detectada después de importar`);
   }catch(e){console.error(e);toast('No se pudo actualizar: '+(e.message||e))}
 };
 async function loadInventoryHistoryV21(force=false){if(!session)return [];if(!force&&Date.now()-inventoryHistoryCacheV21.at<60000)return inventoryHistoryCacheV21.rows;const {data,error}=await invictoSupabaseV12.from('inventory_imports').select('id,warehouse_id,source_name,row_count,imported_at,notes').order('imported_at',{ascending:false}).limit(20);if(error){console.warn(error);return []}inventoryHistoryCacheV21={at:Date.now(),rows:data||[]};return data||[]}
