@@ -48,7 +48,7 @@ window.applyInventoryV20=async function(warehouse){
 
     renderInventory();
     if(typeof renderAI==='function')renderAI();
-    toast(`${warehouse}: ${actual.toLocaleString('es-CO')} uds · ${v.external_ids_matched} IDs verificados`);
+    toast(`${warehouse}: ${Number(actual||0).toLocaleString('es-CO')} uds · ${v.external_ids_matched} IDs verificados`);
   }catch(e){
     console.error(e);
     toast('No se pudo verificar la actualización: '+(e.message||e));
