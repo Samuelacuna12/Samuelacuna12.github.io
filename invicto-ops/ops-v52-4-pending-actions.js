@@ -47,6 +47,7 @@
         ${card('carryover','ARRASTRE ABIERTO',s.arrastre_abierto,'blue')}
       </div>
       ${admin()&&(!window.opsCanonicalV51?.selectedAdvisor||window.opsCanonicalV51.selectedAdvisor==='all')?`<div class="pending524-team">
+        <div class="pending524-team-title"><b>Pendientes por asesor</b><span>Haz clic en cualquier contador para ver las ventas</span></div>
         ${rows.map(r=>`<div class="pending524-row"><div><b>${E(r.full_name)}</b></div>
           <div>Sin gestionar: <button class="pending524-link" onclick="openPendingV524('never','${E(r.advisor_id)}','Sin gestionar · ${E(r.full_name)}')">${N(r.sin_gestionar)}</button></div>
           <div>Sin gestión hoy: <button class="pending524-link" onclick="openPendingV524('today','${E(r.advisor_id)}','Sin gestión hoy · ${E(r.full_name)}')">${N(r.sin_gestion_hoy)}</button></div>
@@ -79,5 +80,5 @@
     const fn=function(){const r=base.apply(this,arguments);setTimeout(inject,0);return r};fn.__v524=true;window.renderSalesV51=fn;
   }
   wrap();setTimeout(()=>{wrap();if(typeof currentView!=='undefined'&&currentView==='sales')inject()},250);setTimeout(()=>{if(typeof currentView!=='undefined'&&currentView==='sales')inject()},1200);
-  console.info('INVICTO OPS v52.4 · pendientes clicables');
+  console.info('INVICTO OPS v59 · pendientes restaurados y clicables');
 })();
