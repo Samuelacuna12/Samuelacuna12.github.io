@@ -1,4 +1,4 @@
-/* INVICTO OPS v52.4 · presencia solo admin + cuentas claras de carga */
+/* INVICTO OPS v60 · presencia solo admin + rendimiento limpio */
 (function(){
   const E=v=>typeof esc==='function'?esc(v??''):String(v??'');
   const M=v=>typeof money==='function'?money(v):Number(v||0).toLocaleString('es-CO');
@@ -99,7 +99,7 @@
         if(pi>=0&&cells[pi])cells[pi].innerHTML=`<b>${Number(row.open_total||0)}</b> <button class="clarity524-btn ${Number(row.open_total||0)?'':'zero'}" onclick="goSalesClarityV524('open','${E(row.advisor_id)}')">Ver</button>`;
       });
     });
-    if(!host.querySelector('[data-v524-perfnote]')){const h=host.querySelector('.perf32-head');if(h){const n=document.createElement('div');n.dataset.v524Perfnote='1';n.className='perf32-banner';n.innerHTML='<b>Cuentas claras:</b> Pendientes abiertas = ventas que siguen abiertas. Sin gestión hoy = no tuvieron acción hoy. Usa <b>Ver</b> para abrir exactamente cuáles son.';h.insertAdjacentElement('afterend',n)}}
+
   }
   function patchPerformance(){
     const base=window.paintPerformanceV32;if(typeof base!=='function'||base.__v524)return;
