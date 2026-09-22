@@ -29,10 +29,26 @@
 
     if(typeof inventoryHistoryCacheV21!=='undefined')inventoryHistoryCacheV21={at:0,rows:[]};
     if(typeof opsHydratedV13!=='undefined')opsHydratedV13=false;
-    if(typeof hydrateOpsV13==='function')await hydrateOpsV13(true);
+
+    // La importación ya fue confirmada por Supabase. Un error de render/hidratación
+    // NO puede convertir una carga exitosa en "fallida".
+    try{
+      if(typeof hydrateOpsV13==='function')await hydrateOpsV13(true);
+    }catch(uiHydrateError){
+      console.warn('hydrate post stock v58',uiHydrateError);
+    }
+
+    let serverStatus=null;
+    try{
+      const st=await invictoSupabaseV12.rpc('daily_stock_status_v29');
+      if(!st.error&&Array.isArray(st.data))serverStatus=st.data.find(x=>x.warehouse===warehouse)||null;
+    }catch(statusError){
+      console.warn('daily stock status post import v58',statusError);
+    }
 
     const s=typeof invWarehouseStatsV20==='function'?invWarehouseStatsV20(warehouse):null;
-    const actual=s?Number(s.physical||0):Number(data.incoming_stock||0);
+    const actual=Number(serverStatus?.physical ?? s?.physical ?? data.incoming_stock ?? 0);
+    const rowsNow=Number(s?.rows ?? data.verification?.inventory_matches ?? 0);
     const conf=Number(data.reservation_conflicts||0);
     const v=data.verification||{};
 
@@ -42,25 +58,23 @@
       r.appliedAt=new Date().toISOString();
       r.serverVerification=v;
       r.currentPhysical=actual;
-      if(s)r.currentRows=s.rows;
+      r.currentRows=rowsNow;
       r.delta=Number(r.acceptedPhysical||0)-actual;
       r.deltaPct=actual?Math.round((r.delta/actual)*100):0;
-      if(s){
-        r.rowDelta=Number(r.acceptedRows||0)-Number(s.rows||0);
-        r.rowDeltaPct=s.rows?Math.round((r.rowDelta/s.rows)*100):0;
-      }
+      r.rowDelta=Number(r.acceptedRows||0)-rowsNow;
+      r.rowDeltaPct=rowsNow?Math.round((r.rowDelta/rowsNow)*100):0;
     }
 
-    const exactStock=actual===Number(r&&r.acceptedPhysical||0)||conf>0;
+    const exactStock=actual===Number(r?.acceptedPhysical||0)||conf>0;
     const exactIds=Number(v.external_ids_matched||0)===Number(v.external_ids_expected||0)&&Number(v.external_id_mismatches||0)===0;
     const exactVariants=Number(v.inventory_matches||0)===Number(v.incoming_variants||0)&&Number(v.stock_mismatches||0)===0;
     if(!exactStock||!exactIds||!exactVariants){
-      throw new Error('Verificación posterior incompleta: stock '+actual+'/'+Number(r&&r.acceptedPhysical||0)+', IDs '+Number(v.external_ids_matched||0)+'/'+Number(v.external_ids_expected||0)+', variantes '+Number(v.inventory_matches||0)+'/'+Number(v.incoming_variants||0));
+      throw new Error('Verificación posterior incompleta: stock '+actual+'/'+Number(r?.acceptedPhysical||0)+', IDs '+Number(v.external_ids_matched||0)+'/'+Number(v.external_ids_expected||0)+', variantes '+Number(v.inventory_matches||0)+'/'+Number(v.incoming_variants||0));
     }
 
-    if(typeof renderInventory==='function')renderInventory();
-    if(typeof renderAI==='function')renderAI();
-    if(typeof toast==='function')toast(warehouse+': '+actual.toLocaleString('es-CO')+' unidades cargadas y verificadas');
+    try{if(typeof renderInventory==='function')renderInventory()}catch(renderError){console.warn('render inventory post stock v58',renderError)}
+    try{if(typeof renderAI==='function')renderAI()}catch(renderAIError){console.warn('render AI post stock v58',renderAIError)}
+    if(typeof toast==='function')toast(warehouse+': '+Number(actual||0).toLocaleString('es-CO')+' unidades cargadas y verificadas');
     return data;
   }
 
@@ -96,9 +110,19 @@
       await applyStockV56(warehouse);
 
       if(typeof dailyStockLastCheckV29!=='undefined')dailyStockLastCheckV29=0;
-      if(typeof fetchDailyStockStatusV29==='function')await fetchDailyStockStatusV29(true);
-      const current=(typeof dailyStockRowsV29!=='undefined'?dailyStockRowsV29:[]).find(function(x){return x.warehouse===warehouse});
-      if(!current||!current.loaded)throw new Error('Supabase aplicó la carga pero el cierre diario todavía no la reconoce');
+      let current=null;
+      try{
+        if(typeof fetchDailyStockStatusV29==='function')await fetchDailyStockStatusV29(true);
+        current=(typeof dailyStockRowsV29!=='undefined'?dailyStockRowsV29:[]).find(function(x){return x.warehouse===warehouse})||null;
+      }catch(refreshError){
+        console.warn('daily modal refresh v58',refreshError);
+      }
+      if(!current||!current.loaded){
+        const st=await invictoSupabaseV12.rpc('daily_stock_status_v29');
+        if(st.error)throw st.error;
+        current=(st.data||[]).find(function(x){return x.warehouse===warehouse})||null;
+      }
+      if(!current||!current.loaded)throw new Error('La carga no quedó registrada como corte de hoy');
 
       if(row){row.classList.remove('loading','error');row.classList.add('done')}
       if(msg)msg.textContent='Cargado y verificado · '+Number(current.physical||0).toLocaleString('es-CO')+' uds';
@@ -120,5 +144,5 @@
     }
   };
 
-  console.info('INVICTO OPS v56 · carga de stock reparada y errores visibles');
+  console.info('INVICTO OPS v58 · stock confirmado por backend, render no puede falsear error');
 })();
