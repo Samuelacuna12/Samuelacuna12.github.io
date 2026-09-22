@@ -1,4 +1,4 @@
-/* INVICTO OPS v52.3 · arrastre visible + semantica clara en Rendimiento */
+/* INVICTO OPS v60 · arrastre visible sin banners explicativos */
 (function(){
   function clarifyPerformance(){
     const host=document.getElementById('view-performance');
@@ -10,17 +10,7 @@
       const t=(el.textContent||'');
       if(/sin tocar/i.test(t))el.textContent=t.replace(/sin tocar/ig,'sin gestión hoy');
     });
-    if(!host.querySelector('[data-v523-note]')){
-      const banner=host.querySelector('.perf32-banner');
-      if(banner){
-        const n=document.createElement('div');
-        n.dataset.v523Note='1';
-        n.className='perf32-banner';
-        n.style.marginTop='-4px';
-        n.innerHTML='<b>Lectura correcta:</b> “Sin gestión hoy” incluye arrastre abierto de días anteriores que todavía no ha tenido acción hoy. Esas ventas ya aparecen también en Ventas del día como <b>ARRASTRE</b>.';
-        banner.insertAdjacentElement('afterend',n);
-      }
-    }
+
   }
 
   const basePaint=window.paintPerformanceV32;
@@ -42,5 +32,5 @@
     if(typeof loadCanonicalV51==='function')loadCanonicalV51(true);
   },300);
   setTimeout(clarifyPerformance,1500);
-  console.info('INVICTO OPS v52.3 · arrastre abierto visible en la cola + semantica de rendimiento corregida');
+  console.info('INVICTO OPS v60 · arrastre visible sin banners redundantes');
 })();
