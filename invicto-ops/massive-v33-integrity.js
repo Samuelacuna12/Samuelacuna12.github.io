@@ -105,11 +105,16 @@ window.exportCutV17=async function(cutId,warehouse){
   const allSales=cutSalesV17(cut).filter(s=>s.warehouse===warehouse);
   if(!allSales.length)return toast('Este corte no tiene pedidos para '+warehouse);
   try{
-    const {data:already,error:alreadyErr}=await invictoSupabaseV12.rpc('get_massive_exported_sale_ids_v55',{p_cut_id:cut.id,p_warehouse_name:warehouse});
-    if(alreadyErr)throw alreadyErr;
-    const exportedSet=new Set((already||[]).map(String));
-    const sales=allSales.filter(s=>!exportedSet.has(String(s.dbId||'')));
-    if(!sales.length)return toast('Esta bodega ya fue exportada completamente. No se generará otra vez.');
+    const {data:elig,error:eligErr}=await invictoSupabaseV12.rpc('get_massive_export_candidates_v62',{p_cut_id:cut.id,p_warehouse_name:warehouse});
+    if(eligErr)throw eligErr;
+    const eligibleSet=new Set((elig?.eligible_ids||[]).map(String));
+    const sales=allSales.filter(s=>eligibleSet.has(String(s.dbId||'')));
+    if(!sales.length){
+      const guided=Number(elig?.excluded_with_guide||0),done=Number(elig?.excluded_already_exported||0);
+      if(guided)return toast('No hay pedidos por exportar: '+guided+' ya tienen guía.');
+      if(done)return toast('Esta bodega ya fue exportada completamente.');
+      return toast('No hay pedidos elegibles para MASSIVE.');
+    }
     const manual=[],manualMeta=[],rows=[],includedSaleIds=[];
     if(warehouse==='LogiGho Medellín')await loadLogighoCitiesV17();
     const max=warehouse==='LogiGho Medellín'?12:warehouse.startsWith('Hoko')?15:9999;
@@ -135,10 +140,22 @@ window.exportCutV17=async function(cutId,warehouse){
     if(warehouse==='LogiGho Medellín'){headers=LOGIGHO_HEADERS_V17;operator='LogiGho'}
     else if(warehouse.startsWith('Hoko')){headers=HOKO_HEADERS_V17;operator='Hoko'}
     else{headers=['PEDIDO','NOMBRE','TELEFONO','CIUDAD','DEPARTAMENTO','DIRECCION','ASESOR','UNIDADES','DETALLE EXACTO','VALOR','PAGO','OBSERVACIONES'];operator='Bucaramanga'}
-    const ws=XLSX.utils.aoa_to_sheet([headers,...rows]);formatMassiveSheetV33(ws,warehouse,rows.length);XLSX.utils.book_append_sheet(wb,ws,'ordenes');
+    const {data:finalElig,error:finalEligErr}=await invictoSupabaseV12.rpc('get_massive_export_candidates_v62',{p_cut_id:cut.id,p_warehouse_name:warehouse});
+    if(finalEligErr)throw finalEligErr;
+    const finalSet=new Set((finalElig?.eligible_ids||[]).map(String));
+    const finalRows=[],finalIds=[];
+    rows.forEach((row,i)=>{
+      const sid=String(includedSaleIds[i]||'');
+      if(sid&&finalSet.has(sid)){finalRows.push(row);finalIds.push(includedSaleIds[i]);}
+    });
+    const removedByGuide=rows.length-finalRows.length;
+    if(!finalRows.length&&!manual.length)return toast('No se generó el MASSIVE: los pedidos ya tienen guía o dejaron de ser elegibles.');
+    const ws=XLSX.utils.aoa_to_sheet([headers,...finalRows]);formatMassiveSheetV33(ws,warehouse,finalRows.length);XLSX.utils.book_append_sheet(wb,ws,'ordenes');
     if(manual.length){const m=XLSX.utils.aoa_to_sheet([['PEDIDO','CLIENTE','BODEGA','MOTIVO','UNIDADES'],...manual]);XLSX.utils.book_append_sheet(wb,m,'PENDIENTES_MANUAL')}
     const label=cut.displayId||`C-${String(cut.id).slice(0,6)}`,file=`${safeFileV17(label)}_${safeFileV17(operator)}_${safeFileV17(warehouse)}.xlsx`;
     XLSX.writeFile(wb,file,{bookType:'xlsx',compression:true});
+    includedSaleIds.splice(0,includedSaleIds.length,...finalIds);
+    rows.splice(0,rows.length,...finalRows);
 
     const cleanManual=manualMeta.filter(x=>x.sale_id);
     const {data:logData,error:logError}=await invictoSupabaseV12.rpc('log_dispatch_export_v54',{
@@ -153,9 +170,9 @@ window.exportCutV17=async function(cutId,warehouse){
 
     if(typeof hydrateOpsV13==='function')await hydrateOpsV13(true);
     if(typeof renderCuts==='function'&&currentView==='cuts')setTimeout(()=>renderCuts(),50);
-    toast(`${file}: ${rows.length} pedidos exportados${manual.length?` · ${manual.length} bloqueados vuelven al próximo corte`:''}`);
+    toast(file+': '+rows.length+' pedidos exportados'+(removedByGuide?' · '+removedByGuide+' excluidos porque ya tenían guía':'')+(manual.length?' · '+manual.length+' bloqueados vuelven al próximo corte':''));
     return logData;
   }catch(e){console.error(e);toast('No se pudo completar la exportación MASSIVE: '+(e.message||e))}
 };
 
-console.info('INVICTO OPS v55 · MASSIVE una sola vez + cantidades agrupadas + trazabilidad exacta');
+console.info('INVICTO OPS v62 · MASSIVE consulta guía en Supabase antes de exportar');
