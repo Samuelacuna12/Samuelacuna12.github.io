@@ -102,13 +102,16 @@ window.exportCutV17=async function(cutId,warehouse){
   if(!isAdmin())return toast('Solo administración o gerencia puede generar massives');
   if(typeof XLSX==='undefined')return toast('No está disponible el generador Excel');
   const cut=state.cuts.find(c=>c.id===cutId);if(!cut)return toast('Corte no encontrado');
-  const allSales=cutSalesV17(cut).filter(s=>s.warehouse===warehouse);
-  if(!allSales.length)return toast('Este corte no tiene pedidos para '+warehouse);
+  const allCutSales=cutSalesV17(cut);
+  if(!allCutSales.length)return toast('Este corte no tiene pedidos');
   try{
     const {data:elig,error:eligErr}=await invictoSupabaseV12.rpc('get_massive_export_candidates_v62',{p_cut_id:cut.id,p_warehouse_name:warehouse});
     if(eligErr)throw eligErr;
     const eligibleSet=new Set((elig?.eligible_ids||[]).map(String));
-    const sales=allSales.filter(s=>eligibleSet.has(String(s.dbId||'')));
+    // La bodega la decide Supabase. No confiamos en state.sales porque puede estar cacheado.
+    const sales=allCutSales
+      .filter(s=>eligibleSet.has(String(s.dbId||'')))
+      .map(s=>({...s,warehouse}));
     if(!sales.length){
       const guided=Number(elig?.excluded_with_guide||0),done=Number(elig?.excluded_already_exported||0);
       if(guided)return toast('No hay pedidos por exportar: '+guided+' ya tienen guía.');
@@ -175,4 +178,4 @@ window.exportCutV17=async function(cutId,warehouse){
   }catch(e){console.error(e);toast('No se pudo completar la exportación MASSIVE: '+(e.message||e))}
 };
 
-console.info('INVICTO OPS v62 · MASSIVE consulta guía en Supabase antes de exportar');
+console.info('INVICTO OPS v63 · MASSIVE usa bodega autoritativa de Supabase');
