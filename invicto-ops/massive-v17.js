@@ -101,9 +101,40 @@ async function exportCutV17(cutId,warehouse){
   }catch(e){console.error(e);toast('No se pudo generar massive: '+(e.message||e))}
 }
 
+let massiveSummaryV63=null,massiveSummaryV63At=0,massiveSummaryV63Loading=false;
+async function refreshMassiveCountsV63(force=false){
+  if(massiveSummaryV63Loading||!window.invictoSupabaseV12)return;
+  if(!force&&massiveSummaryV63&&Date.now()-massiveSummaryV63At<10000){paintMassiveCountsV63(massiveSummaryV63);return;}
+  massiveSummaryV63Loading=true;
+  try{
+    const {data,error}=await invictoSupabaseV12.rpc('get_massive_cut_summary_v63');
+    if(error)throw error;
+    massiveSummaryV63=Array.isArray(data)?data:[];massiveSummaryV63At=Date.now();
+    paintMassiveCountsV63(massiveSummaryV63);
+  }catch(e){
+    console.error('massive summary v63',e);
+    document.querySelectorAll('[data-m63-cell]').forEach(el=>{el.innerHTML='<span class="muted">Error</span>'});
+  }finally{massiveSummaryV63Loading=false}
+}
+function paintMassiveCountsV63(rows){
+  const map=new Map((rows||[]).map(r=>[String(r.cut_id),r]));
+  document.querySelectorAll('[data-m63-cell]').forEach(el=>{
+    const cutId=el.dataset.m63Cut,wh=el.dataset.m63Wh,row=map.get(String(cutId)),stat=row?.warehouses?.[wh]||{};
+    const n=Number(stat.eligible||0),guided=Number(stat.with_guide||0),done=Number(stat.already_exported||0);
+    el.title=(guided?guided+' con guía excluidas. ':'')+(done?done+' ya exportadas.':'');
+    if(n&&isAdmin()){
+      const b=document.createElement('button');b.className='btn navy sm';b.textContent='Descargar '+n;
+      b.onclick=()=>exportCutV17(cutId,wh);el.replaceChildren(b);
+    }else el.innerHTML='<span class="muted">'+n+'</span>';
+  });
+}
+window.refreshMassiveCountsV63=refreshMassiveCountsV63;
+
 const renderCutsBaseV17=window.renderCuts;
 window.renderCuts=function(){
   renderCutsBaseV17();const host=document.getElementById('view-cuts');if(!host)return;
   const cuts=[...(state.cuts||[])].slice(0,12);
-  host.insertAdjacentHTML('afterbegin',`<div class="panel" style="margin-bottom:14px"><div class="panel-head"><div><h3>Exportación MASSIVE</h3><div class="muted">Genera el archivo exacto del operador usando los IDs de la bodega y prorratea el valor comercial para que cuadre.</div></div><div class="spacer"></div>${isAdmin()?`<label class="btn light sm">Catálogo ciudades LogiGho<input id="logiCatalogV17" type="file" accept=".xlsx,.xls" hidden onchange="importLogighoCatalogV17(this.files[0])"></label>`:''}</div><div class="table-wrap"><table><thead><tr><th>Corte</th><th>Fecha</th><th>Hoko Bogotá</th><th>Hoko Medellín</th><th>LogiGho</th><th>Bucaramanga</th></tr></thead><tbody>${cuts.map(c=>{const ss=cutSalesV17(c);const btn=w=>{const n=ss.filter(s=>s.warehouse===w).length;return n&&isAdmin()?`<button class="btn navy sm" onclick="exportCutV17('${c.id}','${w}')">Descargar ${n}</button>`:`<span class="muted">${n||0}</span>`};return `<tr><td><b>${esc(c.displayId||c.id)}</b></td><td>${fmtDate(c.createdAt)}</td><td>${btn('Hoko Bogotá')}</td><td>${btn('Hoko Medellín')}</td><td>${btn('LogiGho Medellín')}</td><td>${btn('Bucaramanga')}</td></tr>`}).join('')||'<tr><td colspan="6" class="muted">Crea un corte para habilitar los massives.</td></tr>'}</tbody></table></div></div>`);
+  const cell=(c,w)=>'<span data-m63-cell data-m63-cut="'+c.id+'" data-m63-wh="'+esc(w)+'"><span class="muted">…</span></span>';
+  host.insertAdjacentHTML('afterbegin',`<div class="panel" style="margin-bottom:14px"><div class="panel-head"><div><h3>Exportación MASSIVE</h3><div class="muted">Genera el archivo exacto del operador usando los IDs de la bodega y prorratea el valor comercial para que cuadre.</div></div><div class="spacer"></div>${isAdmin()?`<label class="btn light sm">Catálogo ciudades LogiGho<input id="logiCatalogV17" type="file" accept=".xlsx,.xls" hidden onchange="importLogighoCatalogV17(this.files[0])"></label>`:''}</div><div class="table-wrap"><table><thead><tr><th>Corte</th><th>Fecha</th><th>Hoko Bogotá</th><th>Hoko Medellín</th><th>LogiGho</th><th>Bucaramanga</th></tr></thead><tbody>${cuts.map(c=>`<tr><td><b>${esc(c.displayId||c.id)}</b></td><td>${fmtDate(c.createdAt)}</td><td>${cell(c,'Hoko Bogotá')}</td><td>${cell(c,'Hoko Medellín')}</td><td>${cell(c,'LogiGho Medellín')}</td><td>${cell(c,'Bucaramanga')}</td></tr>`).join('')||'<tr><td colspan="6" class="muted">Crea un corte para habilitar los massives.</td></tr>'}</tbody></table></div></div>`);
+  setTimeout(()=>refreshMassiveCountsV63(true),20);
 };
