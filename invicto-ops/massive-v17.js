@@ -16,7 +16,7 @@ function digitsV17(v=''){return String(v||'').replace(/\D/g,'')}
 function plusDaysV17(n){const d=new Date();d.setDate(d.getDate()+n);return d}
 function dateTextV17(d){return new Intl.DateTimeFormat('es-CO',{timeZone:'America/Bogota',day:'2-digit',month:'2-digit',year:'numeric'}).format(d)}
 function safeFileV17(v=''){return String(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'')}
-function cutSalesV17(cut){const ids=new Set(cut?.saleIds||[]);return state.sales.filter(s=>ids.has(s.id))}
+function cutSalesV17(cut){const ids=new Set(cut?.saleIds||[]);return state.sales.filter(s=>ids.has(s.id)&&!String(s.guide||s.manualGuideNumber||'').trim())}
 function exactUnitsV17(s){return Array.isArray(s?.items)?s.items.filter(x=>x?.variantKey):[]}
 function inventoryRowForUnitV17(u,w){return state.inventory.find(r=>r.warehouse===w&&r.variantKey===u.variantKey)||null}
 function linePricesV17(total,n){n=Math.max(1,Number(n||1));let t=Math.max(0,Math.round(Number(total||0)));const base=Math.floor(t/n),rem=t-base*n;return Array.from({length:n},(_,i)=>base+(i<rem?1:0))}
