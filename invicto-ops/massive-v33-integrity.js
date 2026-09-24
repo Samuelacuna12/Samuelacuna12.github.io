@@ -105,7 +105,7 @@ window.exportCutV17=async function(cutId,warehouse){
   const allCutSales=cutSalesV17(cut);
   if(!allCutSales.length)return toast('Este corte no tiene pedidos');
   try{
-    const {data:elig,error:eligErr}=await invictoSupabaseV12.rpc('get_massive_export_candidates_v62',{p_cut_id:cut.id,p_warehouse_name:warehouse});
+    const {data:elig,error:eligErr}=await invictoSupabaseV12.rpc('get_massive_export_candidates_v63',{p_cut_id:cut.id,p_warehouse_name:warehouse});
     if(eligErr)throw eligErr;
     const eligibleSet=new Set((elig?.eligible_ids||[]).map(String));
     // La bodega la decide Supabase. No confiamos en state.sales porque puede estar cacheado.
@@ -143,7 +143,7 @@ window.exportCutV17=async function(cutId,warehouse){
     if(warehouse==='LogiGho Medellín'){headers=LOGIGHO_HEADERS_V17;operator='LogiGho'}
     else if(warehouse.startsWith('Hoko')){headers=HOKO_HEADERS_V17;operator='Hoko'}
     else{headers=['PEDIDO','NOMBRE','TELEFONO','CIUDAD','DEPARTAMENTO','DIRECCION','ASESOR','UNIDADES','DETALLE EXACTO','VALOR','PAGO','OBSERVACIONES'];operator='Bucaramanga'}
-    const {data:finalElig,error:finalEligErr}=await invictoSupabaseV12.rpc('get_massive_export_candidates_v62',{p_cut_id:cut.id,p_warehouse_name:warehouse});
+    const {data:finalElig,error:finalEligErr}=await invictoSupabaseV12.rpc('get_massive_export_candidates_v63',{p_cut_id:cut.id,p_warehouse_name:warehouse});
     if(finalEligErr)throw finalEligErr;
     const finalSet=new Set((finalElig?.eligible_ids||[]).map(String));
     const finalRows=[],finalIds=[];
@@ -178,4 +178,4 @@ window.exportCutV17=async function(cutId,warehouse){
   }catch(e){console.error(e);toast('No se pudo completar la exportación MASSIVE: '+(e.message||e))}
 };
 
-console.info('INVICTO OPS v63 · MASSIVE usa bodega autoritativa de Supabase');
+console.info('INVICTO OPS v63 · MASSIVE usa bodega autoritativa de Supabase + guard DB');
