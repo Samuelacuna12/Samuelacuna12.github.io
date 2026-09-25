@@ -6,6 +6,7 @@ const INVICTO_SUPABASE_KEY_V12='sb_publishable_IBdKw7gD078zjvB38UWcVQ_dyV4lI9s';
 const invictoSupabaseV12=window.supabase.createClient(INVICTO_SUPABASE_URL_V12,INVICTO_SUPABASE_KEY_V12,{
   auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
 });
+window.invictoSupabaseV12=invictoSupabaseV12;
 
 let invictoAuthReadyV12=false;
 const renderShellBaseV12=window.renderShell;
