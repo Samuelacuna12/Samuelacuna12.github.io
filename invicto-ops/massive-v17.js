@@ -103,7 +103,11 @@ async function exportCutV17(cutId,warehouse){
 
 let massiveSummaryV63=null,massiveSummaryV63At=0,massiveSummaryV63Loading=false;
 async function refreshMassiveCountsV63(force=false){
-  if(massiveSummaryV63Loading||!window.invictoSupabaseV12)return;
+  if(massiveSummaryV63Loading)return;
+  if(typeof invictoSupabaseV12==='undefined'){
+    setTimeout(()=>refreshMassiveCountsV63(force),250);
+    return;
+  }
   if(!force&&massiveSummaryV63&&Date.now()-massiveSummaryV63At<10000){paintMassiveCountsV63(massiveSummaryV63);return;}
   massiveSummaryV63Loading=true;
   try{
