@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#d8dde4">
+<title>Levantamiento Plataforma de Créditos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%23ff674f'/%3E%3Cstop offset='.5' stop-color='%23f7c39e'/%3E%3Cstop offset='1' stop-color='%2365a9ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='%23101419'/%3E%3Crect x='12' y='15' width='40' height='34' rx='12' fill='url(%23g)'/%3E%3Crect x='18' y='23' width='28' height='18' rx='7' fill='%23101419'/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(circle at 50% 0,#eef1f5 0,#d8dde4 45%,#c9d0d8 100%);min-height:100vh;color:#f7f8fb}
+:root{--dark:#0d1015;--dark2:#151922;--line:rgba(255,255,255,.10);--muted:#98a1b2;--soft:#dce2ea;--red:#ff5f45;--peach:#ffc09b;--blue:#69aaff;--green:#6de6a0;--shadow:0 26px 70px rgba(19,25,34,.25)}
+.page{max-width:1220px;margin:0 auto;padding:30px 22px 48px}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px;color:#12161d}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:#626d7d}.top h1{margin:7px 0 0;font-size:clamp(28px,4vw,46px);line-height:1;letter-spacing:-.05em}.top p{max-width:470px;margin:0;color:#5e6877;font-size:14px;line-height:1.5}
+.layout{display:grid;grid-template-columns:355px 1fr;gap:22px;align-items:start}.left{display:flex;flex-direction:column;gap:16px;position:sticky;top:20px}
+.wallet{position:relative;overflow:hidden;border-radius:34px;border:1px solid rgba(255,255,255,.36);box-shadow:var(--shadow);isolation:isolate}.wallet:after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);pointer-events:none}
+.heroCard{height:275px;background:#11141a;padding:20px}.heroCard:before{content:"";position:absolute;left:-15%;right:-15%;top:-45%;height:72%;background:linear-gradient(100deg,#ff7259 6%,#ffc7a6 40%,#7bb5ff 80%);filter:blur(16px);opacity:.95;z-index:-1}
+.stackcard{position:absolute;left:22px;right:22px;height:66px;border-radius:21px;border:1px solid rgba(255,255,255,.23);background:rgba(255,255,255,.09);backdrop-filter:blur(16px);padding:0 16px;display:flex;align-items:center;justify-content:space-between;font-size:13px}.s1{top:20px}.s2{top:80px;background:rgba(10,13,18,.28)}.stackcard strong{font-variant-numeric:tabular-nums}
+.heroInner{position:absolute;left:22px;right:22px;bottom:22px;background:linear-gradient(180deg,#11141a,#0c0e13);border-radius:28px;padding:23px;border:1px solid rgba(255,255,255,.08);box-shadow:0 -10px 30px rgba(0,0,0,.12)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.miniIcon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:20px}.label{display:flex;align-items:center;gap:8px;font-size:14px;color:#e9edf3}.big{font-size:44px;font-weight:800;letter-spacing:-.06em;margin-top:9px;line-height:1}.small{margin-top:6px;font-size:12px;color:#8791a2}
+.chartCard{height:290px;padding:22px;background:linear-gradient(145deg,#e84d37 0,#8f483a 20%,#322a26 49%,#15171d 82%)}.chartCard:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 9%,rgba(255,255,255,.23),transparent 21%),radial-gradient(circle at 0 80%,rgba(255,75,45,.6),transparent 30%);z-index:-1}.chartCard .big{font-size:38px}.available{font-size:12px;color:#f0c5b6;margin-top:7px}.bars{height:112px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:25px}.barWrap{display:flex;flex:1;align-items:center;flex-direction:column;gap:7px;color:rgba(255,255,255,.58);font-size:10px}.bar{width:17px;min-height:10px;border-radius:5px;background:rgba(255,255,255,.95);box-shadow:0 6px 12px rgba(0,0,0,.12)}
+.info{border-radius:28px;background:rgba(14,17,23,.88);backdrop-filter:blur(16px);padding:18px;border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow)}.infoTitle{font-size:13px;color:#cfd5df;margin-bottom:11px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:8px 11px;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:999px;font-size:11px;color:#c4cbd6}
+.quiz{background:linear-gradient(180deg,#0d1015,#111620);border-radius:36px;padding:27px;border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow);min-height:760px;overflow:hidden;position:relative}.quiz:before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;right:-160px;top:-180px;background:rgba(95,163,255,.11);filter:blur(3px);pointer-events:none}.quizHead{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--line)}.quizHead h2{margin:0 0 7px;font-size:26px;letter-spacing:-.03em}.quizHead p{margin:0;color:var(--muted);font-size:13px;line-height:1.5;max-width:520px}.progressBox{width:260px;flex:0 0 260px}.progressMeta{display:flex;justify-content:space-between;font-size:11px;color:#b9c1ce;margin-bottom:8px}.track{height:9px;border-radius:20px;background:rgba(255,255,255,.07);overflow:hidden}.fill{height:100%;width:12.5%;border-radius:inherit;background:linear-gradient(90deg,var(--red),var(--peach),var(--blue));transition:.3s ease}
+.step{display:none;padding:26px 0 4px;animation:fade .28s ease}.step.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.step h3{font-size:22px;margin:0 0 6px;letter-spacing:-.025em}.desc{font-size:13px;color:var(--muted);margin:0 0 22px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}.field{display:flex;flex-direction:column;gap:7px}.field label,.question{font-size:12px;color:#d8dee8;font-weight:650}
+input,select,textarea{width:100%;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:#fff;padding:14px 15px;font:inherit;font-size:13px;outline:none;transition:.18s ease}select option{color:#111;background:#fff}textarea{min-height:105px;resize:vertical}input::placeholder,textarea::placeholder{color:#737d8d}input:focus,select:focus,textarea:focus{border-color:rgba(117,176,255,.55);background:rgba(255,255,255,.065);box-shadow:0 0 0 4px rgba(105,170,255,.08)}
+.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice span{display:flex;min-height:58px;align-items:center;padding:13px;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.045);font-size:12px;cursor:pointer;transition:.18s ease}.choice span:hover{background:rgba(255,255,255,.07)}.choice input:checked+span{border-color:rgba(255,194,157,.7);background:linear-gradient(135deg,rgba(255,95,69,.18),rgba(105,170,255,.12));box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.nav{margin-top:25px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.note{color:#7f8999;font-size:11px}.buttons{display:flex;gap:9px}.btn{border:0;border-radius:15px;padding:12px 18px;font-weight:800;font-size:12px;cursor:pointer;transition:.18s ease}.btn:hover{transform:translateY(-1px)}.ghost{background:rgba(255,255,255,.065);border:1px solid var(--line);color:#fff}.primary{background:linear-gradient(135deg,#ff654d,#ffc2a0);color:#17191e}.hidden{display:none!important}
+.summary{display:grid;gap:10px;max-height:480px;overflow:auto;padding-right:5px}.sum{border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.04);padding:13px}.sum b{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#8792a4;margin-bottom:5px}.sum span{font-size:12px;color:#eef1f5;line-height:1.45;white-space:pre-wrap}.done{display:none;text-align:center;padding:55px 15px}.done.show{display:block}.doneIcon{width:76px;height:76px;margin:0 auto 18px;border-radius:25px;display:grid;place-items:center;font-size:34px;background:linear-gradient(135deg,#ff674f,#ffc39e,#70adff);color:#101318}.done h3{font-size:28px;margin:0 0 8px}.done p{max-width:520px;margin:0 auto 22px;color:#9ca6b6;font-size:13px;line-height:1.55}.doneActions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);background:#10141b;color:#fff;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 40px rgba(0,0,0,.2);padding:12px 16px;border-radius:15px;font-size:12px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:930px){.layout{grid-template-columns:1fr}.left{position:static;display:grid;grid-template-columns:1fr 1fr}.info{grid-column:1/-1}.quiz{min-height:auto}.top{align-items:flex-start;flex-direction:column}.top p{max-width:none}}@media(max-width:680px){.page{padding:18px 12px 30px}.left{display:flex}.quiz{border-radius:28px;padding:19px}.quizHead{flex-direction:column}.progressBox{width:100%;flex-basis:auto}.grid,.choices{grid-template-columns:1fr}.full{grid-column:auto}.wallet{border-radius:28px}.nav{align-items:flex-start;flex-direction:column}.buttons{width:100%}.btn{flex:1}.top h1{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div><div class="eyebrow">Descubrimiento funcional</div><h1>Plataforma de créditos</h1></div>
+    <p>Cuestionario de levantamiento para definir operación, flujos, automatizaciones, integraciones y alcance técnico del sistema.</p>
+  </div>
+
+  <div class="layout">
+    <aside class="left">
+      <div class="wallet heroCard">
+        <div class="stackcard s1"><span>▣ Empresas proyectadas</span><strong id="metricEmpresas">—</strong></div>
+        <div class="stackcard s2"><span>▣ Trabajadores</span><strong id="metricTrabajadores">—</strong></div>
+        <div class="heroInner">
+          <div class="row"><span class="label">▣ Alcance definido</span><span class="miniIcon">+</span></div>
+          <div class="big" id="score">0%</div>
+          <div class="small">Información completada</div>
+        </div>
+      </div>
+
+      <div class="wallet chartCard">
+        <div class="row"><span class="label">▣ Progreso del quiz</span><span class="miniIcon">↗</span></div>
+        <div class="big" id="sideProgress">12%</div>
+        <div class="available">8 bloques estratégicos</div>
+        <div class="bars">
+          <div class="barWrap"><div class="bar" style="height:36px"></div><span>1</span></div>
+          <div class="barWrap"><div class="bar" style="height:54px"></div><span>2</span></div>
+          <div class="barWrap"><div class="bar" style="height:42px"></div><span>3</span></div>
+          <div class="barWrap"><div class="bar" style="height:68px"></div><span>4</span></div>
+          <div class="barWrap"><div class="bar" style="height:88px"></div><span>5</span></div>
+          <div class="barWrap"><div class="bar" style="height:73px"></div><span>6</span></div>
+          <div class="barWrap"><div class="bar" style="height:50px"></div><span>7</span></div>
+          <div class="barWrap"><div class="bar" style="height:30px"></div><span>8</span></div>
+        </div>
+      </div>
+
+      <div class="info">
+        <div class="infoTitle">Áreas incluidas</div>
+        <div class="chips"><span class="chip">Solicitudes</span><span class="chip">Empresas</span><span class="chip">Trabajadores</span><span class="chip">Créditos</span><span class="chip">Cuotas</span><span class="chip">Cartera</span><span class="chip">WhatsApp</span><span class="chip">APIs</span><span class="chip">Datacrédito</span></div>
+      </div>
+    </aside>
+
+    <main class="quiz">
+      <div id="quizArea">
+        <div class="quizHead">
+          <div><h2>Levantamiento del proyecto</h2><p>Responde cada bloque. La información se guarda automáticamente en este dispositivo mientras avanzas.</p></div>
+          <div class="progressBox">
+            <div class="progressMeta"><span id="counter">Paso 1 de 8</span><span id="stepName">Datos generales</span></div>
+            <div class="track"><div class="fill" id="fill"></div></div>
+          </div>
+        </div>
+
+        <form id="form">
+          <section class="step active" data-name="Datos generales">
+            <h3>1. Datos generales</h3><p class="desc">Contexto de la empresa y objetivo del desarrollo.</p>
+            <div class="grid">
+              <div class="field"><label>Empresa</label><input name="empresa" placeholder="Nombre de la empresa"></div>
+              <div class="field"><label>Persona de contacto</label><input name="contacto" placeholder="Nombre completo"></div>
+              <div class="field"><label>Correo</label><input name="correo" type="email" placeholder="correo@empresa.com"></div>
+              <div class="field"><label>Teléfono</label><input name="telefono" placeholder="+57 ..."></div>
+              <div class="field full"><label>¿Qué problema principal debe resolver la plataforma?</label><textarea name="objetivo" placeholder="Describe el objetivo principal y el resultado esperado..."></textarea></div>
+              <div class="field full"><label>¿Actualmente utilizan algún sistema para gestionar créditos, cartera o libranzas?</label><textarea name="sistema_actual" placeholder="Indica cuál, qué funciona bien y qué quieren reemplazar o mejorar..."></textarea></div>
+            </div>
+          </section>
+
+          <section class="step" data-name="Empresas y trabajadores">
+            <h3>2. Empresas y trabajadores</h3><p class="desc">Volumen, accesos y estructura de los usuarios.</p>
+            <div class="grid">
+              <div class="field"><label>Empresas proyectadas</label><input id="empresas" name="cantidad_empresas" type="number" min="0" placeholder="Ej. 50"></div>
+              <div class="field"><label>Trabajadores aproximados</label><input id="trabajadores" name="cantidad_trabajadores" type="number" min="0" placeholder="Ej. 5000"></div>
+              <div class="field"><label>¿Cada empresa tendrá su propio portal?</label><select name="portal_empresa"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
+              <div class="field"><label>¿Cada trabajador tendrá acceso individual?</label><select name="portal_trabajador"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
+              <div class="field full"><label>¿Qué información debe manejarse de empresas y trabajadores?</label><textarea name="datos_empresas" placeholder="Cédula, salario, contrato, antigüedad, desprendibles, referencias, etc."></textarea></div>
+            </div>
+          </section>
+
+          <section class="step" data-name="Solicitudes y créditos">
+            <h3>3. Solicitudes y créditos</h3><p class="desc">Reglas del producto, simulación, aprobación y desembolso.</p>
+            <div class="grid">
+              <div class="field"><label>Tipos de crédito</label><input name="tipos_credito" placeholder="Libranza, libre inversión, etc."></div>
+              <div class="field"><label>¿Habrá simulador de crédito?</label><select name="simulador"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
+              <div class="field"><label>¿Cuotas e intereses se calculan automáticamente?</label><select name="calculo_automatico"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Parcialmente</option></select></div>
+              <div class="field"><label>¿Se requiere firma electrónica?</label><select name="firma"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
+              <div class="field full"><label>Describe reglas de monto, plazo, tasa, mora, refinanciación y aprobación</label><textarea name="reglas_credito" placeholder="Incluye topes, tasas, plazos, descuentos por nómina y excepciones..."></textarea></div>
+              <div class="field full"><label>¿Cómo debe funcionar el desembolso?</label><textarea name="desembolso" placeholder="Cuenta bancaria, validaciones previas, quién autoriza, estados, comprobantes..."></textarea></div>
+            </div>
+          </section>
+
+          <section class="step" data-name="Documentos y aprobación">
+            <h3>4. Documentos y aprobación</h3><p class="desc">Expediente digital, validaciones y responsables.</p>
+            <div class="grid">
+              <div class="field full"><label>Documentos requeridos al trabajador</label><textarea name="documentos" placeholder="Cédula, certificación laboral, desprendibles, extractos, etc."></textarea></div>
+              <div class="field full"><div class="question">¿Cómo será la aprobación?</div><div class="choices">
+                <label class="choice"><input type="radio" name="aprobacion" value="Manual"><span>Manual</span></label>
+                <label class="choice"><input type="radio" name="aprobacion" value="Semiautomática"><span>Semiautomática</span></label>
+                <label class="choice"><input type="radio" name="aprobacion" value="Automática"><span>Automática</span></label>
+              </div></div>
+              <div class="field full"><label>Describe el flujo completo desde solicitud hasta aprobación o rechazo</label><textarea name="flujo_aprobacion" placeholder="Estados, responsables, validaciones, alertas y motivos de rechazo..."></textarea></div>
+            </div>
+          </section>
+
+          <section class="step" data-name="Atención y automatización">
+            <h3>5. Atención y automatización</h3><p class="desc">Define qué hará el equipo humano y qué se automatizará.</p>
+            <div class="grid">
+              <div class="field full"><div class="question">¿Quién atenderá al cliente?</div><div class="choices">
+                <label class="choice"><input type="radio" name="atencion" value="Personas"><span>Personas</span></label>
+                <label class="choice"><input type="radio" name="atencion" value="Bots con IA"><span>Bots con IA</span></label>
+                <label class="choice"><input type="radio" name="atencion" value="Modelo mixto"><span>Modelo mixto</span></label>
+              </div></div>
+              <div class="field full"><label>¿WhatsApp será atendido por bots, personas o ambos?</label><textarea name="whatsapp" placeholder="Detalla ventas, soporte, consulta de saldo, cobranza, derivación a asesor, horarios..."></textarea></div>
+              <div class="field full"><label>¿Las llamadas serán atendidas por bots, personas o ambos?</label><textarea name="llamadas" placeholder="Detalla casos de uso, horarios, transferencia y registro de llamadas..."></textarea></div>
+              <div class="field full"><label>¿Quién responde y mantiene las APIs?</label><textarea name="responsable_apis" placeholder="Equipo interno, proveedor, tercero, documentación existente, ambientes de prueba..."></textarea></div>
+            </div>
+          </section>
+
+          <section class="step" data-name="Cobranza y recaudo">
+            <h3>6. Cobranza y recaudo</h3><p class="desc">Pagos de empresas, seguimiento y cartera.</p>
+            <div class="grid">
+              <div class="field full"><div class="question">¿El cobro mensual a las empresas será?</div><div class="choices">
+                <label class="choice"><input type="radio" name="cobro_empresa" value="Automático"><span>Automático</span></label>
+                <label class="choice"><input type="radio" name="cobro_empresa" value="Manual"><span>Manual</span></label>
+                <label class="choice"><input type="radio" name="cobro_empresa" value="Mixto"><span>Mixto</span></label>
+              </div></div>
+              <div class="field full"><label>¿Cómo deben funcionar los mensajes de cobranza?</label><textarea name="cobranza" placeholder="WhatsApp, correo, llamadas, frecuencia, escalamiento, mensajes por mora..."></textarea></div>
+              <div class="field full"><label>¿Cómo debe manejarse la cartera?</label><textarea name="cartera" placeholder="Cartera al día, vencida, acuerdos, conciliaciones, reportes, alertas..."></textarea></div>
+              <div class="field full"><label>¿Cómo se registran actualmente los pagos o descuentos de nómina?</label><textarea name="recaudo" placeholder="Carga manual, archivo plano, API, conciliación bancaria, etc."></textarea></div>
+            </div>
+          </section>
+
+          <section class="step" data-name="Integraciones">
+            <h3>7. Integraciones</h3><p class="desc">Servicios externos, comunicaciones y sistemas existentes.</p>
+            <div class="grid">
+              <div class="field"><label>¿Conexión con Datacrédito?</label><select name="datacredito"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
+              <div class="field"><label>¿Correos masivos informativos?</label><select name="correos_masivos"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
+              <div class="field"><label>¿WhatsApp API?</label><select name="whatsapp_api"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Ya existe</option><option>Por definir</option></select></div>
+              <div class="field"><label>¿Pasarela de pagos?</label><select name="pasarela"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Ya existe</option><option>Por definir</option></select></div>
+              <div class="field full"><label>Otras APIs o integraciones necesarias</label><textarea name="integraciones" placeholder="ERP, nómina, centrales de riesgo, firma, SMS, telefonía, bancos, BI, etc."></textarea></div>
+            </div>
+          </section>
+
+          <section class="step" data-name="Paneles y alcance final">
+            <h3>8. Paneles y alcance final</h3><p class="desc">Define qué debe ver cada perfil y cierra los requisitos pendientes.</p>
+            <div class="grid">
+              <div class="field full"><label>¿Qué debe ver y hacer el administrador?</label><textarea name="panel_admin" placeholder="KPIs, usuarios, solicitudes, créditos, cuotas, cartera, empresas, permisos, auditoría..."></textarea></div>
+              <div class="field full"><label>¿Qué debe ver y hacer cada empresa?</label><textarea name="panel_empresa" placeholder="Trabajadores, novedades, descuentos, pagos, archivos, cartera, reportes..."></textarea></div>
+              <div class="field full"><label>¿Qué debe ver y hacer cada trabajador?</label><textarea name="panel_trabajador" placeholder="Solicitar crédito, cargar documentos, firmar, ver estado, cuotas, saldo, certificados..."></textarea></div>
+              <div class="field full"><label>Reportes, métricas o indicadores indispensables</label><textarea name="reportes" placeholder="Describe reportes gerenciales, exportaciones y métricas necesarias..."></textarea></div>
+              <div class="field full"><label>Requisitos adicionales o funciones que no hayamos preguntado</label><textarea name="adicionales" placeholder="Todo lo que consideres necesario para cotizar correctamente..."></textarea></div>
+              <div class="field full"><label>Fecha ideal para tener una primera versión operativa</label><input name="fecha_objetivo" type="date"></div>
+            </div>
+          </section>
+
+          <div class="nav">
+            <span class="note">Borrador guardado automáticamente en este navegador.</span>
+            <div class="buttons"><button type="button" class="btn ghost" id="prev">Anterior</button><button type="button" class="btn primary" id="next">Siguiente</button><button type="button" class="btn primary hidden" id="review">Revisar respuestas</button></div>
+          </div>
+        </form>
+      </div>
+
+      <div id="reviewArea" class="hidden">
+        <div class="quizHead"><div><h2>Revisión final</h2><p>Verifica las respuestas antes de finalizar. Puedes regresar a editar cualquier dato.</p></div><div class="progressBox"><div class="progressMeta"><span>Resumen</span><span>100%</span></div><div class="track"><div class="fill" style="width:100%"></div></div></div></div>
+        <div style="padding-top:24px" class="summary" id="summary"></div>
+        <div class="nav"><span class="note">Al finalizar podrás copiar o descargar todas las respuestas.</span><div class="buttons"><button type="button" class="btn ghost" id="backEdit">Volver a editar</button><button type="button" class="btn primary" id="finish">Finalizar</button></div></div>
+      </div>
+
+      <div class="done" id="done">
+        <div class="doneIcon">✓</div><h3>Levantamiento completado</h3>
+        <p>Las respuestas quedaron consolidadas. Puedes copiarlas o descargar un archivo JSON para compartirlo con el equipo de desarrollo.</p>
+        <div class="doneActions"><button class="btn ghost" id="copy">Copiar respuestas</button><button class="btn primary" id="download">Descargar respuestas</button><button class="btn ghost" id="editAgain">Editar</button></div>
+      </div>
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast">Copiado</div>
+<script>
+const form=document.getElementById('form');
+const steps=[...document.querySelectorAll('.step')];
+const prev=document.getElementById('prev'),next=document.getElementById('next'),review=document.getElementById('review');
+const fill=document.getElementById('fill'),counter=document.getElementById('counter'),stepName=document.getElementById('stepName'),sideProgress=document.getElementById('sideProgress'),score=document.getElementById('score');
+const metricEmpresas=document.getElementById('metricEmpresas'),metricTrabajadores=document.getElementById('metricTrabajadores');
+const quizArea=document.getElementById('quizArea'),reviewArea=document.getElementById('reviewArea'),summary=document.getElementById('summary'),done=document.getElementById('done'),toast=document.getElementById('toast');
+let current=0;
+const key='levantamiento_creditos_v1';
+
+function labels(){
+ const m={};
+ form.querySelectorAll('input,select,textarea').forEach(el=>{
+   let l=el.closest('.field')?.querySelector('label');
+   if(!l && el.type==='radio') l=el.closest('.field')?.querySelector('.question');
+   if(el.name && !m[el.name]) m[el.name]=l?l.textContent.trim():el.name.replaceAll('_',' ');
+ });
+ return m;
+}
+function data(){
+ const fd=new FormData(form),obj={};
+ for(const [k,v] of fd.entries()) obj[k]=v;
+ return obj;
+}
+function completion(){
+ const fields=[...form.querySelectorAll('input[name],select[name],textarea[name]')];
+ const names=[...new Set(fields.map(e=>e.name))];let n=0;
+ names.forEach(name=>{
+   const group=fields.filter(e=>e.name===name);
+   if(group[0].type==='radio'){if(group.some(e=>e.checked))n++}
+   else if(String(group[0].value).trim())n++;
+ });
+ return Math.round(n/names.length*100);
+}
+function save(){localStorage.setItem(key,JSON.stringify(data()));updateMetrics()}
+function load(){
+ try{
+   const saved=JSON.parse(localStorage.getItem(key)||'{}');
+   Object.entries(saved).forEach(([name,val])=>{
+     const els=[...form.querySelectorAll('[name="'+CSS.escape(name)+'"]')];
+     els.forEach(el=>{if(el.type==='radio') el.checked=el.value===val; else el.value=val})
+   });
+ }catch(e){}
+}
+function updateMetrics(){
+ metricEmpresas.textContent=document.getElementById('empresas').value||'—';
+ metricTrabajadores.textContent=document.getElementById('trabajadores').value||'—';
+ score.textContent=completion()+'%';
+}
+function render(){
+ steps.forEach((s,i)=>s.classList.toggle('active',i===current));
+ const p=Math.round((current+1)/steps.length*100);
+ fill.style.width=p+'%'; sideProgress.textContent=p+'%'; counter.textContent='Paso '+(current+1)+' de '+steps.length; stepName.textContent=steps[current].dataset.name;
+ prev.style.visibility=current===0?'hidden':'visible';
+ next.classList.toggle('hidden',current===steps.length-1);
+ review.classList.toggle('hidden',current!==steps.length-1);
+ updateMetrics();window.scrollTo({top:0,behavior:'smooth'});
+}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function buildSummary(){
+ const obj=data(),map=labels();summary.innerHTML='';
+ Object.keys(map).forEach(k=>{
+   const v=obj[k];
+   if(v&&String(v).trim()){
+     summary.insertAdjacentHTML('beforeend','<div class="sum"><b>'+esc(map[k])+'</b><span>'+esc(String(v))+'</span></div>');
+   }
+ });
+ if(!summary.children.length) summary.innerHTML='<div class="sum"><span>Aún no hay respuestas.</span></div>';
+}
+function textSummary(){
+ const obj=data(),map=labels();
+ return Object.keys(map).filter(k=>obj[k]&&String(obj[k]).trim()).map(k=>map[k]+':\n'+obj[k]).join('\n\n');
+}
+function showToast(msg){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600)}
+form.addEventListener('input',save);form.addEventListener('change',save);
+next.onclick=()=>{if(current<steps.length-1){current++;render()}};
+prev.onclick=()=>{if(current>0){current--;render()}};
+review.onclick=()=>{save();buildSummary();quizArea.classList.add('hidden');reviewArea.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};
+document.getElementById('backEdit').onclick=()=>{reviewArea.classList.add('hidden');quizArea.classList.remove('hidden');render()};
+document.getElementById('finish').onclick=()=>{save();reviewArea.classList.add('hidden');done.classList.add('show');sideProgress.textContent='100%';window.scrollTo({top:0,behavior:'smooth'})};
+document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(textSummary());showToast('Respuestas copiadas')}catch(e){showToast('No fue posible copiar')}};
+document.getElementById('download').onclick=()=>{
+ const payload={generado:new Date().toISOString(),respuestas:data()};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='levantamiento-plataforma-creditos.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);showToast('Archivo descargado')
+};
+document.getElementById('editAgain').onclick=()=>{done.classList.remove('show');quizArea.classList.remove('hidden');current=steps.length-1;render()};
+load();render();
+</script>
+</body>
+</html>
