@@ -1,293 +1,551 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#d8dde4">
-<title>Levantamiento Plataforma de Créditos</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%23ff674f'/%3E%3Cstop offset='.5' stop-color='%23f7c39e'/%3E%3Cstop offset='1' stop-color='%2365a9ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='%23101419'/%3E%3Crect x='12' y='15' width='40' height='34' rx='12' fill='url(%23g)'/%3E%3Crect x='18' y='23' width='28' height='18' rx='7' fill='%23101419'/%3E%3C/svg%3E">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#d9dee6">
+<title>Levantamiento integral · Plataforma de créditos por libranza</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%23ff674f'/%3E%3Cstop offset='.5' stop-color='%23ffc39e'/%3E%3Cstop offset='1' stop-color='%236faeff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='%23101419'/%3E%3Crect x='11' y='14' width='42' height='36' rx='12' fill='url(%23g)'/%3E%3Crect x='18' y='22' width='28' height='20' rx='7' fill='%23101419'/%3E%3C/svg%3E">
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(circle at 50% 0,#eef1f5 0,#d8dde4 45%,#c9d0d8 100%);min-height:100vh;color:#f7f8fb}
-:root{--dark:#0d1015;--dark2:#151922;--line:rgba(255,255,255,.10);--muted:#98a1b2;--soft:#dce2ea;--red:#ff5f45;--peach:#ffc09b;--blue:#69aaff;--green:#6de6a0;--shadow:0 26px 70px rgba(19,25,34,.25)}
-.page{max-width:1220px;margin:0 auto;padding:30px 22px 48px}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px;color:#12161d}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:#626d7d}.top h1{margin:7px 0 0;font-size:clamp(28px,4vw,46px);line-height:1;letter-spacing:-.05em}.top p{max-width:470px;margin:0;color:#5e6877;font-size:14px;line-height:1.5}
-.layout{display:grid;grid-template-columns:355px 1fr;gap:22px;align-items:start}.left{display:flex;flex-direction:column;gap:16px;position:sticky;top:20px}
-.wallet{position:relative;overflow:hidden;border-radius:34px;border:1px solid rgba(255,255,255,.36);box-shadow:var(--shadow);isolation:isolate}.wallet:after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);pointer-events:none}
-.heroCard{height:275px;background:#11141a;padding:20px}.heroCard:before{content:"";position:absolute;left:-15%;right:-15%;top:-45%;height:72%;background:linear-gradient(100deg,#ff7259 6%,#ffc7a6 40%,#7bb5ff 80%);filter:blur(16px);opacity:.95;z-index:-1}
-.stackcard{position:absolute;left:22px;right:22px;height:66px;border-radius:21px;border:1px solid rgba(255,255,255,.23);background:rgba(255,255,255,.09);backdrop-filter:blur(16px);padding:0 16px;display:flex;align-items:center;justify-content:space-between;font-size:13px}.s1{top:20px}.s2{top:80px;background:rgba(10,13,18,.28)}.stackcard strong{font-variant-numeric:tabular-nums}
-.heroInner{position:absolute;left:22px;right:22px;bottom:22px;background:linear-gradient(180deg,#11141a,#0c0e13);border-radius:28px;padding:23px;border:1px solid rgba(255,255,255,.08);box-shadow:0 -10px 30px rgba(0,0,0,.12)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.miniIcon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:20px}.label{display:flex;align-items:center;gap:8px;font-size:14px;color:#e9edf3}.big{font-size:44px;font-weight:800;letter-spacing:-.06em;margin-top:9px;line-height:1}.small{margin-top:6px;font-size:12px;color:#8791a2}
-.chartCard{height:290px;padding:22px;background:linear-gradient(145deg,#e84d37 0,#8f483a 20%,#322a26 49%,#15171d 82%)}.chartCard:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 9%,rgba(255,255,255,.23),transparent 21%),radial-gradient(circle at 0 80%,rgba(255,75,45,.6),transparent 30%);z-index:-1}.chartCard .big{font-size:38px}.available{font-size:12px;color:#f0c5b6;margin-top:7px}.bars{height:112px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:25px}.barWrap{display:flex;flex:1;align-items:center;flex-direction:column;gap:7px;color:rgba(255,255,255,.58);font-size:10px}.bar{width:17px;min-height:10px;border-radius:5px;background:rgba(255,255,255,.95);box-shadow:0 6px 12px rgba(0,0,0,.12)}
-.info{border-radius:28px;background:rgba(14,17,23,.88);backdrop-filter:blur(16px);padding:18px;border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow)}.infoTitle{font-size:13px;color:#cfd5df;margin-bottom:11px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:8px 11px;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:999px;font-size:11px;color:#c4cbd6}
-.quiz{background:linear-gradient(180deg,#0d1015,#111620);border-radius:36px;padding:27px;border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow);min-height:760px;overflow:hidden;position:relative}.quiz:before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;right:-160px;top:-180px;background:rgba(95,163,255,.11);filter:blur(3px);pointer-events:none}.quizHead{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--line)}.quizHead h2{margin:0 0 7px;font-size:26px;letter-spacing:-.03em}.quizHead p{margin:0;color:var(--muted);font-size:13px;line-height:1.5;max-width:520px}.progressBox{width:260px;flex:0 0 260px}.progressMeta{display:flex;justify-content:space-between;font-size:11px;color:#b9c1ce;margin-bottom:8px}.track{height:9px;border-radius:20px;background:rgba(255,255,255,.07);overflow:hidden}.fill{height:100%;width:12.5%;border-radius:inherit;background:linear-gradient(90deg,var(--red),var(--peach),var(--blue));transition:.3s ease}
-.step{display:none;padding:26px 0 4px;animation:fade .28s ease}.step.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.step h3{font-size:22px;margin:0 0 6px;letter-spacing:-.025em}.desc{font-size:13px;color:var(--muted);margin:0 0 22px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}.field{display:flex;flex-direction:column;gap:7px}.field label,.question{font-size:12px;color:#d8dee8;font-weight:650}
-input,select,textarea{width:100%;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:#fff;padding:14px 15px;font:inherit;font-size:13px;outline:none;transition:.18s ease}select option{color:#111;background:#fff}textarea{min-height:105px;resize:vertical}input::placeholder,textarea::placeholder{color:#737d8d}input:focus,select:focus,textarea:focus{border-color:rgba(117,176,255,.55);background:rgba(255,255,255,.065);box-shadow:0 0 0 4px rgba(105,170,255,.08)}
-.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice span{display:flex;min-height:58px;align-items:center;padding:13px;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.045);font-size:12px;cursor:pointer;transition:.18s ease}.choice span:hover{background:rgba(255,255,255,.07)}.choice input:checked+span{border-color:rgba(255,194,157,.7);background:linear-gradient(135deg,rgba(255,95,69,.18),rgba(105,170,255,.12));box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
-.nav{margin-top:25px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.note{color:#7f8999;font-size:11px}.buttons{display:flex;gap:9px}.btn{border:0;border-radius:15px;padding:12px 18px;font-weight:800;font-size:12px;cursor:pointer;transition:.18s ease}.btn:hover{transform:translateY(-1px)}.ghost{background:rgba(255,255,255,.065);border:1px solid var(--line);color:#fff}.primary{background:linear-gradient(135deg,#ff654d,#ffc2a0);color:#17191e}.hidden{display:none!important}
-.summary{display:grid;gap:10px;max-height:480px;overflow:auto;padding-right:5px}.sum{border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.04);padding:13px}.sum b{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#8792a4;margin-bottom:5px}.sum span{font-size:12px;color:#eef1f5;line-height:1.45;white-space:pre-wrap}.done{display:none;text-align:center;padding:55px 15px}.done.show{display:block}.doneIcon{width:76px;height:76px;margin:0 auto 18px;border-radius:25px;display:grid;place-items:center;font-size:34px;background:linear-gradient(135deg,#ff674f,#ffc39e,#70adff);color:#101318}.done h3{font-size:28px;margin:0 0 8px}.done p{max-width:520px;margin:0 auto 22px;color:#9ca6b6;font-size:13px;line-height:1.55}.doneActions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);background:#10141b;color:#fff;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 40px rgba(0,0,0,.2);padding:12px 16px;border-radius:15px;font-size:12px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:930px){.layout{grid-template-columns:1fr}.left{position:static;display:grid;grid-template-columns:1fr 1fr}.info{grid-column:1/-1}.quiz{min-height:auto}.top{align-items:flex-start;flex-direction:column}.top p{max-width:none}}@media(max-width:680px){.page{padding:18px 12px 30px}.left{display:flex}.quiz{border-radius:28px;padding:19px}.quizHead{flex-direction:column}.progressBox{width:100%;flex-basis:auto}.grid,.choices{grid-template-columns:1fr}.full{grid-column:auto}.wallet{border-radius:28px}.nav{align-items:flex-start;flex-direction:column}.buttons{width:100%}.btn{flex:1}.top h1{font-size:32px}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(circle at 50% 0,#f2f4f7 0,#dce1e8 38%,#cbd2da 100%);min-height:100vh;color:#f8fafc}
+:root{--dark:#0e1116;--dark2:#151a22;--dark3:#1b202a;--line:rgba(255,255,255,.10);--muted:#9ba6b7;--red:#ff654c;--peach:#ffc39f;--blue:#6caaff;--green:#72e6a2;--shadow:0 26px 72px rgba(18,25,35,.24)}
+.page{max-width:1240px;margin:0 auto;padding:30px 22px 48px}.top{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;margin-bottom:22px;color:#12161d}.eyebrow{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#697487;font-weight:850}.top h1{margin:7px 0 0;font-size:clamp(30px,4vw,46px);line-height:1;letter-spacing:-.05em}.top p{max-width:520px;margin:0;color:#5f6978;font-size:13px;line-height:1.55}
+.layout{display:grid;grid-template-columns:360px 1fr;gap:22px;align-items:start}.left{position:sticky;top:18px;display:flex;flex-direction:column;gap:16px}
+.card{position:relative;overflow:hidden;border-radius:34px;border:1px solid rgba(255,255,255,.35);box-shadow:var(--shadow);isolation:isolate}.card:after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);pointer-events:none}
+.hero{height:286px;background:#111419;padding:20px}.hero:before{content:"";position:absolute;left:-16%;right:-16%;top:-44%;height:74%;background:linear-gradient(100deg,#ff725a 4%,#ffc5a6 43%,#7ab5ff 83%);filter:blur(17px);opacity:.95;z-index:-1}
+.float{position:absolute;left:22px;right:22px;height:66px;border-radius:21px;border:1px solid rgba(255,255,255,.21);background:rgba(255,255,255,.08);backdrop-filter:blur(16px);padding:0 16px;display:flex;align-items:center;justify-content:space-between;font-size:12px}.f1{top:20px}.f2{top:80px;background:rgba(12,15,21,.28)}.float strong{font-variant-numeric:tabular-nums}
+.heroInner{position:absolute;left:22px;right:22px;bottom:22px;background:linear-gradient(180deg,#12151b,#0d0f14);border-radius:28px;padding:23px;border:1px solid rgba(255,255,255,.08)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.label{font-size:13px;color:#edf0f5}.icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:19px}.big{font-size:44px;line-height:1;font-weight:850;letter-spacing:-.06em;margin-top:10px}.small{font-size:11px;color:#8994a5;margin-top:7px}
+.chart{height:292px;padding:22px;background:linear-gradient(145deg,#ec5038 0,#8f463a 19%,#322a27 50%,#15181f 84%)}.chart:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 8%,rgba(255,255,255,.22),transparent 21%),radial-gradient(circle at 0 83%,rgba(255,75,45,.58),transparent 30%);z-index:-1}.chart .big{font-size:38px}.sub{font-size:11px;color:#f0c7b9;margin-top:7px}.bars{height:112px;display:flex;align-items:flex-end;justify-content:space-between;gap:9px;margin-top:25px}.barWrap{display:flex;flex:1;align-items:center;flex-direction:column;gap:6px;color:rgba(255,255,255,.55);font-size:9px}.bar{width:15px;min-height:9px;border-radius:5px;background:rgba(255,255,255,.95);box-shadow:0 5px 12px rgba(0,0,0,.12)}
+.mini{border-radius:28px;background:rgba(14,17,23,.9);backdrop-filter:blur(16px);padding:18px;border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow)}.mini h3{font-size:13px;margin:0 0 10px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.045);font-size:10px;color:#c9d0da}
+.quiz{background:linear-gradient(180deg,#0e1116,#111722);border-radius:36px;padding:28px;border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow);min-height:780px;position:relative;overflow:hidden}.quiz:before{content:"";position:absolute;width:360px;height:360px;right:-200px;top:-210px;border-radius:50%;background:rgba(91,160,255,.12);filter:blur(3px);pointer-events:none}
+.qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--line)}.qhead h2{margin:0 0 7px;font-size:26px;letter-spacing:-.035em}.qhead p{margin:0;color:var(--muted);font-size:12px;line-height:1.55;max-width:520px}.progressBox{width:270px;flex:0 0 270px}.pmeta{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:#bac2cd;margin-bottom:8px}.track{height:9px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden}.fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--red),var(--peach),var(--blue));transition:.28s}
+.module{padding-top:26px}.moduleHead{margin-bottom:20px}.moduleHead h3{font-size:22px;margin:0 0 6px;letter-spacing:-.025em}.moduleHead p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}.questions{display:grid;gap:14px}.question{border:1px solid rgba(255,255,255,.075);border-radius:20px;background:rgba(255,255,255,.032);padding:15px}.questionLabel{font-size:12px;line-height:1.45;color:#eef2f7;font-weight:720;margin-bottom:10px}.hint{font-size:10px;color:#7f899a;margin:-4px 0 10px}.required{color:#ff9a82}
+.options{display:flex;flex-wrap:wrap;gap:8px}.opt{position:relative}.opt input{position:absolute;opacity:0;pointer-events:none}.opt span{display:flex;align-items:center;min-height:39px;padding:9px 12px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.045);font-size:11px;color:#dce2ea;cursor:pointer;transition:.16s}.opt span:hover{background:rgba(255,255,255,.075)}.opt input:checked+span{border-color:rgba(255,196,159,.7);background:linear-gradient(135deg,rgba(255,101,76,.17),rgba(108,170,255,.13));color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],textarea,select{width:100%;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:#fff;padding:12px 13px;font:inherit;font-size:11px;outline:none;transition:.16s}textarea{min-height:92px;resize:vertical}input::placeholder,textarea::placeholder{color:#737d8d}select option{background:#fff;color:#111}input:focus,textarea:focus,select:focus{border-color:rgba(110,171,255,.55);background:rgba(255,255,255,.065);box-shadow:0 0 0 4px rgba(108,170,255,.08)}
+.nav{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.saveText{font-size:10px;color:#7f8998}.buttons{display:flex;gap:9px}.btn{border:0;border-radius:14px;padding:12px 18px;font-weight:850;font-size:11px;cursor:pointer;transition:.16s}.btn:hover{transform:translateY(-1px)}.ghost{color:#fff;background:rgba(255,255,255,.065);border:1px solid var(--line)}.primary{color:#17191f;background:linear-gradient(135deg,#ff654d,#ffc2a0)}.hidden{display:none!important}
+.summary{display:grid;gap:10px;max-height:560px;overflow:auto;padding-right:6px}.sum{padding:13px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.038)}.sum b{display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#8691a3;margin-bottom:5px}.sum span{font-size:11px;color:#f0f3f7;line-height:1.45;white-space:pre-wrap}.done{text-align:center;padding:58px 12px}.doneIcon{width:74px;height:74px;margin:0 auto 18px;border-radius:24px;display:grid;place-items:center;font-size:34px;background:linear-gradient(135deg,#ff674f,#ffc39e,#70adff);color:#101318}.done h3{font-size:27px;margin:0 0 8px}.done p{max-width:540px;margin:0 auto 22px;color:#9ca6b5;font-size:12px;line-height:1.6}.doneActions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;pointer-events:none;background:#10141b;color:#fff;border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.22);padding:11px 14px;border-radius:14px;font-size:11px;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.sectionPills{display:flex;gap:6px;overflow:auto;padding:0 0 3px;margin-top:14px}.sectionPill{flex:0 0 auto;width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.12)}.sectionPill.on{background:linear-gradient(90deg,#ff684f,#ffb28d)}
+@media(max-width:960px){.layout{grid-template-columns:1fr}.left{position:static;display:grid;grid-template-columns:1fr 1fr}.mini{grid-column:1/-1}.top{align-items:flex-start;flex-direction:column}.top p{max-width:none}.quiz{min-height:auto}}@media(max-width:680px){.page{padding:18px 12px 30px}.left{display:flex}.quiz{padding:18px;border-radius:28px}.qhead{flex-direction:column}.progressBox{width:100%;flex-basis:auto}.buttons{width:100%}.btn{flex:1}.nav{align-items:flex-start;flex-direction:column}.card{border-radius:28px}.top h1{font-size:32px}}
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="top">
-    <div><div class="eyebrow">Descubrimiento funcional</div><h1>Plataforma de créditos</h1></div>
-    <p>Cuestionario de levantamiento para definir operación, flujos, automatizaciones, integraciones y alcance técnico del sistema.</p>
-  </div>
+  <header class="top">
+    <div><div class="eyebrow">Levantamiento integral · versión completa</div><h1>Plataforma de créditos</h1></div>
+    <p>Cuestionario dinámico para definir el alcance funcional, financiero, operativo y técnico de una plataforma de créditos por libranza. La mayoría se responde seleccionando opciones.</p>
+  </header>
 
   <div class="layout">
     <aside class="left">
-      <div class="wallet heroCard">
-        <div class="stackcard s1"><span>▣ Empresas proyectadas</span><strong id="metricEmpresas">—</strong></div>
-        <div class="stackcard s2"><span>▣ Trabajadores</span><strong id="metricTrabajadores">—</strong></div>
+      <div class="card hero">
+        <div class="float f1"><span>▣ Módulos del diagnóstico</span><strong id="moduleCount">20</strong></div>
+        <div class="float f2"><span>▣ Preguntas posibles</span><strong id="possibleCount">—</strong></div>
         <div class="heroInner">
-          <div class="row"><span class="label">▣ Alcance definido</span><span class="miniIcon">+</span></div>
-          <div class="big" id="score">0%</div>
-          <div class="small">Información completada</div>
+          <div class="row"><span class="label">▣ Alcance definido</span><span class="icon">+</span></div>
+          <div class="big" id="completion">0%</div>
+          <div class="small" id="answeredMeta">0 respuestas completadas</div>
         </div>
       </div>
 
-      <div class="wallet chartCard">
-        <div class="row"><span class="label">▣ Progreso del quiz</span><span class="miniIcon">↗</span></div>
-        <div class="big" id="sideProgress">12%</div>
-        <div class="available">8 bloques estratégicos</div>
-        <div class="bars">
-          <div class="barWrap"><div class="bar" style="height:36px"></div><span>1</span></div>
-          <div class="barWrap"><div class="bar" style="height:54px"></div><span>2</span></div>
-          <div class="barWrap"><div class="bar" style="height:42px"></div><span>3</span></div>
-          <div class="barWrap"><div class="bar" style="height:68px"></div><span>4</span></div>
-          <div class="barWrap"><div class="bar" style="height:88px"></div><span>5</span></div>
-          <div class="barWrap"><div class="bar" style="height:73px"></div><span>6</span></div>
-          <div class="barWrap"><div class="bar" style="height:50px"></div><span>7</span></div>
-          <div class="barWrap"><div class="bar" style="height:30px"></div><span>8</span></div>
-        </div>
+      <div class="card chart">
+        <div class="row"><span class="label">▣ Progreso del levantamiento</span><span class="icon">↗</span></div>
+        <div class="big" id="stepProgress">5%</div>
+        <div class="sub" id="visibleMeta">Preguntas dinámicas según respuestas</div>
+        <div class="bars" id="bars"></div>
       </div>
 
-      <div class="info">
-        <div class="infoTitle">Áreas incluidas</div>
-        <div class="chips"><span class="chip">Solicitudes</span><span class="chip">Empresas</span><span class="chip">Trabajadores</span><span class="chip">Créditos</span><span class="chip">Cuotas</span><span class="chip">Cartera</span><span class="chip">WhatsApp</span><span class="chip">APIs</span><span class="chip">Datacrédito</span></div>
+      <div class="mini">
+        <h3>Áreas cubiertas</h3>
+        <div class="chips"><span class="chip">Convenios</span><span class="chip">Solicitudes</span><span class="chip">Scoring</span><span class="chip">KYC</span><span class="chip">Firma</span><span class="chip">Desembolso</span><span class="chip">Nómina</span><span class="chip">Recaudo</span><span class="chip">Cartera</span><span class="chip">Cobranza</span><span class="chip">Datacrédito</span><span class="chip">Bots IA</span><span class="chip">Roles</span><span class="chip">Auditoría</span><span class="chip">Seguridad</span></div>
       </div>
     </aside>
 
     <main class="quiz">
       <div id="quizArea">
-        <div class="quizHead">
-          <div><h2>Levantamiento del proyecto</h2><p>Responde cada bloque. La información se guarda automáticamente en este dispositivo mientras avanzas.</p></div>
+        <div class="qhead">
+          <div><h2>Levantamiento del proyecto</h2><p>No todas las preguntas aparecerán. El formulario abre preguntas adicionales solo cuando una respuesta las hace necesarias.</p></div>
           <div class="progressBox">
-            <div class="progressMeta"><span id="counter">Paso 1 de 8</span><span id="stepName">Datos generales</span></div>
+            <div class="pmeta"><span id="stepCounter">Módulo 1 de 20</span><span id="stepTitle">Datos generales</span></div>
             <div class="track"><div class="fill" id="fill"></div></div>
+            <div class="sectionPills" id="sectionPills"></div>
           </div>
         </div>
-
-        <form id="form">
-          <section class="step active" data-name="Datos generales">
-            <h3>1. Datos generales</h3><p class="desc">Contexto de la empresa y objetivo del desarrollo.</p>
-            <div class="grid">
-              <div class="field"><label>Empresa</label><input name="empresa" placeholder="Nombre de la empresa"></div>
-              <div class="field"><label>Persona de contacto</label><input name="contacto" placeholder="Nombre completo"></div>
-              <div class="field"><label>Correo</label><input name="correo" type="email" placeholder="correo@empresa.com"></div>
-              <div class="field"><label>Teléfono</label><input name="telefono" placeholder="+57 ..."></div>
-              <div class="field full"><label>¿Qué problema principal debe resolver la plataforma?</label><textarea name="objetivo" placeholder="Describe el objetivo principal y el resultado esperado..."></textarea></div>
-              <div class="field full"><label>¿Actualmente utilizan algún sistema para gestionar créditos, cartera o libranzas?</label><textarea name="sistema_actual" placeholder="Indica cuál, qué funciona bien y qué quieren reemplazar o mejorar..."></textarea></div>
-            </div>
-          </section>
-
-          <section class="step" data-name="Empresas y trabajadores">
-            <h3>2. Empresas y trabajadores</h3><p class="desc">Volumen, accesos y estructura de los usuarios.</p>
-            <div class="grid">
-              <div class="field"><label>Empresas proyectadas</label><input id="empresas" name="cantidad_empresas" type="number" min="0" placeholder="Ej. 50"></div>
-              <div class="field"><label>Trabajadores aproximados</label><input id="trabajadores" name="cantidad_trabajadores" type="number" min="0" placeholder="Ej. 5000"></div>
-              <div class="field"><label>¿Cada empresa tendrá su propio portal?</label><select name="portal_empresa"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
-              <div class="field"><label>¿Cada trabajador tendrá acceso individual?</label><select name="portal_trabajador"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
-              <div class="field full"><label>¿Qué información debe manejarse de empresas y trabajadores?</label><textarea name="datos_empresas" placeholder="Cédula, salario, contrato, antigüedad, desprendibles, referencias, etc."></textarea></div>
-            </div>
-          </section>
-
-          <section class="step" data-name="Solicitudes y créditos">
-            <h3>3. Solicitudes y créditos</h3><p class="desc">Reglas del producto, simulación, aprobación y desembolso.</p>
-            <div class="grid">
-              <div class="field"><label>Tipos de crédito</label><input name="tipos_credito" placeholder="Libranza, libre inversión, etc."></div>
-              <div class="field"><label>¿Habrá simulador de crédito?</label><select name="simulador"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
-              <div class="field"><label>¿Cuotas e intereses se calculan automáticamente?</label><select name="calculo_automatico"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Parcialmente</option></select></div>
-              <div class="field"><label>¿Se requiere firma electrónica?</label><select name="firma"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
-              <div class="field full"><label>Describe reglas de monto, plazo, tasa, mora, refinanciación y aprobación</label><textarea name="reglas_credito" placeholder="Incluye topes, tasas, plazos, descuentos por nómina y excepciones..."></textarea></div>
-              <div class="field full"><label>¿Cómo debe funcionar el desembolso?</label><textarea name="desembolso" placeholder="Cuenta bancaria, validaciones previas, quién autoriza, estados, comprobantes..."></textarea></div>
-            </div>
-          </section>
-
-          <section class="step" data-name="Documentos y aprobación">
-            <h3>4. Documentos y aprobación</h3><p class="desc">Expediente digital, validaciones y responsables.</p>
-            <div class="grid">
-              <div class="field full"><label>Documentos requeridos al trabajador</label><textarea name="documentos" placeholder="Cédula, certificación laboral, desprendibles, extractos, etc."></textarea></div>
-              <div class="field full"><div class="question">¿Cómo será la aprobación?</div><div class="choices">
-                <label class="choice"><input type="radio" name="aprobacion" value="Manual"><span>Manual</span></label>
-                <label class="choice"><input type="radio" name="aprobacion" value="Semiautomática"><span>Semiautomática</span></label>
-                <label class="choice"><input type="radio" name="aprobacion" value="Automática"><span>Automática</span></label>
-              </div></div>
-              <div class="field full"><label>Describe el flujo completo desde solicitud hasta aprobación o rechazo</label><textarea name="flujo_aprobacion" placeholder="Estados, responsables, validaciones, alertas y motivos de rechazo..."></textarea></div>
-            </div>
-          </section>
-
-          <section class="step" data-name="Atención y automatización">
-            <h3>5. Atención y automatización</h3><p class="desc">Define qué hará el equipo humano y qué se automatizará.</p>
-            <div class="grid">
-              <div class="field full"><div class="question">¿Quién atenderá al cliente?</div><div class="choices">
-                <label class="choice"><input type="radio" name="atencion" value="Personas"><span>Personas</span></label>
-                <label class="choice"><input type="radio" name="atencion" value="Bots con IA"><span>Bots con IA</span></label>
-                <label class="choice"><input type="radio" name="atencion" value="Modelo mixto"><span>Modelo mixto</span></label>
-              </div></div>
-              <div class="field full"><label>¿WhatsApp será atendido por bots, personas o ambos?</label><textarea name="whatsapp" placeholder="Detalla ventas, soporte, consulta de saldo, cobranza, derivación a asesor, horarios..."></textarea></div>
-              <div class="field full"><label>¿Las llamadas serán atendidas por bots, personas o ambos?</label><textarea name="llamadas" placeholder="Detalla casos de uso, horarios, transferencia y registro de llamadas..."></textarea></div>
-              <div class="field full"><label>¿Quién responde y mantiene las APIs?</label><textarea name="responsable_apis" placeholder="Equipo interno, proveedor, tercero, documentación existente, ambientes de prueba..."></textarea></div>
-            </div>
-          </section>
-
-          <section class="step" data-name="Cobranza y recaudo">
-            <h3>6. Cobranza y recaudo</h3><p class="desc">Pagos de empresas, seguimiento y cartera.</p>
-            <div class="grid">
-              <div class="field full"><div class="question">¿El cobro mensual a las empresas será?</div><div class="choices">
-                <label class="choice"><input type="radio" name="cobro_empresa" value="Automático"><span>Automático</span></label>
-                <label class="choice"><input type="radio" name="cobro_empresa" value="Manual"><span>Manual</span></label>
-                <label class="choice"><input type="radio" name="cobro_empresa" value="Mixto"><span>Mixto</span></label>
-              </div></div>
-              <div class="field full"><label>¿Cómo deben funcionar los mensajes de cobranza?</label><textarea name="cobranza" placeholder="WhatsApp, correo, llamadas, frecuencia, escalamiento, mensajes por mora..."></textarea></div>
-              <div class="field full"><label>¿Cómo debe manejarse la cartera?</label><textarea name="cartera" placeholder="Cartera al día, vencida, acuerdos, conciliaciones, reportes, alertas..."></textarea></div>
-              <div class="field full"><label>¿Cómo se registran actualmente los pagos o descuentos de nómina?</label><textarea name="recaudo" placeholder="Carga manual, archivo plano, API, conciliación bancaria, etc."></textarea></div>
-            </div>
-          </section>
-
-          <section class="step" data-name="Integraciones">
-            <h3>7. Integraciones</h3><p class="desc">Servicios externos, comunicaciones y sistemas existentes.</p>
-            <div class="grid">
-              <div class="field"><label>¿Conexión con Datacrédito?</label><select name="datacredito"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
-              <div class="field"><label>¿Correos masivos informativos?</label><select name="correos_masivos"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Por definir</option></select></div>
-              <div class="field"><label>¿WhatsApp API?</label><select name="whatsapp_api"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Ya existe</option><option>Por definir</option></select></div>
-              <div class="field"><label>¿Pasarela de pagos?</label><select name="pasarela"><option value="">Selecciona</option><option>Sí</option><option>No</option><option>Ya existe</option><option>Por definir</option></select></div>
-              <div class="field full"><label>Otras APIs o integraciones necesarias</label><textarea name="integraciones" placeholder="ERP, nómina, centrales de riesgo, firma, SMS, telefonía, bancos, BI, etc."></textarea></div>
-            </div>
-          </section>
-
-          <section class="step" data-name="Paneles y alcance final">
-            <h3>8. Paneles y alcance final</h3><p class="desc">Define qué debe ver cada perfil y cierra los requisitos pendientes.</p>
-            <div class="grid">
-              <div class="field full"><label>¿Qué debe ver y hacer el administrador?</label><textarea name="panel_admin" placeholder="KPIs, usuarios, solicitudes, créditos, cuotas, cartera, empresas, permisos, auditoría..."></textarea></div>
-              <div class="field full"><label>¿Qué debe ver y hacer cada empresa?</label><textarea name="panel_empresa" placeholder="Trabajadores, novedades, descuentos, pagos, archivos, cartera, reportes..."></textarea></div>
-              <div class="field full"><label>¿Qué debe ver y hacer cada trabajador?</label><textarea name="panel_trabajador" placeholder="Solicitar crédito, cargar documentos, firmar, ver estado, cuotas, saldo, certificados..."></textarea></div>
-              <div class="field full"><label>Reportes, métricas o indicadores indispensables</label><textarea name="reportes" placeholder="Describe reportes gerenciales, exportaciones y métricas necesarias..."></textarea></div>
-              <div class="field full"><label>Requisitos adicionales o funciones que no hayamos preguntado</label><textarea name="adicionales" placeholder="Todo lo que consideres necesario para cotizar correctamente..."></textarea></div>
-              <div class="field full"><label>Fecha ideal para tener una primera versión operativa</label><input name="fecha_objetivo" type="date"></div>
-            </div>
-          </section>
-
-          <div class="nav">
-            <span class="note">Borrador guardado automáticamente en este navegador.</span>
-            <div class="buttons"><button type="button" class="btn ghost" id="prev">Anterior</button><button type="button" class="btn primary" id="next">Siguiente</button><button type="button" class="btn primary hidden" id="review">Revisar respuestas</button></div>
-          </div>
-        </form>
+        <section class="module">
+          <div class="moduleHead"><h3 id="moduleTitle"></h3><p id="moduleDesc"></p></div>
+          <div class="questions" id="questions"></div>
+        </section>
+        <div class="nav">
+          <span class="saveText">✓ Se guarda automáticamente en este dispositivo</span>
+          <div class="buttons"><button class="btn ghost" id="prev" type="button">Anterior</button><button class="btn primary" id="next" type="button">Siguiente</button><button class="btn primary hidden" id="review" type="button">Revisar respuestas</button></div>
+        </div>
       </div>
 
       <div id="reviewArea" class="hidden">
-        <div class="quizHead"><div><h2>Revisión final</h2><p>Verifica las respuestas antes de finalizar. Puedes regresar a editar cualquier dato.</p></div><div class="progressBox"><div class="progressMeta"><span>Resumen</span><span>100%</span></div><div class="track"><div class="fill" style="width:100%"></div></div></div></div>
-        <div style="padding-top:24px" class="summary" id="summary"></div>
-        <div class="nav"><span class="note">Al finalizar podrás copiar o descargar todas las respuestas.</span><div class="buttons"><button type="button" class="btn ghost" id="backEdit">Volver a editar</button><button type="button" class="btn primary" id="finish">Finalizar</button></div></div>
+        <div class="qhead"><div><h2>Revisión final</h2><p>Revisa el levantamiento antes de finalizar. El resumen incluye únicamente preguntas aplicables y respondidas.</p></div><div class="progressBox"><div class="pmeta"><span>Resumen</span><span>100%</span></div><div class="track"><div class="fill" style="width:100%"></div></div></div></div>
+        <div class="summary" id="summary" style="margin-top:22px"></div>
+        <div class="nav"><span class="saveText">Puedes volver y editar cualquier respuesta.</span><div class="buttons"><button class="btn ghost" id="backEdit" type="button">Volver a editar</button><button class="btn primary" id="finish" type="button">Finalizar</button></div></div>
       </div>
 
-      <div class="done" id="done">
+      <div id="doneArea" class="done hidden">
         <div class="doneIcon">✓</div><h3>Levantamiento completado</h3>
-        <p>Las respuestas quedaron consolidadas. Puedes copiarlas o descargar un archivo JSON para compartirlo con el equipo de desarrollo.</p>
-        <div class="doneActions"><button class="btn ghost" id="copy">Copiar respuestas</button><button class="btn primary" id="download">Descargar respuestas</button><button class="btn ghost" id="editAgain">Editar</button></div>
+        <p>Las respuestas quedaron consolidadas. Puedes copiarlas o descargar un archivo JSON para compartirlo con el equipo técnico y utilizarlo como base del alcance y la cotización.</p>
+        <div class="doneActions"><button class="btn ghost" id="copy" type="button">Copiar respuestas</button><button class="btn primary" id="download" type="button">Descargar respuestas</button><button class="btn ghost" id="editAgain" type="button">Editar</button></div>
       </div>
     </main>
   </div>
 </div>
-<div class="toast" id="toast">Copiado</div>
-<script>
-const form=document.getElementById('form');
-const steps=[...document.querySelectorAll('.step')];
-const prev=document.getElementById('prev'),next=document.getElementById('next'),review=document.getElementById('review');
-const fill=document.getElementById('fill'),counter=document.getElementById('counter'),stepName=document.getElementById('stepName'),sideProgress=document.getElementById('sideProgress'),score=document.getElementById('score');
-const metricEmpresas=document.getElementById('metricEmpresas'),metricTrabajadores=document.getElementById('metricTrabajadores');
-const quizArea=document.getElementById('quizArea'),reviewArea=document.getElementById('reviewArea'),summary=document.getElementById('summary'),done=document.getElementById('done'),toast=document.getElementById('toast');
-let current=0;
-const key='levantamiento_creditos_v1';
+<div class="toast" id="toast">Listo</div>
 
-function labels(){
- const m={};
- form.querySelectorAll('input,select,textarea').forEach(el=>{
-   let l=el.closest('.field')?.querySelector('label');
-   if(!l && el.type==='radio') l=el.closest('.field')?.querySelector('.question');
-   if(el.name && !m[el.name]) m[el.name]=l?l.textContent.trim():el.name.replaceAll('_',' ');
- });
- return m;
+<script>
+const YN=["Sí","No","Por definir"];
+const YNN=["Sí","No","No aplica","Por definir"];
+const FREQ=["En tiempo real","Diario","Semanal","Mensual","Por evento","Por definir"];
+const USER_TYPES=["Superadministrador","Administrador","Analista de crédito","Riesgo","Cartera","Cobranza","Servicio al cliente","Auditor","Empresa convenio","Trabajador","Asesor comercial"];
+const modules=[
+{
+title:"1. Datos generales y alcance",desc:"Contexto del negocio, objetivo, operación actual y alcance inicial.",qs:[
+q("empresa","Nombre de la empresa","text"),
+q("contacto","Nombre de la persona responsable del proyecto","text"),
+q("correo","Correo de contacto","email"),
+q("telefono","Teléfono de contacto","tel"),
+q("pais","País principal de operación","single",["Colombia","Otro país","Varios países"]),
+q("operacion_actual","¿Actualmente ya otorgan créditos por libranza?","single",YN),
+q("cantidad_creditos","¿Cuántos créditos administran aproximadamente hoy?","single",["0","1–100","101–500","501–2.000","2.001–10.000","Más de 10.000","Por definir"],{id:"operacion_actual",eq:"Sí"}),
+q("sistema_actual","¿Con qué manejan hoy la operación?","multi",["Excel","Software propio","ERP","CRM","Software de terceros","Procesos manuales","Otro","Aún no operan"]),
+q("objetivo","¿Cuál es el objetivo principal de la nueva plataforma?","multi",["Digitalizar solicitudes","Automatizar aprobación","Administrar cartera","Automatizar cobranza","Portal para empresas","Portal para trabajadores","Integrar IA","Reducir operación manual","Tener trazabilidad completa","Otro"]),
+q("reemplazo","¿La plataforma reemplazará algún sistema existente?","single",YN),
+q("detalle_reemplazo","¿Qué sistema o proceso debe reemplazar?","text",null,{id:"reemplazo",eq:"Sí"}),
+q("prioridad","¿Qué tan urgente es el proyecto?","single",["Alta: iniciar de inmediato","Media: 1–3 meses","Baja: más de 3 meses","Por definir"])
+]},
+{
+title:"2. Usuarios, volumen y estructura",desc:"Cantidad de empresas, trabajadores, usuarios internos y crecimiento esperado.",qs:[
+q("empresas_actuales","¿Cuántas empresas convenio manejan o esperan manejar al inicio?","single",["1–10","11–50","51–200","201–1.000","Más de 1.000","Por definir"]),
+q("trabajadores","¿Cuántos trabajadores potenciales tendrá la plataforma?","single",["Menos de 1.000","1.000–5.000","5.001–20.000","20.001–100.000","Más de 100.000","Por definir"]),
+q("usuarios_internos","¿Cuántos usuarios internos usarán el sistema?","single",["1–5","6–20","21–50","51–200","Más de 200","Por definir"]),
+q("sedes","¿La operación tendrá varias sedes o regionales?","single",YN),
+q("manejo_sedes","¿Cada sede necesita información, metas o permisos independientes?","single",YN,{id:"sedes",eq:"Sí"}),
+q("multimarca","¿La plataforma manejará varias marcas o razones sociales?","single",YN),
+q("crecimiento","Crecimiento esperado en 24 meses","single",["Menos de 25%","25–100%","2x–5x","Más de 5x","Por definir"]),
+q("concurrencia","¿Hay momentos de alta demanda simultánea?","single",["Sí, nómina/cierres","Sí, campañas comerciales","No","Por definir"]),
+q("idiomas","Idiomas requeridos","multi",["Español","Inglés","Portugués","Otro"]),
+q("monedas","Monedas requeridas","multi",["COP","USD","Otra","Solo una moneda por país"])
+]},
+{
+title:"3. Empresas convenio",desc:"Alta, validación, reglas, contratos, cupos y administración por empresa.",qs:[
+q("alta_empresa","¿Quién crea una empresa convenio?","multi",["Administrador","Equipo comercial","Empresa mediante autorregistro","API","Importación masiva"]),
+q("aprob_empresa","¿Una empresa debe pasar por aprobación antes de quedar activa?","single",YN),
+q("niveles_empresa","¿Cuántos niveles de aprobación?","single",["1","2","3 o más","Por definir"],{id:"aprob_empresa",eq:"Sí"}),
+q("docs_empresa","Documentos requeridos para una empresa","multi",["Cámara de comercio","RUT","Cédula representante","Certificación bancaria","Contrato/convenio","Estados financieros","Autorizaciones","Otros"]),
+q("contrato_empresa","¿El convenio debe almacenarse y firmarse dentro de la plataforma?","single",YN),
+q("reglas_empresa","¿Cada empresa puede tener reglas propias de crédito?","single",YN),
+q("reglas_empresa_tipo","¿Qué puede cambiar por empresa?","multi",["Tasa","Plazo","Monto máximo","Productos disponibles","Porcentaje de capacidad de pago","Comisiones","Seguros","Flujo de aprobación","Documentos requeridos"],{id:"reglas_empresa",eq:"Sí"}),
+q("cupo_empresa","¿Cada empresa tendrá cupo o límite de colocación?","single",YN),
+q("renovacion_convenio","¿El convenio tiene vencimiento o renovación?","single",YN),
+q("alerta_vencimiento","¿Debe generar alertas antes del vencimiento?","single",YN,{id:"renovacion_convenio",eq:"Sí"}),
+q("estado_empresa","Estados necesarios de una empresa","multi",["Prospecto","En validación","Activa","Suspendida","Bloqueada","Terminada"]),
+q("responsables_empresa","¿Una empresa puede tener varios usuarios responsables?","single",YN)
+]},
+{
+title:"4. Trabajadores y vinculación",desc:"Registro, validación laboral, novedades y lifecycle del trabajador.",qs:[
+q("registro_trabajador","¿Cómo se crea un trabajador?","multi",["Autorregistro","Carga por empresa","Carga masiva","API de nómina","Usuario interno"]),
+q("validacion_laboral","¿Debe validarse que el trabajador esté activo?","single",YN),
+q("fuente_validacion","¿Cómo se validará la relación laboral?","multi",["Certificación laboral","Base de la empresa","API","Archivo de nómina","Validación manual","Por definir"],{id:"validacion_laboral",eq:"Sí"}),
+q("datos_trabajador","Datos mínimos requeridos","multi",["Identificación","Celular","Correo","Dirección","Cargo","Salario","Tipo de contrato","Fecha de ingreso","Centro de costo","Cuenta bancaria","Beneficiarios"]),
+q("novedades","¿Deben registrarse novedades laborales?","single",YN),
+q("tipos_novedad","Novedades a manejar","multi",["Retiro","Incapacidad","Vacaciones","Licencia","Cambio salarial","Cambio de cargo","Cambio de empresa","Embargo","Suspensión"],{id:"novedades",eq:"Sí"}),
+q("retiro","¿Qué debe pasar automáticamente cuando el trabajador se retira?","multi",["Bloquear nuevas solicitudes","Notificar cartera","Recalcular plan de pago","Activar cobro directo","Enviar comunicaciones","Crear tarea de seguimiento","Por definir"],{id:"novedades",eq:"Sí"}),
+q("duplicados","¿Debe impedir trabajadores duplicados por identificación?","single",YN),
+q("empleos_multiples","¿Un trabajador puede estar vinculado a más de una empresa?","single",YN),
+q("actualizacion_datos","¿El trabajador puede actualizar sus datos directamente?","single",YN),
+q("aprobacion_cambios","¿Los cambios sensibles deben ser aprobados?","single",YN,{id:"actualizacion_datos",eq:"Sí"})
+]},
+{
+title:"5. Productos y parametrización financiera",desc:"Productos, tasas, plazos, comisiones, seguros y reglas configurables.",qs:[
+q("multiproducto","¿Manejarán más de un producto de crédito?","single",YN),
+q("productos","Productos previstos","multi",["Libranza tradicional","Libre inversión","Compra de cartera","Refinanciación","Anticipo","Educación","Salud","Otro"],{id:"multiproducto",eq:"Sí"}),
+q("tasa_tipo","Tipo de tasa","multi",["Fija","Variable","Por producto","Por empresa","Por perfil de riesgo","Por campaña","Por definir"]),
+q("tasa_configurable","¿La tasa debe poder cambiarse desde administración sin desarrollo?","single",YN),
+q("plazos","Plazos disponibles","multi",["1–6 meses","7–12","13–24","25–36","37–60","Más de 60","Configurables"]),
+q("monto_minmax","¿Monto mínimo y máximo deben ser configurables?","single",YN),
+q("comisiones","¿Existen comisiones o cargos adicionales?","single",YN),
+q("tipo_comisiones","Tipos de cobro adicionales","multi",["Estudio","Administración","Desembolso","Seguro","Plataforma","Otro"],{id:"comisiones",eq:"Sí"}),
+q("seguros","¿Los créditos incluyen seguro?","single",YN),
+q("seguro_tipo","¿Cómo se calcula el seguro?","multi",["Valor fijo","Porcentaje del crédito","Por edad","Por saldo","Proveedor externo","Por definir"],{id:"seguros",eq:"Sí"}),
+q("calendario","¿Las cuotas dependen de calendario laboral o fecha de nómina?","single",YN),
+q("festivos","¿Debe considerar festivos y días no hábiles?","single",YN),
+q("gracia","¿Se manejarán períodos de gracia?","single",YN),
+q("cuotas_extra","¿Se permiten cuotas extraordinarias o primas?","single",YN)
+]},
+{
+title:"6. Solicitud de crédito",desc:"Canales, pasos, abandonos, estados y experiencia del solicitante.",qs:[
+q("canales_solicitud","¿Por dónde podrá iniciar una solicitud?","multi",["Portal web","Portal empresa","WhatsApp","App móvil","Asesor","Call center","API"]),
+q("precalificacion","¿Habrá precalificación antes de pedir documentos?","single",YN),
+q("simulador","¿Habrá simulador público o privado?","multi",["Público","Solo trabajador autenticado","Solo asesores","No","Por definir"]),
+q("solicitud_guardada","¿El usuario puede guardar y continuar después?","single",YN),
+q("abandono","¿Se hará seguimiento automático a solicitudes abandonadas?","single",YN),
+q("canales_abandono","Canales de recuperación","multi",["WhatsApp","SMS","Correo","Llamada","Tarea para asesor"],{id:"abandono",eq:"Sí"}),
+q("estados_solicitud","Estados necesarios","multi",["Iniciada","Documentación pendiente","En validación","En estudio","Preaprobada","Aprobada","Rechazada","Desembolsada","Cancelada","Expirada"]),
+q("motivos_rechazo","¿Se deben parametrizar motivos de rechazo?","single",YN),
+q("reintento","¿Un rechazado puede volver a solicitar?","single",YN),
+q("plazo_reintento","¿Debe existir tiempo mínimo para volver a solicitar?","single",YN,{id:"reintento",eq:"Sí"}),
+q("asignacion_analista","¿Las solicitudes se asignan automáticamente a analistas?","single",YN),
+q("regla_asignacion","Regla de asignación","multi",["Round robin","Por empresa","Por región","Por carga de trabajo","Por producto","Manual"],{id:"asignacion_analista",eq:"Sí"}),
+q("prioridad_solicitud","¿Habrá solicitudes prioritarias o VIP?","single",YN)
+]},
+{
+title:"7. Riesgo, scoring y aprobación",desc:"Capacidad de pago, políticas, centrales de riesgo y excepciones.",qs:[
+q("scoring","¿La plataforma tendrá motor de scoring?","single",YN),
+q("scoring_fuentes","Fuentes del scoring","multi",["Datacrédito","TransUnion","Información laboral","Historial interno","Ingresos","Endeudamiento","Comportamiento de pago","Reglas propias","IA/ML"],{id:"scoring",eq:"Sí"}),
+q("capacidad_pago","¿Debe calcular capacidad de pago automáticamente?","single",YN),
+q("porcentaje_capacidad","¿El porcentaje máximo de descuento será configurable?","single",YN,{id:"capacidad_pago",eq:"Sí"}),
+q("consulta_centrales","¿Se consultarán centrales de riesgo?","single",YN),
+q("centrales","Centrales a consultar","multi",["Datacrédito Experian","TransUnion","Otra"],{id:"consulta_centrales",eq:"Sí"}),
+q("contrato_central","¿Ya tienen contrato y acceso API con la central?","single",["Sí","No","En proceso","No sé"],{id:"consulta_centrales",eq:"Sí"}),
+q("autorizacion_consulta","¿Se requiere autorización digital antes de consultar?","single",YN,{id:"consulta_centrales",eq:"Sí"}),
+q("aprobacion_auto","¿Habrá créditos de aprobación 100% automática?","single",YN),
+q("aprobacion_niveles","¿Habrá aprobación multinivel para ciertos casos?","single",YN),
+q("niveles_credito","Niveles de aprobación posibles","multi",["Analista","Jefe de crédito","Riesgo","Gerencia","Comité","Otro"],{id:"aprobacion_niveles",eq:"Sí"}),
+q("excepciones","¿Se permiten excepciones a política?","single",YN),
+q("doble_control","¿Las excepciones necesitan doble aprobación?","single",YN,{id:"excepciones",eq:"Sí"}),
+q("motivo_decision","¿Debe guardarse el motivo y evidencia de cada decisión?","single",YN),
+q("version_politicas","¿Se necesita versionado de políticas de riesgo?","single",YN)
+]},
+{
+title:"8. Identidad, KYC y cumplimiento",desc:"Validación de identidad, fraude, listas restrictivas y autorizaciones legales.",qs:[
+q("kyc","¿Se requiere proceso KYC?","single",YN),
+q("identidad_metodos","Métodos de validación","multi",["OTP celular","OTP correo","Biometría facial","Prueba de vida","Validación documento","Preguntas de identidad","Proveedor externo","Manual"],{id:"kyc",eq:"Sí"}),
+q("proveedor_kyc","¿Ya cuentan con proveedor de identidad/biometría?","single",["Sí","No","Por definir"],{id:"kyc",eq:"Sí"}),
+q("listas","¿Se consultan listas restrictivas o SARLAFT?","single",YN),
+q("listas_tipo","Listas requeridas","multi",["ONU","OFAC","Procuraduría","Contraloría","PEP","Listas propias","Proveedor externo"],{id:"listas",eq:"Sí"}),
+q("fraude","¿Se requieren reglas antifraude?","single",YN),
+q("fraude_senales","Señales de fraude a revisar","multi",["Dispositivo","IP","Ubicación","Duplicidad de cuenta","Teléfono","Correo","Documento","Cuenta bancaria","Patrones de solicitud"],{id:"fraude",eq:"Sí"}),
+q("consentimientos","Consentimientos a capturar","multi",["Tratamiento de datos","Consulta centrales","Firma electrónica","Publicidad","Débito/cobro","Autorización de libranza","Otro"]),
+q("evidencia_consentimiento","¿Debe guardarse IP, fecha, dispositivo y versión del texto aceptado?","single",YN),
+q("menores","¿Existe algún caso de menores de edad?","single",["No","Sí","No aplica"]),
+q("bloqueo_fraude","¿Debe existir lista interna de bloqueados?","single",YN)
+]},
+{
+title:"9. Documentos, contratos y firma",desc:"Expediente digital, generación automática, firma y custodia documental.",qs:[
+q("documentos_solicitante","Documentos que puede requerir el crédito","multi",["Cédula","Certificación laboral","Desprendibles","Extractos","Certificación bancaria","Declaración de renta","Referencias","Otros"]),
+q("docs_dinamicos","¿Los documentos cambian según empresa/producto/riesgo?","single",YN),
+q("ocr","¿Quieren lectura automática OCR de documentos?","single",YN),
+q("validar_docs","¿Debe validarse automáticamente información de documentos?","single",YN),
+q("generar_docs","Documentos que debe generar el sistema","multi",["Solicitud","Pagaré","Carta de instrucciones","Libranza","Contrato","Plan de pagos","Autorizaciones","Certificado de saldo","Paz y salvo","Extracto"]),
+q("firma_electronica","¿Se firmarán documentos electrónicamente?","single",YN),
+q("firma_proveedor","Modalidad de firma","multi",["OTP","Firma dibujada","Firma electrónica certificada","Biometría","Proveedor externo","Por definir"],{id:"firma_electronica",eq:"Sí"}),
+q("firma_orden","¿Hay un orden específico de firmantes?","single",YN,{id:"firma_electronica",eq:"Sí"}),
+q("firma_empresa","¿También debe firmar la empresa convenio?","single",YN,{id:"firma_electronica",eq:"Sí"}),
+q("plantillas","¿Administradores podrán editar plantillas sin desarrollo?","single",YN),
+q("version_documentos","¿Se requiere versionado de contratos y plantillas?","single",YN),
+q("expediente","¿Cada crédito tendrá expediente digital completo?","single",YN),
+q("retencion","¿Existe política de retención documental definida?","single",["Sí","No","Por definir"])
+]},
+{
+title:"10. Desembolso",desc:"Autorizaciones, cuentas bancarias, reversos y comprobantes.",qs:[
+q("desembolso_canal","¿Cómo se desembolsará?","multi",["Transferencia bancaria","ACH","Proveedor/pasarela","Pago a tercero","Efectivo","Otro"]),
+q("cuenta_validada","¿Debe validarse la titularidad de la cuenta bancaria?","single",YN),
+q("proveedor_validacion_cuenta","¿Ya tienen proveedor/API para validar cuentas?","single",["Sí","No","Por definir"],{id:"cuenta_validada",eq:"Sí"}),
+q("desembolso_aprobacion","¿El desembolso necesita aprobación adicional?","single",YN),
+q("desembolso_niveles","¿Cuántos niveles?","single",["1","2","3 o más","Por definir"],{id:"desembolso_aprobacion",eq:"Sí"}),
+q("desembolso_lotes","¿Se harán desembolsos en lote?","single",YN),
+q("estado_desembolso","¿Debe consultarse automáticamente el estado del desembolso?","single",YN),
+q("fallo_desembolso","¿Qué hacer si un desembolso falla?","multi",["Reintentar","Crear alerta","Notificar cliente","Notificar tesorería","Bloquear crédito","Gestión manual"]),
+q("reverso_desembolso","¿Se permiten reversos o anulaciones?","single",YN),
+q("doble_aprob_reverso","¿El reverso requiere doble aprobación?","single",YN,{id:"reverso_desembolso",eq:"Sí"}),
+q("comprobante","¿El sistema debe generar/guardar comprobante de desembolso?","single",YN)
+]},
+{
+title:"11. Nómina y descuentos",desc:"Archivos, APIs, novedades, fechas de corte y aplicación de descuentos.",qs:[
+q("descuento_nomina","¿El pago principal será por descuento de nómina?","single",YN),
+q("fuente_nomina","¿Cómo llegará la información de nómina?","multi",["Archivo Excel/CSV","Archivo plano","SFTP","API","Carga manual","Correo","Por definir"],{id:"descuento_nomina",eq:"Sí"}),
+q("formatos_empresa","¿Cada empresa puede manejar un formato de archivo diferente?","single",YN,{id:"descuento_nomina",eq:"Sí"}),
+q("mapeo_archivos","¿Se necesita un configurador para mapear columnas de archivos?","single",YN,{id:"formatos_empresa",eq:"Sí"}),
+q("corte_nomina","¿Cada empresa tendrá fechas de corte diferentes?","single",YN,{id:"descuento_nomina",eq:"Sí"}),
+q("novedades_nomina","Novedades de nómina a manejar","multi",["Descuento completo","Descuento parcial","Sin descuento","Retiro","Incapacidad","Vacaciones","Embargo","Error de nómina"],{id:"descuento_nomina",eq:"Sí"}),
+q("reprocesar_archivo","¿Se puede corregir y reprocesar una nómina cargada?","single",YN,{id:"descuento_nomina",eq:"Sí"}),
+q("validaciones_archivo","¿Se requieren validaciones automáticas antes de aplicar descuentos?","single",YN,{id:"descuento_nomina",eq:"Sí"}),
+q("aprobacion_nomina","¿La empresa debe aprobar la liquidación antes del cierre?","single",YN,{id:"descuento_nomina",eq:"Sí"}),
+q("historico_nomina","¿Se debe conservar histórico de archivos y resultados?","single",YN,{id:"descuento_nomina",eq:"Sí"}),
+q("export_empresa","¿La plataforma debe generar archivo para que la empresa aplique descuentos?","single",YN,{id:"descuento_nomina",eq:"Sí"})
+]},
+{
+title:"12. Recaudo y conciliación",desc:"Registro de pagos, conciliación bancaria, pagos parciales y anticipados.",qs:[
+q("canales_pago","Canales de pago adicionales a nómina","multi",["PSE","Transferencia","Débito automático","Consignación","Tarjeta","Pago en corresponsal","Pago manual","Ninguno"]),
+q("pasarela","¿Ya tienen pasarela o proveedor de recaudo?","single",["Sí","No","En definición","No aplica"]),
+q("conciliacion","¿Se requiere conciliación automática?","single",YN),
+q("fuentes_conciliacion","Fuentes para conciliar","multi",["Banco","Pasarela","Archivo empresa","ERP/contabilidad","API"],{id:"conciliacion",eq:"Sí"}),
+q("pago_parcial","¿Se permiten pagos parciales?","single",YN),
+q("aplicacion_pago","Orden de aplicación del pago","multi",["Mora","Intereses","Seguros","Comisiones","Capital","Configurable"]),
+q("pago_anticipado","¿Se permiten pagos anticipados?","single",YN),
+q("prepago_total","¿Se permiten prepagos totales sin penalidad?","single",YN,{id:"pago_anticipado",eq:"Sí"}),
+q("reliquidacion","¿Un pago extraordinario debe reliquidar plazo o cuota?","single",["Reducir plazo","Reducir cuota","Cliente elige","No reliquida","Por definir"],{id:"pago_anticipado",eq:"Sí"}),
+q("reversar_pago","¿Se pueden reversar pagos aplicados?","single",YN),
+q("permiso_reverso","¿El reverso requiere aprobación y motivo?","single",YN,{id:"reversar_pago",eq:"Sí"}),
+q("recibo_pago","¿Debe generarse recibo o comprobante?","single",YN),
+q("saldos_tiempo_real","¿El saldo debe actualizarse en tiempo real?","single",YN)
+]},
+{
+title:"13. Cartera, mora y cobranza",desc:"Estados de cartera, mora, acuerdos, castigos y gestión jurídica.",qs:[
+q("mora_calculo","¿La mora se calcula automáticamente?","single",YN),
+q("mora_regla","¿La tasa/regla de mora será configurable?","single",YN,{id:"mora_calculo",eq:"Sí"}),
+q("edades_cartera","Edades de cartera requeridas","multi",["1–30","31–60","61–90","91–120","121–180","Más de 180","Configurable"]),
+q("estrategias_cobro","Canales de cobranza","multi",["WhatsApp","SMS","Correo","Llamadas","IVR","Bot de voz","Gestor humano","Visita","Jurídica"]),
+q("automatizar_cobranza","¿Las campañas se disparan automáticamente por días de mora?","single",YN),
+q("promesas_pago","¿Se registrarán promesas de pago?","single",YN),
+q("alerta_promesa","¿Debe alertar cuando una promesa se incumple?","single",YN,{id:"promesas_pago",eq:"Sí"}),
+q("acuerdos","¿Se podrán crear acuerdos de pago?","single",YN),
+q("refinanciacion","¿Se podrán refinanciar o reestructurar créditos?","single",YN),
+q("aprob_refinanciacion","¿Requiere nueva evaluación/aprobación?","single",YN,{id:"refinanciacion",eq:"Sí"}),
+q("cobranza_juridica","¿Manejarán cobranza jurídica?","single",YN),
+q("juridica_datos","¿Se requiere módulo de procesos jurídicos, abogados y actuaciones?","single",YN,{id:"cobranza_juridica",eq:"Sí"}),
+q("castigo","¿Se manejará cartera castigada?","single",YN),
+q("venta_cartera","¿Existe venta o cesión de cartera?","single",YN),
+q("paz_salvo","¿El paz y salvo se genera automáticamente al quedar en cero?","single",YN)
+]},
+{
+title:"14. Atención y comunicaciones",desc:"WhatsApp, correo, SMS, llamadas, campañas y centro de notificaciones.",qs:[
+q("canales_atencion","Canales de atención","multi",["WhatsApp","Correo","Teléfono","Chat web","SMS","App","Presencial"]),
+q("whatsapp_api","¿Usarán WhatsApp API oficial?","single",YN),
+q("whatsapp_existente","¿Ya tienen proveedor/BSP y número conectado?","single",["Sí","No","En proceso","No sé"],{id:"whatsapp_api",eq:"Sí"}),
+q("email_transaccional","¿Se enviarán correos transaccionales automáticos?","single",YN),
+q("email_masivo","¿Se enviarán correos masivos/campañas?","single",YN),
+q("sms","¿Se enviarán SMS?","single",YN),
+q("plantillas_msg","¿Administradores podrán crear/editar plantillas de mensajes?","single",YN),
+q("eventos_notificar","Eventos que deben generar notificación","multi",["Solicitud iniciada","Documentos pendientes","Aprobación","Rechazo","Firma pendiente","Desembolso","Cuota próxima","Pago recibido","Mora","Promesa vencida","Paz y salvo"]),
+q("preferencias_cliente","¿El cliente podrá elegir canales/preferencias de contacto?","single",YN),
+q("horarios_envio","¿Deben existir horarios permitidos para comunicaciones?","single",YN),
+q("trazabilidad_mensajes","¿Se debe guardar historial de todos los mensajes enviados y su estado?","single",YN),
+q("notificaciones_internas","¿Se requieren notificaciones internas para empleados?","single",YN)
+]},
+{
+title:"15. IA, bots y llamadas",desc:"Automatización conversacional, bots de voz, escalamiento y acciones permitidas.",qs:[
+q("uso_ia","¿Quieren agentes de IA dentro del sistema?","single",YN),
+q("ia_canales","Canales con IA","multi",["WhatsApp","Chat web","Llamadas","Correo","Soporte interno"],{id:"uso_ia",eq:"Sí"}),
+q("ia_funciones","Funciones del agente IA","multi",["Resolver dudas","Precalificar","Consultar estado","Simular crédito","Solicitar documentos","Cobranza","Recordatorios","Tomar promesas de pago","Agendar llamada","Escalar a humano"],{id:"uso_ia",eq:"Sí"}),
+q("ia_acceso_datos","¿El bot puede consultar información real del crédito?","single",YN,{id:"uso_ia",eq:"Sí"}),
+q("ia_acciones","¿El bot podrá ejecutar acciones transaccionales?","single",YN,{id:"uso_ia",eq:"Sí"}),
+q("ia_acciones_tipo","Acciones permitidas","multi",["Actualizar datos","Crear solicitud","Cargar promesa","Generar certificado","Enviar link de pago","Agendar cita","Crear ticket","Ninguna sin humano"],{id:"ia_acciones",eq:"Sí"}),
+q("escalamiento","¿Debe escalar automáticamente a una persona?","single",YN,{id:"uso_ia",eq:"Sí"}),
+q("criterios_escalar","Criterios de escalamiento","multi",["Cliente lo solicita","Sentimiento negativo","Monto alto","Queja","Caso no resuelto","Riesgo","Palabras clave","Horario"],{id:"escalamiento",eq:"Sí"}),
+q("voz_ia","¿Quieren bot de voz para llamadas?","single",YN),
+q("grabacion_llamada","¿Las llamadas deben grabarse?","single",YN),
+q("transcripcion","¿Se requiere transcripción y resumen automático?","single",YN,{id:"grabacion_llamada",eq:"Sí"}),
+q("calidad_bot","¿Se requiere panel para revisar conversaciones y calidad del bot?","single",YN,{id:"uso_ia",eq:"Sí"})
+]},
+{
+title:"16. Portales, roles y permisos",desc:"Qué puede ver y hacer cada perfil; aprobaciones, segregación y superadministración.",qs:[
+q("portales","Portales necesarios","multi",["Administración","Empresa convenio","Trabajador","Asesor comercial","Analista","Cobranza","Auditor","Otro"]),
+q("roles","Roles internos previstos","multi",USER_TYPES),
+q("roles_custom","¿Los administradores podrán crear roles personalizados?","single",YN),
+q("permisos_granulares","¿Se requieren permisos granulares por acción?","single",YN),
+q("segregacion_empresa","¿Un usuario de empresa solo debe ver su propia empresa?","single",YN),
+q("segregacion_sede","¿Se requiere limitar por sede/regional/centro de costo?","single",YN),
+q("impersonar","¿Superadministrador puede ingresar como otro usuario para soporte?","single",YN),
+q("doble_control","Acciones que requieren doble control","multi",["Aprobar crédito","Cambiar tasa","Reversar pago","Reversar desembolso","Modificar saldo","Crear acuerdo","Castigar cartera","Eliminar documentos","Cambiar cuenta bancaria","Ninguna"]),
+q("bloqueo_edicion","¿Debe bloquearse la edición de información después de ciertos estados?","single",YN),
+q("sesiones","¿Se requiere cerrar sesiones remotas o por inactividad?","single",YN),
+q("delegacion","¿Un usuario podrá delegar temporalmente funciones a otro?","single",YN)
+]},
+{
+title:"17. Integraciones y migración",desc:"APIs, ERP, bancos, nómina, proveedores externos y datos históricos.",qs:[
+q("integraciones","Integraciones previstas","multi",["Datacrédito","TransUnion","ERP","Contabilidad","Nómina","Bancos","Pasarela de pagos","Firma electrónica","Biometría/KYC","WhatsApp","SMS","Email","Telefonía","SFTP","Otra"]),
+q("api_propia","¿La plataforma necesita API propia para terceros?","single",YN),
+q("webhooks","¿Se requieren webhooks/eventos hacia otros sistemas?","single",YN),
+q("documentacion_api","¿Debe incluir documentación técnica de API?","single",YN),
+q("sandbox","¿Se requiere ambiente sandbox para integradores?","single",YN),
+q("responsable_integraciones","¿Quién provee documentación y credenciales de sistemas externos?","single",["Cliente","Proveedor tercero","Equipo de desarrollo","Mixto","Por definir"]),
+q("migracion","¿Hay que migrar información existente?","single",YN),
+q("migrar_que","Información a migrar","multi",["Empresas","Trabajadores","Créditos activos","Créditos pagados","Pagos","Cartera","Documentos","Comunicaciones","Usuarios","Históricos"],{id:"migracion",eq:"Sí"}),
+q("fuente_migracion","Formato actual de los datos","multi",["Excel","CSV","Base de datos","API","Software tercero","Archivos físicos/digitales","Otro"],{id:"migracion",eq:"Sí"}),
+q("calidad_datos","¿Los datos actuales están limpios y estructurados?","single",["Sí","Parcialmente","No","No sabemos"],{id:"migracion",eq:"Sí"}),
+q("validar_migracion","¿Se requiere conciliación/validación posterior a migración?","single",YN,{id:"migracion",eq:"Sí"}),
+q("exportaciones","Formatos de exportación requeridos","multi",["Excel","CSV","PDF","TXT/plano","API","SFTP"]),
+q("importaciones","¿Se necesitan importaciones masivas configurables?","single",YN)
+]},
+{
+title:"18. Reportes, auditoría y seguridad",desc:"Indicadores, trazabilidad, protección de datos, acceso y continuidad.",qs:[
+q("dashboards","Dashboards requeridos","multi",["Colocación","Aprobación","Rechazos","Desembolsos","Cartera","Mora","Recaudo","Cobranza","Empresas","Asesores","Riesgo","Operación"]),
+q("reportes_programados","¿Reportes automáticos por correo?","single",YN),
+q("frecuencia_reportes","Frecuencia","multi",FREQ,{id:"reportes_programados",eq:"Sí"}),
+q("constructor_reportes","¿Usuarios podrán crear reportes personalizados?","single",YN),
+q("auditoria","¿Se requiere auditoría completa de cambios?","single",YN),
+q("auditar","Qué debe registrar auditoría","multi",["Quién","Fecha/hora","Valor anterior","Valor nuevo","IP","Dispositivo","Motivo","Aprobador"],{id:"auditoria",eq:"Sí"}),
+q("2fa","¿Se requiere doble factor de autenticación?","single",YN),
+q("sso","¿Se requiere inicio de sesión corporativo SSO?","single",YN),
+q("cifrado","¿Se exige cifrado de información sensible en reposo?","single",YN),
+q("backups","Frecuencia mínima de backups","single",["Cada hora","Diario","Semanal","Proveedor define","Por definir"]),
+q("rpo_rto","¿Existe objetivo de recuperación RPO/RTO definido?","single",["Sí","No","Por definir"]),
+q("logs","¿Se requiere acceso a logs de sistema para auditoría/soporte?","single",YN),
+q("alertas_seguridad","Alertas de seguridad","multi",["Intentos fallidos","Cambio de contraseña","Nuevo dispositivo","Acceso sospechoso","Cambio de cuenta bancaria","Cambio de permisos","Exportación masiva"]),
+q("privacidad","¿Existe política específica de privacidad/protección de datos?","single",["Sí","No","En construcción"]),
+q("borrado_datos","¿Debe existir anonimización o borrado por solicitud legal?","single",YN)
+]},
+{
+title:"19. Facturación y modelo comercial",desc:"Cobros a empresas, comisiones, licencias y facturación del servicio.",qs:[
+q("facturacion_empresas","¿La plataforma debe cobrar a las empresas convenio?","single",YN),
+q("modelo_cobro","Modelo de cobro","multi",["Mensualidad fija","Por trabajador","Por crédito","Por desembolso","Comisión porcentual","Plan por niveles","Mixto"],{id:"facturacion_empresas",eq:"Sí"}),
+q("cobro_auto_empresa","¿El cobro a empresas será automático?","single",YN,{id:"facturacion_empresas",eq:"Sí"}),
+q("factura_electronica","¿Debe generar factura electrónica?","single",YN,{id:"facturacion_empresas",eq:"Sí"}),
+q("proveedor_factura","¿Ya tienen proveedor de facturación?","single",["Sí","No","Por definir"],{id:"factura_electronica",eq:"Sí"}),
+q("mora_empresa","¿Debe controlar cartera/mora de las empresas por el servicio?","single",YN,{id:"facturacion_empresas",eq:"Sí"}),
+q("bloqueo_empresa_mora","¿Puede suspender automáticamente una empresa por falta de pago?","single",YN,{id:"mora_empresa",eq:"Sí"}),
+q("comisiones_asesores","¿Se calculan comisiones de asesores/comerciales?","single",YN),
+q("reglas_comision","¿Las reglas de comisión deben ser configurables?","single",YN,{id:"comisiones_asesores",eq:"Sí"}),
+q("centros_costo","¿Se requiere asignación de costos/ingresos por empresa o centro de costo?","single",YN)
+]},
+{
+title:"20. Infraestructura, soporte y futuro",desc:"Disponibilidad, ambientes, soporte, ownership y evolución posterior.",qs:[
+q("cloud","Preferencia de infraestructura","single",["AWS","Azure","Google Cloud","Proveedor define","Infraestructura propia","Por definir"]),
+q("ambientes","Ambientes necesarios","multi",["Desarrollo","QA/pruebas","Staging","Producción","Sandbox"]),
+q("disponibilidad","Disponibilidad objetivo","single",["Horario laboral","24/7","99.5%","99.9% o superior","Por definir"]),
+q("soporte","Horario de soporte esperado","single",["Horario laboral","Extendido","24/7","Por definir"]),
+q("sla","¿Se requiere SLA contractual de soporte?","single",YN),
+q("mesa_ayuda","¿Se requiere módulo/ticketera de soporte?","single",YN),
+q("monitoreo","¿Debe incluir monitoreo y alertas técnicas?","single",YN),
+q("propiedad_codigo","¿Quién debe ser propietario del código fuente?","single",["Cliente","Proveedor","Compartido","Por definir"]),
+q("repositorio","¿El cliente requiere acceso al repositorio de código?","single",YN),
+q("capacitacion","¿Se necesita capacitación a usuarios?","single",YN),
+q("manuales","Material requerido","multi",["Manual administrador","Manual empresa","Manual trabajador","Videos","Base de conocimiento","Documentación técnica"]),
+q("app_movil","¿Se contempla app móvil nativa en una fase futura?","single",YN),
+q("otros_paises","¿Se contempla expansión a otros países?","single",YN),
+q("multitenant","¿Se contempla vender la plataforma a múltiples compañías como SaaS?","single",YN),
+q("roadmap","Funcionalidades futuras consideradas","multi",["IA avanzada","App móvil","Open banking","Nuevos productos","Marketplace","White label","Analítica predictiva","Otro"]),
+q("fecha_objetivo","Fecha ideal de primera versión operativa","date"),
+q("prioridad_modulos","¿Qué módulos son indispensables para una primera versión?","multi",["Empresas","Trabajadores","Solicitudes","Riesgo","Documentos","Firma","Desembolso","Nómina","Recaudo","Cartera","Cobranza","Portales","Reportes","Integraciones"]),
+q("comentarios","¿Hay algún requisito, proceso o excepción importante que no hayamos cubierto?","text")
+]}
+];
+
+function q(id,label,type,options,showIf,hint){return{id,label,type,options:options||[],showIf:showIf||null,hint:hint||""}}
+const storageKey="quiz_libranza_integral_v3";
+let current=0;
+let answers={};
+try{answers=JSON.parse(localStorage.getItem(storageKey)||"{}")}catch(e){answers={}}
+
+const el=id=>document.getElementById(id);
+const questionsEl=el("questions");
+el("moduleCount").textContent=modules.length;
+const allQuestions=modules.flatMap(m=>m.qs);
+el("possibleCount").textContent=allQuestions.length+"+";
+
+function visible(q){
+ if(!q.showIf)return true;
+ const v=answers[q.showIf.id];
+ if("eq" in q.showIf)return v===q.showIf.eq;
+ if(q.showIf.in)return q.showIf.in.includes(v);
+ if(q.showIf.includes)return Array.isArray(v)&&v.includes(q.showIf.includes);
+ return true;
 }
-function data(){
- const fd=new FormData(form),obj={};
- for(const [k,v] of fd.entries()) obj[k]=v;
- return obj;
+function activeQuestions(){return allQuestions.filter(visible)}
+function answered(q){
+ const v=answers[q.id];
+ if(Array.isArray(v))return v.length>0;
+ return v!==undefined&&v!==null&&String(v).trim()!=="";
 }
-function completion(){
- const fields=[...form.querySelectorAll('input[name],select[name],textarea[name]')];
- const names=[...new Set(fields.map(e=>e.name))];let n=0;
- names.forEach(name=>{
-   const group=fields.filter(e=>e.name===name);
-   if(group[0].type==='radio'){if(group.some(e=>e.checked))n++}
-   else if(String(group[0].value).trim())n++;
- });
- return Math.round(n/names.length*100);
-}
-function save(){localStorage.setItem(key,JSON.stringify(data()));updateMetrics()}
-function load(){
- try{
-   const saved=JSON.parse(localStorage.getItem(key)||'{}');
-   Object.entries(saved).forEach(([name,val])=>{
-     const els=[...form.querySelectorAll('[name="'+CSS.escape(name)+'"]')];
-     els.forEach(el=>{if(el.type==='radio') el.checked=el.value===val; else el.value=val})
-   });
- }catch(e){}
-}
-function updateMetrics(){
- metricEmpresas.textContent=document.getElementById('empresas').value||'—';
- metricTrabajadores.textContent=document.getElementById('trabajadores').value||'—';
- score.textContent=completion()+'%';
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function persist(){localStorage.setItem(storageKey,JSON.stringify(answers));updateStats()}
+
+function renderQuestion(q){
+ if(!visible(q))return"";
+ const v=answers[q.id];
+ let input="";
+ if(q.type==="single"||q.type==="multi"){
+   input='<div class="options">'+q.options.map(o=>{
+     const checked=q.type==="single"?v===o:Array.isArray(v)&&v.includes(o);
+     return '<label class="opt"><input type="'+(q.type==="single"?"radio":"checkbox")+'" name="'+esc(q.id)+'" value="'+esc(o)+'" '+(checked?"checked":"")+'><span>'+esc(o)+'</span></label>'
+   }).join("")+'</div>';
+ }else if(q.type==="date"){
+   input='<input type="date" data-id="'+esc(q.id)+'" value="'+esc(v||"")+'">';
+ }else{
+   const t=q.type==="email"?"email":q.type==="tel"?"tel":q.type==="number"?"number":"text";
+   input='<input type="'+t+'" data-id="'+esc(q.id)+'" value="'+esc(v||"")+'" placeholder="Escribe aquí...">';
+ }
+ return '<div class="question" data-q="'+esc(q.id)+'"><div class="questionLabel">'+esc(q.label)+'</div>'+(q.hint?'<div class="hint">'+esc(q.hint)+'</div>':"")+input+'</div>';
 }
 function render(){
- steps.forEach((s,i)=>s.classList.toggle('active',i===current));
- const p=Math.round((current+1)/steps.length*100);
- fill.style.width=p+'%'; sideProgress.textContent=p+'%'; counter.textContent='Paso '+(current+1)+' de '+steps.length; stepName.textContent=steps[current].dataset.name;
- prev.style.visibility=current===0?'hidden':'visible';
- next.classList.toggle('hidden',current===steps.length-1);
- review.classList.toggle('hidden',current!==steps.length-1);
- updateMetrics();window.scrollTo({top:0,behavior:'smooth'});
+ const m=modules[current];
+ el("moduleTitle").textContent=m.title;
+ el("moduleDesc").textContent=m.desc;
+ el("stepCounter").textContent="Módulo "+(current+1)+" de "+modules.length;
+ el("stepTitle").textContent=m.title.replace(/^\d+\.\s*/,"");
+ const p=Math.round((current+1)/modules.length*100);
+ el("fill").style.width=p+"%";
+ el("stepProgress").textContent=p+"%";
+ questionsEl.innerHTML=m.qs.map(renderQuestion).join("")||'<div class="question"><div class="questionLabel">No hay preguntas adicionales para este módulo según tus respuestas.</div></div>';
+ el("prev").style.visibility=current===0?"hidden":"visible";
+ el("next").classList.toggle("hidden",current===modules.length-1);
+ el("review").classList.toggle("hidden",current!==modules.length-1);
+ [...el("sectionPills").children].forEach((x,i)=>x.classList.toggle("on",i<=current));
+ bindInputs();
+ updateStats();
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function bindInputs(){
+ questionsEl.querySelectorAll('input[type="radio"]').forEach(inp=>inp.addEventListener("change",()=>{
+   answers[inp.name]=inp.value;persist();render();
+ }));
+ questionsEl.querySelectorAll('input[type="checkbox"]').forEach(inp=>inp.addEventListener("change",()=>{
+   const arr=new Set(Array.isArray(answers[inp.name])?answers[inp.name]:[]);
+   inp.checked?arr.add(inp.value):arr.delete(inp.value);
+   answers[inp.name]=[...arr];persist();
+ }));
+ questionsEl.querySelectorAll('input[data-id]').forEach(inp=>inp.addEventListener("input",()=>{answers[inp.dataset.id]=inp.value;persist()}));
+}
+function updateStats(){
+ const act=activeQuestions();
+ const done=act.filter(answered).length;
+ const pct=act.length?Math.round(done/act.length*100):0;
+ el("completion").textContent=pct+"%";
+ el("answeredMeta").textContent=done+" de "+act.length+" preguntas aplicables respondidas";
+ el("visibleMeta").textContent=act.length+" preguntas aplicables según tus respuestas";
+}
+function initBars(){
+ el("bars").innerHTML=modules.map((m,i)=>'<div class="barWrap"><div class="bar" style="height:'+(25+((i*17)%70))+'px"></div><span>'+(i+1)+'</span></div>').join("");
+}
+function initPills(){el("sectionPills").innerHTML=modules.map(()=>'<span class="sectionPill"></span>').join("")}
+function labelById(id){return allQuestions.find(q=>q.id===id)?.label||id}
 function buildSummary(){
- const obj=data(),map=labels();summary.innerHTML='';
- Object.keys(map).forEach(k=>{
-   const v=obj[k];
-   if(v&&String(v).trim()){
-     summary.insertAdjacentHTML('beforeend','<div class="sum"><b>'+esc(map[k])+'</b><span>'+esc(String(v))+'</span></div>');
-   }
+ const rows=[];
+ modules.forEach(m=>{
+   m.qs.forEach(q=>{
+     if(visible(q)&&answered(q)){
+       const v=Array.isArray(answers[q.id])?answers[q.id].join(", "):answers[q.id];
+       rows.push('<div class="sum"><b>'+esc(m.title)+'</b><span><strong>'+esc(q.label)+'</strong>\n'+esc(v)+'</span></div>');
+     }
+   });
  });
- if(!summary.children.length) summary.innerHTML='<div class="sum"><span>Aún no hay respuestas.</span></div>';
+ el("summary").innerHTML=rows.join("")||'<div class="sum"><span>No hay respuestas todavía.</span></div>';
 }
 function textSummary(){
- const obj=data(),map=labels();
- return Object.keys(map).filter(k=>obj[k]&&String(obj[k]).trim()).map(k=>map[k]+':\n'+obj[k]).join('\n\n');
+ let out=[];
+ modules.forEach(m=>{
+   let section=[];
+   m.qs.forEach(q=>{
+     if(visible(q)&&answered(q)){
+       const v=Array.isArray(answers[q.id])?answers[q.id].join(", "):answers[q.id];
+       section.push(q.label+"\n"+v);
+     }
+   });
+   if(section.length)out.push(m.title+"\n\n"+section.join("\n\n"));
+ });
+ return out.join("\n\n----------------\n\n");
 }
-function showToast(msg){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1600)}
-form.addEventListener('input',save);form.addEventListener('change',save);
-next.onclick=()=>{if(current<steps.length-1){current++;render()}};
-prev.onclick=()=>{if(current>0){current--;render()}};
-review.onclick=()=>{save();buildSummary();quizArea.classList.add('hidden');reviewArea.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};
-document.getElementById('backEdit').onclick=()=>{reviewArea.classList.add('hidden');quizArea.classList.remove('hidden');render()};
-document.getElementById('finish').onclick=()=>{save();reviewArea.classList.add('hidden');done.classList.add('show');sideProgress.textContent='100%';window.scrollTo({top:0,behavior:'smooth'})};
-document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(textSummary());showToast('Respuestas copiadas')}catch(e){showToast('No fue posible copiar')}};
-document.getElementById('download').onclick=()=>{
- const payload={generado:new Date().toISOString(),respuestas:data()};
- const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='levantamiento-plataforma-creditos.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);showToast('Archivo descargado')
+function toast(msg){el("toast").textContent=msg;el("toast").classList.add("show");setTimeout(()=>el("toast").classList.remove("show"),1600)}
+
+el("next").onclick=()=>{if(current<modules.length-1){current++;render()}};
+el("prev").onclick=()=>{if(current>0){current--;render()}};
+el("review").onclick=()=>{buildSummary();el("quizArea").classList.add("hidden");el("reviewArea").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})};
+el("backEdit").onclick=()=>{el("reviewArea").classList.add("hidden");el("quizArea").classList.remove("hidden");render()};
+el("finish").onclick=()=>{el("reviewArea").classList.add("hidden");el("doneArea").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})};
+el("editAgain").onclick=()=>{el("doneArea").classList.add("hidden");el("quizArea").classList.remove("hidden");current=modules.length-1;render()};
+el("copy").onclick=async()=>{try{await navigator.clipboard.writeText(textSummary());toast("Respuestas copiadas")}catch(e){toast("No fue posible copiar")}};
+el("download").onclick=()=>{
+ const act=activeQuestions();
+ const payload={generado:new Date().toISOString(),preguntas_posibles:allQuestions.length,preguntas_aplicables:act.length,respondidas:act.filter(answered).length,respuestas:answers};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="levantamiento-integral-plataforma-libranza.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast("Archivo descargado")
 };
-document.getElementById('editAgain').onclick=()=>{done.classList.remove('show');quizArea.classList.remove('hidden');current=steps.length-1;render()};
-load();render();
+initBars();initPills();render();
 </script>
 </body>
 </html>
