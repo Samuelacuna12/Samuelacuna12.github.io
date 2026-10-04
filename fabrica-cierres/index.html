@@ -4,102 +4,317 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#202b40">
-<title>La Fábrica de Cierres</title>
+<title>La Fábrica de Cierres — Vende con estructura</title>
+<meta name="description" content="Descubre cómo convertir tus conversaciones comerciales en un sistema de cierre estructurado, medible y predecible.">
 <style>
-:root{--bg:#202b40;--navy:#111b2f;--ink:#141b28;--blue:#1238ff;--paper:#f8f9fb;--line:#cfd5de;--muted:#717c8e}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button{font:inherit}.site{width:min(1080px,calc(100% - 36px));margin:18px auto 34px}.surface{background:var(--paper);border-radius:32px;overflow:hidden}.nav{height:70px;padding:0 38px;display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;font-size:9px}.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:.04em}.mark{display:flex;gap:2px;height:18px}.mark i{display:block;width:4px;background:#14213a}.mark i:last-child{background:#f3bd24}.navlinks{display:flex;gap:28px;font-weight:800}.navlinks a{opacity:.65}.navcta{justify-self:end;border:1px solid #9aacf9;color:var(--blue);border-radius:999px;padding:9px 13px;font-weight:800;white-space:nowrap}
-.hero{min-height:500px;display:grid;grid-template-columns:1.04fr .96fr;align-items:center;padding:68px 64px 44px;background:linear-gradient(180deg,#fbfdff,#edf3f9);border-radius:0 0 32px 32px}.kicker{font-size:9px;font-weight:900;letter-spacing:.14em;color:var(--blue);margin:0 0 16px}.hero h1{font-size:clamp(52px,6.5vw,76px);line-height:.86;letter-spacing:-.07em;margin:0 0 22px}.hero h1 span{color:var(--blue)}.hero p{font-size:13px;line-height:1.55;color:#667287;max-width:535px}.actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px}.pill{background:var(--blue);color:#fff;border-radius:999px;padding:12px 16px;font-size:9px;font-weight:900}.note{font-size:9px;color:#8b96a7;max-width:210px}.obj{display:grid;place-items:center;min-height:380px}.obj svg{width:min(420px,100%);transform:rotate(2deg)}
-.problems{padding:56px 64px 72px}.problems h2{text-align:center;font-size:27px;letter-spacing:-.04em;margin:0 0 30px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{border:1px solid var(--line);border-radius:18px;padding:21px;min-height:165px;background:#fafbfd}.card span,.error span,.match span{color:var(--blue);font-size:9px;font-weight:900;letter-spacing:.1em}.card h3,.error h3,.match h3{font-size:16px;line-height:1.1;letter-spacing:-.03em;margin:14px 0 8px}.card p,.match p{font-size:10px;line-height:1.52;color:var(--muted);margin:0}
-.method{padding:22px 50px 70px}.display{font-size:clamp(45px,5.8vw,70px);line-height:.87;letter-spacing:-.07em;margin:0 0 28px;color:#a8b2c1}.display span{color:var(--blue)}.panel{background:var(--navy);color:#fff;border-radius:25px;overflow:hidden}.mrow{width:100%;border:0;border-bottom:1px solid rgba(255,255,255,.13);background:transparent;color:#fff;display:grid;grid-template-columns:30px 1.08fr 1fr;gap:15px;align-items:center;text-align:left;padding:22px 25px;cursor:pointer}.mrow:hover,.mrow.active{background:#162440}.mrow .arr{color:#8294b0;transition:.18s}.mrow.active .arr{color:#fff;transform:rotate(-45deg)}.mrow strong{font-size:19px;line-height:1;letter-spacing:-.035em}.mrow small{font-size:9px;line-height:1.55;color:#b1bdd0}.mrow:not(.active) small{opacity:.42}.mfoot{display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--blue);padding:16px 25px;font-size:13px}.mfoot a{border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 12px;font-size:8px;font-weight:900}
-.approach{display:grid;grid-template-columns:.88fr 1.12fr;gap:60px;align-items:center;padding:52px 64px 72px}.approach h2{font-size:44px;line-height:.87;letter-spacing:-.06em;margin:0}.miniobj{width:190px;margin:10px 0 0 25px}.approachcopy p{font-size:12px;line-height:1.58;color:#677387}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px;padding-top:17px;border-top:1px solid var(--line)}.stats b{display:block;font-size:27px;letter-spacing:-.05em}.stats span{font-size:8px;color:#818c9c}
-.dark{position:relative;color:#fff;padding:82px 64px 68px;overflow:hidden}.ghost{position:absolute;right:34px;top:35px;font-size:88px;font-weight:900;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.08)}.darkhead{position:relative;z-index:1;max-width:760px;margin-bottom:34px}.darkhead p{font-size:9px;letter-spacing:.14em;font-weight:900;color:#7184a4;margin:0 0 13px}.darkhead h2{font-size:clamp(48px,6vw,70px);line-height:.9;letter-spacing:-.07em;margin:0}.darkhead h2 span{color:#60708b}.errors{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.error{border:1px solid #53627b;background:transparent;color:#fff;border-radius:17px;padding:22px;text-align:left;min-height:158px;cursor:pointer}.error.active{background:var(--blue);border-color:var(--blue)}.error p{font-size:9px;line-height:1.5;color:#a9b5c8;margin:0}.error.active p{color:#dce4ff}.error.active span{color:#fff}.errorout{position:relative;z-index:1;display:grid;grid-template-columns:.76fr 1.24fr;gap:32px;margin-top:30px;padding-top:28px;border-top:1px solid #44516a}.errorout .num{font-size:9px;font-weight:900;color:#7588a6}.errorout h3{font-size:28px;letter-spacing:-.04em;margin:7px 0 0}.errorout p,.errorout li{font-size:11px;line-height:1.58;color:#aab7ca}.errorout ul{margin:10px 0 0;padding-left:18px}
-.lower{margin-top:0}.paradigm{padding:70px 64px 32px}.paradigm h2,.value h2{font-size:clamp(42px,5vw,62px);line-height:.93;letter-spacing:-.06em;margin:0 0 30px}.paradigm h2 span,.value h2 strong{color:var(--blue)}.table{border:1px solid var(--line);border-radius:20px;overflow:hidden}.tr{display:grid;grid-template-columns:1fr 44px 1fr;align-items:center;border-bottom:1px solid var(--line)}.tr:last-child{border-bottom:0}.tr span,.tr strong{padding:17px 20px;font-size:12px}.tr b{text-align:center;color:var(--blue)}.tr strong{background:#f0f3f7}
-.value{padding:58px 64px 34px}.value h2 i{font-style:normal;color:#a1acba;font-weight:600}.valuegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.valuegrid article{padding:24px;border-radius:18px;min-height:180px;border:1px solid var(--line)}.before{background:#f0f2f5}.after{background:var(--navy);color:#fff}.valuegrid small{font-size:8px;font-weight:900;letter-spacing:.12em;color:#8b96a7}.valuegrid h3{font-size:23px;letter-spacing:-.04em;margin:18px 0 9px}.valuegrid p{font-size:11px;line-height:1.52;color:#6c7788}.after p{color:#aebace}
-.matchsec{padding:52px 64px 60px}.matchhead{display:grid;grid-template-columns:.42fr 1.58fr;gap:28px;align-items:start;margin-bottom:28px}.matchhead h2{font-size:41px;line-height:.96;letter-spacing:-.055em;margin:0}.final{margin:10px 64px 68px;background:linear-gradient(145deg,#eef3f8,#fafbfd);border-radius:26px;min-height:390px;padding:54px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.final h2{font-size:clamp(58px,7vw,84px);line-height:.85;letter-spacing:-.075em;margin:0}.final>p:not(.kicker){font-size:14px;color:#6d788b;margin:20px 0 26px}.final a{background:#f3ba1d;color:#172038;border-radius:999px;padding:13px 19px;font-size:10px;font-weight:900}.final small{font-size:8px;color:#8a95a5;margin-top:14px}.footer{padding:22px 8px 0;color:#93a1b7;display:flex;justify-content:space-between;gap:18px;font-size:8px;letter-spacing:.08em;font-weight:800}
-@media(max-width:820px){.site{width:min(100% - 14px,720px);margin-top:8px}.surface{border-radius:22px}.nav{height:62px;padding:0 18px;grid-template-columns:1fr auto}.navlinks{display:none}.navcta{font-size:8px;padding:8px 10px}.hero{grid-template-columns:1fr;padding:50px 28px 26px;min-height:auto}.hero h1{font-size:55px}.obj{min-height:310px}.obj svg{width:330px;transform:none}.problems,.method,.approach,.dark,.paradigm,.value,.matchsec{padding-left:26px;padding-right:26px}.grid3,.errors{grid-template-columns:1fr}.card,.error{min-height:auto}.mrow{grid-template-columns:24px 1fr;padding:18px 19px}.mrow small{grid-column:2}.mfoot{flex-direction:column;align-items:flex-start}.approach{grid-template-columns:1fr;gap:24px}.errorout{grid-template-columns:1fr;gap:10px}.ghost{font-size:60px;right:12px}.valuegrid{grid-template-columns:1fr}.matchhead{grid-template-columns:1fr;gap:8px}.final{margin-left:26px;margin-right:26px}}
-@media(max-width:520px){.site{width:calc(100% - 8px)}.brand{font-size:8px}.hero{padding:42px 20px 20px}.hero h1{font-size:46px}.hero p{font-size:12px}.obj{min-height:260px}.obj svg{width:275px}.problems,.method,.approach,.dark,.paradigm,.value,.matchsec{padding-left:20px;padding-right:20px}.display{font-size:45px}.mrow{grid-template-columns:19px 1fr;gap:9px}.mrow strong{font-size:17px}.approach h2{font-size:39px}.darkhead h2{font-size:47px}.paradigm h2,.value h2,.matchhead h2{font-size:38px}.tr{grid-template-columns:1fr 30px 1fr}.tr span,.tr strong{padding:13px 10px;font-size:10px}.final{margin:8px 20px 44px;padding:48px 18px}.final h2{font-size:58px}.footer{flex-direction:column;gap:7px}}
+:root{
+  --outer:#202b40;--navy:#111b2f;--navy2:#16243e;--blue:#163bff;--yellow:#f3bc27;
+  --paper:#f8f9fb;--white:#fff;--ink:#141b28;--muted:#6f7b8f;--line:#d4d9e1;--red:#e14d57;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--outer);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.site{width:min(1120px,calc(100% - 28px));margin:14px auto 38px}
+.shell{background:var(--paper);border-radius:30px;overflow:hidden}
+.nav{height:68px;padding:0 34px;display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;font-size:9px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:900;letter-spacing:.05em}
+.mark{display:flex;gap:2px;height:18px}.mark i{width:4px;background:#17223a;display:block}.mark i:last-child{background:var(--yellow)}
+.navlinks{display:flex;gap:28px;font-weight:800}.navlinks a{opacity:.65}.navlinks a:hover{opacity:1}
+.navcta{justify-self:end;border:1px solid #9eb0ff;color:var(--blue);border-radius:999px;padding:9px 13px;font-weight:900}
+.hero{min-height:560px;padding:74px 66px 54px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;background:linear-gradient(180deg,#fbfdff,#edf3f9);border-radius:0 0 30px 30px}
+.kicker{font-size:9px;letter-spacing:.14em;font-weight:900;color:var(--blue);margin:0 0 15px}
+.hero h1{font-size:clamp(54px,6.4vw,80px);line-height:.86;letter-spacing:-.072em;margin:0 0 22px;max-width:650px}
+.hero h1 span{color:var(--blue)}
+.hero .copy{font-size:14px;line-height:1.6;color:#667287;max-width:560px}
+.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:13px 18px;font-size:9px;font-weight:900;letter-spacing:.02em}
+.btn-primary{background:var(--blue);color:#fff}.btn-outline{border:1px solid #b9c3d1;background:#fff;color:#28344a}
+.micro-proof{font-size:9px;color:#8893a4}
+.hero-art{display:grid;place-items:center;min-height:400px}
+.hero-art svg{width:min(430px,100%)}
+.problem{padding:58px 66px 72px}
+.problem-title{text-align:center;max-width:760px;margin:0 auto 34px}
+.problem-title h2{font-size:34px;letter-spacing:-.05em;line-height:1;margin:0 0 12px}
+.problem-title p{font-size:12px;line-height:1.55;color:var(--muted);margin:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{border:1px solid var(--line);background:#fbfcfd;border-radius:18px;padding:22px;min-height:180px}
+.card>span,.mini-label{color:var(--blue);font-size:9px;font-weight:900;letter-spacing:.1em}
+.card h3{font-size:17px;line-height:1.1;letter-spacing:-.03em;margin:14px 0 9px}
+.card p{font-size:10px;line-height:1.55;color:var(--muted);margin:0}
+.bridge{margin:34px 0 0;background:var(--navy);color:#fff;border-radius:22px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.bridge div{max-width:700px}.bridge small{display:block;color:#8394af;font-size:9px;letter-spacing:.1em;font-weight:900;margin-bottom:6px}.bridge b{font-size:23px;line-height:1.1;letter-spacing:-.04em}
+.bridge .btn{flex:0 0 auto;background:var(--yellow);color:#172038}
+.compare{padding:28px 50px 72px}
+.display{font-size:clamp(46px,5.6vw,72px);line-height:.86;letter-spacing:-.07em;color:#a8b2c1;margin:0 0 28px}.display span{color:var(--blue)}
+.compare-box{display:grid;grid-template-columns:1fr 1fr;border-radius:25px;overflow:hidden}
+.side{padding:32px;min-height:360px}.side.dark{background:var(--navy);color:#fff}.side.light{background:#eef2f6}
+.side h3{font-size:30px;letter-spacing:-.045em;margin:0 0 20px}.side ul{list-style:none;padding:0;margin:0;display:grid;gap:13px}
+.side li{display:flex;gap:10px;font-size:12px;line-height:1.45}.dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;font-size:10px;font-weight:900}
+.dark .dot{background:rgba(225,77,87,.16);color:#ff8b93}.light .dot{background:#dce5ff;color:var(--blue)}
+.trend{margin-top:30px;height:100px}.trend svg{width:100%;height:100%}
+.authority{padding:56px 66px 70px;display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:center}
+.authority h2{font-size:48px;line-height:.9;letter-spacing:-.06em;margin:6px 0 15px}.authority p{font-size:12px;line-height:1.55;color:var(--muted)}
+.stats{display:grid;gap:0;border-top:1px solid var(--line)}
+.stat{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:22px 0;border-bottom:1px solid var(--line)}
+.stat b{font-size:30px;letter-spacing:-.05em}.stat span{font-size:11px;line-height:1.5;color:var(--muted)}
+.paradigm{padding:0 66px 76px}
+.paradigm h2{font-size:42px;line-height:.95;letter-spacing:-.055em;margin:0 0 28px}.paradigm h2 span{color:var(--blue)}
+.table{border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.tr{display:grid;grid-template-columns:1fr 45px 1fr;align-items:center;border-bottom:1px solid var(--line)}.tr:last-child{border-bottom:0}
+.tr>span,.tr>strong{padding:17px 20px;font-size:12px}.tr>b{text-align:center;color:var(--blue)}.tr>strong{background:#f0f3f7}
+.dark-zone{position:relative;padding:86px 66px 74px;color:#fff;overflow:hidden}
+.ghost{position:absolute;right:20px;top:28px;font-size:100px;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.07);letter-spacing:-.06em}
+.dark-head{position:relative;z-index:1;margin-bottom:34px}.dark-head h2{font-size:clamp(50px,6vw,76px);line-height:.88;letter-spacing:-.07em;margin:0}.dark-head h2 span{color:#60708b}
+.error-tabs{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.error-tab{border:1px solid #52617a;background:transparent;color:#fff;border-radius:18px;padding:23px;text-align:left;min-height:165px;cursor:pointer}.error-tab.active{background:var(--blue);border-color:var(--blue)}
+.error-tab span{font-size:9px;font-weight:900;color:#7890b7}.error-tab.active span{color:#fff}.error-tab h3{font-size:17px;line-height:1.1;margin:14px 0 9px}.error-tab p{font-size:10px;color:#aeb9cb;line-height:1.5;margin:0}.error-tab.active p{color:#dce3ff}
+.error-panel{position:relative;z-index:1;display:grid;grid-template-columns:.75fr 1.25fr;gap:34px;margin-top:32px;padding-top:30px;border-top:1px solid #435069}
+.error-panel h3{font-size:31px;letter-spacing:-.045em;margin:7px 0 0}.error-panel p,.error-panel li{font-size:11px;line-height:1.6;color:#aab7ca}.error-panel ul{padding-left:18px;margin:11px 0 0}
+.detail{padding:70px 66px}.detail h2{font-size:clamp(42px,5vw,62px);line-height:.93;letter-spacing:-.06em;margin:0 0 16px}.detail h2 span{color:var(--blue)}
+.detail-lead{font-size:12px;line-height:1.55;color:var(--muted);max-width:720px;margin:0 0 30px}
+.coa{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.coa article{border:1px solid var(--line);border-radius:18px;padding:23px;background:#fbfcfd}.coa b{display:block;font-size:17px;margin:12px 0 8px}.coa p{font-size:10px;line-height:1.55;color:var(--muted);margin:0}
+.value-map{display:grid;grid-template-columns:1fr 1fr;gap:12px}.value-map article{border-radius:20px;padding:27px;min-height:200px;border:1px solid var(--line)}.before{background:#f0f2f5}.after{background:var(--navy);color:#fff}.value-map small{font-size:8px;font-weight:900;letter-spacing:.12em;color:#8994a5}.value-map h3{font-size:24px;letter-spacing:-.04em;margin:18px 0 10px}.value-map p{font-size:11px;line-height:1.55;color:#6c7788}.after p{color:#aebace}
+.phrase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.phrase-list{border:1px solid var(--line);border-radius:20px;overflow:hidden}.phrase-list button{width:100%;border:0;border-bottom:1px solid var(--line);background:#fbfcfd;text-align:left;padding:17px 20px;cursor:pointer;font-size:12px}.phrase-list button:last-child{border-bottom:0}.phrase-list button.active{background:#edf2ff;color:var(--blue);font-weight:800}
+.phrase-output{background:var(--navy);color:#fff;border-radius:20px;padding:27px;display:flex;flex-direction:column;justify-content:center;min-height:220px}.phrase-output small{font-size:8px;letter-spacing:.12em;font-weight:900;color:#7790b7}.phrase-output p{font-size:20px;line-height:1.35;letter-spacing:-.03em;margin:12px 0 0}
+.offer{padding:70px 66px}
+.offer-head{max-width:800px;margin-bottom:30px}.offer-head h2{font-size:clamp(46px,5.5vw,68px);line-height:.9;letter-spacing:-.065em;margin:0 0 15px}.offer-head h2 span{color:var(--blue)}.offer-head p{font-size:12px;color:var(--muted);line-height:1.55}
+.offer-flow{display:grid;grid-template-columns:1fr 65px 1fr 65px 1fr;align-items:stretch}.flow{border-radius:20px;padding:25px;min-height:210px}.flow:nth-child(1){background:#173c72;color:#fff}.flow:nth-child(3){background:var(--yellow)}.flow:nth-child(5){background:#eef2f6}.arrow{display:grid;place-items:center;font-size:28px;color:var(--blue)}.flow small{font-size:8px;font-weight:900;letter-spacing:.1em;opacity:.65}.flow h3{font-size:22px;letter-spacing:-.04em;margin:15px 0 10px}.flow p{font-size:10px;line-height:1.55;opacity:.78}
+.fit{padding:24px 66px 70px}.fit h2{font-size:43px;line-height:.95;letter-spacing:-.055em;margin:0 0 27px}.fit h2 span{color:var(--blue)}
+.route{padding:72px 66px;background:#edf2f7;border-radius:26px;margin:0 36px 54px}
+.route-head{text-align:center;max-width:760px;margin:0 auto 34px}.route-head h2{font-size:47px;line-height:.94;letter-spacing:-.06em;margin:0 0 14px}.route-head p{font-size:12px;color:var(--muted);line-height:1.55}
+.route-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.route-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;min-height:350px}.route-card.featured{background:var(--navy);color:#fff;border-color:var(--navy)}.route-card small{font-size:8px;letter-spacing:.12em;font-weight:900;color:#8090a7}.route-card h3{font-size:28px;letter-spacing:-.045em;margin:15px 0 10px}.route-card p{font-size:11px;line-height:1.55;color:#707b8e}.featured p{color:#aebace}.route-card ul{padding-left:18px;margin:12px 0 22px}.route-card li{font-size:10px;line-height:1.55;margin-bottom:5px}.route-card .btn{margin-top:auto;align-self:flex-start}.featured .btn{background:var(--yellow);color:#152039}.route-card:not(.featured) .btn{background:var(--blue);color:#fff}
+.final{padding:30px 66px 78px;text-align:center}.final-inner{background:linear-gradient(145deg,#f0f4f8,#fbfcfd);border-radius:26px;padding:64px 28px}.final h2{font-size:clamp(60px,7vw,90px);line-height:.84;letter-spacing:-.075em;margin:0}.final p{font-size:14px;color:#69758a;margin:21px 0 28px}.final .btn{background:var(--yellow);color:#172038;padding:14px 20px}.final small{display:block;font-size:8px;color:#8a95a5;margin-top:14px}
+.footer{padding:20px 6px 0;color:#92a1b8;font-size:8px;letter-spacing:.08em;display:flex;justify-content:space-between;gap:18px;font-weight:800}
+.mobile-cta{display:none}
+@media(max-width:860px){
+ .site{width:min(100% - 14px,720px);margin-top:7px}.shell{border-radius:22px}
+ .nav{height:60px;padding:0 18px;grid-template-columns:1fr auto}.navlinks{display:none}.navcta{font-size:8px}
+ .hero{grid-template-columns:1fr;padding:50px 28px 26px;min-height:auto}.hero h1{font-size:56px}.hero-art{min-height:320px}.hero-art svg{width:330px}
+ .problem,.compare,.authority,.paradigm,.dark-zone,.detail,.offer,.fit,.final{padding-left:26px;padding-right:26px}
+ .grid3,.error-tabs,.coa{grid-template-columns:1fr}.card,.error-tab{min-height:auto}.compare-box,.authority,.phrase-grid{grid-template-columns:1fr}.authority{gap:28px}
+ .stat{grid-template-columns:120px 1fr}.error-panel{grid-template-columns:1fr;gap:10px}.offer-flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);min-height:40px}.route{margin-left:18px;margin-right:18px;padding:52px 24px}.route-grid{grid-template-columns:1fr}
+ .mobile-cta{display:block;position:sticky;bottom:8px;z-index:30;margin:8px 8px 0}.mobile-cta a{display:block;background:var(--yellow);color:#172038;text-align:center;border-radius:999px;padding:13px 15px;font-size:9px;font-weight:900;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+}
+@media(max-width:520px){
+ .site{width:calc(100% - 8px)}.brand{font-size:8px}.hero{padding:42px 20px 18px}.hero h1{font-size:47px}.hero .copy{font-size:12px}.hero-art{min-height:260px}.hero-art svg{width:275px}
+ .problem,.compare,.authority,.paradigm,.dark-zone,.detail,.offer,.fit,.final{padding-left:20px;padding-right:20px}.display{font-size:45px}.side{padding:24px}.side h3{font-size:25px}.paradigm h2,.detail h2,.fit h2{font-size:38px}.tr{grid-template-columns:1fr 30px 1fr}.tr>span,.tr>strong{padding:13px 10px;font-size:10px}.route{margin-left:8px;margin-right:8px;padding:46px 18px}.route-head h2{font-size:39px}.final h2{font-size:58px}.footer{flex-direction:column;gap:7px}
+}
 </style>
 </head>
 <body>
 <main class="site">
-<section class="surface">
+<section class="shell">
 <header class="nav">
-<a class="brand" href="#inicio"><span class="mark"><i></i><i></i><i></i><i></i></span><span>MANUEL TREJO</span></a>
-<nav class="navlinks"><a href="#problema">PROBLEMA</a><a href="#metodo">MÉTODO</a><a href="#sistema">SISTEMA</a></nav>
-<a class="navcta" href="#diagnostico">AGENDAR LLAMADA ↗</a>
+  <a class="brand" href="#inicio"><span class="mark"><i></i><i></i><i></i><i></i></span><span>LA FÁBRICA DE CIERRES</span></a>
+  <nav class="navlinks"><a href="#problema">PROBLEMA</a><a href="#metodo">MÉTODO</a><a href="#programa">PROGRAMA</a></nav>
+  <a class="navcta" href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">CONOCER MÉTODO ↗</a>
 </header>
 
 <section class="hero" id="inicio">
-<div>
-<p class="kicker">MÉTODO DE VENTA PREDECIBLE</p>
-<h1>Cómo duplicar tu tasa de cierre <span>en 90 días.</span></h1>
-<p>El método paso a paso para cerrar ventas con seguridad, sin técnicas agresivas ni depender de la suerte — incluso si no tienes experiencia previa.</p>
-<div class="actions"><a class="pill" href="#metodo">VER EL MÉTODO →</a><span class="note">Sistema probado para ventas digitales, presenciales y telefónicas.</span></div>
-</div>
-<div class="obj" aria-hidden="true">
-<svg viewBox="0 0 600 560"><defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9fbff"/><stop offset=".12" stop-color="#0f39ff"/><stop offset=".24" stop-color="#ff9d00"/><stop offset=".36" stop-color="#f6f9ff"/><stop offset=".5" stop-color="#ff5f2e"/><stop offset=".63" stop-color="#0b34ff"/><stop offset=".77" stop-color="#e9eff8"/><stop offset=".9" stop-color="#ffc325"/><stop offset="1" stop-color="#17243b"/></linearGradient><linearGradient id="c2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#141f34"/><stop offset=".18" stop-color="#fff"/><stop offset=".36" stop-color="#0c3cff"/><stop offset=".52" stop-color="#ffb51a"/><stop offset=".72" stop-color="#ff6436"/><stop offset="1" stop-color="#eaf0f7"/></linearGradient></defs><path d="M176 52L332 36 477 118 523 276 441 441 277 514 120 427 61 268 92 120Z" fill="url(#c)" stroke="#1d2a40" stroke-width="2"/><path d="M176 52L332 36 294 220 92 120Z" fill="url(#c2)" opacity=".95"/><path d="M332 36L477 118 294 220Z" fill="#f8fbff" opacity=".64"/><path d="M477 118L523 276 294 220Z" fill="url(#c)" opacity=".9"/><path d="M523 276L441 441 294 220Z" fill="#ff6b35" opacity=".66"/><path d="M441 441L277 514 294 220Z" fill="url(#c2)" opacity=".92"/><path d="M277 514L120 427 294 220Z" fill="#f3f6fb" opacity=".85"/></svg>
-</div>
+  <div>
+    <p class="kicker">VENTAS CON ESTRUCTURA · NO CON SUERTE</p>
+    <h1>Cómo duplicar tu tasa de cierre <span>en 90 días.</span></h1>
+    <p class="copy">Un sistema para convertir conversaciones en decisiones. Sin perseguir clientes, sin depender de descuentos y sin improvisar en cada llamada.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">VER EL MÉTODO MATCH™ →</a>
+      <a class="btn btn-outline" href="#programa">QUIERO ENTENDER CÓMO FUNCIONA</a>
+      <span class="micro-proof">+10.000 vendedores formados</span>
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 600 560">
+      <defs><linearGradient id="m1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9fbff"/><stop offset=".12" stop-color="#123cff"/><stop offset=".25" stop-color="#ffab13"/><stop offset=".39" stop-color="#f6f9ff"/><stop offset=".53" stop-color="#ff6230"/><stop offset=".68" stop-color="#1136ff"/><stop offset=".82" stop-color="#edf2f8"/><stop offset=".92" stop-color="#ffc52a"/><stop offset="1" stop-color="#19243b"/></linearGradient><linearGradient id="m2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#152039"/><stop offset=".2" stop-color="#fff"/><stop offset=".38" stop-color="#1740ff"/><stop offset=".55" stop-color="#ffbf22"/><stop offset=".73" stop-color="#ff6333"/><stop offset="1" stop-color="#e7edf5"/></linearGradient></defs>
+      <path d="M177 51L334 35 478 120 523 277 440 442 277 514 120 428 61 269 92 120Z" fill="url(#m1)" stroke="#1e2b42" stroke-width="2"/>
+      <path d="M177 51L334 35 294 221 92 120Z" fill="url(#m2)" opacity=".95"/><path d="M334 35L478 120 294 221Z" fill="#f8fbff" opacity=".64"/><path d="M478 120L523 277 294 221Z" fill="url(#m1)" opacity=".9"/><path d="M523 277L440 442 294 221Z" fill="#ff6b35" opacity=".66"/><path d="M440 442L277 514 294 221Z" fill="url(#m2)" opacity=".92"/><path d="M277 514L120 428 294 221Z" fill="#f3f6fb" opacity=".85"/>
+    </svg>
+  </div>
 </section>
 
-<section class="problems" id="problema">
-<h2>¿Tus ventas siguen dependiendo de la suerte?</h2>
-<div class="grid3">
-<article class="card"><span>01</span><h3>Cero conexión emocional</h3><p>Hablas más de lo que preguntas y el cliente nunca llega a sentirse realmente entendido.</p></article>
-<article class="card"><span>02</span><h3>Vendes características</h3><p>Explicas lo que tiene tu oferta, pero no lo conectas con problemas reales que el cliente quiere resolver.</p></article>
-<article class="card"><span>03</span><h3>Falsa modestia al cerrar</h3><p>Al momento de pedir una decisión vuelves a abrir dudas que ya estaban resueltas.</p></article>
-</div>
+<section class="problem" id="problema">
+  <div class="problem-title">
+    <h2>El problema no es que no sepas vender. Es que cada cierre empieza desde cero.</h2>
+    <p>Cuando no existe una estructura replicable, vender se convierte en una mezcla de intuición, seguimiento y suerte.</p>
+  </div>
+  <div class="grid3">
+    <article class="card"><span>01</span><h3>Cada cierre se siente diferente</h3><p>No sabes exactamente qué hiciste bien cuando ganas ni qué corregir cuando pierdes.</p></article>
+    <article class="card"><span>02</span><h3>Persigues decisiones</h3><p>El cliente dice “yo te aviso” y el seguimiento se convierte en semanas de mensajes sin dirección.</p></article>
+    <article class="card"><span>03</span><h3>Descuentas para cerrar</h3><p>Cuando falta estructura, el precio termina reemplazando a una conversación comercial bien llevada.</p></article>
+  </div>
+  <div class="bridge"><div><small>IDEA CENTRAL</small><b>Dejar las ventas al azar termina matando la venta. Necesitas ingeniería, no improvisación.</b></div><a class="btn" href="#metodo">VER CÓMO CAMBIA →</a></div>
 </section>
 
-<section class="method" id="metodo">
-<h2 class="display">DEJA DE VENDER<br><span>POR SUERTE.</span></h2>
-<div class="panel">
-<button class="mrow active" type="button" aria-expanded="true"><span class="arr">↘</span><strong>Pregunta con intención</strong><small>Deja de hablar sin parar. Una buena pregunta mueve al cliente hacia una decisión consciente.</small></button>
-<button class="mrow" type="button" aria-expanded="false"><span class="arr">↘</span><strong>Resuelve problemas reales</strong><small>No vendas características. Traduce tu oferta en problemas concretos que el cliente quiere resolver.</small></button>
-<button class="mrow" type="button" aria-expanded="false"><span class="arr">↘</span><strong>Cierra por conclusión</strong><small>Si el diagnóstico fue correcto, avanzar debe sentirse como el siguiente paso lógico.</small></button>
-<button class="mrow" type="button" aria-expanded="false"><span class="arr">↘</span><strong>Controla la conversación</strong><small>La seguridad viene de tener una estructura clara para preguntar, validar y avanzar.</small></button>
-<div class="mfoot"><span>Una estructura replicable en cada conversación.</span><a href="#sistema">VER SISTEMA ↗</a></div>
-</div>
+<section class="compare" id="metodo">
+  <h2 class="display">DE LA VENTA POR SUERTE<br>A LA VENTA <span>PREDECIBLE.</span></h2>
+  <div class="compare-box">
+    <div class="side dark">
+      <h3>La venta por suerte</h3>
+      <ul>
+        <li><span class="dot">×</span><span>Cada cierre se siente como un golpe de suerte.</span></li>
+        <li><span class="dot">×</span><span>Sufres seguimientos eternos sin un siguiente paso claro.</span></li>
+        <li><span class="dot">×</span><span>Escuchas constantemente el temido “yo te aviso”.</span></li>
+      </ul>
+      <div class="trend"><svg viewBox="0 0 420 100"><path d="M10 70C55 10 90 96 130 42S190 94 235 36 300 82 342 28 380 72 410 35" fill="none" stroke="#6f819e" stroke-width="3" opacity=".55"/></svg></div>
+    </div>
+    <div class="side light">
+      <h3>La venta predecible</h3>
+      <ul>
+        <li><span class="dot">✓</span><span>Estructura replicable en cada conversación.</span></li>
+        <li><span class="dot">✓</span><span>Cierres efectivos con un propósito claro.</span></li>
+        <li><span class="dot">✓</span><span>Control total de tu proceso comercial.</span></li>
+      </ul>
+      <div class="trend"><svg viewBox="0 0 420 100"><polyline points="15,88 105,69 170,73 240,45 305,52 370,17 410,8" fill="none" stroke="#163bff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+  </div>
 </section>
 
-<section class="approach">
-<div><h2>NUESTRO<br>ENFOQUE</h2><svg class="miniobj" viewBox="0 0 340 220"><defs><linearGradient id="mc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d3dff"/><stop offset=".25" stop-color="#fff"/><stop offset=".48" stop-color="#ffbd1e"/><stop offset=".72" stop-color="#ff6736"/><stop offset="1" stop-color="#17243b"/></linearGradient></defs><path d="M67 62L156 28 257 66 288 144 202 202 92 183 35 119Z" fill="url(#mc)" stroke="#18243c" stroke-width="2"/></svg></div>
-<div class="approachcopy"><p>Convertimos conversaciones comerciales desordenadas en un sistema que tu equipo puede repetir.</p><p>Pregunta, diagnóstico, valor, manejo de objeciones y cierre dejan de ser momentos aislados y pasan a formar parte de un mismo proceso.</p><div class="stats"><div><b>+10</b><span>AÑOS</span></div><div><b>+10.000</b><span>VENDEDORES</span></div><div><b>+20</b><span>PAÍSES</span></div></div></div>
-</section>
-</section>
-
-<section class="dark" id="sistema">
-<div class="ghost">SISTEMA</div>
-<div class="darkhead"><p>LOS TRES ERRORES</p><h2>Lo que más está frenando <span>tus cierres.</span></h2></div>
-<div class="errors">
-<button class="error active" data-error="0"><span>01</span><h3>Cero conexión emocional</h3><p>Hablar en lugar de preguntar.</p></button>
-<button class="error" data-error="1"><span>02</span><h3>Vender características</h3><p>Explicar producto en vez de valor.</p></button>
-<button class="error" data-error="2"><span>03</span><h3>Falsa modestia</h3><p>Dudar justo en el momento de cerrar.</p></button>
-</div>
-<div class="errorout"><div><span class="num" id="en">01</span><h3 id="et">Cero conexión emocional</h3></div><div><p id="ep">El cliente no necesita un monólogo. Necesita una conversación que lo haga pensar y que te permita entender qué está intentando resolver.</p><ul id="el"><li>Condiciona pequeñas respuestas afirmativas.</li><li>Usa preguntas orientativas.</li><li>Abre la conversación con intención.</li></ul></div></div>
+<section class="authority">
+  <div><p class="kicker">DETRÁS DEL MÉTODO</p><h2>La estructura se entrena.</h2><p>No se trata de hablar más bonito. Se trata de saber qué preguntar, qué validar y cómo avanzar según el tipo de cliente.</p></div>
+  <div class="stats">
+    <div class="stat"><b>+10 años</b><span>Formando equipos y liderando vendedores de alto rendimiento.</span></div>
+    <div class="stat"><b>+10.000</b><span>Vendedores capacitados con metodologías de cierre estructurado.</span></div>
+    <div class="stat"><b>+20 países</b><span>Experiencia aplicando el sistema en distintos mercados y contextos comerciales.</span></div>
+  </div>
 </section>
 
-<section class="surface lower">
 <section class="paradigm">
-<p class="kicker">CAMBIO DE PARADIGMA</p><h2>Del vendedor improvisado al <span>cerrador estructurado.</span></h2>
-<div class="table"><div class="tr"><span>Habla sin parar</span><b>→</b><strong>Pregunta con intención</strong></div><div class="tr"><span>Vende características</span><b>→</b><strong>Resuelve problemas reales</strong></div><div class="tr"><span>Sufre falsa modestia al cobrar</span><b>→</b><strong>Usa cierres por conclusión</strong></div><div class="tr"><span>Teme el rechazo</span><b>→</b><strong>Controla la conversación</strong></div></div>
+  <p class="kicker">EL CAMBIO DE PARADIGMA</p>
+  <h2>De vendedor improvisado a <span>cerrador estructurado.</span></h2>
+  <div class="table">
+    <div class="tr"><span>Habla sin parar</span><b>→</b><strong>Pregunta con intención</strong></div>
+    <div class="tr"><span>Vende características</span><b>→</b><strong>Resuelve problemas reales</strong></div>
+    <div class="tr"><span>Sufre falsa modestia al cobrar</span><b>→</b><strong>Usa cierres por conclusión</strong></div>
+    <div class="tr"><span>Teme el rechazo del cliente</span><b>→</b><strong>Controla la conversación</strong></div>
+  </div>
+</section>
 </section>
 
-<section class="value">
-<p class="kicker">CAMBIO DE NARRATIVA</p><h2>No vendas lo que tu producto <i>es.</i><br>Vende lo que <strong>hace.</strong></h2>
-<div class="valuegrid"><article class="before"><small>ANTES</small><h3>“Mi producto tiene…”</h3><p>Características, módulos, herramientas, especificaciones y datos.</p></article><article class="after"><small>DESPUÉS</small><h3>“Esto te ayuda a…”</h3><p>Resolver un problema concreto, avanzar más rápido y obtener un resultado que sí importa.</p></article></div>
+<section class="dark-zone" id="errores">
+  <div class="ghost">3 ERRORES</div>
+  <div class="dark-head"><p class="kicker" style="color:#7187aa">CORRIGE ESTO PRIMERO</p><h2>Aumenta tus ventas resolviendo <span>estos 3 errores.</span></h2></div>
+  <div class="error-tabs">
+    <button class="error-tab active" data-error="0"><span>ERROR 01</span><h3>Cero conexión emocional</h3><p>Hablar en lugar de preguntar.</p></button>
+    <button class="error-tab" data-error="1"><span>ERROR 02</span><h3>Vender características</h3><p>Explicar el producto en vez del valor.</p></button>
+    <button class="error-tab" data-error="2"><span>ERROR 03</span><h3>Falsa modestia al cerrar</h3><p>Pedir permiso cuando ya deberías avanzar.</p></button>
+  </div>
+  <div class="error-panel">
+    <div><span class="mini-label" id="errorNumber">ERROR 01</span><h3 id="errorTitle">Cero conexión emocional</h3></div>
+    <div><p id="errorText">El cliente no necesita un monólogo. Necesita una conversación que lo haga pensar y que te permita entender qué está intentando resolver.</p><ul id="errorList"><li>Condiciona pequeñas respuestas afirmativas.</li><li>Usa preguntas orientativas.</li><li>Abre la conversación con intención.</li></ul></div>
+  </div>
 </section>
 
-<section class="matchsec" id="match">
-<div class="matchhead"><p class="kicker">¿ES PARA TI?</p><h2>Este programa encaja si ya vendes y quieres dejar de improvisar.</h2></div>
-<div class="grid3 match"><article class="card"><span>01</span><h3>Tu rol</h3><p>Profesional independiente, consultor o miembro de un equipo comercial.</p></article><article class="card"><span>02</span><h3>Tu oferta</h3><p>Servicios, consultoría, formación, servicios presenciales o productos físicos.</p></article><article class="card"><span>03</span><h3>Tu compromiso</h3><p>Disposición real para cambiar tus resultados, no esperar que cambien por arte de magia.</p></article></div>
+<section class="shell">
+<section class="detail">
+  <p class="kicker">ERROR 01 · HABLAR EN LUGAR DE PREGUNTAR</p>
+  <h2>El mejor vendedor es el que <span>mejor pregunta.</span></h2>
+  <p class="detail-lead">La conversación se guía con una secuencia de preguntas que reduce respuestas automáticas y hace que el cliente piense en su propia decisión.</p>
+  <div class="coa">
+    <article><span class="mini-label">NIVEL 1</span><b>Condicionar el “sí”</b><p>Construye un hábito de afirmación con pequeñas validaciones naturales.</p></article>
+    <article><span class="mini-label">NIVEL 2</span><b>Preguntas orientativas</b><p>Da elecciones claras para reducir confusión y dirigir el pensamiento.</p></article>
+    <article><span class="mini-label">NIVEL 3</span><b>Preguntas de apertura</b><p>Rompe respuestas automáticas y descubre la razón real detrás de la compra.</p></article>
+  </div>
 </section>
 
-<section class="final" id="diagnostico"><p class="kicker">EL SIGUIENTE PASO</p><h2>Deja de depender<br>de la suerte.</h2><p>Convierte tus ventas en un proceso consistente, medible y predecible.</p><a href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">AGENDAR LLAMADA ↗</a><small>Aplicamos un diagnóstico para evaluar si el sistema se adecúa a ti.</small></section>
+<section class="detail" style="padding-top:10px">
+  <p class="kicker">ERROR 02 · CARACTERÍSTICAS VS BENEFICIOS</p>
+  <h2>Cambia tu narrativa. No vendas lo que tu producto <span>es.</span></h2>
+  <p class="detail-lead">Al cliente no le interesa una lista interminable de especificaciones. Le interesa entender qué problema real le vas a ayudar a resolver.</p>
+  <div class="value-map">
+    <article class="before"><small>NO HAGAS ESTO</small><h3>“Mi producto tiene…”</h3><p>Características, módulos, herramientas, especificaciones técnicas y datos sin contexto.</p></article>
+    <article class="after"><small>MAPA DE VALOR</small><h3>“Esto te ayuda a…”</h3><p>Resolver problemas concretos, ahorrar tiempo, proteger margen, cerrar con más seguridad y avanzar con claridad.</p></article>
+  </div>
 </section>
-<footer class="footer"><span>MANUEL TREJO · LA FÁBRICA DE CIERRES</span><span>VENTAS CON ESTRUCTURA, NO CON SUERTE.</span></footer>
+
+<section class="detail" style="padding-top:20px">
+  <p class="kicker">ERROR 03 · FALSA MODESTIA</p>
+  <h2>La humildad es una virtud. La excesiva modestia <span>mata cierres.</span></h2>
+  <p class="detail-lead">Selecciona una frase débil y observa cómo cambia cuando el cierre se formula como una conclusión lógica.</p>
+  <div class="phrase-grid">
+    <div class="phrase-list">
+      <button class="active" data-phrase="0">“¿Será que te gustaría?”</button>
+      <button data-phrase="1">“Si quieres…”</button>
+      <button data-phrase="2">“Si puedes…”</button>
+      <button data-phrase="3">“Si tienes…”</button>
+    </div>
+    <div class="phrase-output" id="phraseOutput"><small>CIERRE POR CONCLUSIÓN</small><p>“Por lo que me contaste, esto sí encaja. Para avanzar, el siguiente paso es…”</p></div>
+  </div>
+</section>
+
+<section class="offer" id="programa">
+  <div class="offer-head"><p class="kicker">LA SOLUCIÓN · LA FÁBRICA DE CIERRES</p><h2>Convierte el caos comercial en <span>un sistema.</span></h2><p>Una formación diseñada para que sepas qué decir, cómo decirlo y cuándo decirlo según el tipo de cliente, sin perder tu personalidad ni sonar robotizado.</p></div>
+  <div class="offer-flow">
+    <div class="flow"><small>ANTES</small><h3>Ciclo de errores</h3><p>Miedo al rechazo, inseguridad, seguimiento sin dirección y cierres inconsistentes.</p></div>
+    <div class="arrow">→</div>
+    <div class="flow"><small>EL SISTEMA</small><h3>Formación + estructura</h3><p>Preguntas, diagnóstico, propuesta de valor, objeciones, seguimiento y cierre.</p></div>
+    <div class="arrow">→</div>
+    <div class="flow"><small>DESPUÉS</small><h3>Claridad comercial</h3><p>Un proceso más profesional, entrenable, medible y fácil de replicar.</p></div>
+  </div>
+</section>
+
+<section class="fit">
+  <p class="kicker">¿ES ESTE PROGRAMA PARA TI?</p>
+  <h2>Es para ti si ya vendes y quieres <span>subir de nivel.</span></h2>
+  <div class="grid3">
+    <article class="card"><span>01 · TU ROL</span><h3>Vendes de verdad</h3><p>Eres profesional independiente, consultor, vendedor o lideras un equipo comercial.</p></article>
+    <article class="card"><span>02 · TU OFERTA</span><h3>Tienes algo que vender</h3><p>Servicios, consultoría, formación online, servicios presenciales o productos físicos.</p></article>
+    <article class="card"><span>03 · TU COMPROMISO</span><h3>Quieres implementar</h3><p>Estás dispuesto a cambiar tu proceso y entrenar una metodología, no esperar magia.</p></article>
+  </div>
+</section>
+
+<section class="route">
+  <div class="route-head"><p class="kicker">ELIGE TU SIGUIENTE PASO</p><h2>No todos necesitan comprar lo mismo.</h2><p>La landing no termina en “gracias por leer”. Termina ofreciendo la ruta correcta según el nivel de compromiso del prospecto.</p></div>
+  <div class="route-grid">
+    <article class="route-card featured">
+      <small>RUTA 01 · ACOMPAÑAMIENTO</small>
+      <h3>Quiero aplicar el sistema a mi proceso comercial.</h3>
+      <p>Para vendedores, empresarios y equipos que ya venden y quieren trabajar su tasa de cierre con acompañamiento.</p>
+      <ul><li>Conoce primero el Método MATCH™.</li><li>Entiende los errores que hoy te frenan.</li><li>Si hay encaje, avanzas al Diagnóstico de Cierre.</li></ul>
+      <a class="btn" href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">CONOCER MATCH™ Y AVANZAR →</a>
+    </article>
+    <article class="route-card">
+      <small>RUTA 02 · ENTRADA DIRECTA</small>
+      <h3>Quiero empezar hoy por mi cuenta.</h3>
+      <p>Una opción para quien aún no está listo para acompañamiento, pero sí quiere aprender una estructura de cierre aplicable desde ya.</p>
+      <ul><li>Taller práctico de ventas digitales.</li><li>4 módulos + 4 bonos.</li><li>Acceso inmediato y recorrido autónomo.</li></ul>
+      <a class="btn" href="https://manueltrejove.com/tallerdeventas-tiktok" target="_blank" rel="noopener">VER TALLER · US$135 →</a>
+    </article>
+  </div>
+</section>
+
+<section class="final">
+  <div class="final-inner">
+    <p class="kicker">DEJA DE DEPENDER DE LA SUERTE</p>
+    <h2>Haz que vender sea<br>predecible.</h2>
+    <p>Conoce el método, identifica dónde estás perdiendo cierres y define cuál es el siguiente paso correcto para ti.</p>
+    <a class="btn" href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">QUIERO CONOCER EL MÉTODO MATCH™ ↗</a>
+    <small>El objetivo es evaluar encaje antes de avanzar a acompañamiento.</small>
+  </div>
+</section>
+</section>
+
+<div class="mobile-cta"><a href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">CONOCER MÉTODO MATCH™ →</a></div>
+<footer class="footer"><span>LA FÁBRICA DE CIERRES · MANUEL TREJO</span><span>VENTAS CON ESTRUCTURA, NO CON SUERTE.</span></footer>
 </main>
+
 <script>
-(()=>{const rows=[...document.querySelectorAll('.mrow')];rows.forEach(r=>r.addEventListener('click',()=>{rows.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-expanded','false')});r.classList.add('active');r.setAttribute('aria-expanded','true')}));const data=[['01','Cero conexión emocional','El cliente no necesita un monólogo. Necesita una conversación que lo haga pensar y que te permita entender qué está intentando resolver.',['Condiciona pequeñas respuestas afirmativas.','Usa preguntas orientativas.','Abre la conversación con intención.']],['02','Vender características','Las características explican qué tiene tu oferta; el valor explica por qué eso importa. El cierre mejora cuando el cliente ve con claridad qué problema estás resolviendo.',['Detecta el problema que sí reconoce.','Conecta tu solución con ese problema.','Explica el beneficio en términos concretos.']],['03','Falsa modestia al cerrar','Si ya diagnosticamos bien, cerrar no debería sentirse agresivo. La conclusión correcta es definir con claridad qué ocurre después.',['Resume problema, objetivo y solución.','Marca un siguiente paso concreto.','Pide una decisión sin volver a sembrar dudas.']]];const cards=[...document.querySelectorAll('.error')],n=document.getElementById('en'),t=document.getElementById('et'),p=document.getElementById('ep'),l=document.getElementById('el');cards.forEach(c=>c.addEventListener('click',()=>{const d=data[+c.dataset.error];cards.forEach(x=>x.classList.remove('active'));c.classList.add('active');n.textContent=d[0];t.textContent=d[1];p.textContent=d[2];l.innerHTML=d[3].map(x=>'<li>'+x+'</li>').join('')}))})();
+(()=>{
+ const errors=[
+  ['ERROR 01','Cero conexión emocional','El cliente no necesita un monólogo. Necesita una conversación que lo haga pensar y que te permita entender qué está intentando resolver.',['Condiciona pequeñas respuestas afirmativas.','Usa preguntas orientativas.','Abre la conversación con intención.']],
+  ['ERROR 02','Vender características','Las características explican qué tiene tu oferta; el valor explica por qué eso importa. El cierre mejora cuando el cliente entiende qué problema real estás resolviendo.',['Detecta el problema que sí reconoce.','Conecta tu solución con ese problema.','Explica el beneficio en términos concretos.']],
+  ['ERROR 03','Falsa modestia al cerrar','Cuando el diagnóstico fue correcto, avanzar no debe sentirse agresivo. El siguiente paso se plantea con claridad, no con inseguridad.',['Resume problema, objetivo y solución.','Marca el siguiente paso concreto.','Pide una decisión sin reabrir dudas.']]
+ ];
+ const tabs=[...document.querySelectorAll('.error-tab')],n=document.getElementById('errorNumber'),t=document.getElementById('errorTitle'),p=document.getElementById('errorText'),l=document.getElementById('errorList');
+ tabs.forEach(x=>x.addEventListener('click',()=>{const d=errors[+x.dataset.error];tabs.forEach(y=>y.classList.remove('active'));x.classList.add('active');n.textContent=d[0];t.textContent=d[1];p.textContent=d[2];l.innerHTML=d[3].map(v=>'<li>'+v+'</li>').join('')}));
+ const phrases=[
+ '“Por lo que me contaste, esto sí encaja. Para avanzar, el siguiente paso es…”',
+ '“Con lo que ya validamos, el siguiente paso es comenzar por aquí.”',
+ '“En este momento solo necesitamos confirmar este punto para avanzar.”',
+ '“Para avanzar, solo falta definir esto y seguimos con el proceso.”'
+ ];
+ const pb=[...document.querySelectorAll('.phrase-list button')],out=document.getElementById('phraseOutput');
+ pb.forEach(b=>b.addEventListener('click',()=>{pb.forEach(x=>x.classList.remove('active'));b.classList.add('active');out.innerHTML='<small>CIERRE POR CONCLUSIÓN</small><p>'+phrases[+b.dataset.phrase]+'</p>'}));
+})();
 </script>
 </body>
 </html>
