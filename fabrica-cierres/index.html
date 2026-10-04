@@ -1,193 +1,161 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1730">
-<title>La Fábrica de Cierres — Método de Venta Predecible</title>
-<meta name="description" content="Convierte tus ventas en un proceso estructurado, medible y predecible. Una experiencia interactiva basada en La Fábrica de Cierres.">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1f2b40">
+  <title>La Fábrica de Cierres</title>
+  <meta name="description" content="Cómo duplicar tu tasa de cierre en 90 días con un sistema comercial estructurado.">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-<div class="site-shell">
-  <nav class="nav" aria-label="Navegación principal">
-    <a class="brand" href="#inicio" aria-label="Inicio">
-      <span class="brandmark">M</span>
-      <span>La Fábrica de Cierres <small>Ventas con ingeniería</small></span>
-    </a>
-    <div class="navlinks">
-      <a href="#problema">El problema</a>
-      <a href="#metodo">El método</a>
-      <a href="#match">¿Es para ti?</a>
-      <a class="nav-cta" href="#diagnostico">Agendar diagnóstico <span>↗</span></a>
-    </div>
-  </nav>
+  <main class="page">
+    <section class="paper">
+      <header class="topbar">
+        <a class="logo" href="#inicio" aria-label="La Fábrica de Cierres">
+          <span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>LA FÁBRICA DE CIERRES</span>
+        </a>
+        <nav class="mini-nav" aria-label="Navegación">
+          <a href="#metodo">MÉTODO</a>
+          <a href="#errores">SISTEMA</a>
+          <a href="#match">PARA QUIÉN</a>
+        </nav>
+        <a class="tiny-cta" href="#diagnostico">AGENDAR LLAMADA ↗</a>
+      </header>
 
-  <main>
-    <section id="inicio" class="section hero grid-bg">
-      <div class="hero-copy reveal">
-        <div class="hero-tag"><i></i> SISTEMA DE CIERRE ESTRUCTURADO</div>
-        <h1>Cómo duplicar tu tasa de cierre <span class="highlight">en 90 días.</span></h1>
-        <p class="lead">El método paso a paso para cerrar ventas con seguridad, sin técnicas agresivas ni depender de la suerte — incluso si hoy improvisas cada conversación.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#problema">Descubrir el sistema <span class="arrow">→</span></a>
-          <a class="btn btn-secondary" href="#match">Ver si aplica para mí</a>
+      <section id="inicio" class="hero">
+        <div class="hero-copy">
+          <p class="micro">VENTAS PREDECIBLES · MÉTODO ESTRUCTURADO</p>
+          <h1>Cómo duplicar tu tasa de cierre <em>en 90 días.</em></h1>
+          <p>El método paso a paso para cerrar ventas con seguridad, sin técnicas agresivas ni depender de la suerte — incluso si no tienes experiencia previa.</p>
+          <div class="hero-actions">
+            <a class="primary" href="#metodo">DESCUBRIR EL MÉTODO <span>→</span></a>
+            <span class="mini-proof">+10.000 vendedores capacitados</span>
+          </div>
         </div>
-        <div class="stats" aria-label="Datos de autoridad">
-          <div class="stat"><b>+10 años</b><span>formando equipos de ventas</span></div>
-          <div class="stat"><b>+10.000</b><span>vendedores capacitados</span></div>
-          <div class="stat"><b>+20</b><span>países con el sistema validado</span></div>
-        </div>
-      </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="orbit"></div><div class="orbit two"></div>
-        <div class="prism-wrap">
-          <svg viewBox="0 0 520 520" role="img" aria-label="Forma abstracta inspirada en ingeniería y precisión">
+
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 520 500">
             <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1447ff"/><stop offset=".34" stop-color="#80a2ff"/><stop offset=".58" stop-color="#f5bd28"/><stop offset=".78" stop-color="#ff6f54"/><stop offset="1" stop-color="#07152f"/></linearGradient>
-              <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".25" stop-color="#1447ff"/><stop offset=".68" stop-color="#f5bd28"/><stop offset="1" stop-color="#0b1730"/></linearGradient>
-              <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+              <linearGradient id="metalA" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f8fbff"/>
+                <stop offset=".13" stop-color="#113cff"/>
+                <stop offset=".29" stop-color="#ffbd19"/>
+                <stop offset=".43" stop-color="#f8f9fb"/>
+                <stop offset=".6" stop-color="#ff5e25"/>
+                <stop offset=".73" stop-color="#173bff"/>
+                <stop offset=".9" stop-color="#f7fbff"/>
+                <stop offset="1" stop-color="#0d1830"/>
+              </linearGradient>
+              <linearGradient id="metalB" x1="1" y1=".1" x2="0" y2=".9">
+                <stop offset="0" stop-color="#0f1e39"/>
+                <stop offset=".22" stop-color="#ffffff"/>
+                <stop offset=".39" stop-color="#ffc72c"/>
+                <stop offset=".57" stop-color="#063bff"/>
+                <stop offset=".76" stop-color="#ff6d2d"/>
+                <stop offset="1" stop-color="#eaf0f8"/>
+              </linearGradient>
+              <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+                <feDropShadow dx="0" dy="24" stdDeviation="18" flood-color="#16223a" flood-opacity=".2"/>
+              </filter>
             </defs>
-            <circle cx="260" cy="260" r="170" fill="#1447ff" opacity=".08" filter="url(#blur)"/>
-            <path d="M129 173L243 91 389 138 438 285 342 422 187 397 87 292Z" fill="url(#g1)" stroke="#0b1730" stroke-width="3"/>
-            <path d="M129 173L243 91 261 235 87 292Z" fill="url(#g2)" opacity=".9"/>
-            <path d="M243 91L389 138 261 235Z" fill="#f6d052" opacity=".88"/>
-            <path d="M389 138L438 285 261 235Z" fill="#1447ff" opacity=".78"/>
-            <path d="M438 285L342 422 261 235Z" fill="#ff7b58" opacity=".72"/>
-            <path d="M342 422L187 397 261 235Z" fill="#0d2c5a" opacity=".9"/>
-            <path d="M187 397L87 292 261 235Z" fill="#dce7ff" opacity=".95"/>
-            <g fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2">
-              <path d="M129 173L261 235 187 397"/><path d="M389 138L261 235 342 422"/>
-            </g>
+            <path filter="url(#shadow)" d="M150 72L289 42 422 128 447 271 358 406 197 430 82 323 77 174Z" fill="url(#metalA)" stroke="#173052" stroke-width="2"/>
+            <path d="M150 72L289 42 246 205 77 174Z" fill="url(#metalB)" opacity=".92"/>
+            <path d="M289 42L422 128 246 205Z" fill="#f8f9fb" opacity=".62"/>
+            <path d="M422 128L447 271 246 205Z" fill="url(#metalA)" opacity=".88"/>
+            <path d="M447 271L358 406 246 205Z" fill="#ff9228" opacity=".7"/>
+            <path d="M358 406L197 430 246 205Z" fill="url(#metalB)" opacity=".9"/>
+            <path d="M197 430L82 323 246 205Z" fill="#f4f7fc" opacity=".82"/>
           </svg>
         </div>
-        <div class="metric-float one"><b>90 días</b><span>para estructurar el cierre</span></div>
-        <div class="metric-float two"><b>100%</b><span>más control comercial</span></div>
-      </div>
-    </section>
+      </section>
 
-    <section id="problema" class="section light pad grid-bg">
-      <div class="problem-head reveal">
-        <div><span class="eyebrow">Diagnóstico inicial</span><h2>¿Tus ventas dependen demasiado de <span class="highlight">la suerte?</span></h2></div>
-        <p class="lead">Cuando no existe un proceso replicable, cada conversación empieza desde cero. El resultado: seguimiento irregular, cierres impredecibles y una operación comercial difícil de escalar.</p>
-      </div>
-      <div class="cards3">
-        <article class="problem-card reveal"><span class="num">01 · CONEXIÓN</span><h3>Hablas más de lo que preguntas.</h3><p>El cliente responde por compromiso, no porque se sienta entendido. La conversación avanza sin una conexión real.</p><div class="mini-line"></div></article>
-        <article class="problem-card reveal"><span class="num">02 · VALOR</span><h3>Vendes características, no resultados.</h3><p>Describes lo que hace tu producto, pero no traduces ese producto en problemas concretos que el cliente quiere resolver.</p><div class="mini-line"></div></article>
-        <article class="problem-card reveal"><span class="num">03 · CIERRE</span><h3>Pides permiso para avanzar.</h3><p>La falsa modestia debilita el cierre. El cliente necesita claridad sobre el siguiente paso, no más incertidumbre.</p><div class="mini-line"></div></article>
-      </div>
-    </section>
-
-    <section class="section dark pad grid-bg reveal">
-      <span class="eyebrow">Cambio de modelo</span>
-      <h2>De la venta por suerte a la <span class="yellow">venta predecible.</span></h2>
-      <div class="compare-wrap">
-        <article class="compare-panel bad">
-          <span class="error-kicker">Modo improvisado</span><h3>La venta por suerte</h3>
-          <ul><li><span class="bullet">×</span><span>Cada cierre se siente como un golpe de suerte.</span></li><li><span class="bullet">×</span><span>Sufres de seguimientos eternos.</span></li><li><span class="bullet">×</span><span>Escuchas constantemente el temido “yo te aviso”.</span></li></ul>
-          <div class="scribble"><svg viewBox="0 0 400 130" preserveAspectRatio="none"><path d="M8 92C51 18 75 123 117 54S164 121 205 45 249 114 288 37 331 107 392 48" fill="none" stroke="#8295b2" stroke-width="4" stroke-linecap="round" opacity=".55"/><path d="M12 38C55 111 79 18 121 87S174 26 217 101 268 16 309 91 352 27 390 70" fill="none" stroke="#4f668a" stroke-width="3" stroke-linecap="round" opacity=".45"/></svg></div>
-        </article>
-        <article class="compare-panel good">
-          <span class="error-kicker" style="color:#1447ff">Modo estructurado</span><h3>La venta predecible</h3>
-          <ul><li><span class="bullet">✓</span><span>Estructura replicable en cada conversación.</span></li><li><span class="bullet">✓</span><span>Cierres efectivos con un propósito claro.</span></li><li><span class="bullet">✓</span><span>Control total de tu proceso comercial.</span></li></ul>
-          <svg class="trend" viewBox="0 0 420 140"><defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1447ff" stop-opacity=".22"/><stop offset="1" stop-color="#1447ff" stop-opacity="0"/></linearGradient></defs><path d="M20 120L98 94 150 102 212 62 268 70 330 28 400 12V130H20Z" fill="url(#area)"/><polyline points="20,120 98,94 150,102 212,62 268,70 330,28 400,12" fill="none" stroke="#1447ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </article>
-      </div>
-      <div class="quote">Dejar las ventas al azar termina matando la venta. <strong>Necesitas ingeniería, no improvisación.</strong></div>
-    </section>
-
-    <section class="section light pad grid-bg">
-      <div class="authority">
-        <div class="reveal"><span class="eyebrow">Detrás del método</span><div class="big-number">10K+</div><h2>Conversaciones convertidas en estructura.</h2><p class="lead">El mejor vendedor no es el que más habla. Es aquel que tiene un paso a paso replicable.</p></div>
-        <div class="authority-list reveal">
-          <div class="auth-row"><b>+10 años</b><span>Formando equipos y liderando alto rendimiento con más de 150 vendedores a cargo.</span></div>
-          <div class="auth-row"><b>+10.000</b><span>Vendedores capacitados con una metodología diseñada para repetirse.</span></div>
-          <div class="auth-row"><b>+20 países</b><span>Validación del sistema en distintos contextos, ofertas y canales comerciales.</span></div>
+      <section class="problems">
+        <h2>¿Tus ventas siguen dependiendo de la suerte?</h2>
+        <div class="problem-grid">
+          <article><span>01</span><h3>Cero conexión emocional</h3><p>Hablas más de lo que preguntas y el cliente nunca llega a sentirse realmente entendido.</p></article>
+          <article><span>02</span><h3>Vendes características</h3><p>Explicas lo que tiene tu oferta, pero no lo conectas con problemas reales que el cliente quiere resolver.</p></article>
+          <article><span>03</span><h3>Falsa modestia al cerrar</h3><p>El proceso avanza, pero al momento de pedir la decisión vuelves a abrir dudas que ya estaban resueltas.</p></article>
         </div>
-      </div>
-      <div class="paradigm reveal" aria-label="Cambio de paradigma comercial">
-        <div class="p-row"><div>Habla sin parar</div><div class="p-arrow">→</div><div class="p-good">Pregunta con intención</div></div>
-        <div class="p-row"><div>Vende características</div><div class="p-arrow">→</div><div class="p-good">Resuelve problemas reales</div></div>
-        <div class="p-row"><div>Sufre falsa modestia al cobrar</div><div class="p-arrow">→</div><div class="p-good">Cierra por conclusión</div></div>
-        <div class="p-row"><div>Teme el rechazo</div><div class="p-arrow">→</div><div class="p-good">Controla la conversación</div></div>
-      </div>
-    </section>
+      </section>
 
-    <section id="metodo" class="section dark pad grid-bg">
-      <div class="errors-head reveal"><div><span class="eyebrow">Los 3 errores</span><h2>Corrige lo que realmente está <span class="yellow">frenando tus cierres.</span></h2></div><p class="lead">Interactúa con cada error para ver la lógica correctiva del sistema.</p></div>
-      <div class="error-tabs reveal" role="tablist" aria-label="Errores de cierre">
-        <button class="error-tab active" data-error="0" role="tab" aria-selected="true">01 · Conexión emocional</button>
-        <button class="error-tab" data-error="1" role="tab" aria-selected="false">02 · Características</button>
-        <button class="error-tab" data-error="2" role="tab" aria-selected="false">03 · Falsa modestia</button>
-      </div>
-      <div class="error-stage reveal">
-        <div class="error-summary"><span class="error-kicker" id="errorKicker">ERROR 01</span><h3 id="errorTitle">Cero conexión emocional</h3><p id="errorText">Hablar en lugar de preguntar convierte una conversación comercial en un monólogo. El cliente necesita sentir que la decisión también le pertenece.</p></div>
-        <div class="error-detail"><span class="eyebrow">Mecánica correctiva</span><h3 id="detailTitle">Pregunta para guiar, no para interrogar.</h3><p id="detailIntro">La estructura correcta usa preguntas en tres niveles para mover al cliente desde respuestas automáticas hacia una decisión consciente.</p><div class="detail-grid" id="detailGrid"></div></div>
-      </div>
-    </section>
-
-    <section class="section light pad grid-bg">
-      <span class="eyebrow">Error 01 · Laboratorio</span><h2>El mejor vendedor es el que <span class="highlight">mejor pregunta.</span></h2><p class="lead">Selecciona un nivel del embudo para ver cómo cambia la intención de la pregunta.</p>
-      <div class="question-lab">
-        <div class="funnel reveal">
-          <button class="funnel-step active" data-level="0">Nivel 1 · Condicionar el “sí”</button>
-          <button class="funnel-step" data-level="1">Nivel 2 · Preguntas orientativas</button>
-          <button class="funnel-step" data-level="2">Nivel 3 · Preguntas de apertura</button>
-          <div class="funnel-out">SÍ</div>
+      <section id="metodo" class="method">
+        <h2><span>DE LA VENTA POR SUERTE</span><br>A LA VENTA <strong>PREDECIBLE.</strong></h2>
+        <div class="method-table">
+          <button class="method-row active" type="button" data-method="0" aria-expanded="true"><span class="row-arrow">↘</span><b>Pregunta con intención</b><small>Deja de hablar sin parar. La conversación se estructura alrededor de preguntas que llevan al cliente a pensar y decidir.</small></button>
+          <button class="method-row" type="button" data-method="1" aria-expanded="false"><span class="row-arrow">↘</span><b>Resuelve problemas reales</b><small>No vendas características. Traduce tu oferta en problemas concretos que tu cliente reconoce y quiere solucionar.</small></button>
+          <button class="method-row" type="button" data-method="2" aria-expanded="false"><span class="row-arrow">↘</span><b>Cierra por conclusión</b><small>No pidas permiso para avanzar. Si el diagnóstico fue correcto, el cierre debe sentirse como el siguiente paso lógico.</small></button>
+          <button class="method-row" type="button" data-method="3" aria-expanded="false"><span class="row-arrow">↘</span><b>Controla la conversación</b><small>La seguridad no viene de improvisar mejor. Viene de saber qué preguntar, qué validar y cuándo avanzar.</small></button>
+          <div class="method-cta"><span>El mejor vendedor no es el que más habla.</span><a href="#errores">VER EL SISTEMA ↗</a></div>
         </div>
-        <div class="lab-box reveal"><span class="eyebrow">Mecánica</span><h3 id="labTitle">Construir hábito de afirmación</h3><p id="labText">En ventas, encadenar pequeñas afirmaciones reduce fricción y ayuda a mantener una conversación colaborativa.</p><div class="example" id="labExample">Ejemplo: “Si esto te permitiera cerrar más sin perseguir clientes, ¿tendría sentido para ti?”</div></div>
+      </section>
+
+      <section class="approach">
+        <div>
+          <h2>NUESTRO<br>ENFOQUE</h2>
+          <div class="small-art" aria-hidden="true">
+            <svg viewBox="0 0 280 200"><defs><linearGradient id="miniMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3cff"/><stop offset=".25" stop-color="#f9fcff"/><stop offset=".48" stop-color="#ffb719"/><stop offset=".72" stop-color="#ff6130"/><stop offset="1" stop-color="#14233b"/></linearGradient></defs><path d="M55 60L130 22 225 58 245 128 175 181 82 165 32 109Z" fill="url(#miniMetal)" stroke="#11213e" stroke-width="2"/></svg>
+          </div>
+        </div>
+        <div class="approach-copy">
+          <p>Convertimos conversaciones comerciales desordenadas en un sistema que tu equipo puede repetir.</p>
+          <p>Pregunta, diagnóstico, valor, manejo de objeciones y cierre dejan de ser momentos aislados y pasan a formar parte de un mismo proceso.</p>
+          <div class="approach-stats"><div><b>+10</b><span>años</span></div><div><b>+10K</b><span>vendedores</span></div><div><b>+20</b><span>países</span></div></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="errores" class="dark-zone">
+      <div class="dark-heading"><p>EL SISTEMA</p><h2>Los 3 errores que más<br><span>matan tus cierres.</span></h2></div>
+      <div class="error-cards">
+        <button class="error-card active" type="button" data-error="0"><span>01</span><h3>Cero conexión emocional</h3><p>Hablar en lugar de preguntar.</p></button>
+        <button class="error-card" type="button" data-error="1"><span>02</span><h3>Vender características</h3><p>Explicar producto en vez de valor.</p></button>
+        <button class="error-card" type="button" data-error="2"><span>03</span><h3>Falsa modestia</h3><p>Dudar justo en el momento de cerrar.</p></button>
+      </div>
+      <div class="error-detail">
+        <div><span id="errorNumber">01</span><h3 id="errorTitle">Cero conexión emocional</h3></div>
+        <div><p id="errorText">El cliente no necesita un monólogo. Necesita una conversación que lo haga pensar y que te permita entender qué está intentando resolver.</p><ul id="errorList"><li>Condiciona pequeñas respuestas afirmativas.</li><li>Usa preguntas orientativas.</li><li>Abre la conversación con intención.</li></ul></div>
       </div>
     </section>
 
-    <section class="section light pad grid-bg">
-      <span class="eyebrow">Error 02 · Mapa de valor</span><h2>No vendas lo que tu producto <span class="highlight">es.</span> Vende lo que <span class="highlight">hace.</span></h2>
-      <div class="value-map">
-        <div class="value-side bad-side reveal"><h3>Especificaciones técnicas</h3><p class="lead" style="font-size:16px">Información correcta, pero difícil de traducir en una decisión.</p><ul><li>Módulos, horas y características.</li><li>Herramientas sin contexto.</li><li>Datos que no conectan con urgencia.</li></ul></div>
-        <div class="value-arrow reveal">→</div>
-        <div class="value-side reveal"><h3>Problemas que resuelves</h3><div class="checklist"><div class="checkitem"><span class="checkmark">✓</span><span>Menos seguimiento improductivo</span></div><div class="checkitem"><span class="checkmark">✓</span><span>Más claridad para manejar objeciones</span></div><div class="checkitem"><span class="checkmark">✓</span><span>Un proceso que el equipo puede replicar</span></div><div class="checkitem"><span class="checkmark">✓</span><span>Cierres con un siguiente paso concreto</span></div><div class="checkitem"><span class="checkmark">✓</span><span>Mayor control de la tasa de conversión</span></div></div></div>
-      </div>
+    <section class="paper second-paper">
+      <section class="value">
+        <div class="value-title"><p>CAMBIO DE NARRATIVA</p><h2>No vendas lo que tu producto <span>es.</span><br>Vende lo que tu producto <strong>hace.</strong></h2></div>
+        <div class="value-comparison">
+          <div class="muted-side"><small>ANTES</small><h3>“Mi producto tiene…”</h3><p>Características, módulos, herramientas, especificaciones y datos.</p></div>
+          <div class="bright-side"><small>DESPUÉS</small><h3>“Esto te ayuda a…”</h3><p>Resolver un problema concreto, avanzar más rápido y obtener un resultado que sí importa.</p></div>
+        </div>
+      </section>
+
+      <section class="close-lab">
+        <div class="close-copy"><p>CIERRE POR CONCLUSIÓN</p><h2>Deja de pedir permiso para avanzar.</h2><p class="body-copy">Selecciona una frase débil y mira cómo convertirla en un siguiente paso claro y profesional.</p></div>
+        <div class="phrase-system">
+          <div class="phrase-list"><button type="button" data-phrase="0">“¿Será que te gustaría?”</button><button type="button" data-phrase="1">“Si quieres…”</button><button type="button" data-phrase="2">“Si puedes…”</button></div>
+          <div class="phrase-output" id="phraseOutput"><small>VERSIÓN ESTRUCTURADA</small><p>Selecciona una frase para transformarla.</p></div>
+        </div>
+      </section>
+
+      <section id="match" class="match">
+        <div class="match-copy"><p>¿ES PARA TI?</p><h2>El programa encaja si ya vendes y quieres dejar de improvisar.</h2></div>
+        <div class="match-grid">
+          <article><span>01</span><h3>Tu rol</h3><p>Profesional independiente, consultor o miembro de un equipo comercial.</p></article>
+          <article><span>02</span><h3>Tu oferta</h3><p>Servicios, consultoría, formación, servicios presenciales o productos físicos.</p></article>
+          <article><span>03</span><h3>Tu compromiso</h3><p>Disposición real para cambiar tus resultados, no esperar que ocurra por arte de magia.</p></article>
+        </div>
+      </section>
+
+      <section id="diagnostico" class="final">
+        <p>EL SIGUIENTE PASO</p>
+        <h2>Deja de depender<br>de la suerte.</h2>
+        <p class="final-copy">Convierte tus ventas en un proceso consistente, medible y predecible.</p>
+        <a href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">AGENDAR LLAMADA <span>↗</span></a>
+        <small>Aplicamos un diagnóstico para evaluar si el sistema se adecúa a ti.</small>
+      </section>
     </section>
 
-    <section class="section light pad grid-bg">
-      <span class="eyebrow">Error 03 · Cierre por conclusión</span><h2>Deja de pedir permiso para <span class="highlight">cerrar.</span></h2><p class="lead">El cierre consultivo no es presionar. Es llevar una conversación bien diagnosticada a una conclusión lógica.</p>
-      <div class="phrase-lab">
-        <div class="phrase-col bad reveal"><h3>Lo que debes eliminar</h3><div class="phrase-buttons"><button class="phrase-btn" data-phrase="¿Será que te gustaría?">“¿Será que te gustaría?”</button><button class="phrase-btn" data-phrase="Si puedes...">“Si puedes...”</button><button class="phrase-btn" data-phrase="Si quieres...">“Si quieres...”</button><button class="phrase-btn" data-phrase="Si tienes...">“Si tienes...”</button></div></div>
-        <div class="phrase-col reveal"><h3>Cierres por conclusión</h3><p>Selecciona una frase débil para convertirla en un siguiente paso claro.</p><div class="phrase-result" id="phraseResult">Selecciona una frase de la izquierda.</div></div>
-      </div>
-    </section>
-
-    <section class="section light pad grid-bg">
-      <span class="eyebrow">La solución</span><h2>La Fábrica de Cierres convierte el caos en <span class="highlight">sistema.</span></h2><p class="lead">Sabes qué decir, cómo decirlo y cuándo decirlo según el tipo de cliente — manteniendo tu esencia, pero con estrategia.</p>
-      <div class="system-flow">
-        <div class="flow-card reveal"><span>Punto de partida</span><h3>Ciclo de errores</h3><p>Miedo al rechazo, inseguridad, seguimiento sin dirección y conversaciones que no avanzan.</p><div class="gear"></div></div>
-        <div class="flow-arrow reveal">→</div>
-        <div class="flow-card reveal"><span>El sistema</span><h3>Formación personalizada</h3><p>Un método que organiza preguntas, valor, objeciones, seguimiento y cierre en una secuencia entrenable.</p><div class="gear"></div></div>
-        <div class="flow-arrow reveal">→</div>
-        <div class="flow-card reveal"><span>Resultado</span><h3>Claridad + profesionalismo</h3><p>Más control del proceso, decisiones más claras y una operación comercial que puede medirse y mejorarse.</p><div class="gear"></div></div>
-      </div>
-    </section>
-
-    <section id="match" class="section light pad grid-bg">
-      <div class="match">
-        <div class="reveal"><span class="eyebrow">Filtro de encaje</span><h2>¿Es este programa el <span class="highlight">match adecuado</span> para ti?</h2><p class="lead">El sistema está pensado para profesionales y equipos que venden una oferta real y están dispuestos a cambiar su proceso comercial.</p><div class="criteria"><div class="criterion"><div class="diamond"><span>01</span></div><div><h3>Tu rol</h3><p>Profesional independiente, consultor o miembro de un equipo comercial.</p></div></div><div class="criterion"><div class="diamond"><span>02</span></div><div><h3>Tu oferta</h3><p>Servicios, consultoría, formación online, servicios presenciales o productos físicos.</p></div></div><div class="criterion"><div class="diamond"><span>03</span></div><div><h3>Tu compromiso</h3><p>Disposición real para cambiar resultados mediante entrenamiento y estructura.</p></div></div></div></div>
-        <form class="match-form reveal" id="matchForm">
-          <fieldset class="qblock"><legend>1. ¿Hoy tienes una oferta activa que ya vendes?</legend><div class="options"><div class="option"><input type="radio" id="q1y" name="q1" value="1"><label for="q1y">Sí, ya vendo</label></div><div class="option"><input type="radio" id="q1n" name="q1" value="0"><label for="q1n">Aún no</label></div></div></fieldset>
-          <fieldset class="qblock"><legend>2. ¿Tu proceso de cierre depende mucho de la improvisación?</legend><div class="options"><div class="option"><input type="radio" id="q2y" name="q2" value="1"><label for="q2y">Sí, demasiado</label></div><div class="option"><input type="radio" id="q2n" name="q2" value="0"><label for="q2n">Ya está estructurado</label></div></div></fieldset>
-          <fieldset class="qblock"><legend>3. ¿Estás dispuesto a entrenar y cambiar tu proceso?</legend><div class="options"><div class="option"><input type="radio" id="q3y" name="q3" value="1"><label for="q3y">Sí, totalmente</label></div><div class="option"><input type="radio" id="q3n" name="q3" value="0"><label for="q3n">No por ahora</label></div></div></fieldset>
-          <button class="btn btn-primary" type="submit" style="width:100%">Evaluar mi encaje <span class="arrow">→</span></button>
-          <div class="match-result" id="matchResult" role="status" aria-live="polite"></div>
-        </form>
-      </div>
-    </section>
-
-    <section id="diagnostico" class="section dark final-cta grid-bg">
-      <div class="reveal"><span class="eyebrow">Siguiente paso</span><h2>Deja de depender de la suerte. Construye un cierre <span class="yellow">consistente, medible y predecible.</span></h2><p class="lead">Agenda una llamada de diagnóstico y evalúa si este sistema se ajusta a tu proceso comercial.</p><div class="cta-panel"><div><small>Diagnóstico de cierre</small><b>Una conversación para identificar qué está frenando tu tasa de cierre.</b></div><a class="btn btn-yellow" href="https://manueltrejove.com/inicio" target="_blank" rel="noopener">Agendar llamada <span class="arrow">↗</span></a></div></div>
-    </section>
+    <footer><span>LA FÁBRICA DE CIERRES</span><span>VENTAS CON ESTRUCTURA, NO CON SUERTE.</span></footer>
   </main>
-  <footer class="footer"><span><strong>La Fábrica de Cierres</strong> · Experiencia interactiva</span><span>Diseño conceptual inspirado en ingeniería comercial.</span></footer>
-</div>
-
-<script src="app.js" defer></script>
+  <script src="app.js"></script>
 </body>
 </html>
