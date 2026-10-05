@@ -387,7 +387,7 @@ body{
     <aside class="sidebar">
       <div class="brand">
         <div class="brandmark">SO</div>
-        <div><b>SeguroOS</b><span>Agencia Demo</span></div>
+        <div><b>SeguroOS</b><span>Agencia Demo · datos ficticios</span></div>
       </div>
 
       <div class="navgroup">
@@ -702,42 +702,67 @@ const state={
     {id:2,name:"Carlos Ríos",doc:"91.331.992",products:"Vida",policies:1,next:"14 Oct",status:"Activo",phone:"301 550 1180"},
     {id:3,name:"Laura Gómez",doc:"1.098.345.221",products:"Moto · Vehículo",policies:2,next:"19 Oct",status:"Activo",phone:"315 664 3201"},
     {id:4,name:"Jorge Pérez",doc:"13.887.221",products:"Vehículo",policies:1,next:"28 Oct",status:"En renovación",phone:"320 887 1122"},
-    {id:5,name:"Diana Silva",doc:"63.551.884",products:"Viaje · Vida",policies:3,next:"02 Nov",status:"Activo",phone:"318 330 2121"}
+    {id:5,name:"Diana Silva",doc:"63.551.884",products:"Viaje · Vida",policies:3,next:"02 Nov",status:"Activo",phone:"318 330 2121"},
+    {id:6,name:"Felipe Ortiz",doc:"1.032.558.904",products:"Hogar · Vida",policies:2,next:"07 Nov",status:"Activo",phone:"310 441 9208"},
+    {id:7,name:"Sofía Vargas",doc:"52.884.771",products:"Viaje",policies:1,next:"10 Nov",status:"Activo",phone:"316 772 4401"},
+    {id:8,name:"Andrés León",doc:"79.668.410",products:"Empresarial · Vehículo",policies:3,next:"15 Nov",status:"Activo",phone:"300 773 1190"},
+    {id:9,name:"Paula Díaz",doc:"1.014.887.390",products:"Moto",policies:1,next:"18 Nov",status:"Activo",phone:"314 220 8831"},
+    {id:10,name:"María Suárez",doc:"37.556.821",products:"Vida · Salud",policies:2,next:"23 Nov",status:"Activo",phone:"311 689 4420"},
+    {id:11,name:"Ricardo Torres",doc:"88.221.447",products:"Vehículo · Hogar",policies:2,next:"29 Nov",status:"Activo",phone:"317 881 2054"},
+    {id:12,name:"Valentina Cruz",doc:"1.005.774.230",products:"Viaje · Vida",policies:2,next:"04 Dic",status:"Activo",phone:"313 940 1762"}
   ],
   policies:[
     {num:"AU-8831",client:"Ana Martínez",insurer:"Aseguradora Alpha",product:"Vehículo",start:"09 Oct 2025",end:"09 Oct 2026",premium:"$1,46M",status:"Activa"},
     {num:"VI-1002",client:"Carlos Ríos",insurer:"Aseguradora Beta",product:"Vida",start:"14 Oct 2025",end:"14 Oct 2026",premium:"$2,10M",status:"Activa"},
     {num:"MO-2281",client:"Laura Gómez",insurer:"Aseguradora Gamma",product:"Moto",start:"19 Oct 2025",end:"19 Oct 2026",premium:"$680K",status:"Activa"},
-    {num:"AU-9924",client:"Jorge Pérez",insurer:"Aseguradora Alpha",product:"Vehículo",start:"28 Oct 2025",end:"28 Oct 2026",premium:"$1,82M",status:"Por renovar"}
+    {num:"AU-9924",client:"Jorge Pérez",insurer:"Aseguradora Alpha",product:"Vehículo",start:"28 Oct 2025",end:"28 Oct 2026",premium:"$1,82M",status:"Por renovar"},
+    {num:"VI-4421",client:"Diana Silva",insurer:"Aseguradora Beta",product:"Vida",start:"02 Nov 2025",end:"02 Nov 2026",premium:"$2,45M",status:"Activa"},
+    {num:"HO-2154",client:"Felipe Ortiz",insurer:"Aseguradora Delta",product:"Hogar",start:"07 Nov 2025",end:"07 Nov 2026",premium:"$920K",status:"Activa"},
+    {num:"VJ-7782",client:"Sofía Vargas",insurer:"Aseguradora Beta",product:"Viaje",start:"10 Nov 2025",end:"10 Nov 2026",premium:"$540K",status:"Activa"},
+    {num:"EM-4407",client:"Andrés León",insurer:"Aseguradora Alpha",product:"Empresarial",start:"15 Nov 2025",end:"15 Nov 2026",premium:"$4,80M",status:"Activa"},
+    {num:"MO-9011",client:"Paula Díaz",insurer:"Aseguradora Gamma",product:"Moto",start:"18 Nov 2025",end:"18 Nov 2026",premium:"$760K",status:"Activa"},
+    {num:"VI-5518",client:"María Suárez",insurer:"Aseguradora Delta",product:"Vida",start:"23 Nov 2025",end:"23 Nov 2026",premium:"$1,95M",status:"Activa"},
+    {num:"AU-1134",client:"Ricardo Torres",insurer:"Aseguradora Alpha",product:"Vehículo",start:"29 Nov 2025",end:"29 Nov 2026",premium:"$2,20M",status:"Activa"},
+    {num:"VJ-6690",client:"Valentina Cruz",insurer:"Aseguradora Beta",product:"Viaje",start:"04 Dic 2025",end:"04 Dic 2026",premium:"$610K",status:"Activa"}
   ],
   renewals:[
     {client:"Ana Martínez",policy:"Vehículo",days:4,stage:"Contactado",advisor:"Diana",premium:"$1,46M"},
     {client:"Carlos Ríos",policy:"Vida",days:9,stage:"Cotizando",advisor:"Mateo",premium:"$2,10M"},
     {client:"Laura Gómez",policy:"Moto",days:14,stage:"Pendiente",advisor:"Sara",premium:"$680K"},
     {client:"Jorge Pérez",policy:"Vehículo",days:23,stage:"Pendiente",advisor:"Diana",premium:"$1,82M"},
-    {client:"Diana Silva",policy:"Vida",days:28,stage:"Contactado",advisor:"Andrés",premium:"$2,45M"}
+    {client:"Diana Silva",policy:"Vida",days:28,stage:"Contactado",advisor:"Andrés",premium:"$2,45M"},
+    {client:"Felipe Ortiz",policy:"Hogar",days:33,stage:"Pendiente",advisor:"Mateo",premium:"$920K"},
+    {client:"Sofía Vargas",policy:"Viaje",days:36,stage:"Cotizando",advisor:"Sara",premium:"$540K"},
+    {client:"Andrés León",policy:"Empresarial",days:41,stage:"Contactado",advisor:"Diana",premium:"$4,80M"}
   ],
   quotes:[
     {client:"Laura Gómez",type:"Vehículo",options:3,time:"Hace 12 min"},
     {client:"Felipe Ortiz",type:"Vida",options:2,time:"Hace 31 min"},
-    {client:"Sofía Vargas",type:"Viaje",options:4,time:"Hace 1 h"}
+    {client:"Sofía Vargas",type:"Viaje",options:4,time:"Hace 1 h"},
+    {client:"Andrés León",type:"Empresarial",options:3,time:"Hace 2 h"},
+    {client:"Valentina Cruz",type:"Vida",options:2,time:"Ayer"}
   ],
   debts:[
     {client:"Jorge Pérez",policy:"AU-9924",balance:"$2,4M",due:"03 Oct",status:"Vencido"},
-    {client:"María Suárez",policy:"VI-1002",balance:"$1,8M",due:"06 Oct",status:"Pendiente"},
-    {client:"Andrés León",policy:"PY-8720",balance:"$3,1M",due:"09 Oct",status:"Pendiente"},
-    {client:"Paula Díaz",policy:"MO-2281",balance:"$740K",due:"12 Oct",status:"Pendiente"}
+    {client:"María Suárez",policy:"VI-5518",balance:"$1,8M",due:"06 Oct",status:"Pendiente"},
+    {client:"Andrés León",policy:"EM-4407",balance:"$3,1M",due:"09 Oct",status:"Pendiente"},
+    {client:"Paula Díaz",policy:"MO-9011",balance:"$740K",due:"12 Oct",status:"Pendiente"},
+    {client:"Ricardo Torres",policy:"AU-1134",balance:"$1,2M",due:"18 Oct",status:"Pendiente"}
   ],
   tasks:[
     {title:"Llamar a Ana Martínez",meta:"Renovación vence en 4 días",done:false},
     {title:"Enviar propuesta a Laura",meta:"Vehículo · 3 alternativas",done:false},
     {title:"Cobro Jorge Pérez",meta:"Saldo vencido $2,4M",done:false},
-    {title:"Revisar documentos Carlos Ríos",meta:"Póliza de vida",done:true}
+    {title:"Revisar documentos Carlos Ríos",meta:"Póliza de vida",done:true},
+    {title:"Preparar renovación de Diana Silva",meta:"Vida · vence en 28 días",done:false},
+    {title:"Validar documentos de Andrés León",meta:"Seguro empresarial",done:true}
   ],
   docs:[
     {name:"Póliza AU-8831.pdf",client:"Ana Martínez",type:"Póliza"},
     {name:"Cédula Laura Gómez.pdf",client:"Laura Gómez",type:"Cédula"},
-    {name:"Soporte pago VI-1002.pdf",client:"Carlos Ríos",type:"Soporte de pago"}
+    {name:"Soporte pago VI-1002.pdf",client:"Carlos Ríos",type:"Soporte de pago"},
+    {name:"RUT Andrés León.pdf",client:"Andrés León",type:"Documento empresarial"},
+    {name:"Certificado viaje Valentina.pdf",client:"Valentina Cruz",type:"Certificado"}
   ],
   templates:[
     {name:"Renovación 30 días",text:"Hola {{nombre}}, tu póliza vence el {{fecha}}. Ya podemos revisar opciones de renovación."},
@@ -748,7 +773,9 @@ const state={
   chats:[
     {name:"Ana Martínez",meta:"Vehículo · renovación",messages:[{dir:"in",text:"Hola, ¿mi póliza vence este mes?"},{dir:"out",text:"Sí. Vence el 9 de octubre. Ya estamos revisando opciones."}]},
     {name:"Carlos Ríos",meta:"Vida",messages:[{dir:"in",text:"Gracias, ya vi la propuesta."},{dir:"out",text:"Perfecto. Si quieres, revisamos juntos las coberturas."}]},
-    {name:"Laura Gómez",meta:"Vehículo",messages:[{dir:"in",text:"¿Me puedes enviar la opción 2?"},{dir:"out",text:"Claro. Te la envío enseguida."}]}
+    {name:"Laura Gómez",meta:"Vehículo",messages:[{dir:"in",text:"¿Me puedes enviar la opción 2?"},{dir:"out",text:"Claro. Te la envío enseguida."}]},
+    {name:"Andrés León",meta:"Empresarial",messages:[{dir:"in",text:"¿Ya tienen la renovación de la póliza empresarial?"},{dir:"out",text:"Sí, estamos comparando tres opciones y te las compartimos hoy."}]},
+    {name:"María Suárez",meta:"Vida · pago",messages:[{dir:"in",text:"¿Me confirmas el saldo pendiente?"},{dir:"out",text:"Claro, el saldo registrado es de $1,8M."}]}
   ],
   integrations:[
     {name:"Aseguradora Alpha",desc:"API de cotización",status:"Conectada",on:true},
