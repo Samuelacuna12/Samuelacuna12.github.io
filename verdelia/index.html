@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#123d2d">
+<title>Verdelía · Modelo de Combos</title>
+<meta name="description" content="Dashboard financiero y comercial de los combos semanales Verdelía.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23123d2d'/%3E%3Ccircle cx='51' cy='56' r='25' fill='%23f46b2c'/%3E%3Cellipse cx='65' cy='30' rx='17' ry='8' transform='rotate(-28 65 30)' fill='%23c8ef69'/%3E%3C/svg%3E">
+<style>
+:root{
+  --green:#123d2d;--green-2:#1d5a42;--lime:#c9ef68;--orange:#f46b2c;
+  --cream:#f7f1e5;--cream-2:#eee3d1;--ink:#173128;--muted:#68746f;
+  --white:#fffdf8;--line:rgba(18,61,45,.13);--shadow:0 18px 55px rgba(18,61,45,.12);
+  --radius:28px;--radius-sm:18px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+button,input{font:inherit}.shell{max-width:1260px;margin:auto;padding:0 22px 60px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(247,241,229,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.topbar .inner{max-width:1260px;margin:auto;height:76px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.04em;font-size:24px;color:var(--green)}
+.mark{width:38px;height:38px;border-radius:13px;background:var(--green);position:relative;box-shadow:inset 0 -5px 12px rgba(0,0,0,.12)}
+.mark:before{content:"";position:absolute;width:17px;height:17px;border-radius:50%;background:var(--orange);left:10px;top:13px}
+.mark:after{content:"";position:absolute;width:14px;height:7px;border-radius:100% 0 100% 0;background:var(--lime);left:20px;top:7px;transform:rotate(-25deg)}
+.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{color:var(--green);text-decoration:none;font-size:13px;font-weight:800;padding:9px 12px;border-radius:999px}.nav a:hover{background:var(--white)}
+.hero{margin:28px 0 22px;background:var(--green);color:var(--white);border-radius:36px;min-height:360px;padding:46px;position:relative;overflow:hidden;display:grid;grid-template-columns:1.25fr .75fr;gap:34px;align-items:center;box-shadow:var(--shadow)}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%}.hero:before{width:330px;height:330px;background:var(--orange);right:-90px;top:-120px}.hero:after{width:240px;height:240px;background:var(--lime);right:80px;bottom:-155px}
+.hero-copy,.hero-side{position:relative;z-index:2}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--lime)}
+h1{font-size:clamp(46px,7vw,88px);letter-spacing:-.065em;line-height:.91;margin:14px 0 20px}.hero p{max-width:680px;margin:0;color:rgba(255,255,255,.78);font-size:17px}
+.hero-pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}.pill{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);padding:10px 13px;border-radius:999px;font-size:13px;font-weight:750}
+.hero-side{display:flex;justify-content:center}.produce-card{width:min(100%,340px);aspect-ratio:1;background:var(--cream);border-radius:42px;transform:rotate(5deg);position:relative;box-shadow:0 30px 70px rgba(0,0,0,.2)}
+.produce-card .orange{position:absolute;width:42%;aspect-ratio:1;border-radius:50%;background:var(--orange);left:18%;top:35%}.produce-card .lime{position:absolute;width:36%;height:18%;border-radius:100% 0 100% 0;background:var(--lime);right:15%;top:25%;transform:rotate(-22deg)}.produce-card .green{position:absolute;width:28%;height:44%;border-radius:50% 50% 44% 44%;background:var(--green-2);right:17%;bottom:10%;transform:rotate(17deg)}
+.section{margin-top:28px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:0 2px 14px}.section-head h2{margin:0;font-size:26px;letter-spacing:-.04em;color:var(--green)}.section-head p{margin:0;color:var(--muted);font-size:13px}
+.grid{display:grid;gap:16px}.grid-4{grid-template-columns:repeat(4,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:rgba(255,253,248,.9);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:0 10px 30px rgba(18,61,45,.06)}
+.kpi .label{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:var(--muted)}.kpi .value{font-size:30px;font-weight:950;letter-spacing:-.05em;color:var(--green);margin-top:7px}.kpi .sub{font-size:12px;color:var(--muted);margin-top:4px}
+.combo{position:relative;overflow:hidden;min-height:320px}.combo:before{content:"";position:absolute;width:130px;height:130px;border-radius:50%;right:-48px;top:-42px;background:var(--accent,#c9ef68);opacity:.75}.combo .tag{display:inline-flex;background:var(--green);color:white;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}.combo h3{font-size:34px;letter-spacing:-.055em;margin:16px 0 5px;color:var(--green)}.combo .for{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:14px}.combo ul{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:13px}.combo li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:6px}.combo .econ{display:flex;justify-content:space-between;align-items:end;margin-top:18px;padding-top:15px;border-top:1px solid var(--line)}.combo .profit{font-weight:950;color:var(--green);font-size:19px}.combo .cost{font-size:11px;color:var(--muted)}
+.scenario-tabs{display:flex;gap:8px;flex-wrap:wrap}.scenario-tabs button{border:0;padding:11px 16px;border-radius:999px;background:var(--white);color:var(--green);font-weight:900;cursor:pointer;border:1px solid var(--line)}.scenario-tabs button.active{background:var(--green);color:white}
+.simulator{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px}.controls .control{margin-bottom:18px}.control label{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:800;color:var(--green);margin-bottom:8px}.control input[type=range]{width:100%;accent-color:var(--green)}.mini-input{width:86px;border:1px solid var(--line);border-radius:12px;background:var(--cream);padding:7px 9px;color:var(--green);font-weight:800;text-align:right}
+.notice{border-radius:16px;background:#fff7df;border:1px solid #efdda1;padding:12px 14px;font-size:12px;color:#775c11;margin-top:12px}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.metric{background:var(--green);color:white;border-radius:22px;padding:18px;min-height:118px}.metric:nth-child(2){background:var(--orange)}.metric:nth-child(3){background:#275f49}.metric:nth-child(4){background:#dfeeb9;color:var(--green)}.metric .m-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:900;opacity:.75}.metric .m-value{font-size:28px;font-weight:950;letter-spacing:-.05em;margin-top:8px}.metric .m-sub{font-size:11px;opacity:.76;margin-top:4px}
+.proj-table{width:100%;border-collapse:separate;border-spacing:0 8px}.proj-table th{font-size:11px;text-align:right;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:4px 12px}.proj-table th:first-child{text-align:left}.proj-table td{background:var(--white);padding:14px 12px;text-align:right;font-size:13px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.proj-table td:first-child{text-align:left;font-weight:900;color:var(--green);border-left:1px solid var(--line);border-radius:14px 0 0 14px}.proj-table td:last-child{border-right:1px solid var(--line);border-radius:0 14px 14px 0;font-weight:950;color:var(--green)}
+.chart{display:grid;gap:13px;margin-top:8px}.bar-row{display:grid;grid-template-columns:74px 1fr 110px;align-items:center;gap:10px}.bar-row .name{font-size:12px;font-weight:900;color:var(--green)}.bar-bg{height:16px;border-radius:999px;background:var(--cream-2);overflow:hidden}.bar{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--green),var(--lime));transition:width .5s ease}.bar-val{text-align:right;font-size:12px;font-weight:900;color:var(--green)}
+.formula{font-size:12px;color:var(--muted);margin-top:12px}.footer{margin-top:36px;background:var(--green);color:white;border-radius:28px;padding:26px;display:flex;justify-content:space-between;gap:18px;align-items:center}.footer strong{font-size:20px;letter-spacing:-.03em}.footer span{font-size:12px;color:rgba(255,255,255,.68)}
+@media(max-width:1000px){.grid-4{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr .55fr;padding:38px}.simulator{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}.hero-side{opacity:.9}}
+@media(max-width:720px){.shell{padding:0 14px 40px}.topbar .inner{padding:0 14px;height:66px}.nav{display:none}.brand{font-size:21px}.hero{margin-top:16px;border-radius:28px;padding:30px 24px 200px;display:block;min-height:0}.hero-side{position:absolute;right:-38px;bottom:-46px;width:240px}.produce-card{width:220px;border-radius:34px}.grid-4,.grid-2{grid-template-columns:1fr}.card{border-radius:22px;padding:18px}.metrics{grid-template-columns:1fr 1fr}.metric .m-value{font-size:23px}.section-head{align-items:flex-start;flex-direction:column}.proj-wrap{overflow-x:auto}.proj-table{min-width:720px}.bar-row{grid-template-columns:62px 1fr 92px}.footer{align-items:flex-start;flex-direction:column}}
+@media(max-width:430px){h1{font-size:52px}.metrics{grid-template-columns:1fr}.hero{padding-bottom:170px}.hero-side{width:190px}.produce-card{width:180px}.combo h3{font-size:30px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="inner">
+    <div class="brand"><span class="mark" aria-hidden="true"></span>verdelía</div>
+    <nav class="nav" aria-label="Principal">
+      <a href="#combos">Combos</a><a href="#simulador">Simulador</a><a href="#proyecciones">Proyecciones</a>
+    </nav>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Modelo comercial · combos semanales</div>
+      <h1>Mercado fresco.<br>Negocio medible.</h1>
+      <p>Dashboard comercial de Verdelía para proyectar ventas, costo de producto, CPA y margen de contribución. El domicilio se cobra por separado al cliente.</p>
+      <div class="hero-pills"><span class="pill">CPA base $10.000</span><span class="pill">Empaque $600</span><span class="pill">Domicilio aparte</span><span class="pill">Sin merma teórica</span></div>
+    </div>
+    <div class="hero-side"><div class="produce-card"><span class="orange"></span><span class="lime"></span><span class="green"></span></div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><h2>La foto rápida</h2><p>Con mezcla base 40% / 30% / 20% / 10% entre los cuatro combos.</p></div></div>
+    <div class="grid grid-4">
+      <article class="card kpi"><div class="label">Ticket promedio</div><div class="value" id="kpiTicket">$77.500</div><div class="sub">Venta promedio por pedido</div></article>
+      <article class="card kpi"><div class="label">Costo producto</div><div class="value" id="kpiMerch">$44.570</div><div class="sub">Promedio ponderado</div></article>
+      <article class="card kpi"><div class="label">Margen por pedido</div><div class="value" id="kpiProfit">$22.330</div><div class="sub">Después de CPA + empaque</div></article>
+      <article class="card kpi"><div class="label">Margen contribución</div><div class="value" id="kpiMargin">28,8%</div><div class="sub">Antes de gastos fijos e impuestos</div></article>
+    </div>
+  </section>
+
+  <section class="section" id="combos">
+    <div class="section-head"><div><h2>Combos Verdelía</h2><p>Consumo semanal real, no volumen artificial.</p></div></div>
+    <div class="grid grid-4">
+      <article class="card combo" style="--accent:#c9ef68">
+        <span class="tag">1 persona</span><h3>$50.000</h3><div class="for">Individual · 1 semana</div>
+        <ul>
+          <li><span>Básicos</span><b>Papa, cebolla, tomate, ajo</b></li>
+          <li><span>Verduras</span><b>Zanahoria, pepino, calabacín</b></li>
+          <li><span>Verdes</span><b>Brócoli, espinaca, lechuga</b></li>
+          <li><span>Frutas</span><b>Banano, naranja, papaya</b></li>
+          <li><span>Proteína</span><b>12 huevos AA</b></li>
+        </ul>
+        <div class="econ"><div><div class="cost">Costo producto aprox.</div><b>$26.800</b></div><div class="profit">$12.600</div></div>
+      </article>
+      <article class="card combo" style="--accent:#f6b35e">
+        <span class="tag">1 persona +</span><h3>$75.000</h3><div class="for">Individual plus · más variedad</div>
+        <ul>
+          <li><span>Básicos</span><b>Papa, yuca, cebolla, tomate, ajo</b></li>
+          <li><span>Verduras</span><b>Calabacín, brócoli, pimentón</b></li>
+          <li><span>Verdes</span><b>Espinaca, lechuga, cilantro</b></li>
+          <li><span>Frutas</span><b>Banano, cítricos, piña, guayaba</b></li>
+          <li><span>Proteína</span><b>18 huevos AA</b></li>
+        </ul>
+        <div class="econ"><div><div class="cost">Costo producto aprox.</div><b>$41.700</b></div><div class="profit">$22.700</div></div>
+      </article>
+      <article class="card combo" style="--accent:#f46b2c">
+        <span class="tag">2 personas</span><h3>$100.000</h3><div class="for">Pareja · mercado semanal</div>
+        <ul>
+          <li><span>Básicos</span><b>Papa, yuca, plátano, ajo</b></li>
+          <li><span>Verduras</span><b>Brócoli, calabacín, pimentones</b></li>
+          <li><span>Extras</span><b>Habichuela, arveja, mazorca</b></li>
+          <li><span>Frutas</span><b>7+ variedades</b></li>
+          <li><span>Proteína</span><b>24 huevos AA</b></li>
+        </ul>
+        <div class="econ"><div><div class="cost">Costo producto aprox.</div><b>$58.800</b></div><div class="profit">$30.600</div></div>
+      </article>
+      <article class="card combo" style="--accent:#77c7a2">
+        <span class="tag">3–4 personas</span><h3>$150.000</h3><div class="for">Familiar · mercado completo</div>
+        <ul>
+          <li><span>Básicos</span><b>Más volumen de cocina</b></li>
+          <li><span>Verduras</span><b>12+ referencias</b></li>
+          <li><span>Frutas</span><b>10+ referencias</b></li>
+          <li><span>Premium</span><b>Aguacate, fresa, uva/lulo</b></li>
+          <li><span>Proteína</span><b>30 huevos AA</b></li>
+        </ul>
+        <div class="econ"><div><div class="cost">Costo producto aprox.</div><b>$95.800</b></div><div class="profit">$43.600</div></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="simulador">
+    <div class="section-head"><div><h2>Simulador de ventas</h2><p>Edita pedidos, días, CPA, empaque y mezcla. Todo recalcula al instante.</p></div>
+      <div class="scenario-tabs"><button data-orders="10" class="active">10/día</button><button data-orders="20">20/día</button><button data-orders="30">30/día</button></div>
+    </div>
+    <div class="simulator">
+      <article class="card controls">
+        <div class="control"><label><span>Pedidos por día</span><input class="mini-input" id="ordersInput" type="number" min="1" max="200" value="10"></label><input id="ordersRange" type="range" min="1" max="60" value="10"></div>
+        <div class="control"><label><span>Días de venta al mes</span><input class="mini-input" id="daysInput" type="number" min="1" max="31" value="30"></label><input id="daysRange" type="range" min="1" max="31" value="30"></div>
+        <div class="control"><label><span>CPA Facebook</span><input class="mini-input" id="cpaInput" type="number" min="0" step="500" value="10000"></label></div>
+        <div class="control"><label><span>Empaque por pedido</span><input class="mini-input" id="packInput" type="number" min="0" step="100" value="600"></label></div>
+        <div class="control"><label><span>Mix $50k</span><input class="mini-input mix" data-i="0" type="number" min="0" max="100" value="40">%</label><input class="mixRange" data-i="0" type="range" min="0" max="100" value="40"></div>
+        <div class="control"><label><span>Mix $75k</span><input class="mini-input mix" data-i="1" type="number" min="0" max="100" value="30">%</label><input class="mixRange" data-i="1" type="range" min="0" max="100" value="30"></div>
+        <div class="control"><label><span>Mix $100k</span><input class="mini-input mix" data-i="2" type="number" min="0" max="100" value="20">%</label><input class="mixRange" data-i="2" type="range" min="0" max="100" value="20"></div>
+        <div class="control"><label><span>Mix $150k</span><input class="mini-input mix" data-i="3" type="number" min="0" max="100" value="10">%</label><input class="mixRange" data-i="3" type="range" min="0" max="100" value="10"></div>
+        <div class="notice" id="mixNotice">Mezcla total: 100%. El domicilio no entra en el costo porque lo paga el cliente.</div>
+      </article>
+      <article class="card">
+        <div class="metrics">
+          <div class="metric"><div class="m-label">Venta diaria</div><div class="m-value" id="dailySales">$775.000</div><div class="m-sub" id="dailyOrders">10 pedidos</div></div>
+          <div class="metric"><div class="m-label">Margen diario</div><div class="m-value" id="dailyProfit">$223.300</div><div class="m-sub">Antes de gastos fijos</div></div>
+          <div class="metric"><div class="m-label">Venta mensual</div><div class="m-value" id="monthlySales">$23,25 M</div><div class="m-sub" id="monthDays">30 días de venta</div></div>
+          <div class="metric"><div class="m-label">Margen mensual</div><div class="m-value" id="monthlyProfit">$6,70 M</div><div class="m-sub">Después de producto + CPA + empaque</div></div>
+        </div>
+        <div class="chart" style="margin-top:22px">
+          <div class="bar-row"><div class="name">$50k</div><div class="bar-bg"><div class="bar" id="bar0"></div></div><div class="bar-val" id="barVal0"></div></div>
+          <div class="bar-row"><div class="name">$75k</div><div class="bar-bg"><div class="bar" id="bar1"></div></div><div class="bar-val" id="barVal1"></div></div>
+          <div class="bar-row"><div class="name">$100k</div><div class="bar-bg"><div class="bar" id="bar2"></div></div><div class="bar-val" id="barVal2"></div></div>
+          <div class="bar-row"><div class="name">$150k</div><div class="bar-bg"><div class="bar" id="bar3"></div></div><div class="bar-val" id="barVal3"></div></div>
+        </div>
+        <div class="formula">Margen de contribución = ventas − costo de mercancía − CPA − empaque. No incluye arriendo, nómina, impuestos ni otros gastos fijos.</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="proyecciones">
+    <div class="section-head"><div><h2>Proyección 10 · 20 · 30 pedidos diarios</h2><p>Escenario base: 30 días, CPA $10.000, empaque $600 y mix 40/30/20/10.</p></div></div>
+    <article class="card proj-wrap">
+      <table class="proj-table">
+        <thead><tr><th>Pedidos/día</th><th>Ventas/día</th><th>Ventas/mes</th><th>Producto/mes</th><th>Facebook/mes</th><th>Margen/mes</th></tr></thead>
+        <tbody id="projectionBody"></tbody>
+      </table>
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="grid grid-2">
+      <article class="card">
+        <div class="section-head"><div><h2>Economía por combo</h2><p>Cliente nuevo con CPA base de $10.000.</p></div></div>
+        <div class="chart" id="comboEconomics"></div>
+      </article>
+      <article class="card">
+        <div class="section-head"><div><h2>Qué cambia con recompra</h2><p>Cuando un cliente vuelve sin pagar otro CPA completo.</p></div></div>
+        <div class="metrics">
+          <div class="metric"><div class="m-label">Margen promedio nuevo</div><div class="m-value" id="newAvg">$22.330</div><div class="m-sub">Con CPA $10.000</div></div>
+          <div class="metric"><div class="m-label">Margen promedio recurrente</div><div class="m-value" id="repeatAvg">$32.330</div><div class="m-sub">Simulando CPA $0</div></div>
+        </div>
+        <div class="notice">La recurrencia es una palanca crítica: cada recompra orgánica puede recuperar hasta $10.000 adicionales por pedido frente al escenario de adquisición pagada.</div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer"><div><strong>verdelía</strong><br><span>Frutas · verduras · mercado semanal</span></div><span>Modelo financiero editable · Bucaramanga</span></footer>
+</main>
+
+<script>
+const PRICE=[50000,75000,100000,150000];
+const MERCH=[26800,41700,58800,95800];
+const fmt = n => new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(Math.round(n)).replace('COP','$');
+const compact = n => n>=1000000 ? '$'+(n/1000000).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' M' : fmt(n);
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ordersInput=$('#ordersInput'), ordersRange=$('#ordersRange'), daysInput=$('#daysInput'), daysRange=$('#daysRange'), cpaInput=$('#cpaInput'), packInput=$('#packInput');
+
+function mixValues(){
+  let vals=$$('.mix').map(i=>Math.max(0,Number(i.value)||0));
+  let total=vals.reduce((a,b)=>a+b,0);
+  if(total<=0){ vals=[40,30,20,10]; total=100; }
+  return {raw:vals,total,norm:vals.map(v=>v/total)};
+}
+function calc(orders,days,cpa,pack,mix){
+  const ticket=PRICE.reduce((a,p,i)=>a+p*mix[i],0);
+  const merch=MERCH.reduce((a,p,i)=>a+p*mix[i],0);
+  const profit=ticket-merch-cpa-pack;
+  return {ticket,merch,profit,margin:profit/ticket, dailySales:ticket*orders,dailyProfit:profit*orders,monthlySales:ticket*orders*days,monthlyProfit:profit*orders*days,monthlyMerch:merch*orders*days,monthlyCPA:cpa*orders*days};
+}
+function update(){
+  const orders=Math.max(1,Number(ordersInput.value)||1);
+  const days=Math.max(1,Number(daysInput.value)||1);
+  const cpa=Math.max(0,Number(cpaInput.value)||0);
+  const pack=Math.max(0,Number(packInput.value)||0);
+  ordersRange.value=Math.min(60,orders); daysRange.value=Math.min(31,days);
+  const mv=mixValues(), x=calc(orders,days,cpa,pack,mv.norm);
+  $('#kpiTicket').textContent=fmt(x.ticket); $('#kpiMerch').textContent=fmt(x.merch); $('#kpiProfit').textContent=fmt(x.profit); $('#kpiMargin').textContent=(x.margin*100).toLocaleString('es-CO',{maximumFractionDigits:1})+'%';
+  $('#dailySales').textContent=fmt(x.dailySales); $('#dailyProfit').textContent=fmt(x.dailyProfit); $('#monthlySales').textContent=compact(x.monthlySales); $('#monthlyProfit').textContent=compact(x.monthlyProfit); $('#dailyOrders').textContent=orders+' pedidos'; $('#monthDays').textContent=days+' días de venta';
+  $('#mixNotice').textContent='Mezcla total: '+mv.total.toLocaleString('es-CO')+'%. '+(Math.abs(mv.total-100)>.01?'Para calcular, el sistema normaliza automáticamente las proporciones. ':'')+'El domicilio lo paga el cliente.';
+  mv.norm.forEach((m,i)=>{ $('#bar'+i).style.width=(m*100)+'%'; $('#barVal'+i).textContent=(m*100).toLocaleString('es-CO',{maximumFractionDigits:1})+'% · '+(orders*m).toLocaleString('es-CO',{maximumFractionDigits:1})+'/día'; });
+  $('#newAvg').textContent=fmt(x.profit); $('#repeatAvg').textContent=fmt(x.profit+cpa);
+  $$('.scenario-tabs button').forEach(b=>b.classList.toggle('active',Number(b.dataset.orders)===orders));
+}
+function buildProjection(){
+  const mix=[.4,.3,.2,.1],days=30,cpa=10000,pack=600;
+  $('#projectionBody').innerHTML=[10,20,30].map(o=>{const x=calc(o,days,cpa,pack,mix);return '<tr><td>'+o+' pedidos</td><td>'+fmt(x.dailySales)+'</td><td>'+compact(x.monthlySales)+'</td><td>'+compact(x.monthlyMerch)+'</td><td>'+compact(x.monthlyCPA)+'</td><td>'+compact(x.monthlyProfit)+'</td></tr>'}).join('');
+}
+function buildEconomics(){
+  const cpa=10000,pack=600;
+  const profits=PRICE.map((p,i)=>p-MERCH[i]-cpa-pack), max=Math.max(...profits);
+  $('#comboEconomics').innerHTML=PRICE.map((p,i)=>'<div class="bar-row"><div class="name">'+fmt(p).replace('.000','k')+'</div><div class="bar-bg"><div class="bar" style="width:'+profits[i]/max*100+'%"></div></div><div class="bar-val">'+fmt(profits[i])+'</div></div>').join('');
+}
+ordersRange.addEventListener('input',e=>{ordersInput.value=e.target.value;update()}); ordersInput.addEventListener('input',update);
+daysRange.addEventListener('input',e=>{daysInput.value=e.target.value;update()}); daysInput.addEventListener('input',update);
+cpaInput.addEventListener('input',update); packInput.addEventListener('input',update);
+$$('.mix').forEach(inp=>inp.addEventListener('input',e=>{const i=e.target.dataset.i;$$('.mixRange')[i].value=e.target.value;update()}));
+$$('.mixRange').forEach(inp=>inp.addEventListener('input',e=>{const i=e.target.dataset.i;$$('.mix')[i].value=e.target.value;update()}));
+$$('.scenario-tabs button').forEach(b=>b.addEventListener('click',()=>{ordersInput.value=b.dataset.orders;ordersRange.value=b.dataset.orders;update()}));
+buildProjection(); buildEconomics(); update();
+</script>
+</body>
+</html>
