@@ -805,29 +805,29 @@ function showPage(p){
 function renderHomeRenew(days=30){
   const b=document.getElementById("homeRenewBody");b.innerHTML="";
   state.renewals.filter(r=>r.days<=days).forEach(r=>{
-    b.innerHTML+=\`<tr><td><div class="person"><div class="pavatar">\${initials(r.client)}</div><div><b>\${r.client}</b><span>\${r.advisor}</span></div></div></td><td>\${r.policy}</td><td>\${r.days} días</td><td>\${badge(r.stage)}</td><td><b>\${r.premium}</b></td><td><button class="btn small" onclick="openChatByName('\${r.client}')">Gestionar</button></td></tr>\`;
+    b.innerHTML+=`<tr><td><div class="person"><div class="pavatar">${initials(r.client)}</div><div><b>${r.client}</b><span>${r.advisor}</span></div></div></td><td>${r.policy}</td><td>${r.days} días</td><td>${badge(r.stage)}</td><td><b>${r.premium}</b></td><td><button class="btn small" onclick="openChatByName('${r.client}')">Gestionar</button></td></tr>`;
   });
 }
 function renderChart(){
   const vals=[72,86,80,98,104,118,128],labs=["Abr","May","Jun","Jul","Ago","Sep","Oct"];
-  document.getElementById("productionChart").innerHTML=vals.map((v,i)=>\`<div class="bar" style="height:\${Math.max(30,v/1.4)}%"><b>\${v}</b><span>\${labs[i]}</span></div>\`).join("");
+  document.getElementById("productionChart").innerHTML=vals.map((v,i)=>`<div class="bar" style="height:${Math.max(30,v/1.4)}%"><b>${v}</b><span>${labs[i]}</span></div>`).join("");
 }
 function renderClients(){
-  document.getElementById("clientsBody").innerHTML=state.clients.map(c=>\`<tr><td><div class="person"><div class="pavatar">\${initials(c.name)}</div><div><b>\${c.name}</b><span>\${c.phone}</span></div></div></td><td>\${c.doc}</td><td>\${c.products}</td><td>\${c.policies}</td><td>\${c.next}</td><td>\${badge(c.status)}</td><td><button class="btn small" onclick="openClient(\${c.id})">Ver ficha</button></td></tr>\`).join("");
+  document.getElementById("clientsBody").innerHTML=state.clients.map(c=>`<tr><td><div class="person"><div class="pavatar">${initials(c.name)}</div><div><b>${c.name}</b><span>${c.phone}</span></div></div></td><td>${c.doc}</td><td>${c.products}</td><td>${c.policies}</td><td>${c.next}</td><td>${badge(c.status)}</td><td><button class="btn small" onclick="openClient(${c.id})">Ver ficha</button></td></tr>`).join("");
 }
 function renderSelects(){
-  const opts=state.clients.map(c=>\`<option value="\${c.id}">\${c.name}</option>\`).join("");
+  const opts=state.clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join("");
   document.getElementById("quoteClient").innerHTML=opts;
   document.getElementById("docClient").innerHTML=opts;
 }
 function renderPolicies(){
-  document.getElementById("policiesBody").innerHTML=state.policies.map(p=>\`<tr><td><b>\${p.num}</b></td><td>\${p.client}</td><td>\${p.insurer}</td><td>\${p.product}</td><td>\${p.start}</td><td>\${p.end}</td><td><b>\${p.premium}</b></td><td>\${badge(p.status)}</td></tr>\`).join("");
+  document.getElementById("policiesBody").innerHTML=state.policies.map(p=>`<tr><td><b>${p.num}</b></td><td>${p.client}</td><td>${p.insurer}</td><td>${p.product}</td><td>${p.start}</td><td>${p.end}</td><td><b>${p.premium}</b></td><td>${badge(p.status)}</td></tr>`).join("");
 }
 function renderRenewals(){
   document.getElementById("r7").textContent=state.renewals.filter(r=>r.days<=7).length;
   document.getElementById("r15").textContent=state.renewals.filter(r=>r.days<=15).length;
   document.getElementById("r30").textContent=state.renewals.filter(r=>r.days<=30).length;
-  document.getElementById("renewalsBody").innerHTML=state.renewals.map((r,i)=>\`<tr><td><b>\${r.client}</b></td><td>\${r.policy}</td><td>\${r.days}</td><td>\${badge(r.stage)}</td><td>\${r.advisor}</td><td><button class="btn small" onclick="advanceRenewal(\${i})">Avanzar</button> <button class="btn small" onclick="openChatByName('\${r.client}')">Contactar</button></td></tr>\`).join("");
+  document.getElementById("renewalsBody").innerHTML=state.renewals.map((r,i)=>`<tr><td><b>${r.client}</b></td><td>${r.policy}</td><td>${r.days}</td><td>${badge(r.stage)}</td><td>${r.advisor}</td><td><button class="btn small" onclick="advanceRenewal(${i})">Avanzar</button> <button class="btn small" onclick="openChatByName('${r.client}')">Contactar</button></td></tr>`).join("");
 }
 function advanceRenewal(i){
   const flow=["Pendiente","Contactado","Cotizando","Renovada"];
@@ -836,7 +836,7 @@ function advanceRenewal(i){
 renderHomeRenew(30);toast("Etapa actualizada");
 }
 function renderRecentQuotes(){
-  document.getElementById("recentQuotes").innerHTML=state.quotes.map(q=>\`<div class="listrow"><div class="pavatar">\${initials(q.client)}</div><div class="grow"><b>\${q.client}</b><span>\${q.type} · \${q.options} opciones</span></div><div class="amount">\${q.time}</div></div>\`).join("");
+  document.getElementById("recentQuotes").innerHTML=state.quotes.map(q=>`<div class="listrow"><div class="pavatar">${initials(q.client)}</div><div class="grow"><b>${q.client}</b><span>${q.type} · ${q.options} opciones</span></div><div class="amount">${q.time}</div></div>`).join("");
 }
 function runQuote(){
   const c=state.clients.find(x=>String(x.id)===document.getElementById("quoteClient").value);
@@ -846,24 +846,24 @@ function runQuote(){
     {name:"Aseguradora Beta",price:"$1.460.000",desc:"Cobertura premium · asistencia 24/7"},
     {name:"Aseguradora Gamma",price:"$1.690.000",desc:"Todo riesgo · vehículo de reemplazo"}
   ];
-  document.getElementById("quoteResults").innerHTML=options.map((o,i)=>\`<div class="quoteoption"><div><h4>\${o.name}</h4><p>\${o.desc}</p><div style="margin-top:8px;display:flex;gap:6px"><button class="btn small" onclick="previewQuote('\${c.name}','\${type}','\${o.name}','\${o.price}')">Vista previa</button><button class="btn small" onclick="copyLink('\${c.name}',\${i})">Copiar link</button></div></div><div class="quoteprice">\${o.price}</div></div>\`).join("");
+  document.getElementById("quoteResults").innerHTML=options.map((o,i)=>`<div class="quoteoption"><div><h4>${o.name}</h4><p>${o.desc}</p><div style="margin-top:8px;display:flex;gap:6px"><button class="btn small" onclick="previewQuote('${c.name}','${type}','${o.name}','${o.price}')">Vista previa</button><button class="btn small" onclick="copyLink('${c.name}',${i})">Copiar link</button></div></div><div class="quoteprice">${o.price}</div></div>`).join("");
   state.quotes.unshift({client:c.name,type,options:3,time:"Ahora"});renderRecentQuotes();toast("3 alternativas encontradas");
 }
 function previewQuote(client,type,insurer,price){
-  openModal("Vista previa de cotización",\`<div class="card" style="box-shadow:none"><div style="font-size:8px;color:#888;text-transform:uppercase;letter-spacing:.1em">Agencia Demo</div><h2 style="margin:8px 0 4px;font-size:26px">Cotización de \${type}</h2><p style="font-size:10px;color:#777">Cliente: <b>\${client}</b></p><div class="quoteoption" style="margin-top:12px"><div><h4>\${insurer}</h4><p>Propuesta personalizada de demostración.</p></div><div class="quoteprice">\${price}</div></div><div class="formactions"><button class="btn" onclick="window.print()">Imprimir / PDF</button><button class="btn dark" onclick="closeModal()">Cerrar</button></div></div>\`);
+  openModal("Vista previa de cotización",`<div class="card" style="box-shadow:none"><div style="font-size:8px;color:#888;text-transform:uppercase;letter-spacing:.1em">Agencia Demo</div><h2 style="margin:8px 0 4px;font-size:26px">Cotización de ${type}</h2><p style="font-size:10px;color:#777">Cliente: <b>${client}</b></p><div class="quoteoption" style="margin-top:12px"><div><h4>${insurer}</h4><p>Propuesta personalizada de demostración.</p></div><div class="quoteprice">${price}</div></div><div class="formactions"><button class="btn" onclick="window.print()">Imprimir / PDF</button><button class="btn dark" onclick="closeModal()">Cerrar</button></div></div>`);
 }
 function copyLink(client,i){
   const u=location.origin+location.pathname+"?cotizacion="+encodeURIComponent(client)+"-"+(i+1);
   navigator.clipboard?.writeText(u);toast("Link copiado");
 }
 function renderChats(){
-  document.getElementById("chatList").innerHTML=state.chats.map((c,i)=>\`<button class="chatrow" onclick="openChat(\${i})"><div class="pavatar">\${initials(c.name)}</div><div style="min-width:0"><b style="font-size:10px">\${c.name}</b><div style="font-size:8px;color:#777;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">\${c.messages[c.messages.length-1].text}</div></div></button>\`).join("");
+  document.getElementById("chatList").innerHTML=state.chats.map((c,i)=>`<button class="chatrow" onclick="openChat(${i})"><div class="pavatar">${initials(c.name)}</div><div style="min-width:0"><b style="font-size:10px">${c.name}</b><div style="font-size:8px;color:#777;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.messages[c.messages.length-1].text}</div></div></button>`).join("");
 }
 let activeChat=-1;
 function openChat(i){
   activeChat=i;const c=state.chats[i];
   document.getElementById("chatTitle").textContent=c.name;document.getElementById("chatMeta").textContent=c.meta;
-  document.getElementById("chatBox").innerHTML=c.messages.map(m=>\`<div class="bubble \${m.dir}">\${m.text}</div>\`).join("");
+  document.getElementById("chatBox").innerHTML=c.messages.map(m=>`<div class="bubble ${m.dir}">${m.text}</div>`).join("");
   showPage("whatsapp");
 }
 function openChatByName(name){
@@ -876,50 +876,50 @@ function sendChat(){
   state.chats[activeChat].messages.push({dir:"out",text});input.value="";openChat(activeChat);renderChats();toast("Mensaje enviado");
 }
 function renderTemplates(){
-  document.getElementById("templatesGrid").innerHTML=state.templates.map((t,i)=>\`<div class="template"><h4>\${t.name}</h4><p>\${t.text}</p><div style="display:flex;gap:6px"><button class="btn small" onclick="useTemplate(\${i})">Usar</button><button class="btn small" onclick="editTemplate(\${i})">Editar</button></div></div>\`).join("");
+  document.getElementById("templatesGrid").innerHTML=state.templates.map((t,i)=>`<div class="template"><h4>${t.name}</h4><p>${t.text}</p><div style="display:flex;gap:6px"><button class="btn small" onclick="useTemplate(${i})">Usar</button><button class="btn small" onclick="editTemplate(${i})">Editar</button></div></div>`).join("");
 }
 function useTemplate(i){
   showPage("whatsapp");if(activeChat<0&&state.chats.length)openChat(0);
   document.getElementById("chatInput").value=state.templates[i].text.replaceAll("{{nombre}}",state.chats[activeChat]?.name||"Cliente").replaceAll("{{fecha}}","09 de octubre").replaceAll("{{saldo}}","$2,4M").replaceAll("{{poliza}}","AU-8831").replaceAll("{{link}}","https://demo.seguroos.com/cotizacion/123");
   toast("Plantilla cargada");
 }
-function editTemplate(i){openModal("Editar plantilla",\`<div class="field"><label>Nombre</label><input id="tplName" value="\${state.templates[i].name}"/></div><div class="field" style="margin-top:10px"><label>Mensaje</label><textarea id="tplText">\${state.templates[i].text}</textarea></div><div class="formactions"><button class="btn dark" onclick="saveTemplate(\${i})">Guardar</button></div>\`)}
+function editTemplate(i){openModal("Editar plantilla",`<div class="field"><label>Nombre</label><input id="tplName" value="${state.templates[i].name}"/></div><div class="field" style="margin-top:10px"><label>Mensaje</label><textarea id="tplText">${state.templates[i].text}</textarea></div><div class="formactions"><button class="btn dark" onclick="saveTemplate(${i})">Guardar</button></div>`)}
 function saveTemplate(i){state.templates[i].name=document.getElementById("tplName").value;state.templates[i].text=document.getElementById("tplText").value;renderTemplates();closeModal();toast("Plantilla actualizada")}
-function renderDebts(){document.getElementById("debtsBody").innerHTML=state.debts.map((d,i)=>\`<tr><td><b>\${d.client}</b></td><td>\${d.policy}</td><td><b>\${d.balance}</b></td><td>\${d.due}</td><td>\${badge(d.status)}</td><td><button class="btn small" onclick="openPayment(\${i})">Registrar pago</button></td></tr>\`).join("")}
-function openPayment(i){openModal("Registrar pago",\`<div class="formgrid"><div class="field"><label>Cliente</label><input value="\${state.debts[i].client}" disabled/></div><div class="field"><label>Póliza</label><input value="\${state.debts[i].policy}" disabled/></div><div class="field"><label>Valor recibido</label><input id="payAmount" value="\${state.debts[i].balance}"/></div><div class="field"><label>Método</label><select><option>Transferencia</option><option>Tarjeta</option><option>Efectivo</option></select></div></div><div class="formactions"><button class="btn dark" onclick="savePayment(\${i})">Confirmar pago</button></div>\`)}
+function renderDebts(){document.getElementById("debtsBody").innerHTML=state.debts.map((d,i)=>`<tr><td><b>${d.client}</b></td><td>${d.policy}</td><td><b>${d.balance}</b></td><td>${d.due}</td><td>${badge(d.status)}</td><td><button class="btn small" onclick="openPayment(${i})">Registrar pago</button></td></tr>`).join("")}
+function openPayment(i){openModal("Registrar pago",`<div class="formgrid"><div class="field"><label>Cliente</label><input value="${state.debts[i].client}" disabled/></div><div class="field"><label>Póliza</label><input value="${state.debts[i].policy}" disabled/></div><div class="field"><label>Valor recibido</label><input id="payAmount" value="${state.debts[i].balance}"/></div><div class="field"><label>Método</label><select><option>Transferencia</option><option>Tarjeta</option><option>Efectivo</option></select></div></div><div class="formactions"><button class="btn dark" onclick="savePayment(${i})">Confirmar pago</button></div>`)}
 function savePayment(i){state.debts[i].balance="$0";state.debts[i].status="Pagado";renderDebts();closeModal();toast("Pago registrado")}
-function renderDocs(){document.getElementById("docsList").innerHTML=state.docs.map(d=>\`<div class="listrow"><div class="navicon">DO</div><div class="grow"><b>\${d.name}</b><span>\${d.client} · \${d.type}</span></div><button class="btn small" onclick="toast('Vista previa simulada')">Abrir</button></div>\`).join("")}
+function renderDocs(){document.getElementById("docsList").innerHTML=state.docs.map(d=>`<div class="listrow"><div class="navicon">DO</div><div class="grow"><b>${d.name}</b><span>${d.client} · ${d.type}</span></div><button class="btn small" onclick="toast('Vista previa simulada')">Abrir</button></div>`).join("")}
 function uploadDoc(){
   const f=document.getElementById("docFile").files[0];if(!f){toast("Selecciona un archivo");return}
   const c=state.clients.find(x=>String(x.id)===document.getElementById("docClient").value);state.docs.unshift({name:f.name,client:c.name,type:document.getElementById("docType").value});renderDocs();toast("Documento agregado");
 }
 function renderTasks(){
-  document.getElementById("tasksList").innerHTML=state.tasks.map((t,i)=>\`<div class="listrow"><input type="checkbox" \${t.done?"checked":""} onchange="toggleTask(\${i},this.checked)"/><div class="grow"><b style="\${t.done?"text-decoration:line-through;color:#888":""}">\${t.title}</b><span>\${t.meta}</span></div></div>\`).join("");
+  document.getElementById("tasksList").innerHTML=state.tasks.map((t,i)=>`<div class="listrow"><input type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${i},this.checked)"/><div class="grow"><b style="${t.done?"text-decoration:line-through;color:#888":""}">${t.title}</b><span>${t.meta}</span></div></div>`).join("");
   document.getElementById("taskPending").textContent=state.tasks.filter(t=>!t.done).length;document.getElementById("taskDone").textContent=state.tasks.filter(t=>t.done).length;
 }
 function toggleTask(i,v){state.tasks[i].done=v;renderTasks();toast(v?"Tarea completada":"Tarea reabierta")}
-function renderAdvisors(){document.getElementById("advisorsList").innerHTML=state.advisors.map(a=>\`<div class="listrow"><div class="pavatar">\${initials(a[0])}</div><div class="grow"><b>\${a[0]}</b><span>Asesor comercial</span></div><div class="amount">\${a[1]}</div></div>\`).join("")}
-function renderIntegrations(){document.getElementById("integrationsList").innerHTML=state.integrations.map((x,i)=>\`<div class="integration"><div class="navicon">\${x.name.includes("WhatsApp")?"WA":x.name.includes("OpenAI")?"IA":"API"}</div><div class="grow"><h4>\${x.name}</h4><p>\${x.desc} · \${x.status}</p></div><button class="toggle \${x.on?"on":""}" onclick="toggleIntegration(\${i})"></button><button class="btn small" onclick="toast('Configuración de \${x.name}')">Configurar</button></div>\`).join("")}
+function renderAdvisors(){document.getElementById("advisorsList").innerHTML=state.advisors.map(a=>`<div class="listrow"><div class="pavatar">${initials(a[0])}</div><div class="grow"><b>${a[0]}</b><span>Asesor comercial</span></div><div class="amount">${a[1]}</div></div>`).join("")}
+function renderIntegrations(){document.getElementById("integrationsList").innerHTML=state.integrations.map((x,i)=>`<div class="integration"><div class="navicon">${x.name.includes("WhatsApp")?"WA":x.name.includes("OpenAI")?"IA":"API"}</div><div class="grow"><h4>${x.name}</h4><p>${x.desc} · ${x.status}</p></div><button class="toggle ${x.on?"on":""}" onclick="toggleIntegration(${i})"></button><button class="btn small" onclick="toast('Configuración de ${x.name}')">Configurar</button></div>`).join("")}
 function toggleIntegration(i){state.integrations[i].on=!state.integrations[i].on;state.integrations[i].status=state.integrations[i].on?"Conectada":"Disponible";renderIntegrations();toast(state.integrations[i].on?"Integración activada":"Integración desactivada")}
 function askAI(q){
-  const box=document.getElementById("aiBox");box.innerHTML+=\`<div class="bubble out">\${q}</div>\`;
+  const box=document.getElementById("aiBox");box.innerHTML+=`<div class="bubble out">${q}</div>`;
   const t=q.toLowerCase();let a="Puedo consultar clientes, renovaciones, cartera y producción en esta demo.";
   if(t.includes("vence"))a="Hay "+state.renewals.filter(r=>r.days<=7).length+" pólizas que vencen en los próximos 7 días. Ana Martínez es la más urgente.";
   else if(t.includes("cobrar")||t.includes("cartera"))a="La cartera pendiente es de $18,2M. Hay 24 clientes con saldo y 7 cuentas críticas.";
   else if(t.includes("producción")||t.includes("produccion")||t.includes("venta"))a="La producción del mes va en $128,4M, un 18,6% por encima del mes anterior.";
-  box.innerHTML+=\`<div class="bubble in">\${a}</div>\`;box.scrollTop=box.scrollHeight;
+  box.innerHTML+=`<div class="bubble in">${a}</div>`;box.scrollTop=box.scrollHeight;
 }
 function openClient(id){
   const c=state.clients.find(x=>x.id===id);const p=state.policies.filter(x=>x.client===c.name);
-  openModal("Ficha 360° · "+c.name,\`<div class="metricgrid"><div class="metric"><b>\${c.policies}</b><span>Pólizas activas</span></div><div class="metric"><b>\${c.next}</b><span>Próximo vencimiento</span></div></div><div class="list" style="margin-top:12px">\${p.map(x=>\`<div class="listrow"><div class="grow"><b>\${x.product} · \${x.num}</b><span>\${x.insurer} · vence \${x.end}</span></div><div class="amount">\${x.premium}</div></div>\`).join("")||'<div class="listrow"><div class="grow"><b>Sin pólizas visibles</b></div></div>'}</div><div class="formactions"><button class="btn" onclick="closeModal()">Cerrar</button><button class="btn dark" onclick="closeModal();openChatByName('\${c.name}')">Abrir WhatsApp</button></div>\`);
+  openModal("Ficha 360° · "+c.name,`<div class="metricgrid"><div class="metric"><b>${c.policies}</b><span>Pólizas activas</span></div><div class="metric"><b>${c.next}</b><span>Próximo vencimiento</span></div></div><div class="list" style="margin-top:12px">${p.map(x=>`<div class="listrow"><div class="grow"><b>${x.product} · ${x.num}</b><span>${x.insurer} · vence ${x.end}</span></div><div class="amount">${x.premium}</div></div>`).join("")||'<div class="listrow"><div class="grow"><b>Sin pólizas visibles</b></div></div>'}</div><div class="formactions"><button class="btn" onclick="closeModal()">Cerrar</button><button class="btn dark" onclick="closeModal();openChatByName('${c.name}')">Abrir WhatsApp</button></div>`);
 }
-function newClientModal(){openModal("Nuevo cliente",\`<div class="formgrid"><div class="field"><label>Nombre</label><input id="ncName" value="Nuevo cliente"/></div><div class="field"><label>Documento</label><input id="ncDoc" value="1.098.555.222"/></div><div class="field"><label>Teléfono</label><input id="ncPhone" value="300 555 1122"/></div><div class="field"><label>Producto inicial</label><select id="ncProd"><option>Vehículo</option><option>Vida</option><option>Moto</option><option>Viaje</option></select></div></div><div class="formactions"><button class="btn dark" onclick="saveClient()">Crear cliente</button></div>\`)}
+function newClientModal(){openModal("Nuevo cliente",`<div class="formgrid"><div class="field"><label>Nombre</label><input id="ncName" value="Nuevo cliente"/></div><div class="field"><label>Documento</label><input id="ncDoc" value="1.098.555.222"/></div><div class="field"><label>Teléfono</label><input id="ncPhone" value="300 555 1122"/></div><div class="field"><label>Producto inicial</label><select id="ncProd"><option>Vehículo</option><option>Vida</option><option>Moto</option><option>Viaje</option></select></div></div><div class="formactions"><button class="btn dark" onclick="saveClient()">Crear cliente</button></div>`)}
 function saveClient(){const n=document.getElementById("ncName").value.trim();if(!n){toast("Escribe el nombre");return}state.clients.push({id:Date.now(),name:n,doc:document.getElementById("ncDoc").value,products:document.getElementById("ncProd").value,policies:0,next:"—",status:"Activo",phone:document.getElementById("ncPhone").value});renderClients();renderSelects();closeModal();toast("Cliente creado")}
-function newPolicyModal(){openModal("Registrar póliza",\`<div class="formgrid"><div class="field"><label>Cliente</label><select id="npClient">\${state.clients.map(c=>\`<option>\${c.name}</option>\`).join("")}</select></div><div class="field"><label>Número</label><input id="npNum" value="AU-NEW-001"/></div><div class="field"><label>Aseguradora</label><input id="npIns" value="Aseguradora Alpha"/></div><div class="field"><label>Producto</label><select id="npProd"><option>Vehículo</option><option>Vida</option><option>Moto</option><option>Viaje</option></select></div><div class="field"><label>Inicio</label><input id="npStart" value="05 Oct 2026"/></div><div class="field"><label>Vence</label><input id="npEnd" value="05 Oct 2027"/></div><div class="field"><label>Prima</label><input id="npPremium" value="$1,50M"/></div></div><div class="formactions"><button class="btn dark" onclick="savePolicy()">Guardar póliza</button></div>\`)}
+function newPolicyModal(){openModal("Registrar póliza",`<div class="formgrid"><div class="field"><label>Cliente</label><select id="npClient">${state.clients.map(c=>`<option>${c.name}</option>`).join("")}</select></div><div class="field"><label>Número</label><input id="npNum" value="AU-NEW-001"/></div><div class="field"><label>Aseguradora</label><input id="npIns" value="Aseguradora Alpha"/></div><div class="field"><label>Producto</label><select id="npProd"><option>Vehículo</option><option>Vida</option><option>Moto</option><option>Viaje</option></select></div><div class="field"><label>Inicio</label><input id="npStart" value="05 Oct 2026"/></div><div class="field"><label>Vence</label><input id="npEnd" value="05 Oct 2027"/></div><div class="field"><label>Prima</label><input id="npPremium" value="$1,50M"/></div></div><div class="formactions"><button class="btn dark" onclick="savePolicy()">Guardar póliza</button></div>`)}
 function savePolicy(){state.policies.unshift({num:document.getElementById("npNum").value,client:document.getElementById("npClient").value,insurer:document.getElementById("npIns").value,product:document.getElementById("npProd").value,start:document.getElementById("npStart").value,end:document.getElementById("npEnd").value,premium:document.getElementById("npPremium").value,status:"Activa"});renderPolicies();closeModal();toast("Póliza registrada")}
-function newTaskModal(){openModal("Nueva tarea",\`<div class="field"><label>Título</label><input id="ntTitle" value="Seguimiento nuevo cliente"/></div><div class="field" style="margin-top:10px"><label>Detalle</label><textarea id="ntMeta">Contactar y validar documentación.</textarea></div><div class="formactions"><button class="btn dark" onclick="saveTask()">Crear tarea</button></div>\`)}
+function newTaskModal(){openModal("Nueva tarea",`<div class="field"><label>Título</label><input id="ntTitle" value="Seguimiento nuevo cliente"/></div><div class="field" style="margin-top:10px"><label>Detalle</label><textarea id="ntMeta">Contactar y validar documentación.</textarea></div><div class="formactions"><button class="btn dark" onclick="saveTask()">Crear tarea</button></div>`)}
 function saveTask(){state.tasks.unshift({title:document.getElementById("ntTitle").value,meta:document.getElementById("ntMeta").value,done:false});renderTasks();closeModal();toast("Tarea creada")}
-function newTemplateModal(){openModal("Nueva plantilla",\`<div class="field"><label>Nombre</label><input id="newTplName" value="Seguimiento comercial"/></div><div class="field" style="margin-top:10px"><label>Mensaje</label><textarea id="newTplText">Hola {{nombre}}, queremos hacer seguimiento a tu solicitud.</textarea></div><div class="formactions"><button class="btn dark" onclick="saveNewTemplate()">Crear plantilla</button></div>\`)}
+function newTemplateModal(){openModal("Nueva plantilla",`<div class="field"><label>Nombre</label><input id="newTplName" value="Seguimiento comercial"/></div><div class="field" style="margin-top:10px"><label>Mensaje</label><textarea id="newTplText">Hola {{nombre}}, queremos hacer seguimiento a tu solicitud.</textarea></div><div class="formactions"><button class="btn dark" onclick="saveNewTemplate()">Crear plantilla</button></div>`)}
 function saveNewTemplate(){state.templates.unshift({name:document.getElementById("newTplName").value,text:document.getElementById("newTplText").value});renderTemplates();closeModal();toast("Plantilla creada")}
 function csv(filename,rows){const s=rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(",")).join("\n");const b=new Blob([s],{type:"text/csv;charset=utf-8;"});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download=filename;a.click();URL.revokeObjectURL(u)}
 function globalSearch(q){q=q.trim().toLowerCase();if(!q)return;const c=state.clients.find(x=>[x.name,x.doc,x.phone,x.products].join(" ").toLowerCase().includes(q));const p=state.policies.find(x=>[x.num,x.client,x.product,x.insurer].join(" ").toLowerCase().includes(q));if(c){showPage("clientes");openClient(c.id);return}if(p){showPage("polizas");toast("Encontrada póliza "+p.num+" de "+p.client);return}toast("Sin coincidencias")}
