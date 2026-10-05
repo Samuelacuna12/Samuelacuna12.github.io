@@ -769,6 +769,143 @@
       .scale-arrow{font-size:64px;right:18px;top:18px}
     }
 
+  
+    /* ===== Portada v4 · visual limpia de escalamiento ===== */
+    .growth-visual{
+      position:relative;
+      min-height:590px;
+      border-radius:38px;
+      padding:28px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 78% 18%,rgba(255,255,255,.96),transparent 20%),
+        linear-gradient(145deg,#a8cff2 0%,#dceeff 52%,#bfd9f2 100%);
+      border:1px solid rgba(255,255,255,.9);
+      box-shadow:0 26px 70px rgba(35,61,95,.15),inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .growth-visual:before{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);
+      background-size:56px 56px;
+      opacity:.38;
+      pointer-events:none;
+    }
+    .growth-top{
+      position:relative;z-index:2;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
+    }
+    .growth-goal{
+      width:min(320px,70%);
+      padding:20px 22px;
+      border-radius:26px;
+      background:rgba(255,255,255,.76);
+      border:1px solid rgba(255,255,255,.96);
+      box-shadow:0 18px 40px rgba(34,61,94,.10);
+      backdrop-filter:blur(16px);
+    }
+    .growth-goal span,.growth-badge{
+      font-size:10px;letter-spacing:.15em;font-weight:800;color:#5c748b;
+    }
+    .growth-goal strong{
+      display:block;
+      font-size:52px;line-height:1;letter-spacing:-.065em;
+      margin:7px 0 8px;color:#111923;
+    }
+    .growth-goal small{
+      display:block;font-size:12px;line-height:1.45;color:#566679;
+    }
+    .growth-badge{
+      padding:11px 14px;border-radius:999px;
+      background:rgba(255,255,255,.58);
+      border:1px solid rgba(255,255,255,.88);
+      white-space:nowrap;
+    }
+    .growth-stage{
+      position:relative;z-index:2;
+      height:285px;
+      margin:30px 8px 16px;
+      border-left:2px solid rgba(32,58,87,.16);
+      border-bottom:2px solid rgba(32,58,87,.16);
+      border-radius:0 0 0 18px;
+    }
+    .growth-bars{
+      position:absolute;left:26px;right:90px;bottom:0;top:18px;
+      display:flex;align-items:flex-end;gap:14px;
+    }
+    .gbar{
+      flex:1;
+      border-radius:22px 22px 0 0;
+      background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.56));
+      border:1px solid rgba(255,255,255,.96);
+      box-shadow:0 18px 36px rgba(37,65,97,.10);
+      position:relative;
+    }
+    .gbar span{
+      position:absolute;left:14px;top:12px;
+      font-size:10px;font-weight:800;letter-spacing:.12em;color:#688096;
+    }
+    .gb1{height:30%}.gb2{height:48%}.gb3{height:68%}.gb4{height:90%}
+    .growth-arrow{
+      position:absolute;right:20px;top:4px;width:90px;height:250px;
+    }
+    .growth-arrow .shaft{
+      position:absolute;left:42px;bottom:8px;width:8px;height:205px;
+      background:#183651;border-radius:999px;
+      transform:rotate(21deg);transform-origin:bottom center;
+      box-shadow:0 10px 20px rgba(24,54,81,.12);
+    }
+    .growth-arrow .head{
+      position:absolute;right:0;top:0;width:48px;height:48px;
+      border-top:8px solid #183651;border-right:8px solid #183651;
+      transform:rotate(2deg);
+    }
+    .growth-labels{
+      position:relative;z-index:2;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+    }
+    .growth-labels div{
+      padding:13px 12px;border-radius:18px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(255,255,255,.86);
+    }
+    .growth-labels b{
+      display:block;font-size:12px;margin-bottom:4px;
+    }
+    .growth-labels span{
+      display:block;font-size:9.5px;color:#617185;line-height:1.35;
+    }
+    .growth-foot{
+      position:relative;z-index:2;
+      display:flex;gap:7px;flex-wrap:wrap;
+      margin-top:15px;
+    }
+    .growth-foot span{
+      padding:8px 10px;border-radius:999px;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(255,255,255,.9);
+      font-size:9.5px;font-weight:800;color:#42566d;
+    }
+    @media (max-width:1050px){
+      .growth-visual{min-height:540px}
+    }
+    @media (max-width:700px){
+      .growth-visual{min-height:auto;padding:18px;border-radius:28px}
+      .growth-top{display:block}
+      .growth-goal{width:100%;max-width:none}
+      .growth-badge{display:inline-block;margin-top:10px}
+      .growth-stage{height:240px;margin:24px 2px 14px}
+      .growth-bars{left:16px;right:64px;gap:8px}
+      .gbar{border-radius:14px 14px 0 0}
+      .growth-arrow{right:2px;width:68px;height:220px}
+      .growth-arrow .shaft{left:31px;height:176px;width:7px}
+      .growth-arrow .head{width:38px;height:38px;border-width:7px}
+      .growth-labels{grid-template-columns:repeat(2,1fr)}
+      .growth-goal strong{font-size:44px}
+    }
+
   </style>
 </head>
 <body>
@@ -789,40 +926,39 @@
           <p class="lead fade-up delay2">Marketing, ventas, procesos, equipo, finanzas, tecnología e inteligencia artificial conectados bajo una sola estrategia de crecimiento.</p>
           <div class="tagrow fade-up delay3"><span class="tag">Empresas en crecimiento</span><span class="tag">E-commerce</span><span class="tag">Productores</span><span class="tag">Negocios tradicionales que quieren digitalizarse</span></div>
         </div>
-        <div class="scale-visual fade-up delay2">
-          <div class="scale-grid"></div>
-          <div class="scale-line">
-            <span class="scale-point sp1"></span>
-            <span class="scale-point sp2"></span>
-            <span class="scale-point sp3"></span>
-            <span class="scale-point sp4"></span>
-            <span class="scale-point sp5"></span>
+        <div class="growth-visual fade-up delay2">
+          <div class="growth-top">
+            <div class="growth-goal">
+              <span>OBJETIVO</span>
+              <strong>x2–x3</strong>
+              <small>Construir una estructura capaz de soportar más crecimiento.</small>
+            </div>
+            <div class="growth-badge">SISTEMA DE ESCALAMIENTO</div>
           </div>
 
-          <div class="scale-center">
-            <span>EMPRESA</span>
-            <strong>ESCALABLE</strong>
-            <small>Sistema conectado</small>
+          <div class="growth-stage">
+            <div class="growth-bars" aria-hidden="true">
+              <div class="gbar gb1"><span>01</span></div>
+              <div class="gbar gb2"><span>02</span></div>
+              <div class="gbar gb3"><span>03</span></div>
+              <div class="gbar gb4"><span>04</span></div>
+            </div>
+            <div class="growth-arrow" aria-hidden="true">
+              <span class="shaft"></span>
+              <span class="head"></span>
+            </div>
           </div>
 
-          <div class="scale-module sm1">Marketing</div>
-          <div class="scale-module sm2">Ventas</div>
-          <div class="scale-module sm3">Finanzas</div>
-          <div class="scale-module sm4">Operación</div>
-          <div class="scale-module sm5">IA & Sistemas</div>
-
-          <div class="scale-card scale-goal">
-            <div class="small">OBJETIVO</div>
-            <div class="big-num">x2–x3</div>
-            <div class="small">Más estructura para soportar más crecimiento.</div>
+          <div class="growth-labels">
+            <div><b>Estructura</b><span>Procesos claros</span></div>
+            <div><b>Control</b><span>Datos y métricas</span></div>
+            <div><b>Eficiencia</b><span>IA y automatización</span></div>
+            <div><b>Escalamiento</b><span>Más capacidad de crecer</span></div>
           </div>
 
-          <div class="scale-card scale-proof">
-            <div class="mini-kicker">Más control. Más datos.</div>
-            <div class="small">Menos dependencia de personas, tareas manuales y un solo canal.</div>
+          <div class="growth-foot">
+            <span>Marketing</span><span>Ventas</span><span>Finanzas</span><span>Operación</span><span>IA & Sistemas</span>
           </div>
-
-          <div class="scale-arrow">↗</div>
         </div>
       </div>
       <div class="section-index">01 · INICIO</div><div class="footer-nav"></div>
