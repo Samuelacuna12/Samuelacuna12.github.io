@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#d8d6d2"/>
+<title>SeguroOS — Dashboard</title>
+<style>
+:root{
+  --bg:#d6d3cf;--panel:#f6f5f2;--card:#ffffff;--ink:#151515;--muted:#78736e;
+  --line:rgba(20,20,20,.08);--accent:#dffe69;--accent2:#c8ef43;--orange:#ff7a42;
+  --shadow:0 20px 55px rgba(32,27,22,.13);--r:28px;--r2:20px;
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select{font:inherit}.app{min-height:100vh;padding:18px}
+.shell{max-width:1600px;margin:auto;min-height:calc(100vh - 36px);background:var(--panel);border-radius:36px;overflow:hidden;box-shadow:var(--shadow);display:grid;grid-template-columns:92px 1fr;position:relative}
+.sidebar{background:rgba(255,255,255,.72);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:17px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:900;letter-spacing:-.06em;margin-bottom:10px}
+.navbtn{width:52px;height:52px;border:0;border-radius:18px;background:transparent;color:#777;display:grid;place-items:center;cursor:pointer;font-size:19px;transition:.2s}
+.navbtn:hover,.navbtn.active{background:#fff;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+.spacer{flex:1}.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,#ffd0bb,#ff7b46);display:grid;place-items:center;font-weight:800}
+.main{padding:22px 26px 28px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.title h1{margin:0;font-size:28px;letter-spacing:-.045em}.title p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.tools{display:flex;gap:10px;align-items:center}.search{height:44px;width:260px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:0 14px;outline:none}
+.iconbtn{width:44px;height:44px;border:1px solid var(--line);background:#fff;border-radius:16px;cursor:pointer}
+.primary{height:44px;border:0;background:var(--ink);color:#fff;border-radius:16px;padding:0 16px;font-weight:800;cursor:pointer}
+.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;margin-bottom:16px}
+.welcome{min-height:250px;border-radius:32px;background:
+linear-gradient(120deg,rgba(255,255,255,.82),rgba(255,255,255,.45)),
+radial-gradient(circle at 80% 18%,#fff 0 10%,transparent 11%),
+linear-gradient(145deg,#dedbd7,#f1efeb);padding:26px;position:relative;overflow:hidden}
+.welcome:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-90px;bottom:-120px;background:radial-gradient(circle,#fff,rgba(223,254,105,.9) 44%,transparent 68%);opacity:.75}
+.welcome h2{font-size:38px;line-height:1.02;letter-spacing:-.055em;max-width:680px;margin:0 0 10px;position:relative;z-index:2}
+.welcome p{color:#666;max-width:620px;position:relative;z-index:2}.quick{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px;position:relative;z-index:2}
+.quick button{border:1px solid rgba(0,0,0,.06);background:#fff;border-radius:999px;padding:11px 14px;font-size:12px;font-weight:800;cursor:pointer}
+.quick button.accent{background:var(--accent)}
+.alertcard{background:var(--ink);color:#fff;border-radius:32px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;min-height:250px}
+.alertcard small{color:#aaa}.alertnum{font-size:58px;font-weight:900;letter-spacing:-.07em;line-height:.9}.alertcard .accentbar{height:10px;border-radius:999px;background:#2a2a2a;overflow:hidden}.alertcard .accentbar span{display:block;height:100%;width:72%;background:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;min-height:126px;position:relative;overflow:hidden}
+.kpi .label{font-size:11px;color:#7a756f;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.kpi b{display:block;font-size:34px;letter-spacing:-.05em;margin-top:18px}.kpi em{font-style:normal;font-size:11px;color:#5f5b56}.kpi.good:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-30px;bottom:-40px;background:var(--accent);opacity:.85}
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:16px}.panel{background:#fff;border:1px solid var(--line);border-radius:28px;padding:20px;min-width:0}
+.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.panelhead h3{margin:0;font-size:17px;letter-spacing:-.03em}.sub{color:#89847f;font-size:11px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}.tab{border:0;background:#f0eeeb;border-radius:999px;padding:8px 10px;font-size:10px;font-weight:800;cursor:pointer}.tab.active{background:var(--ink);color:#fff}
+.table{width:100%;border-collapse:collapse}.table th{font-size:10px;color:#918b85;text-align:left;padding:0 10px 10px;text-transform:uppercase;letter-spacing:.08em}.table td{padding:12px 10px;border-top:1px solid #efedea;font-size:12px;vertical-align:middle}.name{display:flex;align-items:center;gap:9px}.dotav{width:31px;height:31px;border-radius:50%;background:linear-gradient(145deg,#fed4c2,#fd8452);display:grid;place-items:center;font-size:10px;font-weight:800}.status{display:inline-flex;padding:7px 9px;border-radius:999px;font-size:9px;font-weight:800}.s-green{background:#e9f9bd}.s-orange{background:#ffe2d5}.s-gray{background:#efeeec}
+.chartwrap{height:225px;display:flex;align-items:end;gap:10px;padding:12px 4px 0}.bar{flex:1;background:#eeeae6;border-radius:16px 16px 5px 5px;position:relative;min-width:24px;transition:.25s}.bar:hover{background:var(--accent)}.bar span{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:9px;color:#8b857f}.bar i{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;font-weight:800}
+.rowcards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.task,.quote,.api{border-radius:24px;padding:18px;background:#fff;border:1px solid var(--line)}
+.task strong,.quote strong,.api strong{display:block;font-size:14px;margin-bottom:6px}.task p,.quote p,.api p{font-size:11px;color:#817b75;margin:0 0 12px;line-height:1.45}
+.progressbar{height:8px;border-radius:999px;background:#efedea;overflow:hidden}.progressbar span{height:100%;display:block;background:var(--accent2)}
+.list{display:grid;gap:9px}.listitem{display:flex;align-items:center;gap:11px;padding:11px;border-radius:17px;background:#f6f4f1}.listitem .grow{flex:1}.listitem b{font-size:11px}.listitem small{display:block;color:#918b85;font-size:9px;margin-top:2px}.amount{font-size:11px;font-weight:900}
+.assistant{display:flex;gap:10px;margin-top:12px}.assistant input{flex:1;height:42px;border:1px solid var(--line);border-radius:14px;padding:0 12px;background:#faf9f7;outline:none}.assistant button{width:42px;border:0;border-radius:14px;background:var(--accent);font-weight:900;cursor:pointer}
+.toast{position:fixed;right:24px;bottom:24px;background:#171717;color:#fff;padding:14px 16px;border-radius:16px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:100}.toast.show{opacity:1;transform:none}
+.modalback{position:fixed;inset:0;background:rgba(0,0,0,.28);display:none;align-items:center;justify-content:center;padding:20px;z-index:90}.modalback.show{display:flex}.modal{width:min(560px,100%);background:#fff;border-radius:28px;padding:22px;box-shadow:var(--shadow)}.modal h3{margin:0 0 14px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:5px}.field label{font-size:10px;font-weight:800;color:#777}.field input,.field select{height:42px;border:1px solid var(--line);border-radius:13px;padding:0 11px;background:#faf9f7;outline:none}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.ghost{height:42px;border:1px solid var(--line);background:#fff;border-radius:13px;padding:0 14px;font-weight:800;cursor:pointer}
+.mobilebar{display:none}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.hero,.grid2{grid-template-columns:1fr}.rowcards{grid-template-columns:1fr 1fr}.search{width:200px}}
+@media(max-width:760px){
+  .app{padding:0}.shell{min-height:100vh;border-radius:0;grid-template-columns:1fr}.sidebar{display:none}.main{padding:16px 14px 86px}.top{align-items:flex-start}.tools .search{display:none}.title h1{font-size:24px}.hero{gap:12px}.welcome{min-height:330px;padding:20px}.welcome h2{font-size:34px}.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi{padding:15px;min-height:112px}.kpi b{font-size:28px}.grid2,.rowcards{grid-template-columns:1fr}.table th:nth-child(3),.table td:nth-child(3){display:none}.mobilebar{position:fixed;left:12px;right:12px;bottom:12px;height:66px;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-radius:22px;border:1px solid var(--line);display:flex;align-items:center;justify-content:space-around;z-index:70;box-shadow:0 16px 40px rgba(0,0,0,.12)}.mobilebar button{border:0;background:transparent;font-size:20px}.formgrid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="logo">SO</div>
+      <button class="navbtn active" data-section="inicio" title="Inicio">⌂</button>
+      <button class="navbtn" data-section="clientes" title="Clientes">◎</button>
+      <button class="navbtn" data-section="cotizaciones" title="Cotizaciones">◫</button>
+      <button class="navbtn" data-section="whatsapp" title="WhatsApp">◉</button>
+      <button class="navbtn" data-section="cartera" title="Cartera">$</button>
+      <button class="navbtn" data-section="reportes" title="Reportes">⌁</button>
+      <div class="spacer"></div>
+      <button class="navbtn" title="Ajustes">⚙</button>
+      <div class="avatar">SA</div>
+    </aside>
+
+    <main class="main">
+      <div class="top">
+        <div class="title">
+          <h1 id="pageTitle">Buenos días, Samuel</h1>
+          <p id="pageSub">Aquí tienes el estado general de tu operación de seguros.</p>
+        </div>
+        <div class="tools">
+          <input id="search" class="search" placeholder="Buscar cliente, póliza o placa..."/>
+          <button class="iconbtn" id="notifBtn">🔔</button>
+          <button class="primary" id="newQuoteBtn">+ Nueva cotización</button>
+        </div>
+      </div>
+
+      <section id="inicio">
+        <div class="hero">
+          <div class="welcome">
+            <h2>Todo tu negocio de seguros,<br>en un solo lugar.</h2>
+            <p>Cotiza, administra clientes, controla renovaciones, conversa por WhatsApp y monitorea cartera sin saltar entre plataformas.</p>
+            <div class="quick">
+              <button class="accent" data-quick="cotizar">Cotizar seguro</button>
+              <button data-quick="cliente">Crear cliente</button>
+              <button data-quick="renovaciones">Ver renovaciones</button>
+              <button data-quick="campaña">Enviar campaña</button>
+            </div>
+          </div>
+          <div class="alertcard">
+            <div><small>RENOVACIONES PRÓXIMAS</small><div class="alertnum">24</div></div>
+            <div><p style="font-size:12px;color:#bbb;margin:0 0 12px">72% ya tienen seguimiento programado.</p><div class="accentbar"><span></span></div></div>
+          </div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi good"><div class="label">Primas este mes</div><b>$128,4M</b><em>+18,6% vs mes anterior</em></div>
+          <div class="kpi"><div class="label">Cotizaciones abiertas</div><b>47</b><em>12 requieren seguimiento hoy</em></div>
+          <div class="kpi"><div class="label">Cartera pendiente</div><b>$18,2M</b><em>86% de recaudo del periodo</em></div>
+          <div class="kpi"><div class="label">Clientes activos</div><b>1.284</b><em>+36 nuevos este mes</em></div>
+        </div>
+
+        <div class="grid2">
+          <div class="panel">
+            <div class="panelhead">
+              <div><h3>Renovaciones próximas</h3><div class="sub">Prioridad comercial de los próximos 30 días</div></div>
+              <div class="tabs" id="renewTabs"><button class="tab active" data-filter="todos">Todos</button><button class="tab" data-filter="7">7 días</button><button class="tab" data-filter="15">15 días</button><button class="tab" data-filter="30">30 días</button></div>
+            </div>
+            <div style="overflow:auto">
+              <table class="table" id="renewTable">
+                <thead><tr><th>Cliente</th><th>Póliza</th><th>Vence</th><th>Estado</th><th>Prima</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panelhead"><div><h3>Producción mensual</h3><div class="sub">Primas emitidas en millones COP</div></div><span class="status s-green">+18,6%</span></div>
+            <div class="chartwrap" id="chart"></div>
+          </div>
+        </div>
+
+        <div class="rowcards">
+          <div class="task">
+            <strong>Tareas de hoy</strong>
+            <p>Seguimientos comerciales asignados al equipo.</p>
+            <div class="list" id="tasks"></div>
+          </div>
+          <div class="quote">
+            <strong>Cotizaciones recientes</strong>
+            <p>Últimas propuestas generadas desde el sistema.</p>
+            <div class="list" id="quotes"></div>
+          </div>
+          <div class="api">
+            <strong>Estado de integraciones</strong>
+            <p>Conectividad de servicios externos.</p>
+            <div class="list" id="apis"></div>
+          </div>
+        </div>
+
+        <div class="grid2" style="margin-top:16px">
+          <div class="panel">
+            <div class="panelhead"><div><h3>Asistente IA</h3><div class="sub">Ejemplo conectado a la operación</div></div><span class="status s-green">Disponible</span></div>
+            <div id="aiAnswer" style="min-height:90px;padding:16px;border-radius:20px;background:#f5f3f0;font-size:12px;line-height:1.55;color:#5f5a55">Prueba: “¿Qué pólizas vencen esta semana?” o “¿Cuánto tenemos por cobrar?”</div>
+            <div class="assistant"><input id="aiInput" placeholder="Pregúntale algo al sistema..."/><button id="aiSend">→</button></div>
+          </div>
+
+          <div class="panel">
+            <div class="panelhead"><div><h3>Embudo comercial</h3><div class="sub">Oportunidades activas</div></div></div>
+            <div class="list">
+              <div class="listitem"><div class="grow"><b>Nuevos leads</b><small>84 oportunidades</small></div><div class="amount">84</div></div>
+              <div class="listitem"><div class="grow"><b>Cotizados</b><small>61 oportunidades</small></div><div class="amount">61</div></div>
+              <div class="listitem"><div class="grow"><b>En negociación</b><small>29 oportunidades</small></div><div class="amount">29</div></div>
+              <div class="listitem"><div class="grow"><b>Cerrados</b><small>18 ventas</small></div><div class="amount">18</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="clientes" hidden>
+        <div class="panel">
+          <div class="panelhead"><div><h3>Clientes</h3><div class="sub">Base centralizada con pólizas, pagos y vencimientos.</div></div><button class="primary" id="addClientBtn">+ Cliente</button></div>
+          <div style="overflow:auto"><table class="table"><thead><tr><th>Cliente</th><th>Producto</th><th>Pólizas</th><th>Próximo vencimiento</th><th>Estado</th></tr></thead><tbody id="clientTable"></tbody></table></div>
+        </div>
+      </section>
+
+      <section id="cotizaciones" hidden>
+        <div class="grid2">
+          <div class="panel"><div class="panelhead"><div><h3>Cotizador</h3><div class="sub">Simulación de cotización conectada a aseguradoras.</div></div></div>
+            <div class="formgrid">
+              <div class="field"><label>Cliente</label><input id="qClient" value="Laura Gómez"/></div>
+              <div class="field"><label>Tipo de seguro</label><select id="qType"><option>Vehículo</option><option>Vida</option><option>Moto</option><option>Viaje</option></select></div>
+              <div class="field"><label>Documento</label><input value="1.098.345.221"/></div>
+              <div class="field"><label>Placa / referencia</label><input value="KLM742"/></div>
+            </div>
+            <div class="actions"><button class="primary" id="quoteRun">Consultar aseguradoras</button></div>
+          </div>
+          <div class="panel"><div class="panelhead"><div><h3>Resultados</h3><div class="sub">Ejemplo de propuestas disponibles.</div></div></div><div id="quoteResults" class="list"></div></div>
+        </div>
+      </section>
+
+      <section id="whatsapp" hidden>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panelhead"><div><h3>Conversaciones</h3><div class="sub">WhatsApp API integrado.</div></div><span class="status s-green">Conectado</span></div>
+            <div class="list" id="chatList"></div>
+          </div>
+          <div class="panel">
+            <div class="panelhead"><div><h3 id="chatName">Ana Martínez</h3><div class="sub">Seguro de vehículo</div></div></div>
+            <div id="chatBox" style="min-height:330px;background:#f5f3f0;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:10px"></div>
+            <div class="assistant"><input id="chatInput" placeholder="Escribe un mensaje..."/><button id="chatSend">→</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cartera" hidden>
+        <div class="kpis">
+          <div class="kpi"><div class="label">Por cobrar</div><b>$18,2M</b><em>24 clientes con saldo</em></div>
+          <div class="kpi"><div class="label">Recaudo</div><b>86%</b><em>Meta del mes: 92%</em></div>
+          <div class="kpi"><div class="label">Vencido +30 días</div><b>$3,8M</b><em>7 cuentas críticas</em></div>
+          <div class="kpi good"><div class="label">Cobrado hoy</div><b>$4,6M</b><em>12 pagos registrados</em></div>
+        </div>
+        <div class="panel"><div class="panelhead"><div><h3>Cartera pendiente</h3><div class="sub">Saldos por cliente y póliza.</div></div></div><div style="overflow:auto"><table class="table"><thead><tr><th>Cliente</th><th>Póliza</th><th>Saldo</th><th>Vencimiento</th><th>Estado</th></tr></thead><tbody id="debtTable"></tbody></table></div></div>
+      </section>
+
+      <section id="reportes" hidden>
+        <div class="grid2">
+          <div class="panel"><div class="panelhead"><div><h3>KPIs comerciales</h3><div class="sub">Resumen ejecutivo.</div></div></div><div class="grid g2">
+            <div class="metric"><b>32,4%</b><span>Conversión cotización → venta</span></div>
+            <div class="metric"><b>$2,8M</b><span>Ticket promedio</span></div>
+            <div class="metric"><b>68%</b><span>Renovación del mes</span></div>
+            <div class="metric"><b>12 min</b><span>Tiempo medio de respuesta</span></div>
+          </div></div>
+          <div class="panel"><div class="panelhead"><div><h3>Rendimiento por asesor</h3><div class="sub">Ventas emitidas este mes.</div></div></div><div class="list" id="advisorList"></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="mobilebar">
+  <button data-section="inicio">⌂</button><button data-section="clientes">◎</button><button data-section="cotizaciones">◫</button><button data-section="whatsapp">◉</button><button data-section="cartera">$</button>
+</div>
+
+<div class="modalback" id="modal">
+  <div class="modal">
+    <h3 id="modalTitle">Nueva cotización</h3>
+    <div class="formgrid" id="modalFields"></div>
+    <div class="actions"><button class="ghost" id="modalCancel">Cancelar</button><button class="primary" id="modalSave">Guardar</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const renewals=[
+ {name:"Ana Martínez",initials:"AM",policy:"Vehículo",days:4,status:"Urgente",premium:"$1,46M"},
+ {name:"Carlos Ríos",initials:"CR",policy:"Vida",days:9,status:"Contactado",premium:"$2,10M"},
+ {name:"Laura Gómez",initials:"LG",policy:"Moto",days:14,status:"Cotizando",premium:"$680K"},
+ {name:"Jorge Pérez",initials:"JP",policy:"Vehículo",days:23,status:"Pendiente",premium:"$1,82M"},
+ {name:"Diana Silva",initials:"DS",policy:"Viaje",days:28,status:"Pendiente",premium:"$420K"}
+];
+const clients=[
+ ["Ana Martínez","Vehículo",2,"09 Oct","Activo"],["Carlos Ríos","Vida",1,"14 Oct","Activo"],["Laura Gómez","Moto",2,"19 Oct","Activo"],["Jorge Pérez","Vehículo",1,"28 Oct","En renovación"],["Diana Silva","Viaje",3,"02 Nov","Activo"]
+];
+const debts=[
+ ["Jorge Pérez","Auto #AU-8831","$2,4M","03 Oct","Vencido"],["María Suárez","Vida #VI-1002","$1,8M","06 Oct","Pendiente"],["Andrés León","Pyme #PY-8720","$3,1M","09 Oct","Pendiente"],["Paula Díaz","Moto #MO-2281","$740K","12 Oct","Pendiente"]
+];
+const quotes=[
+ ["Laura Gómez","Vehículo","3 opciones","Hace 12 min"],["Felipe Ortiz","Vida","2 opciones","Hace 31 min"],["Sofía Vargas","Viaje","4 opciones","Hace 1 h"]
+];
+const tasks=[
+ ["Llamar a Ana Martínez","Renovación vence en 4 días"],["Enviar propuesta a Laura","Vehículo · 3 alternativas"],["Cobro Jorge Pérez","Saldo vencido $2,4M"]
+];
+const apis=[
+ ["Aseguradora Alpha","Conectada"],["Aseguradora Beta","Conectada"],["WhatsApp API","Conectada"],["OpenAI","Disponible"]
+];
+const chartData=[72,86,80,98,104,118,128];
+const chartLabels=["Abr","May","Jun","Jul","Ago","Sep","Oct"];
+const advisors=[["Diana","$38,4M"],["Mateo","$31,1M"],["Sara","$27,8M"],["Andrés","$21,6M"]];
+const chats=[
+ ["Ana Martínez","¿Mi póliza vence este mes?"],["Carlos Ríos","Gracias, ya vi la propuesta."],["Laura Gómez","¿Me puedes enviar la opción 2?"]
+];
+
+function badge(status){
+ const c=status==="Urgente"||status==="Vencido"?"s-orange":status==="Contactado"||status==="Activo"||status==="Conectada"?"s-green":"s-gray";
+ return '<span class="status '+c+'">'+status+'</span>';
+}
+function renderRenew(filter="todos"){
+ const tb=document.querySelector("#renewTable tbody");tb.innerHTML="";
+ renewals.filter(r=>filter==="todos"||r.days<=Number(filter)).forEach(r=>{
+  tb.innerHTML+=\`<tr><td><div class="name"><div class="dotav">\${r.initials}</div><b>\${r.name}</b></div></td><td>\${r.policy}</td><td>\${r.days} días</td><td>\${badge(r.status)}</td><td><b>\${r.premium}</b></td></tr>\`
+ })
+}
+function renderLists(){
+ document.querySelector("#tasks").innerHTML=tasks.map((x,i)=>\`<div class="listitem"><div class="grow"><b>\${x[0]}</b><small>\${x[1]}</small></div><input type="checkbox" data-task="\${i}"></div>\`).join("");
+ document.querySelector("#quotes").innerHTML=quotes.map(x=>\`<div class="listitem"><div class="grow"><b>\${x[0]}</b><small>\${x[1]} · \${x[2]}</small></div><div class="amount">\${x[3]}</div></div>\`).join("");
+ document.querySelector("#apis").innerHTML=apis.map(x=>\`<div class="listitem"><div class="grow"><b>\${x[0]}</b><small>Servicio externo</small></div>\${badge(x[1])}</div>\`).join("");
+ document.querySelector("#advisorList").innerHTML=advisors.map((x,i)=>\`<div class="listitem"><div class="dotav">\${x[0].slice(0,2).toUpperCase()}</div><div class="grow"><b>\${x[0]}</b><small>Asesor comercial</small></div><div class="amount">\${x[1]}</div></div>\`).join("");
+ document.querySelector("#chatList").innerHTML=chats.map((x,i)=>\`<button class="listitem" style="width:100%;border:0;text-align:left;cursor:pointer" data-chat="\${i}"><div class="dotav">\${x[0].split(" ").map(a=>a[0]).join("").slice(0,2)}</div><div class="grow"><b>\${x[0]}</b><small>\${x[1]}</small></div></button>\`).join("");
+}
+function renderClients(){
+ document.querySelector("#clientTable").innerHTML=clients.map(x=>\`<tr><td><b>\${x[0]}</b></td><td>\${x[1]}</td><td>\${x[2]}</td><td>\${x[3]}</td><td>\${badge(x[4])}</td></tr>\`).join("");
+ document.querySelector("#debtTable").innerHTML=debts.map(x=>\`<tr><td><b>\${x[0]}</b></td><td>\${x[1]}</td><td><b>\${x[2]}</b></td><td>\${x[3]}</td><td>\${badge(x[4])}</td></tr>\`).join("");
+}
+function renderChart(){
+ const el=document.querySelector("#chart");el.innerHTML="";
+ chartData.forEach((v,i)=>{el.innerHTML+=\`<div class="bar" style="height:\${v/1.35}%"><i>\${v}</i><span>\${chartLabels[i]}</span></div>\`})
+}
+function toast(msg){const t=document.querySelector("#toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+function showSection(id){
+ document.querySelectorAll("main section").forEach(s=>s.hidden=s.id!==id);
+ document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===id));
+ const labels={inicio:["Buenos días, Samuel","Aquí tienes el estado general de tu operación de seguros."],clientes:["Clientes","Consulta y administra toda tu base de asegurados."],cotizaciones:["Cotizaciones","Consulta aseguradoras y genera propuestas desde un solo lugar."],whatsapp:["WhatsApp","Conversaciones y seguimiento conectado al CRM."],cartera:["Cartera","Controla pagos, saldos y seguimiento de recaudo."],reportes:["Reportes","Indicadores comerciales y operativos de la agencia."]};
+ document.querySelector("#pageTitle").textContent=labels[id][0];document.querySelector("#pageSub").textContent=labels[id][1];
+}
+function openModal(type){
+ const m=document.querySelector("#modal"),fields=document.querySelector("#modalFields"),title=document.querySelector("#modalTitle");
+ title.textContent=type==="cliente"?"Nuevo cliente":"Nueva cotización";
+ fields.innerHTML=type==="cliente"?
+ \`<div class="field"><label>Nombre</label><input id="mName" value="Nuevo cliente"/></div><div class="field"><label>Documento</label><input value="1.098.222.330"/></div><div class="field"><label>Teléfono</label><input value="300 555 0199"/></div><div class="field"><label>Producto principal</label><select><option>Vehículo</option><option>Vida</option><option>Moto</option><option>Viaje</option></select></div>\`:
+ \`<div class="field"><label>Cliente</label><input id="mName" value="Laura Gómez"/></div><div class="field"><label>Seguro</label><select><option>Vehículo</option><option>Vida</option><option>Moto</option><option>Viaje</option></select></div><div class="field"><label>Documento</label><input value="1.098.345.221"/></div><div class="field"><label>Placa / referencia</label><input value="KLM742"/></div>\`;
+ m.dataset.type=type;m.classList.add("show")
+}
+document.querySelectorAll("[data-section]").forEach(b=>b.onclick=()=>showSection(b.dataset.section));
+document.querySelector("#renewTabs").addEventListener("click",e=>{if(!e.target.classList.contains("tab"))return;document.querySelectorAll("#renewTabs .tab").forEach(x=>x.classList.remove("active"));e.target.classList.add("active");renderRenew(e.target.dataset.filter)});
+document.querySelector("#newQuoteBtn").onclick=()=>openModal("cotización");
+document.querySelector("#addClientBtn").onclick=()=>openModal("cliente");
+document.querySelectorAll("[data-quick]").forEach(b=>b.onclick=()=>{const a=b.dataset.quick;if(a==="cotizar")openModal("cotización");else if(a==="cliente")openModal("cliente");else if(a==="renovaciones"){showSection("inicio");toast("Mostrando renovaciones próximas")}else toast("Campaña de ejemplo preparada para 128 clientes")});
+document.querySelector("#modalCancel").onclick=()=>document.querySelector("#modal").classList.remove("show");
+document.querySelector("#modalSave").onclick=()=>{const type=document.querySelector("#modal").dataset.type;document.querySelector("#modal").classList.remove("show");toast(type==="cliente"?"Cliente creado correctamente":"Cotización creada y lista para consultar APIs")};
+document.querySelector("#notifBtn").onclick=()=>toast("Tienes 6 alertas: 4 renovaciones y 2 pagos vencidos");
+document.querySelector("#search").addEventListener("keydown",e=>{if(e.key==="Enter")toast('Buscando: "'+e.target.value+'"')});
+document.querySelector("#quoteRun").onclick=()=>{document.querySelector("#quoteResults").innerHTML=[["Aseguradora Alpha","$1.280.000","Cobertura amplia"],["Aseguradora Beta","$1.460.000","Cobertura premium"],["Aseguradora Gamma","$1.690.000","Todo riesgo + asistencia"]].map(x=>\`<div class="listitem"><div class="grow"><b>\${x[0]}</b><small>\${x[2]}</small></div><div class="amount">\${x[1]}</div></div>\`).join("");toast("3 alternativas encontradas")};
+function sendAI(){
+ const q=document.querySelector("#aiInput").value.trim().toLowerCase();if(!q)return;
+ let a="Encontré la información solicitada.";
+ if(q.includes("vence")||q.includes("vencen"))a="Hay 6 pólizas que vencen en los próximos 7 días. 3 ya fueron contactadas y 3 están pendientes de seguimiento.";
+ else if(q.includes("cobrar")||q.includes("cartera"))a="La cartera pendiente es de $18,2M. Hay 24 clientes con saldo y 7 cuentas llevan más de 30 días vencidas.";
+ else if(q.includes("venta")||q.includes("vend"))a="La producción del mes va en $128,4M, un 18,6% por encima del mes anterior.";
+ document.querySelector("#aiAnswer").textContent=a;document.querySelector("#aiInput").value="";
+}
+document.querySelector("#aiSend").onclick=sendAI;document.querySelector("#aiInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendAI()});
+document.querySelector("#chatList").addEventListener("click",e=>{const b=e.target.closest("[data-chat]");if(!b)return;const c=chats[b.dataset.chat];document.querySelector("#chatName").textContent=c[0];document.querySelector("#chatBox").innerHTML=\`<div class="bubble in" style="background:#fff;align-self:flex-start;max-width:78%;padding:11px 13px;border-radius:16px;font-size:11px">\${c[1]}</div><div class="bubble out" style="background:#dffe69;align-self:flex-end;max-width:78%;padding:11px 13px;border-radius:16px;font-size:11px">Hola, claro. Ya estoy revisando tu información.</div>\`});
+function sendChat(){const inp=document.querySelector("#chatInput");if(!inp.value.trim())return;const d=document.createElement("div");d.textContent=inp.value;d.style.cssText="background:#dffe69;align-self:flex-end;max-width:78%;padding:11px 13px;border-radius:16px;font-size:11px";document.querySelector("#chatBox").appendChild(d);inp.value="";toast("Mensaje enviado por WhatsApp API")}
+document.querySelector("#chatSend").onclick=sendChat;document.querySelector("#chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat()});
+document.addEventListener("change",e=>{if(e.target.matches("[data-task]"))toast(e.target.checked?"Tarea completada":"Tarea reabierta")});
+renderRenew();renderLists();renderClients();renderChart();showSection("inicio");
+</script>
+</body>
+</html>
