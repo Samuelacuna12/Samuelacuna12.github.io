@@ -906,6 +906,38 @@
       .growth-goal strong{font-size:44px}
     }
 
+  
+    /* ===== Fix portada v5: flecha limpia ===== */
+    .growth-arrow{display:none!important}
+    .growth-arrow-clean{
+      position:absolute;
+      right:18px;
+      top:4px;
+      z-index:4;
+      width:66px;
+      height:66px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(255,255,255,.95);
+      box-shadow:0 14px 30px rgba(35,61,95,.10);
+      color:#183651;
+      font-size:42px;
+      line-height:1;
+      font-weight:500;
+      backdrop-filter:blur(14px);
+    }
+    @media (max-width:700px){
+      .growth-arrow-clean{
+        right:8px;
+        top:6px;
+        width:52px;
+        height:52px;
+        font-size:34px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -943,10 +975,7 @@
               <div class="gbar gb3"><span>03</span></div>
               <div class="gbar gb4"><span>04</span></div>
             </div>
-            <div class="growth-arrow" aria-hidden="true">
-              <span class="shaft"></span>
-              <span class="head"></span>
-            </div>
+            <div class="growth-arrow-clean" aria-hidden="true">↗</div>
           </div>
 
           <div class="growth-labels">
