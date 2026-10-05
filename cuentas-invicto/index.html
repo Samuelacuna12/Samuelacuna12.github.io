@@ -43,7 +43,7 @@ button,input,select{font:inherit}button{cursor:pointer}
 <section class="grid">
   <div class="stack">
     <article class="card balance">
-      <div class="balance-head"><div><div class="eyebrow">Saldo disponible</div><div class="mini">Ingresos menos egresos e impuesto aplicado</div></div><span class="status-dot"><i></i> Al día</span></div>
+      <div class="balance-head"><div><div class="eyebrow">Saldo disponible</div><div class="mini">Ingresos menos egresos e impuesto aplicado</div></div><span class="status-dot" id="syncStatus"><i></i> Conectando…</span></div>
       <div class="balance-amount" id="balance">$0</div>
       <div class="balance-bottom"><button class="soft-btn accent" onclick="openMove('income')">＋ Registrar ingreso</button><button class="soft-btn" onclick="openMove('expense')">− Registrar gasto</button></div>
     </article>
@@ -83,7 +83,7 @@ button,input,select{font:inherit}button{cursor:pointer}
   </div>
 </section>
 
-<div class="footer"><span>Cuentas Invicto · Omar & Samuel</span><span>La información se guarda en este navegador.</span></div>
+<div class="footer"><span>Cuentas Invicto · Omar & Samuel</span><span id="syncFoot">Preparando sincronización…</span></div>
 </main>
 
 <div class="modal" id="moveModal" onclick="modalBackdrop(event,'moveModal')">
@@ -120,14 +120,105 @@ button,input,select{font:inherit}button{cursor:pointer}
 
 <script>
 const KEY='invicto_cuentas_omar_samuel_v1';
+const SUPABASE_URL='https://ntafomzqtjdfslanggak.supabase.co';
+const SUPABASE_KEY='sb_publishable_IBdKw7gD078zjvB38UWcVQ_dyV4lI9s';
 let data=JSON.parse(localStorage.getItem(KEY)||'[]');
-let currentType='income', applyTax=false, filter='all';
+let currentType='income', applyTax=false, filter='all', cloudHash='', cloudReady=false, syncBusy=false;
 const $=id=>document.getElementById(id);
 const fmt=n=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(Number(n)||0);
 const num=v=>Number(String(v).replace(/[^0-9]/g,''))||0;
-const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+const saveLocal=()=>localStorage.setItem(KEY,JSON.stringify(data));
+const save=()=>{ saveLocal(); if(cloudReady) cloudUpsert(data).catch(()=>setSyncStatus('Error de sincronización',false)); };
 $('today').textContent=new Intl.DateTimeFormat('es-CO',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
 $('date').value=new Date().toISOString().slice(0,10);
+
+function setSyncStatus(label,ok=true){
+ const s=$('syncStatus');
+ if(s){s.innerHTML='<i></i> '+label; const dot=s.querySelector('i'); if(dot) dot.style.background=ok?'#6dbd3c':'#ff8a67';}
+ const f=$('syncFoot');
+ if(f) f.textContent=cloudReady?'Sincronizado en la nube · visible en tus dispositivos':label;
+}
+async function sha256(textValue){
+ const bytes=new TextEncoder().encode(textValue);
+ const hash=await crypto.subtle.digest('SHA-256',bytes);
+ return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function rpc(fn,body){
+ const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+fn,{
+  method:'POST',
+  headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'},
+  body:JSON.stringify(body)
+ });
+ const txt=await res.text();
+ if(!res.ok) throw new Error(txt||('HTTP '+res.status));
+ return txt?JSON.parse(txt):null;
+}
+function remoteToLocal(rows){
+ return (rows||[]).map(x=>({
+  id:/^\d+$/.test(String(x.movement_id))?Number(x.movement_id):x.movement_id,
+  type:x.type, amount:Number(x.amount)||0, tax:Number(x.tax)||0,
+  description:x.description||'', date:x.movement_date, owner:x.owner||'', category:x.category||'',
+  created_at:x.created_at
+ }));
+}
+async function cloudUpsert(items){
+ if(!cloudHash||syncBusy||!items.length) return;
+ syncBusy=true;
+ try{
+  await rpc('cuentas_invicto_upsert_many',{p_workspace_hash:cloudHash,p_movements:items.map(x=>({...x,id:String(x.id)}))});
+  setSyncStatus('Nube conectada',true);
+ } finally { syncBusy=false; }
+}
+async function cloudDelete(id){
+ if(!cloudHash) return;
+ await rpc('cuentas_invicto_delete',{p_workspace_hash:cloudHash,p_movement_id:String(id)});
+}
+async function pullCloud(){
+ if(!cloudHash||syncBusy) return;
+ syncBusy=true;
+ try{
+  const rows=await rpc('cuentas_invicto_list',{p_workspace_hash:cloudHash});
+  data=remoteToLocal(rows);
+  saveLocal();
+  render();
+  setSyncStatus('Nube conectada',true);
+ }catch(e){
+  setSyncStatus('Sin conexión a la nube',false);
+ }finally{
+  syncBusy=false;
+ }
+}
+async function initCloud(){
+ render();
+ const params=new URLSearchParams(location.hash.replace(/^#/,''));
+ const token=params.get('sync');
+ if(!token){
+  setSyncStatus('Solo este dispositivo',false);
+  if($('syncFoot')) $('syncFoot').textContent='Abre el enlace compartido para ver las mismas cuentas en todos tus dispositivos.';
+  return;
+ }
+ try{
+  setSyncStatus('Sincronizando…',true);
+  cloudHash=await sha256(token);
+  const remote=await rpc('cuentas_invicto_list',{p_workspace_hash:cloudHash});
+  if((remote||[]).length===0 && data.length){
+    await rpc('cuentas_invicto_upsert_many',{p_workspace_hash:cloudHash,p_movements:data.map(x=>({...x,id:String(x.id)}))});
+  }else{
+    data=remoteToLocal(remote);
+    saveLocal();
+  }
+  cloudReady=true;
+  setSyncStatus('Nube conectada',true);
+  render();
+  setInterval(()=>{if(document.visibilityState==='visible')pullCloud()},15000);
+  window.addEventListener('focus',pullCloud);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pullCloud()});
+ }catch(e){
+  cloudReady=false;
+  setSyncStatus('Sin conexión a la nube',false);
+  render();
+ }
+}
 
 function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
 function openMove(type){setType(type);$('moveModal').classList.add('open');setTimeout(()=>$('amount').focus(),100)}
@@ -154,7 +245,7 @@ $('moveForm').addEventListener('submit',e=>{
  save();render();e.target.reset();$('date').value=new Date().toISOString().slice(0,10);applyTax=false;$('taxSwitch').classList.remove('on');closeModal('moveModal');toast('Movimiento guardado');
 });
 
-function removeMove(id){if(!confirm('¿Eliminar este movimiento?'))return;data=data.filter(x=>x.id!==id);save();render();toast('Movimiento eliminado')}
+async function removeMove(id){if(!confirm('¿Eliminar este movimiento?'))return;data=data.filter(x=>String(x.id)!==String(id));saveLocal();render();try{if(cloudReady)await cloudDelete(id);toast('Movimiento eliminado')}catch(e){toast('Se eliminó localmente, falta sincronizar');setSyncStatus('Error de sincronización',false)}}
 function totals(){
  const inc=data.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0);
  const exp=data.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);
@@ -194,7 +285,7 @@ function exportCSV(){
  const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='cuentas-invicto-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(a.href);toast('CSV exportado');
 }
-window.addEventListener('resize',drawChart);render();
+window.addEventListener('resize',drawChart);initCloud();
 </script>
 </body>
 </html>
