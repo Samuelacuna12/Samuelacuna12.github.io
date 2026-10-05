@@ -191,21 +191,18 @@ async function pullCloud(){
 async function initCloud(){
  render();
  const params=new URLSearchParams(location.hash.replace(/^#/,''));
- const token=params.get('sync');
- if(!token){
-  setSyncStatus('Solo este dispositivo',false);
-  if($('syncFoot')) $('syncFoot').textContent='Abre el enlace compartido para ver las mismas cuentas en todos tus dispositivos.';
-  return;
- }
+ const token=params.get('sync')||'6HOjoZ2Srjll_chWJM4YN68_3Q8ZIJMo';
  try{
   setSyncStatus('Sincronizando…',true);
   cloudHash=await sha256(token);
   const remote=await rpc('cuentas_invicto_list',{p_workspace_hash:cloudHash});
-  if((remote||[]).length===0 && data.length){
+  const remoteData=remoteToLocal(remote);
+  const merged=new Map(remoteData.map(x=>[String(x.id),x]));
+  data.forEach(x=>merged.set(String(x.id),x));
+  data=Array.from(merged.values()).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+  saveLocal();
+  if(data.length){
     await rpc('cuentas_invicto_upsert_many',{p_workspace_hash:cloudHash,p_movements:data.map(x=>({...x,id:String(x.id)}))});
-  }else{
-    data=remoteToLocal(remote);
-    saveLocal();
   }
   cloudReady=true;
   setSyncStatus('Nube conectada',true);
