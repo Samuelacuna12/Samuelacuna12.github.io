@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4f2ef" />
+  <title>Sistema Integral para Agencias de Seguros</title>
+  <meta name="description" content="Presentación comercial del sistema integral para agencias de seguros." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#171717;
+      --muted:#6b6b6b;
+      --paper:#f7f6f4;
+      --white:#ffffff;
+      --line:rgba(23,23,23,.08);
+      --orange:#ff6a35;
+      --orange2:#ff8e66;
+      --peach:#ffd4c4;
+      --soft:#eceae7;
+      --shadow:0 24px 70px rgba(34,26,20,.12);
+      --r:34px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+    body{
+      margin:0;
+      font-family:"Manrope",system-ui,sans-serif;
+      color:var(--ink);
+      background:#cbc9c7;
+      overflow-x:hidden;
+    }
+    button,a{font:inherit}
+    .slide{
+      min-height:100vh;
+      scroll-snap-align:start;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      position:relative;
+    }
+    .frame{
+      width:min(1540px,calc(100vw - 40px));
+      min-height:calc(100vh - 40px);
+      background:var(--paper);
+      border-radius:42px;
+      overflow:hidden;
+      position:relative;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.8);
+    }
+    .frame:before{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 8% 16%,rgba(255,125,79,.16),transparent 24%),
+        radial-gradient(circle at 87% 8%,rgba(255,255,255,.96),transparent 22%);
+      pointer-events:none;
+    }
+    .topbar{
+      position:absolute;
+      z-index:10;
+      left:92px;right:34px;top:24px;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em}
+    .brandmark{
+      width:36px;height:36px;border-radius:12px;
+      display:grid;place-items:center;
+      background:linear-gradient(145deg,var(--orange),#ff3f19);
+      color:white;box-shadow:0 10px 24px rgba(255,106,53,.25)
+    }
+    .chip{
+      padding:10px 14px;border-radius:999px;
+      background:rgba(255,255,255,.74);
+      border:1px solid rgba(23,23,23,.06);
+      font-size:11px;font-weight:800;color:#575757;
+      backdrop-filter:blur(14px)
+    }
+    .rail{
+      position:absolute;left:24px;top:50%;transform:translateY(-50%);z-index:10;
+      width:48px;padding:7px;border-radius:999px;
+      background:rgba(255,255,255,.8);
+      border:1px solid rgba(23,23,23,.06);
+      box-shadow:0 12px 30px rgba(30,20,15,.08);
+      display:flex;flex-direction:column;gap:5px;align-items:center;
+    }
+    .dot{
+      width:34px;height:34px;border-radius:50%;border:0;background:transparent;
+      color:#9a9693;font-size:10px;font-weight:800;cursor:pointer;transition:.2s ease
+    }
+    .dot:hover,.dot.active{background:#171717;color:#fff}
+    .stage{
+      min-height:calc(100vh - 40px);
+      padding:110px 68px 72px 112px;
+      display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center;
+      position:relative;z-index:2;
+    }
+    .stage.one{grid-template-columns:1fr}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:9px;
+      font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#7b6f68;
+      margin-bottom:18px
+    }
+    .eyebrow:before{content:"";width:26px;height:2px;background:var(--orange);border-radius:2px}
+    h1,h2,h3,p{margin-top:0}
+    h1{
+      font-size:clamp(54px,6.2vw,102px);
+      line-height:.92;letter-spacing:-.065em;
+      margin-bottom:22px;max-width:950px;font-weight:700
+    }
+    h2{
+      font-size:clamp(40px,4.7vw,76px);
+      line-height:.98;letter-spacing:-.055em;
+      margin-bottom:22px;max-width:1020px;font-weight:700
+    }
+    h3{font-size:24px;letter-spacing:-.035em;margin-bottom:10px}
+    .lead{font-size:clamp(18px,1.45vw,23px);line-height:1.5;color:#626262;max-width:760px}
+    .orange{color:var(--orange)}
+    .soft-card{
+      background:rgba(255,255,255,.82);
+      border:1px solid rgba(23,23,23,.06);
+      border-radius:28px;
+      box-shadow:0 18px 44px rgba(39,27,20,.08);
+    }
+    .hero-visual{
+      min-height:590px;
+      padding:26px;
+      border-radius:38px;
+      position:relative;overflow:hidden;
+      background:linear-gradient(145deg,#ddd9d5,#f5f4f2);
+      border:1px solid rgba(255,255,255,.85);
+      box-shadow:0 26px 70px rgba(42,31,24,.12)
+    }
+    .hero-visual:before{
+      content:"";position:absolute;width:380px;height:380px;border-radius:50%;
+      left:-120px;top:-90px;background:radial-gradient(circle,#ff8d62 0%,#ff6a35 36%,rgba(255,106,53,.12) 68%,transparent 72%);
+      filter:blur(2px);opacity:.95
+    }
+    .phone{
+      position:absolute;
+      width:250px;height:500px;border-radius:38px;
+      background:#fff;
+      border:1px solid rgba(23,23,23,.08);
+      box-shadow:0 30px 70px rgba(49,31,23,.18);
+      overflow:hidden;
+    }
+    .phone.p1{left:36px;bottom:28px;transform:rotate(-3deg)}
+    .phone.p2{right:34px;top:34px;transform:rotate(3deg)}
+    .screen{padding:16px}
+    .phone-head{
+      height:150px;border-radius:28px;
+      background:linear-gradient(135deg,#ffb79e,#ff6a35 50%,#e94a1a);
+      color:#fff;padding:20px;display:flex;flex-direction:column;justify-content:flex-end
+    }
+    .phone-head small{opacity:.9;font-size:10px}
+    .phone-head strong{font-size:22px;line-height:1.05}
+    .mini-row{
+      display:flex;justify-content:space-between;gap:8px;
+      margin-top:12px;padding:11px 12px;border-radius:18px;background:#f4f2ef;
+      font-size:10px;color:#595959
+    }
+    .mini-card{
+      margin-top:12px;padding:14px;border-radius:20px;background:#f7f6f4;border:1px solid rgba(23,23,23,.05)
+    }
+    .mini-card strong{display:block;font-size:13px;margin-bottom:5px}
+    .mini-card span{font-size:9px;color:#777;line-height:1.4}
+    .pill-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+    .pill{padding:7px 9px;border-radius:999px;background:#efedea;font-size:8px;font-weight:800;color:#5a5652}
+    .hero-float{
+      position:absolute;z-index:5;
+      right:28px;bottom:28px;width:250px;
+      padding:20px;border-radius:26px;
+      background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.96);
+      box-shadow:0 18px 42px rgba(40,29,22,.12)
+    }
+    .hero-float b{display:block;font-size:28px;letter-spacing:-.05em;margin-bottom:5px}
+    .hero-float span{font-size:11px;color:#6e6a67;line-height:1.45}
+    .grid{display:grid;gap:14px}
+    .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{
+      padding:22px;border-radius:26px;background:rgba(255,255,255,.82);
+      border:1px solid rgba(23,23,23,.06);box-shadow:0 14px 34px rgba(40,30,24,.07)
+    }
+    .icon{
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+      background:linear-gradient(145deg,#fff1eb,#ffd5c5);color:#c84012;font-size:18px;margin-bottom:18px
+    }
+    .card strong{display:block;font-size:15px;margin-bottom:7px}
+    .card p{font-size:12.5px;line-height:1.5;color:#73706d;margin:0}
+    .statement{
+      padding:26px 28px;border-radius:28px;background:#171717;color:#fff;
+      font-size:22px;line-height:1.45;box-shadow:0 18px 44px rgba(23,23,23,.18)
+    }
+    .statement b{color:#ff8d62}
+    .module{
+      padding:24px;border-radius:28px;background:#fff;border:1px solid rgba(23,23,23,.06);
+      position:relative;overflow:hidden;min-height:210px
+    }
+    .module:after{
+      content:"";position:absolute;width:120px;height:120px;border-radius:50%;
+      right:-45px;bottom:-50px;background:radial-gradient(circle,#ffd8c9,#ff8f68 50%,transparent 70%);opacity:.5
+    }
+    .module-num{font-size:10px;letter-spacing:.15em;font-weight:800;color:#9a8a82;text-transform:uppercase}
+    .module h3{font-size:26px;margin:35px 0 8px}
+    .module p{font-size:12px;line-height:1.5;color:#6f6c69;margin:0}
+    .flow{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:center
+    }
+    .flow .step{
+      padding:18px;border-radius:22px;background:#fff;border:1px solid rgba(23,23,23,.06);text-align:center;
+      min-height:112px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800
+    }
+    .flow .arrow{font-size:24px;color:#b6aaa3;text-align:center}
+    .quote-demo{
+      border-radius:32px;background:#fff;border:1px solid rgba(23,23,23,.06);
+      box-shadow:0 22px 50px rgba(38,27,21,.08);overflow:hidden
+    }
+    .quote-top{
+      padding:22px 24px;background:linear-gradient(135deg,#ffb99f,#ff6a35);color:#fff
+    }
+    .quote-top small{font-size:10px;opacity:.85}
+    .quote-top strong{display:block;font-size:26px;letter-spacing:-.04em;margin-top:4px}
+    .quote-body{padding:22px}
+    .quote-row{display:flex;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid #eee}
+    .quote-row:last-child{border-bottom:0}
+    .quote-row span{font-size:11px;color:#777}.quote-row b{font-size:12px}
+    .whatsapp{
+      background:#fff;border-radius:32px;padding:20px;border:1px solid rgba(23,23,23,.06);box-shadow:0 20px 50px rgba(36,27,22,.08)
+    }
+    .chat-head{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid #eee}
+    .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(145deg,#ffd1c0,#ff7d4d)}
+    .chat-head b{font-size:13px}.chat-head span{display:block;font-size:9px;color:#888}
+    .bubble{max-width:78%;margin-top:12px;padding:11px 13px;border-radius:16px;font-size:10px;line-height:1.45}
+    .bubble.in{background:#f2f0ed}.bubble.out{background:#ffd8ca;margin-left:auto}
+    .metric{padding:18px;border-radius:22px;background:#fff;border:1px solid rgba(23,23,23,.06)}
+    .metric b{display:block;font-size:25px;letter-spacing:-.04em}.metric span{font-size:10px;color:#777}
+    .pricebox{
+      padding:28px;border-radius:30px;background:#fff;border:1px solid rgba(23,23,23,.07);
+      box-shadow:0 18px 44px rgba(39,27,20,.08)
+    }
+    .pricebox.featured{background:#171717;color:#fff}
+    .pricebox.featured .muted{color:#bbb}
+    .price{font-size:50px;font-weight:800;letter-spacing:-.06em;line-height:1;margin:12px 0}
+    .muted{color:#777}
+    .checklist{list-style:none;margin:18px 0 0;padding:0}
+    .checklist li{position:relative;padding-left:22px;margin:9px 0;font-size:12px;line-height:1.45}
+    .checklist li:before{content:"✓";position:absolute;left:0;font-weight:800;color:var(--orange)}
+    .note{margin-top:16px;padding:14px 16px;border-radius:18px;background:#f1efec;font-size:11px;line-height:1.5;color:#6b6764}
+    .cta{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 18px;border-radius:999px;background:#171717;color:#fff;text-decoration:none;font-size:12px;font-weight:800
+    }
+    .section-index{position:absolute;left:112px;bottom:28px;font-size:10px;font-weight:800;letter-spacing:.14em;color:#958d88;z-index:3}
+    .footer-nav{position:absolute;right:26px;bottom:20px;z-index:10;display:flex;gap:8px}
+    .navbtn{
+      width:46px;height:46px;border-radius:50%;border:1px solid rgba(23,23,23,.06);
+      background:#fff;box-shadow:0 10px 24px rgba(34,26,20,.08);cursor:pointer;font-size:18px
+    }
+    .progress{position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.25);z-index:40}
+    .progress span{display:block;width:0;height:100%;background:var(--orange);transition:width .2s ease}
+    .fade{opacity:0;transform:translateY(18px);transition:.65s cubic-bezier(.2,.75,.2,1)}
+    .slide.in-view .fade{opacity:1;transform:none}.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+    @media(max-width:1050px){
+      .stage,.stage.one{grid-template-columns:1fr;padding:105px 34px 88px 82px}
+      .hero-visual{min-height:520px}.g4{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}
+      .flow .arrow{transform:rotate(90deg)}
+      .topbar{left:72px}.section-index{left:88px}
+    }
+    @media(max-width:700px){
+      html{scroll-snap-type:none}
+      .slide{padding:8px;min-height:auto}
+      .frame{width:calc(100vw - 16px);min-height:calc(100vh - 16px);border-radius:28px}
+      .rail{display:none}.topbar{left:20px;right:20px}
+      .stage,.stage.one{padding:92px 18px 82px;min-height:calc(100vh - 16px)}
+      h1{font-size:50px}h2{font-size:40px}.lead{font-size:16px}
+      .g2,.g3,.g4{grid-template-columns:1fr}
+      .hero-visual{min-height:690px;padding:16px}
+      .phone{width:220px;height:450px}.phone.p1{left:8px;bottom:16px}.phone.p2{right:8px;top:20px}
+      .hero-float{width:220px;right:16px;bottom:16px}
+      .section-index{left:20px}.footer-nav{right:14px}
+    }
+  </style>
+</head>
+<body>
+<div id="deck">
+
+<section class="slide" data-title="Inicio">
+  <div class="frame">
+    <div class="topbar">
+      <div class="brand"><span class="brandmark">S</span> Sistema Seguros</div>
+      <div class="chip">Presentación comercial</div>
+    </div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Operación aseguradora conectada</div>
+        <h1 class="fade d1">Tu agencia no necesita más herramientas.<br><span class="orange">Necesita que todo funcione junto.</span></h1>
+        <p class="lead fade d2">Cotizaciones, clientes, pólizas, WhatsApp, renovaciones, cartera, automatizaciones e inteligencia artificial desde un solo ecosistema.</p>
+      </div>
+      <div class="hero-visual fade d2">
+        <div class="phone p1">
+          <div class="screen">
+            <div class="phone-head"><small>Bienvenido</small><strong>Panel de clientes</strong></div>
+            <div class="mini-row"><span>Renovaciones</span><b>18</b></div>
+            <div class="mini-card"><strong>3 pólizas por vencer</strong><span>Próximos 30 días</span></div>
+            <div class="pill-row"><span class="pill">Clientes</span><span class="pill">Pólizas</span><span class="pill">Pagos</span></div>
+          </div>
+        </div>
+        <div class="phone p2">
+          <div class="screen">
+            <div class="mini-card"><strong>Cotización activa</strong><span>Seguro de vehículo · 3 alternativas</span></div>
+            <div class="mini-card"><strong>WhatsApp conectado</strong><span>Seguimiento y plantillas</span></div>
+            <div class="mini-card"><strong>Panel financiero</strong><span>Pagos, cartera y vencimientos</span></div>
+            <div class="mini-card"><strong>IA disponible</strong><span>Consulta y opera con lenguaje natural</span></div>
+          </div>
+        </div>
+        <div class="hero-float"><b>1 ecosistema</b><span>Menos plataformas. Menos Excel. Más control.</span></div>
+      </div>
+    </div>
+    <div class="section-index">01 · INICIO</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Dolor">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">El problema</div></div>
+    <div class="rail"></div>
+    <div class="stage one">
+      <div>
+        <div class="eyebrow fade">Demasiadas herramientas</div>
+        <h2 class="fade d1">¿Cuántas plataformas necesitas hoy para operar una sola agencia?</h2>
+        <div class="grid g4 fade d2">
+          <div class="card"><div class="icon">⌕</div><strong>Cotizaciones dispersas</strong><p>Portales separados, Excel y procesos distintos por aseguradora.</p></div>
+          <div class="card"><div class="icon">◫</div><strong>Clientes sin contexto</strong><p>La información vive en WhatsApp, archivos, hojas de cálculo y memoria del asesor.</p></div>
+          <div class="card"><div class="icon">↻</div><strong>Renovaciones manuales</strong><p>El ingreso depende de que alguien recuerde fechas y haga seguimiento.</p></div>
+          <div class="card"><div class="icon">!</div><strong>WhatsApp mal operado</strong><p>Sin estructura, plantillas o conocimiento de API, aparecen bloqueos y procesos frágiles.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-index">02 · DOLOR</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Costo">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">El costo del desorden</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">La operación se fragmenta</div>
+        <h2 class="fade d1">El problema no es que falte software. Es que nada trabaja junto.</h2>
+        <p class="lead fade d2">Cuando cada proceso vive en una herramienta diferente, el equipo pierde tiempo, el dueño pierde visibilidad y la agencia pierde oportunidades de venta y renovación.</p>
+      </div>
+      <div class="statement fade d2">Si una agencia crece con procesos desordenados, <b>el desorden también escala.</b></div>
+    </div>
+    <div class="section-index">03 · COSTO DEL DESORDEN</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Solución">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">La solución</div></div>
+    <div class="rail"></div>
+    <div class="stage one">
+      <div>
+        <div class="eyebrow fade">Un solo ecosistema</div>
+        <h2 class="fade d1">Cotiza. Gestiona. Conversa. Renueva. Cobra. Analiza. Automatiza.</h2>
+        <div class="grid g4 fade d2">
+          <div class="module"><div class="module-num">01 · Cotiza</div><h3>APIs</h3><p>Conecta aseguradoras disponibles y centraliza cotizaciones.</p></div>
+          <div class="module"><div class="module-num">02 · Gestiona</div><h3>CRM</h3><p>Clientes, pólizas, etapas, tareas y asesores.</p></div>
+          <div class="module"><div class="module-num">03 · Conversa</div><h3>WhatsApp</h3><p>Mensajes, plantillas, campañas y seguimiento.</p></div>
+          <div class="module"><div class="module-num">04 · Renueva</div><h3>Alertas</h3><p>Vencimientos y recordatorios automáticos.</p></div>
+          <div class="module"><div class="module-num">05 · Cobra</div><h3>Cartera</h3><p>Pagos, primas y saldos pendientes.</p></div>
+          <div class="module"><div class="module-num">06 · Analiza</div><h3>Dashboards</h3><p>Métricas comerciales y operativas.</p></div>
+          <div class="module"><div class="module-num">07 · Automatiza</div><h3>Flujos</h3><p>Menos tareas repetitivas y más trazabilidad.</p></div>
+          <div class="module"><div class="module-num">08 · Potencia</div><h3>IA</h3><p>Conecta ChatGPT y consulta el sistema con lenguaje natural.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-index">04 · ECOSISTEMA</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Cotizaciones">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Cotizaciones</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Cotizaciones profesionales</div>
+        <h2 class="fade d1">Deja de enviar cotizaciones que parecen una hoja de Excel.</h2>
+        <p class="lead fade d2">El sistema consulta las aseguradoras conectadas mediante API y organiza alternativas desde una sola interfaz para los principales tipos de seguro disponibles.</p>
+      </div>
+      <div class="quote-demo fade d2">
+        <div class="quote-top"><small>COTIZACIÓN PERSONALIZADA</small><strong>Seguro de vehículo</strong></div>
+        <div class="quote-body">
+          <div class="quote-row"><span>Opción A</span><b>$ 1.280.000</b></div>
+          <div class="quote-row"><span>Opción B</span><b>$ 1.460.000</b></div>
+          <div class="quote-row"><span>Opción C</span><b>$ 1.690.000</b></div>
+          <div class="note">Puede presentarse como PDF o link web con identidad visual de la agencia.</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-index">05 · COTIZACIONES</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Flujo">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Del lead a la renovación</div></div>
+    <div class="rail"></div>
+    <div class="stage one">
+      <div>
+        <div class="eyebrow fade">Todo queda conectado</div>
+        <h2 class="fade d1">Una cotización no debería terminar cuando la envías.</h2>
+        <div class="flow fade d2">
+          <div class="step">Cotización</div><div class="arrow">→</div>
+          <div class="step">Oportunidad</div><div class="arrow">→</div>
+          <div class="step">Cliente</div><div class="arrow">→</div>
+          <div class="step">Póliza</div><div class="arrow">→</div>
+          <div class="step">Renovación</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-index">06 · CICLO COMERCIAL</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="CRM">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">CRM 360°</div></div>
+    <div class="rail"></div>
+    <div class="stage one">
+      <div>
+        <div class="eyebrow fade">Todo el cliente en una sola ficha</div>
+        <h2 class="fade d1">Deja de buscar información. Empieza a trabajar con ella.</h2>
+        <div class="grid g4 fade d2">
+          <div class="card"><strong>Datos y perfil</strong><p>Información principal del cliente.</p></div>
+          <div class="card"><strong>Pólizas</strong><p>Activas, históricas y próximas a vencer.</p></div>
+          <div class="card"><strong>Cotizaciones</strong><p>Alternativas enviadas y oportunidades abiertas.</p></div>
+          <div class="card"><strong>Pagos y cartera</strong><p>Primas, saldos y estados.</p></div>
+          <div class="card"><strong>Conversaciones</strong><p>Historial desde WhatsApp.</p></div>
+          <div class="card"><strong>Tareas</strong><p>Seguimientos y responsables.</p></div>
+          <div class="card"><strong>Documentos</strong><p>Pólizas, anexos y archivos.</p></div>
+          <div class="card"><strong>Oportunidades</strong><p>Venta cruzada y nuevos productos.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-index">07 · CRM</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Renovaciones">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Renovaciones</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Ingreso recurrente</div>
+        <h2 class="fade d1">Cada póliza que vence es una nueva oportunidad de venta.</h2>
+        <p class="lead fade d2">Visualiza vencimientos a 7, 15, 30, 60 o 90 días y crea procesos de seguimiento antes de que llegue la fecha.</p>
+      </div>
+      <div class="grid g2 fade d2">
+        <div class="metric"><b>7 días</b><span>Urgencia máxima</span></div>
+        <div class="metric"><b>15 días</b><span>Seguimiento activo</span></div>
+        <div class="metric"><b>30 días</b><span>Inicio de renovación</span></div>
+        <div class="metric"><b>60–90</b><span>Planeación anticipada</span></div>
+      </div>
+    </div>
+    <div class="section-index">08 · RENOVACIONES</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="WhatsApp">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">WhatsApp API</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Conversaciones conectadas al CRM</div>
+        <h2 class="fade d1">Habla con tus clientes sin perder el contexto comercial.</h2>
+        <p class="lead fade d2">Plantillas, campañas, recordatorios, seguimiento de cotizaciones, renovaciones, pagos y reactivación de clientes desde un entorno ordenado.</p>
+      </div>
+      <div class="whatsapp fade d2">
+        <div class="chat-head"><div class="avatar"></div><div><b>Cliente · Ana Martínez</b><span>Seguro de vehículo</span></div></div>
+        <div class="bubble in">Hola, ¿mi póliza vence este mes?</div>
+        <div class="bubble out">Sí. Vence el 24 de octubre. Ya tenemos 3 alternativas listas para renovar.</div>
+        <div class="bubble in">Perfecto, envíamelas.</div>
+      </div>
+    </div>
+    <div class="section-index">09 · WHATSAPP API</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Automatizaciones">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Automatizaciones</div></div>
+    <div class="rail"></div>
+    <div class="stage one">
+      <div>
+        <div class="eyebrow fade">Seguimiento que no depende de memoria</div>
+        <h2 class="fade d1">El sistema puede hacer seguimiento aunque tu equipo no lo haga manualmente.</h2>
+        <div class="grid g4 fade d2">
+          <div class="card"><div class="icon">30</div><strong>30 días antes</strong><p>Inicio del proceso de renovación.</p></div>
+          <div class="card"><div class="icon">15</div><strong>15 días antes</strong><p>Nuevo recordatorio y seguimiento.</p></div>
+          <div class="card"><div class="icon">7</div><strong>7 días antes</strong><p>Alerta de vencimiento próxima.</p></div>
+          <div class="card"><div class="icon">↻</div><strong>Sin respuesta</strong><p>Se crea una tarea para el asesor.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-index">10 · AUTOMATIZACIONES</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Cartera">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Pagos y cartera</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Control financiero operativo</div>
+        <h2 class="fade d1">No solo controles lo que vendes. Controla lo que cobras.</h2>
+        <p class="lead fade d2">Registra primas, pagos, saldos pendientes, fechas y estado de cartera para saber cuánto has cobrado y a quién debes hacer seguimiento.</p>
+      </div>
+      <div class="grid g2 fade d2">
+        <div class="metric"><b>$128M</b><span>Primas registradas</span></div>
+        <div class="metric"><b>$18M</b><span>Cartera pendiente</span></div>
+        <div class="metric"><b>86%</b><span>Recaudo del periodo</span></div>
+        <div class="metric"><b>24</b><span>Seguimientos pendientes</span></div>
+      </div>
+    </div>
+    <div class="section-index">11 · CARTERA</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="IA">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Inteligencia artificial</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Habla con tu sistema</div>
+        <h2 class="fade d1">Conecta ChatGPT y consulta tu operación con lenguaje natural.</h2>
+        <p class="lead fade d2">El cliente puede hacer la integración siguiendo la capacitación o contratar nuestro desarrollo del chatbot de inteligencia artificial.</p>
+      </div>
+      <div class="whatsapp fade d2">
+        <div class="chat-head"><div class="avatar"></div><div><b>Asistente IA</b><span>Conectado al sistema</span></div></div>
+        <div class="bubble out">Muéstrame las pólizas que vencen este mes.</div>
+        <div class="bubble in">Encontré 42 pólizas. 18 vencen en los próximos 15 días.</div>
+        <div class="bubble out">¿Cuáles tienen pagos pendientes?</div>
+        <div class="bubble in">Hay 7 clientes con saldo pendiente. ¿Quieres crear tareas de seguimiento?</div>
+      </div>
+    </div>
+    <div class="section-index">12 · IA</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Implementación guiada">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Modalidad 01</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Implementación guiada</div>
+        <h2 class="fade d1">Todo lo necesario para poner el sistema en marcha.</h2>
+        <p class="lead fade d2">Recibes el software, la formación y acompañamiento inicial para que tu equipo pueda realizar la implementación paso a paso.</p>
+      </div>
+      <div class="pricebox featured fade d2">
+        <div class="muted">INVERSIÓN INICIAL</div>
+        <div class="price">USD 1.000</div>
+        <ul class="checklist">
+          <li>Acceso al sistema.</li>
+          <li>Curso completo de instalación e integración.</li>
+          <li>Configuración guiada de integraciones.</li>
+          <li>30 días de acompañamiento.</li>
+          <li>1 sesión semanal de preguntas y respuestas durante el primer mes.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-index">13 · IMPLEMENTACIÓN GUIADA</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Llave en mano">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Modalidad 02</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Implementación llave en mano</div>
+        <h2 class="fade d1">Tú entregas la información. Nosotros dejamos el ecosistema preparado.</h2>
+        <p class="lead fade d2">Ideal para agencias que prefieren que nuestro equipo realice la puesta en marcha técnica y la personalización.</p>
+      </div>
+      <div class="pricebox fade d2">
+        <div class="muted">ADICIONAL</div>
+        <div class="price">+ USD 300</div>
+        <ul class="checklist">
+          <li>Configuración del ecosistema.</li>
+          <li>Conexión de WhatsApp API.</li>
+          <li>Conexión de integraciones disponibles.</li>
+          <li>Personalización con identidad de la agencia.</li>
+          <li>Carga inicial de base de clientes.</li>
+          <li>3 capacitaciones privadas uno a uno.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-index">14 · LLAVE EN MANO</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Chatbot IA">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Upsell IA</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Chatbot IA implementado por nosotros</div>
+        <h2 class="fade d1">¿Quieres que tu sistema también pueda conversar y ejecutar tareas con IA?</h2>
+        <p class="lead fade d2">Nuestro equipo puede desarrollar y conectar el chatbot de inteligencia artificial directamente con tu ecosistema.</p>
+      </div>
+      <div class="pricebox fade d2">
+        <div class="muted">ADICIONAL OPCIONAL</div>
+        <div class="price">+ USD 500</div>
+        <div class="note">El cliente asume directamente los consumos y servicios externos asociados a OpenAI/ChatGPT y demás proveedores.</div>
+      </div>
+    </div>
+    <div class="section-index">15 · CHATBOT IA</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Plan activo">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Plan activo</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">Tu sistema sigue evolucionando</div>
+        <h2 class="fade d1">Actualizaciones, mejoras y soporte continuo.</h2>
+        <p class="lead fade d2">La plataforma seguirá evolucionando a medida que cambian los procesos, la tecnología y las integraciones del sector.</p>
+      </div>
+      <div class="pricebox featured fade d2">
+        <div class="muted">FEE MENSUAL</div>
+        <div class="price">USD 30</div>
+        <ul class="checklist">
+          <li>Actualizaciones del sistema.</li>
+          <li>Mejoras y nuevas versiones.</li>
+          <li>Soporte.</li>
+          <li>Evolución continua del ecosistema.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="section-index">16 · PLAN ACTIVO</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Inversión">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Inversión</div></div>
+    <div class="rail"></div>
+    <div class="stage one">
+      <div>
+        <div class="eyebrow fade">Oferta completa</div>
+        <h2 class="fade d1">Cuatro números. Un ecosistema completo.</h2>
+        <div class="grid g4 fade d2">
+          <div class="pricebox featured"><div class="muted">SOFTWARE</div><div class="price">USD 1.000</div><p class="muted">Pago inicial.</p></div>
+          <div class="pricebox"><div class="muted">PLAN ACTIVO</div><div class="price">USD 30</div><p class="muted">Mensual.</p></div>
+          <div class="pricebox"><div class="muted">LLAVE EN MANO</div><div class="price">+300</div><p class="muted">USD opcional.</p></div>
+          <div class="pricebox"><div class="muted">CHATBOT IA</div><div class="price">+500</div><p class="muted">USD opcional.</p></div>
+        </div>
+        <div class="note fade d3">Servicios externos, infraestructura, APIs, WhatsApp y consumos de terceros son contratados y pagados directamente por el cliente.</div>
+      </div>
+    </div>
+    <div class="section-index">17 · INVERSIÓN</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Cierre">
+  <div class="frame">
+    <div class="topbar"><div class="brand"><span class="brandmark">S</span> Sistema Seguros</div><div class="chip">Cierre</div></div>
+    <div class="rail"></div>
+    <div class="stage">
+      <div>
+        <div class="eyebrow fade">El siguiente nivel</div>
+        <h1 class="fade d1">Deja de operar tu agencia con información repartida en cinco lugares.</h1>
+        <p class="lead fade d2">Cotiza. Vende. Conversa. Administra. Cobra. Renueva. Analiza. Automatiza.</p>
+        <a class="cta fade d3" href="#deck" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Volver al inicio ↑</a>
+      </div>
+      <div class="statement fade d2">El siguiente paso no es agregar otra herramienta.<br><br><b>Es conectar toda tu operación.</b></div>
+    </div>
+    <div class="section-index">18 · CIERRE</div><div class="footer-nav"></div>
+  </div>
+</section>
+
+</div>
+<div class="progress"><span id="progressBar"></span></div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll(".slide")), total=slides.length;
+  function go(i){ if(i<0)i=0;if(i>=total)i=total-1;slides[i].scrollIntoView({behavior:"smooth",block:"start"}); }
+  function current(){var best=0,d=Infinity;slides.forEach(function(s,i){var x=Math.abs(s.getBoundingClientRect().top);if(x<d){d=x;best=i}});return best}
+  slides.forEach(function(slide,idx){
+    var rail=slide.querySelector(".rail"), nav=slide.querySelector(".footer-nav");
+    if(rail){
+      slides.forEach(function(_,i){
+        var b=document.createElement("button");b.className="dot"+(i===idx?" active":"");b.type="button";b.textContent=String(i+1).padStart(2,"0");
+        b.title=slides[i].getAttribute("data-title")||("Sección "+(i+1));b.onclick=function(){go(i)};rail.appendChild(b);
+      });
+    }
+    if(nav){
+      var p=document.createElement("button");p.className="navbtn";p.innerHTML="←";p.disabled=idx===0;p.style.opacity=idx===0?".35":"1";p.onclick=function(){go(idx-1)};
+      var n=document.createElement("button");n.className="navbtn";n.innerHTML=idx===total-1?"↥":"→";n.onclick=function(){idx===total-1?go(0):go(idx+1)};
+      nav.appendChild(p);nav.appendChild(n);
+    }
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("in-view")})},{threshold:.3});
+  slides.forEach(function(s){io.observe(s)});
+  function prog(){document.getElementById("progressBar").style.width=((current()+1)/total*100)+"%"}
+  addEventListener("scroll",prog,{passive:true});prog();
+  addEventListener("keydown",function(e){var i=current();if(["ArrowRight","ArrowDown","PageDown"," "].includes(e.key)){e.preventDefault();go(i+1)}if(["ArrowLeft","ArrowUp","PageUp"].includes(e.key)){e.preventDefault();go(i-1)}})
+})();
+</script>
+</body>
+</html>
