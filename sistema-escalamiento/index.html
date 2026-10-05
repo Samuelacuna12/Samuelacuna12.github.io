@@ -938,6 +938,106 @@
       }
     }
 
+  
+    /* ===== Portada v6: movimiento sutil + sin líneas/flechas ===== */
+    .growth-arrow,
+    .growth-arrow-clean,
+    .growth-arrow .shaft,
+    .growth-arrow .head{
+      display:none!important;
+    }
+
+    .growth-visual{
+      animation:heroBreath 7s ease-in-out infinite;
+    }
+
+    .growth-goal{
+      animation:floatGoal 6s ease-in-out infinite;
+      transform-origin:center;
+    }
+
+    .growth-badge{
+      animation:floatBadge 7.5s ease-in-out infinite;
+    }
+
+    .growth-stage{
+      overflow:visible;
+    }
+
+    .gbar{
+      transform-origin:bottom center;
+      animation:barPulse 5.5s ease-in-out infinite;
+    }
+    .gb1{animation-delay:0s}
+    .gb2{animation-delay:.35s}
+    .gb3{animation-delay:.7s}
+    .gb4{animation-delay:1.05s}
+
+    .growth-labels div{
+      animation:labelFloat 7s ease-in-out infinite;
+    }
+    .growth-labels div:nth-child(2){animation-delay:.35s}
+    .growth-labels div:nth-child(3){animation-delay:.7s}
+    .growth-labels div:nth-child(4){animation-delay:1.05s}
+
+    .growth-foot span{
+      animation:chipFloat 6.5s ease-in-out infinite;
+    }
+    .growth-foot span:nth-child(2){animation-delay:.25s}
+    .growth-foot span:nth-child(3){animation-delay:.5s}
+    .growth-foot span:nth-child(4){animation-delay:.75s}
+    .growth-foot span:nth-child(5){animation-delay:1s}
+
+    .growth-visual:after{
+      content:"";
+      position:absolute;
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      right:-70px;
+      top:34%;
+      background:radial-gradient(circle,rgba(255,255,255,.7) 0%,rgba(255,255,255,.2) 52%,transparent 72%);
+      filter:blur(2px);
+      opacity:.55;
+      animation:orbDrift 9s ease-in-out infinite;
+      pointer-events:none;
+    }
+
+    @keyframes heroBreath{
+      0%,100%{box-shadow:0 26px 70px rgba(35,61,95,.15),inset 0 1px 0 rgba(255,255,255,.9)}
+      50%{box-shadow:0 34px 82px rgba(35,61,95,.19),inset 0 1px 0 rgba(255,255,255,.95)}
+    }
+    @keyframes floatGoal{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+    @keyframes floatBadge{
+      0%,100%{transform:translateY(0) translateX(0)}
+      50%{transform:translateY(6px) translateX(-4px)}
+    }
+    @keyframes barPulse{
+      0%,100%{transform:scaleY(1);filter:brightness(1)}
+      50%{transform:scaleY(1.035);filter:brightness(1.05)}
+    }
+    @keyframes labelFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-5px)}
+    }
+    @keyframes chipFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-3px)}
+    }
+    @keyframes orbDrift{
+      0%,100%{transform:translate(0,0) scale(1)}
+      50%{transform:translate(-24px,18px) scale(1.06)}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .growth-visual,.growth-goal,.growth-badge,.gbar,.growth-labels div,.growth-foot span,.growth-visual:after{
+        animation:none!important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -975,7 +1075,7 @@
               <div class="gbar gb3"><span>03</span></div>
               <div class="gbar gb4"><span>04</span></div>
             </div>
-            <div class="growth-arrow-clean" aria-hidden="true">↗</div>
+            
           </div>
 
           <div class="growth-labels">
