@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#dcecff" />
+  <title>Sistema de Escalamiento Empresarial — Samuel Acuña</title>
+  <meta name="description" content="Presentación comercial del Sistema de Escalamiento Empresarial por Samuel Acuña." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#10151e;
+      --muted:#556172;
+      --line:rgba(16,21,30,.10);
+      --glass:rgba(255,255,255,.55);
+      --glass-strong:rgba(255,255,255,.76);
+      --blue:#d8ebff;
+      --blue2:#b9dcff;
+      --ice:#eef7ff;
+      --warm:#f4efe7;
+      --shadow:0 30px 80px rgba(33,50,77,.18);
+      --radius:40px;
+      --radius-sm:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+    body{
+      margin:0;
+      font-family:"Manrope",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%,rgba(255,255,255,.95),transparent 28%),
+        linear-gradient(135deg,#eee9e0,#d8d5cf 55%,#ece8df);
+      overflow-x:hidden;
+    }
+    button,a{font:inherit}
+    .deck{position:relative}
+    .slide{
+      min-height:100vh;
+      scroll-snap-align:start;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
+      position:relative;
+      isolation:isolate;
+    }
+    .frame{
+      width:min(1540px,calc(100vw - 44px));
+      min-height:calc(100vh - 44px);
+      border-radius:var(--radius);
+      overflow:hidden;
+      position:relative;
+      border:1px solid rgba(255,255,255,.82);
+      box-shadow:var(--shadow);
+      background:
+        radial-gradient(circle at 74% 22%,rgba(255,255,255,.88),transparent 18%),
+        radial-gradient(circle at 24% 90%,rgba(168,214,255,.58),transparent 32%),
+        linear-gradient(140deg,#eef8ff 0%,#d8ebff 48%,#c8dfff 100%);
+    }
+    .frame:before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(120deg,rgba(255,255,255,.34),transparent 26%),
+        radial-gradient(circle at 85% 75%,rgba(146,115,255,.12),transparent 22%);
+      pointer-events:none;
+    }
+    .orb{
+      position:absolute; border-radius:999px; filter:blur(3px); opacity:.7; pointer-events:none;
+      animation:float 9s ease-in-out infinite;
+    }
+    .orb.a{width:360px;height:360px;right:-80px;top:10%;background:radial-gradient(circle at 30% 30%,#fff,#b7d8ff 45%,rgba(135,99,255,.28));}
+    .orb.b{width:260px;height:260px;left:9%;bottom:-70px;background:radial-gradient(circle at 30% 30%,#fff,#cbe6ff 50%,rgba(87,164,255,.15));animation-delay:-3s}
+    @keyframes float{50%{transform:translateY(-16px) translateX(8px)}}
+    .topbar{
+      position:absolute; left:88px; right:34px; top:26px; z-index:8;
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:-.03em;
+    }
+    .brand-mark{
+      width:34px;height:34px;border-radius:50%;
+      display:grid;place-items:center;background:rgba(255,255,255,.75);
+      border:1px solid rgba(16,21,30,.08);box-shadow:0 8px 20px rgba(36,56,87,.09)
+    }
+    .top-meta{
+      display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end
+    }
+    .chip{
+      background:rgba(255,255,255,.54);border:1px solid rgba(255,255,255,.78);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border-radius:999px;padding:10px 14px;font-size:12px;font-weight:700;color:#435166;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+    }
+    .rail{
+      position:absolute;left:22px;top:50%;transform:translateY(-50%);z-index:9;
+      width:48px;padding:8px 6px;border-radius:26px;
+      background:rgba(255,255,255,.50);border:1px solid rgba(255,255,255,.78);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+      box-shadow:0 14px 34px rgba(36,56,87,.12);
+    }
+    .dot{
+      width:34px;height:34px;border:0;border-radius:50%;background:transparent;
+      display:grid;place-items:center;color:#738197;cursor:pointer;transition:.25s ease;
+      font-size:11px;font-weight:800;
+    }
+    .dot:hover,.dot.active{background:#fff;color:#111923;transform:scale(1.04)}
+    .stage{
+      position:relative;z-index:3;min-height:calc(100vh - 44px);
+      padding:116px 72px 72px 110px;
+      display:grid;grid-template-columns:1.08fr .92fr;gap:46px;align-items:center;
+    }
+    .stage.one{grid-template-columns:1fr}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;color:#35506c;
+      margin-bottom:20px;
+    }
+    .eyebrow:before{content:"";width:26px;height:1px;background:#35506c}
+    h1,h2,h3,p{margin-top:0}
+    h1{
+      font-size:clamp(52px,6.4vw,108px);line-height:.91;letter-spacing:-.072em;
+      max-width:980px;margin-bottom:26px;font-weight:600;
+    }
+    h2{
+      font-size:clamp(42px,5vw,78px);line-height:.98;letter-spacing:-.058em;
+      max-width:1020px;margin-bottom:24px;font-weight:600;
+    }
+    h3{font-size:22px;line-height:1.1;letter-spacing:-.03em;margin-bottom:12px}
+    .lead{
+      font-size:clamp(18px,1.55vw,24px);line-height:1.48;color:#405064;max-width:760px;
+    }
+    .muted{color:var(--muted)}
+    .accent-line{
+      display:inline-block;background:rgba(255,255,255,.70);
+      border:1px solid rgba(255,255,255,.92);
+      padding:4px 12px 7px;border-radius:18px;box-shadow:0 10px 34px rgba(49,91,140,.09)
+    }
+    .hero-card,.glass{
+      background:var(--glass);border:1px solid rgba(255,255,255,.78);
+      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      box-shadow:0 24px 60px rgba(38,61,94,.12),inset 0 1px 0 rgba(255,255,255,.75);
+    }
+    .hero-card{
+      border-radius:38px;padding:18px;min-height:560px;position:relative;overflow:hidden;
+    }
+    .hero-visual{
+      height:100%;min-height:522px;border-radius:30px;position:relative;overflow:hidden;
+      background:
+        radial-gradient(circle at 66% 26%,rgba(255,255,255,.95),transparent 16%),
+        linear-gradient(145deg,#8cc0ee 0%,#cfe6fb 44%,#b2cde9 100%);
+    }
+    .hero-visual:after{
+      content:"";position:absolute;width:72%;height:72%;right:-8%;bottom:-18%;
+      border-radius:46% 54% 28% 72% / 44% 38% 62% 56%;
+      background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(236,245,255,.55) 45%,rgba(130,180,226,.58));
+      box-shadow:0 30px 90px rgba(28,72,119,.25),inset 0 0 0 1px rgba(255,255,255,.7);
+      transform:rotate(-8deg);
+    }
+    .portrait{
+      position:absolute;inset:auto 0 0 auto;width:72%;height:92%;object-fit:contain;object-position:bottom right;
+      z-index:2;filter:drop-shadow(0 30px 34px rgba(20,35,58,.20));
+    }
+    .floating-card{
+      position:absolute;z-index:4;padding:20px;border-radius:26px;max-width:270px;
+      background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
+      backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+      box-shadow:0 18px 40px rgba(30,58,94,.12);
+    }
+    .floating-card.top{top:24px;left:24px}
+    .floating-card.bottom{left:24px;bottom:24px}
+    .big-num{font-size:46px;line-height:1;font-weight:800;letter-spacing:-.06em}
+    .small{font-size:12px;line-height:1.45;color:#536176}
+    .grid{display:grid;gap:16px}
+    .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{
+      padding:22px;border-radius:26px;
+      background:rgba(255,255,255,.56);border:1px solid rgba(255,255,255,.78);
+      backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+      box-shadow:0 16px 40px rgba(48,76,110,.08);
+    }
+    .card strong{display:block;font-size:15px;margin-bottom:7px}
+    .card p{font-size:13px;line-height:1.5;color:#59677a;margin:0}
+    .icon{
+      width:42px;height:42px;border-radius:14px;background:#fff;display:grid;place-items:center;
+      font-size:18px;margin-bottom:18px;box-shadow:0 10px 24px rgba(37,68,104,.10)
+    }
+    .pain-grid .card{min-height:155px}
+    .statement{
+      padding:28px 30px;border-radius:30px;background:rgba(255,255,255,.67);
+      border:1px solid rgba(255,255,255,.88);font-size:22px;line-height:1.4;
+      box-shadow:0 16px 44px rgba(34,65,99,.10);
+    }
+    .statement b{font-weight:800}
+    .route{
+      min-height:440px;padding:32px;border-radius:34px;position:relative;overflow:hidden;
+      background:rgba(255,255,255,.60);border:1px solid rgba(255,255,255,.86);
+      box-shadow:0 24px 54px rgba(29,58,94,.11);
+    }
+    .route:after{
+      content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-70px;bottom:-80px;
+      background:radial-gradient(circle,#fff 0%,rgba(161,205,247,.7) 44%,transparent 68%);
+    }
+    .route-number{font-size:13px;font-weight:800;letter-spacing:.16em;color:#516c87;text-transform:uppercase}
+    .route h3{font-size:34px;margin:26px 0 12px}
+    .route .price{font-size:38px;font-weight:800;letter-spacing:-.05em;margin:24px 0 4px}
+    .route ul,.checklist{list-style:none;padding:0;margin:20px 0 0}
+    .route li,.checklist li{position:relative;padding-left:24px;margin:10px 0;font-size:14px;color:#435166}
+    .route li:before,.checklist li:before{content:"✓";position:absolute;left:0;top:0;font-weight:800;color:#1f567a}
+    .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .month{padding:26px;border-radius:28px;background:rgba(255,255,255,.64);border:1px solid rgba(255,255,255,.82);min-height:300px}
+    .month .m{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:#58728b}
+    .month h3{font-size:28px;margin:44px 0 12px}
+    .month p{font-size:14px;line-height:1.55;color:#576579}
+    .tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+    .tag{font-size:11px;font-weight:700;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(16,21,30,.06)}
+    .process{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:step
+    }
+    .process .card{min-height:230px;position:relative}
+    .process .card:before{
+      counter-increment:step;content:"0" counter(step);
+      display:block;font-size:11px;letter-spacing:.12em;font-weight:800;color:#6c8094;margin-bottom:48px
+    }
+    .metric{padding:18px;border-radius:22px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.82)}
+    .metric b{display:block;font-size:24px;letter-spacing:-.04em;margin-bottom:6px}
+    .metric span{font-size:12px;color:#5d6b7d}
+    .price-panel{
+      padding:30px;border-radius:32px;background:rgba(255,255,255,.69);border:1px solid rgba(255,255,255,.92);
+      box-shadow:0 20px 50px rgba(39,64,98,.11);
+    }
+    .price-panel .price{font-size:52px;letter-spacing:-.06em;font-weight:800;line-height:1}
+    .price-panel .sub{font-size:13px;color:#59677a;margin-top:8px}
+    .note{
+      margin-top:18px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.43);
+      border:1px dashed rgba(16,21,30,.16);font-size:12px;line-height:1.5;color:#59677a
+    }
+    .comparison{
+      width:100%;border-collapse:separate;border-spacing:0 10px;font-size:13px
+    }
+    .comparison th{font-size:11px;text-transform:uppercase;letter-spacing:.12em;text-align:left;color:#617186;padding:0 14px 8px}
+    .comparison td{padding:16px 14px;background:rgba(255,255,255,.58);border-top:1px solid rgba(255,255,255,.88);border-bottom:1px solid rgba(255,255,255,.88)}
+    .comparison td:first-child{border-radius:16px 0 0 16px}
+    .comparison td:last-child{border-radius:0 16px 16px 0}
+    .quote{
+      font-size:clamp(34px,4.2vw,68px);line-height:1.03;letter-spacing:-.055em;font-weight:600;max-width:1040px
+    }
+    .footer-nav{
+      position:absolute;right:26px;bottom:24px;z-index:10;display:flex;gap:8px;align-items:center
+    }
+    .navbtn{
+      width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.88);background:rgba(255,255,255,.66);
+      backdrop-filter:blur(14px);cursor:pointer;font-size:18px;color:#263343;box-shadow:0 10px 24px rgba(37,62,95,.10)
+    }
+    .navbtn:hover{background:#fff}
+    .progress{
+      position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.22);z-index:30
+    }
+    .progress span{display:block;height:100%;width:0;background:#112236;transition:width .25s ease}
+    .section-index{
+      position:absolute;left:112px;bottom:30px;font-size:11px;font-weight:800;letter-spacing:.14em;color:#63768c;z-index:5
+    }
+    .visual-map{
+      aspect-ratio:1/1;border-radius:50%;position:relative;max-width:520px;margin:auto;
+      background:radial-gradient(circle,#fff 0 20%,rgba(255,255,255,.64) 21% 47%,rgba(255,255,255,.30) 48% 65%,transparent 66%);
+      border:1px solid rgba(255,255,255,.62)
+    }
+    .visual-map .core{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:118px;height:118px;border-radius:50%;
+      display:grid;place-items:center;text-align:center;background:#fff;font-size:13px;font-weight:800;box-shadow:0 18px 40px rgba(38,61,94,.14)
+    }
+    .node{
+      position:absolute;padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.95);
+      font-size:11px;font-weight:800;white-space:nowrap;box-shadow:0 10px 24px rgba(37,66,100,.10)
+    }
+    .n1{top:5%;left:38%}.n2{top:20%;right:-2%}.n3{top:50%;right:-7%}.n4{bottom:15%;right:4%}.n5{bottom:3%;left:39%}.n6{bottom:18%;left:-3%}.n7{top:48%;left:-8%}.n8{top:18%;left:2%}
+    .portrait-panel{
+      position:relative;min-height:560px;border-radius:36px;overflow:hidden;
+      background:linear-gradient(145deg,#b6d8f7,#dceeff 54%,#e9f5ff);
+      border:1px solid rgba(255,255,255,.85);box-shadow:0 24px 56px rgba(42,70,106,.12)
+    }
+    .portrait-panel img{position:absolute;right:-2%;bottom:0;height:96%;width:84%;object-fit:contain;object-position:bottom right}
+    .stat-stack{position:absolute;left:24px;bottom:24px;z-index:3;display:grid;gap:8px;width:45%}
+    .stat{padding:16px 18px;border-radius:20px;background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.95);backdrop-filter:blur(16px)}
+    .stat b{display:block;font-size:28px;letter-spacing:-.05em}.stat span{font-size:11px;color:#59677a}
+    .cta{
+      display:inline-flex;align-items:center;gap:12px;border:0;border-radius:999px;padding:15px 20px;
+      background:#111a25;color:#fff;text-decoration:none;font-weight:800;font-size:13px;box-shadow:0 16px 34px rgba(17,26,37,.18)
+    }
+    .cta .arrow{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
+    .mini-kicker{font-size:13px;font-weight:800;color:#506a83;margin-bottom:10px}
+    .fade-up{opacity:0;transform:translateY(18px);transition:.65s cubic-bezier(.2,.75,.2,1)}
+    .slide.in-view .fade-up{opacity:1;transform:none}
+    .delay1{transition-delay:.08s}.delay2{transition-delay:.16s}.delay3{transition-delay:.24s}
+    @media (max-width:1050px){
+      .stage,.stage.one{grid-template-columns:1fr;padding:110px 36px 92px 86px;gap:26px}
+      .hero-card,.portrait-panel{min-height:420px}.hero-visual{min-height:385px}
+      .g4{grid-template-columns:repeat(2,1fr)}.process{grid-template-columns:repeat(2,1fr)}
+      .timeline{grid-template-columns:1fr}.month{min-height:auto}
+      .topbar{left:72px;right:24px}.section-index{left:88px}
+    }
+    @media (max-width:700px){
+      html{scroll-snap-type:none}
+      .slide{padding:8px;min-height:auto}
+      .frame{width:calc(100vw - 16px);min-height:calc(100vh - 16px);border-radius:28px}
+      .rail{display:none}.topbar{left:22px;right:22px;top:20px}
+      .top-meta .chip:nth-child(n+2){display:none}
+      .stage,.stage.one{padding:96px 20px 86px;min-height:calc(100vh - 16px)}
+      h1{font-size:52px}h2{font-size:42px}.lead{font-size:17px}
+      .g2,.g3,.g4,.process{grid-template-columns:1fr}
+      .route{min-height:auto}.hero-card{min-height:380px}.hero-visual{min-height:345px}
+      .portrait{width:92%}.floating-card{max-width:210px}
+      .visual-map{transform:scale(.9)}
+      .section-index{left:24px;bottom:26px}.footer-nav{right:18px;bottom:18px}
+      .comparison{font-size:11px}.comparison th,.comparison td{padding:12px 8px}
+      .portrait-panel{min-height:440px}.stat-stack{width:58%}.stat b{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <section class="slide" data-title="Inicio">
+    <div class="frame">
+      <div class="orb a"></div><div class="orb b"></div>
+      <div class="topbar">
+        <div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div>
+        <div class="top-meta"><span class="chip">Sistema de Escalamiento Empresarial</span><span class="chip">Presentación privada</span></div>
+      </div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">Estrategia · Estructura · Escalamiento</div>
+          <h1 class="fade-up delay1">Tu empresa ya vende.<br><span class="accent-line">Ahora vamos a estructurarla</span> para que pueda escalar.</h1>
+          <p class="lead fade-up delay2">Marketing, ventas, procesos, equipo, finanzas, tecnología e inteligencia artificial conectados bajo una sola estrategia de crecimiento.</p>
+          <div class="tagrow fade-up delay3"><span class="tag">Empresas en crecimiento</span><span class="tag">E-commerce</span><span class="tag">Productores</span><span class="tag">Negocios tradicionales que quieren digitalizarse</span></div>
+        </div>
+        <div class="hero-card fade-up delay2">
+          <div class="hero-visual">
+            <img class="portrait" src="../portrait.webp" alt="Samuel Acuña">
+            <div class="floating-card top">
+              <div class="small">Objetivo</div>
+              <div class="big-num">x2–x3</div>
+              <div class="small">Construir la estructura necesaria para buscar un nuevo nivel de crecimiento.</div>
+            </div>
+            <div class="floating-card bottom">
+              <div class="mini-kicker">No vendemos “más marketing”.</div>
+              <div class="small">Construimos sistemas para adquirir, convertir, medir y escalar.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">01 · INICIO</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Dolor">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Diagnóstico</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">El problema real</div>
+          <h2 class="fade-up delay1">Vender no siempre significa estar listo para crecer.</h2>
+          <p class="lead fade-up delay2">Hay empresas que facturan bien y, aun así, dependen demasiado del dueño, de un solo canal, de procesos manuales o de personas clave que sostienen todo.</p>
+          <div class="grid g4 pain-grid fade-up delay3">
+            <div class="card"><div class="icon">◎</div><strong>Adquisición inestable</strong><p>Un mes llegan clientes. Al siguiente, no. Nadie sabe exactamente por qué.</p></div>
+            <div class="card"><div class="icon">↗</div><strong>Ventas sin sistema</strong><p>El seguimiento depende de cada vendedor, no de un proceso medible y repetible.</p></div>
+            <div class="card"><div class="icon">◫</div><strong>Información dispersa</strong><p>WhatsApp, hojas de cálculo, plataformas y datos que no conversan entre sí.</p></div>
+            <div class="card"><div class="icon">⌁</div><strong>El dueño en todo</strong><p>La empresa funciona, pero demasiadas decisiones siguen pasando por una sola persona.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">02 · EL DOLOR</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Fricción">
+    <div class="frame">
+      <div class="orb a"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Dónde se frena una empresa</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">Fugas invisibles</div>
+          <h2 class="fade-up delay1">El crecimiento se frena en más lugares de los que parece.</h2>
+          <p class="lead fade-up delay2">No siempre es la pauta. A veces el problema está en la oferta, el margen, el equipo, la logística, el cierre, la velocidad de respuesta o la falta de datos.</p>
+          <div class="statement fade-up delay3"><b>Si solo corriges marketing,</b> pero el resto de la empresa sigue igual, el crecimiento termina chocando contra la operación.</div>
+        </div>
+        <div class="visual-map fade-up delay2">
+          <div class="core">EMPRESA<br>ESCALABLE</div>
+          <span class="node n1">Marketing</span><span class="node n2">Ventas</span><span class="node n3">Finanzas</span><span class="node n4">Operación</span>
+          <span class="node n5">Logística</span><span class="node n6">Talento humano</span><span class="node n7">IA & Sistemas</span><span class="node n8">Oferta</span>
+        </div>
+      </div>
+      <div class="section-index">03 · FRICCIÓN</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Escalar">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Escalar ≠ facturar más</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">La diferencia</div>
+          <h2 class="fade-up delay1">Más ventas con los mismos problemas solo producen problemas más grandes.</h2>
+          <div class="grid g3 fade-up delay2">
+            <div class="card"><div class="big-num">01</div><h3>Facturar más</h3><p>Puede suceder por una campaña, una temporada o una oportunidad puntual.</p></div>
+            <div class="card"><div class="big-num">02</div><h3>Crecer</h3><p>Implica más ventas con mejores procesos, control, equipo y rentabilidad.</p></div>
+            <div class="card"><div class="big-num">03</div><h3>Escalar</h3><p>Significa que el sistema puede soportar más volumen sin multiplicar el caos.</p></div>
+          </div>
+          <p class="lead fade-up delay3" style="margin-top:28px">El objetivo es construir una empresa capaz de adquirir clientes, convertirlos, entregar bien, medir lo que ocurre y tomar decisiones con datos.</p>
+        </div>
+      </div>
+      <div class="section-index">04 · ESCALAR DE VERDAD</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Rutas">
+    <div class="frame">
+      <div class="orb b"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Dos rutas</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">Según el problema, cambia la intervención</div>
+          <h2 class="fade-up delay1">Dos formas de trabajar. Dos niveles de profundidad.</h2>
+          <div class="grid g2 fade-up delay2">
+            <div class="route">
+              <div class="route-number">Ruta 01</div>
+              <h3>Sistema de Crecimiento & Marketing</h3>
+              <p class="muted">Para empresas que necesitan construir un motor serio de adquisición, seguimiento y conversión.</p>
+              <div class="price">$5.500.000</div><div class="small">COP / mes</div>
+              <ul><li>Marketing y adquisición</li><li>IA para atención comercial</li><li>CRM, landings, creativos y pauta</li><li>Capacitación comercial</li></ul>
+            </div>
+            <div class="route">
+              <div class="route-number">Ruta 02</div>
+              <h3>Acompañamiento Estratégico Empresarial</h3>
+              <p class="muted">Para empresas que necesitan intervenir la estructura completa y preparar una transformación mayor.</p>
+              <div class="price">3 o 6 meses</div><div class="small">Intervención integral</div>
+              <ul><li>Marketing + ventas + finanzas</li><li>Operación + logística + equipo</li><li>IA, procesos y nuevas fuentes de ingreso</li><li>Seguimiento semanal con Samuel</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">05 · DOS RUTAS</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Ruta 1">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Ruta 01</span><span class="chip">$5.500.000 / mes</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">Sistema de Crecimiento & Marketing</div>
+          <h2 class="fade-up delay1">Construimos el ecosistema que convierte atención en oportunidades reales de venta.</h2>
+          <p class="lead fade-up delay2">No se trata de publicar por publicar. Se estructura oferta, captación, seguimiento, contenido, automatización y medición para que el marketing tenga una función comercial.</p>
+        </div>
+        <div class="grid g2 fade-up delay2">
+          <div class="card"><div class="icon">◌</div><strong>Oferta y portafolio</strong><p>Revisión del portafolio comercial de Meta, productos, servicios, mensajes, promociones y propuesta de valor.</p></div>
+          <div class="card"><div class="icon">✦</div><strong>Agentes IA comerciales</strong><p>Atención y respuesta en WhatsApp, Instagram y Facebook para agilizar el contacto con prospectos.</p></div>
+          <div class="card"><div class="icon">◧</div><strong>Creativos y edición</strong><p>Diseños estáticos, recomendaciones de videos y edición del material que produce el cliente.</p></div>
+          <div class="card"><div class="icon">↗</div><strong>Pauta y captación</strong><p>Configuración, lanzamiento y optimización de campañas orientadas a encontrar públicos y oportunidades.</p></div>
+        </div>
+      </div>
+      <div class="section-index">06 · RUTA 01</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Implementación">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Qué se construye</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">Implementación inicial</div>
+          <h2 class="fade-up delay1">La primera etapa no es “hacer anuncios”. Es dejar la casa lista.</h2>
+          <div class="grid g4 fade-up delay2">
+            <div class="card"><div class="icon">01</div><strong>Auditoría comercial</strong><p>Revisamos qué vendes, cómo lo presentas, qué oferta tiene mayor potencial y qué debe corregirse antes de escalar.</p></div>
+            <div class="card"><div class="icon">02</div><strong>Ecosistema Meta</strong><p>Verificamos portafolio comercial, activos, canales, estructura y puntos críticos para operar correctamente.</p></div>
+            <div class="card"><div class="icon">03</div><strong>CRM + landing</strong><p>Cuando el proceso lo requiere, estructuramos landing pages y un CRM para ordenar oportunidades y seguimiento.</p></div>
+            <div class="card"><div class="icon">04</div><strong>Automatización comercial</strong><p>Conectamos agentes y flujos para responder más rápido y reducir tareas repetitivas de atención inicial.</p></div>
+          </div>
+          <div class="note fade-up delay3">Las automatizaciones operativas complejas o agentes especializados para procesos internos de la empresa no forman parte de esta ruta; se desarrollan en proyectos de mayor profundidad.</div>
+        </div>
+      </div>
+      <div class="section-index">07 · IMPLEMENTACIÓN</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="90 días">
+    <div class="frame">
+      <div class="orb a"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Primeros 90 días</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">Cómo madura la estrategia</div>
+          <h2 class="fade-up delay1">Tres meses para construir, validar y empezar a optimizar con información real.</h2>
+          <div class="timeline fade-up delay2">
+            <div class="month"><div class="m">Mes 01</div><h3>Estructurar</h3><p>Oferta, portafolio, canales, creativos, activos, IA comercial, CRM, landing y bases del ecosistema de adquisición.</p><div class="tagrow"><span class="tag">Base</span><span class="tag">Implementación</span></div></div>
+            <div class="month"><div class="m">Mes 02</div><h3>Validar</h3><p>Comenzamos a identificar públicos, mensajes, anuncios y puntos de captación con mejor respuesta, mientras el equipo comercial recibe retroalimentación.</p><div class="tagrow"><span class="tag">Audiencias</span><span class="tag">Pruebas</span></div></div>
+            <div class="month"><div class="m">Mes 03</div><h3>Optimizar</h3><p>Con datos suficientes, se priorizan campañas, ofertas y procesos que muestran mayor potencial de rentabilidad y conversión.</p><div class="tagrow"><span class="tag">Datos</span><span class="tag">Escalamiento</span></div></div>
+          </div>
+          <div class="note fade-up delay3">Una estrategia seria puede necesitar alrededor de seis meses para madurar por completo. Eso no significa que no puedan aparecer ventas antes; significa que no prometemos conclusiones sólidas antes de tener datos suficientes.</div>
+        </div>
+      </div>
+      <div class="section-index">08 · LOS PRIMEROS 90 DÍAS</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Marketing">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Alcance Ruta 01</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">Qué recibe la empresa</div>
+          <h2 class="fade-up delay1">Un equipo trabajando sobre adquisición, conversión y seguimiento.</h2>
+          <p class="lead fade-up delay2">La estrategia es coordinada como un sistema, no como servicios aislados.</p>
+        </div>
+        <div class="grid g2 fade-up delay2">
+          <div class="card"><strong>✓ Estrategia de marketing</strong><p>Oferta, mensaje, públicos, canales y prioridades.</p></div>
+          <div class="card"><strong>✓ Gestión de pauta</strong><p>Montaje, seguimiento y optimización de campañas.</p></div>
+          <div class="card"><strong>✓ Creativos</strong><p>Diseño estático, conceptos y edición de videos suministrados.</p></div>
+          <div class="card"><strong>✓ Landing pages</strong><p>Páginas enfocadas en captación o conversión cuando sean necesarias.</p></div>
+          <div class="card"><strong>✓ CRM</strong><p>Organización del flujo comercial y oportunidades.</p></div>
+          <div class="card"><strong>✓ IA comercial</strong><p>Agentes de respuesta para WhatsApp, Instagram y Facebook.</p></div>
+          <div class="card"><strong>✓ Capacitación</strong><p>Orientación al equipo para aprovechar mejor los leads y captar nuevos clientes.</p></div>
+          <div class="card"><strong>✓ Nuevos puntos de captación</strong><p>Exploración de oportunidades adicionales según el negocio.</p></div>
+        </div>
+      </div>
+      <div class="section-index">09 · QUÉ INCLUYE</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Inversión MKT">
+    <div class="frame">
+      <div class="orb b"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Ruta 01 · Inversión</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">Inversión mensual</div>
+          <h2 class="fade-up delay1">Sistema de Crecimiento & Marketing</h2>
+          <p class="lead fade-up delay2">Recomendamos presupuestar al menos los primeros tres meses para poder construir y validar el ecosistema completo.</p>
+        </div>
+        <div class="price-panel fade-up delay2">
+          <div class="small">INVERSIÓN</div>
+          <div class="price">$5.500.000</div>
+          <div class="sub">COP / mes</div>
+          <ul class="checklist">
+            <li>Implementación y estructuración inicial.</li>
+            <li>Equipo multidisciplinario coordinado bajo una sola estrategia.</li>
+            <li>Ejecución y optimización mensual.</li>
+            <li>Seguimiento de adquisición y conversión.</li>
+          </ul>
+          <div class="note">El presupuesto de pauta publicitaria y los costos de plataformas o herramientas de terceros son asumidos directamente por el cliente y no están incluidos en esta inversión.</div>
+        </div>
+      </div>
+      <div class="section-index">10 · INVERSIÓN RUTA 01</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Más que marketing">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">La pregunta clave</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">Cuando el problema es más profundo</div>
+          <div class="quote fade-up delay1">¿Y si tu empresa no necesita solamente más clientes… sino una estructura completa capaz de aprovechar el crecimiento?</div>
+          <p class="lead fade-up delay2" style="margin-top:30px">Ahí cambia la intervención. Ya no hablamos únicamente de marketing. Entramos a estudiar el negocio completo.</p>
+        </div>
+      </div>
+      <div class="section-index">11 · MÁS ALLÁ DEL MARKETING</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Ruta 2">
+    <div class="frame">
+      <div class="orb a"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Ruta 02</span><span class="chip">Acompañamiento estratégico</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">Intervención integral</div>
+          <h2 class="fade-up delay1">Entramos a entender cómo funciona tu empresa de punta a punta.</h2>
+          <p class="lead fade-up delay2">Analizamos datos, detectamos fricciones, proponemos cambios, ayudamos a estructurar sistemas y capacitamos al equipo. La decisión final siempre sigue siendo del dueño.</p>
+          <div class="statement fade-up delay3"><b>Samuel asesora, estructura y acompaña.</b> No reemplaza al empresario ni toma decisiones unilaterales sobre su compañía.</div>
+        </div>
+        <div class="visual-map fade-up delay2">
+          <div class="core">CRECIMIENTO<br>INTEGRAL</div>
+          <span class="node n1">Marketing</span><span class="node n2">Ventas</span><span class="node n3">Contabilidad</span><span class="node n4">Finanzas</span>
+          <span class="node n5">Logística</span><span class="node n6">Personal</span><span class="node n7">IA & Procesos</span><span class="node n8">Producto</span>
+        </div>
+      </div>
+      <div class="section-index">12 · RUTA 02</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Áreas">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Qué se revisa</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">Auditoría 360°</div>
+          <h2 class="fade-up delay1">No buscamos una sola fuga. Revisamos el sistema completo.</h2>
+          <div class="grid g4 fade-up delay2">
+            <div class="card"><div class="icon">↗</div><strong>Marketing</strong><p>Oferta, posicionamiento, canales, adquisición, contenido, pauta y nuevos puntos de entrada.</p></div>
+            <div class="card"><div class="icon">◎</div><strong>Ventas</strong><p>Proceso, seguimiento, cierre, scripts, velocidad de respuesta, métricas y productividad comercial.</p></div>
+            <div class="card"><div class="icon">▤</div><strong>Finanzas</strong><p>Facturación, margen, utilidad, costos, rentabilidad por producto y capacidad real de crecimiento.</p></div>
+            <div class="card"><div class="icon">◫</div><strong>Operación</strong><p>Procesos, cuellos de botella, responsabilidades, tiempos y capacidad para soportar más volumen.</p></div>
+            <div class="card"><div class="icon">⌁</div><strong>Logística</strong><p>Flujos de despacho, cumplimiento, devoluciones, inventario y puntos donde se pierde eficiencia.</p></div>
+            <div class="card"><div class="icon">◇</div><strong>Talento humano</strong><p>Cargos, funciones, costos de nómina, comisiones, desempeño, contratación y estructura del equipo.</p></div>
+            <div class="card"><div class="icon">✦</div><strong>IA & automatización</strong><p>Agentes, sistemas y automatizaciones para medir, acelerar procesos y reducir trabajo repetitivo.</p></div>
+            <div class="card"><div class="icon">＋</div><strong>Nuevos ingresos</strong><p>Nuevas ofertas, productos, unidades de negocio, canales y oportunidades de monetización.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">13 · ÁREAS DE INTERVENCIÓN</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="IA">
+    <div class="frame">
+      <div class="orb b"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">IA aplicada al negocio</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">Menos trabajo repetitivo. Más control.</div>
+          <h2 class="fade-up delay1">La inteligencia artificial debe ahorrar tiempo o producir información útil.</h2>
+          <p class="lead fade-up delay2">No implementamos IA porque esté de moda. La usamos cuando puede mejorar velocidad, trazabilidad, medición o productividad.</p>
+        </div>
+        <div class="grid g2 fade-up delay2">
+          <div class="card"><div class="icon">◉</div><strong>Agentes especializados</strong><p>Automatización de tareas repetitivas, atención, clasificación, seguimiento o procesos internos según el negocio.</p></div>
+          <div class="card"><div class="icon">⌘</div><strong>Sistemas de medición</strong><p>Herramientas que permiten consolidar datos y visualizar indicadores para tomar decisiones con mayor velocidad.</p></div>
+          <div class="card"><div class="icon">⇄</div><strong>Flujos automáticos</strong><p>Conexión entre herramientas para reducir pasos manuales y errores operativos.</p></div>
+          <div class="card"><div class="icon">◫</div><strong>Procesos documentados</strong><p>Antes de automatizar, estructuramos qué debe suceder, quién responde y cómo se mide.</p></div>
+        </div>
+      </div>
+      <div class="section-index">14 · IA & SISTEMAS</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Método">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Método de trabajo</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">Sprints semanales</div>
+          <h2 class="fade-up delay1">Cada semana debe producir avances concretos.</h2>
+          <div class="process fade-up delay2">
+            <div class="card"><h3>Revisar</h3><p>Analizamos métricas, problemas, avances y decisiones pendientes.</p></div>
+            <div class="card"><h3>Priorizar</h3><p>Definimos qué tareas tendrán mayor impacto en la siguiente semana.</p></div>
+            <div class="card"><h3>Ejecutar</h3><p>Se asignan responsables: tareas para Samuel/equipo y tareas para el cliente.</p></div>
+            <div class="card"><h3>Medir</h3><p>La siguiente reunión comienza revisando qué se cumplió, qué cambió y qué debemos ajustar.</p></div>
+          </div>
+          <div class="statement fade-up delay3" style="margin-top:20px">Además de la reunión semanal, el cliente tiene <b>acceso directo al WhatsApp Business de Samuel</b> para dudas y decisiones que no deberían esperar siete días.</div>
+        </div>
+      </div>
+      <div class="section-index">15 · SPRINTS SEMANALES</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Métricas">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Medir antes de opinar</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">Tablero de dirección</div>
+          <h2 class="fade-up delay1">Lo que no se mide termina convirtiéndose en opinión.</h2>
+          <div class="grid g4 fade-up delay2">
+            <div class="metric"><b>Facturación</b><span>Crecimiento real por periodo.</span></div>
+            <div class="metric"><b>Margen</b><span>Qué queda después del costo directo.</span></div>
+            <div class="metric"><b>Utilidad</b><span>Qué tan sano es el crecimiento.</span></div>
+            <div class="metric"><b>CAC</b><span>Costo real de adquirir un cliente.</span></div>
+            <div class="metric"><b>ROAS</b><span>Rendimiento de la inversión publicitaria.</span></div>
+            <div class="metric"><b>Conversión</b><span>Lead → contacto → venta.</span></div>
+            <div class="metric"><b>Ticket</b><span>Valor promedio por compra o cliente.</span></div>
+            <div class="metric"><b>Recurrencia</b><span>Cuánto vuelve a comprar el cliente.</span></div>
+            <div class="metric"><b>Rentabilidad</b><span>Producto, servicio y canal.</span></div>
+            <div class="metric"><b>Respuesta</b><span>Velocidad de atención comercial.</span></div>
+            <div class="metric"><b>Productividad</b><span>Rendimiento por vendedor y equipo.</span></div>
+            <div class="metric"><b>Canales</b><span>Diversificación de adquisición.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">16 · MÉTRICAS</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="3 vs 6">
+    <div class="frame">
+      <div class="orb a"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Profundidad de intervención</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">3 meses vs 6 meses</div>
+          <h2 class="fade-up delay1">El tiempo define cuán profundo podemos transformar.</h2>
+          <div class="grid g2 fade-up delay2">
+            <div class="route">
+              <div class="route-number">Acompañamiento · 3 meses</div>
+              <h3>Preparar para escalar</h3>
+              <p class="muted">Para empresarios que necesitan ordenar, medir y dejar una estructura base lista para comenzar una nueva etapa de crecimiento.</p>
+              <ul><li>Diagnóstico integral</li><li>Priorización de cuellos de botella</li><li>Estructura base de procesos y métricas</li><li>Capacitación del equipo</li><li>Implementaciones de mayor impacto</li><li>Plan de escalamiento posterior</li></ul>
+              <div class="price">$20.000.000</div><div class="small">COP · 3 meses</div>
+            </div>
+            <div class="route">
+              <div class="route-number">Acompañamiento · 6 meses</div>
+              <h3>Transformar y acelerar</h3>
+              <p class="muted">Para empresas que quieren ir más lejos: más pruebas, más sistemas, más ofertas, más capacitación y una intervención sostenida.</p>
+              <ul><li>Todo lo trabajado en la fase de estructuración</li><li>Más ciclos de optimización</li><li>Mayor desarrollo de IA y sistemas</li><li>Más ofertas y fuentes de ingreso</li><li>Mayor profundidad en equipo y operación</li><li>Objetivos de crecimiento más ambiciosos</li></ul>
+              <div class="price">$38.000.000</div><div class="small">COP · 6 meses</div>
+            </div>
+          </div>
+          <div class="note fade-up delay3">Buscar un x2 o x3 es un objetivo de crecimiento, no una garantía automática. El resultado depende de la situación inicial, capacidad operativa, ejecución del equipo, mercado, margen y decisiones del empresario.</div>
+        </div>
+      </div>
+      <div class="section-index">17 · 3 MESES VS 6 MESES</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Adquisición">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Diversificación</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">No depender de una sola fuente</div>
+          <h2 class="fade-up delay1">El objetivo es construir entre 5 y 7 puntos potenciales de adquisición.</h2>
+          <p class="lead fade-up delay2">No significa abrir siete canales por abrirlos. Significa identificar, probar y desarrollar distintas fuentes de clientes para reducir dependencia y ampliar capacidad de crecimiento.</p>
+          <div class="tagrow fade-up delay3"><span class="tag">Pauta</span><span class="tag">Contenido</span><span class="tag">Referidos</span><span class="tag">Bases de datos</span><span class="tag">Alianzas</span><span class="tag">Outbound</span><span class="tag">Recurrencia</span></div>
+        </div>
+        <div class="hero-card fade-up delay2" style="min-height:480px">
+          <div class="hero-visual" style="min-height:442px;display:grid;place-items:center">
+            <div style="position:relative;z-index:3;text-align:center;padding:30px">
+              <div class="small">DEPENDENCIA DE UN SOLO CANAL</div>
+              <div class="big-num" style="font-size:82px;margin:8px 0">↓</div>
+              <div class="small">MENOR RIESGO · MÁS OPCIONES · MÁS DATOS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">18 · PUNTOS DE ADQUISICIÓN</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Samuel">
+    <div class="frame">
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Quién lidera</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">La cabeza estratégica</div>
+          <h2 class="fade-up delay1">Samuel Acuña</h2>
+          <p class="lead fade-up delay2">Más de ocho años trabajando en crecimiento, marketing, ventas, automatización y estructuración empresarial.</p>
+          <p class="muted fade-up delay2" style="max-width:680px;line-height:1.7">Su enfoque parte de entender la empresa completa: cómo vende, cuánto gana, dónde pierde dinero, cómo trabaja el equipo, qué procesos pueden mejorarse, qué puede automatizarse y qué nuevas fuentes de ingreso pueden desarrollarse.</p>
+          <div class="statement fade-up delay3"><b>Analizar. Estructurar. Implementar. Medir. Escalar.</b></div>
+        </div>
+        <div class="portrait-panel fade-up delay2">
+          <img src="../portrait.webp" alt="Samuel Acuña">
+          <div class="stat-stack">
+            <div class="stat"><b>+8 años</b><span>de experiencia en la industria</span></div>
+            <div class="stat"><b>+USD 50M</b><span>en facturación acumulada de empresas gestionadas</span></div>
+            <div class="stat"><b>+USD 10M</b><span>gestionados a través de empresas propias</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">19 · SAMUEL ACUÑA</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Decisión">
+    <div class="frame">
+      <div class="orb b"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Elige la profundidad</span></div></div>
+      <div class="rail"></div>
+      <div class="stage one">
+        <div>
+          <div class="eyebrow fade-up">¿Qué necesita tu empresa?</div>
+          <h2 class="fade-up delay1">La decisión no es “cuál cuesta menos”. Es qué problema necesitamos resolver.</h2>
+          <table class="comparison fade-up delay2">
+            <thead><tr><th>Necesidad</th><th>Sistema Marketing</th><th>3 meses</th><th>6 meses</th></tr></thead>
+            <tbody>
+              <tr><td>Construir adquisición y marketing</td><td>●</td><td>●</td><td>●</td></tr>
+              <tr><td>CRM, landings y atención IA comercial</td><td>●</td><td>●</td><td>●</td></tr>
+              <tr><td>Reestructurar ventas, finanzas y operación</td><td>—</td><td>●</td><td>●</td></tr>
+              <tr><td>Intervenir equipo, cargos y productividad</td><td>—</td><td>●</td><td>●</td></tr>
+              <tr><td>Automatizaciones internas avanzadas</td><td>—</td><td>Prioritarias</td><td>Mayor profundidad</td></tr>
+              <tr><td>Desarrollar nuevas ofertas y fuentes de ingreso</td><td>Limitado</td><td>Base</td><td>Profundo</td></tr>
+              <tr><td>Objetivo principal</td><td>Motor de adquisición</td><td>Preparar para escalar</td><td>Transformar y acelerar</td></tr>
+              <tr><td>Inversión</td><td><b>$5,5M / mes</b></td><td><b>$20M</b></td><td><b>$38M</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="section-index">20 · ELEGIR LA RUTA</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-title="Cierre">
+    <div class="frame">
+      <div class="orb a"></div><div class="orb b"></div>
+      <div class="topbar"><div class="brand"><span class="brand-mark">S</span> Samuel Acuña</div><div class="top-meta"><span class="chip">Siguiente nivel</span></div></div>
+      <div class="rail"></div>
+      <div class="stage">
+        <div>
+          <div class="eyebrow fade-up">La siguiente etapa</div>
+          <h1 class="fade-up delay1">No necesitas más ruido.<br>Necesitas <span class="accent-line">estructura.</span></h1>
+          <p class="lead fade-up delay2">Identifiquemos qué está frenando tu empresa, definamos prioridades y construyamos un sistema capaz de soportar el crecimiento que estás buscando.</p>
+          <a class="cta fade-up delay3" href="#deck" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Volver al inicio <span class="arrow">↑</span></a>
+        </div>
+        <div class="price-panel fade-up delay2">
+          <div class="small">DOS RUTAS · UN MISMO OBJETIVO</div>
+          <h3 style="font-size:34px;margin-top:14px">Hacer que la empresa funcione mejor antes de exigirle que crezca más.</h3>
+          <div class="grid g2" style="margin-top:24px">
+            <div class="card"><strong>$5.500.000 / mes</strong><p>Sistema de Crecimiento & Marketing.</p></div>
+            <div class="card"><strong>$20M · $38M</strong><p>Acompañamiento estratégico de 3 o 6 meses.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-index">21 · CIERRE</div><div class="footer-nav"></div>
+    </div>
+  </section>
+
+</div>
+<div class="progress"><span id="progressBar"></span></div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var total = slides.length;
+  function go(i){
+    if(i<0) i=0;
+    if(i>=total) i=total-1;
+    slides[i].scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function current(){
+    var best=0,dist=Infinity;
+    slides.forEach(function(s,i){
+      var d=Math.abs(s.getBoundingClientRect().top);
+      if(d<dist){dist=d;best=i;}
+    });
+    return best;
+  }
+  slides.forEach(function(slide,idx){
+    var rail=slide.querySelector(".rail");
+    var nav=slide.querySelector(".footer-nav");
+    if(rail){
+      slides.forEach(function(_,i){
+        var b=document.createElement("button");
+        b.className="dot"+(i===idx?" active":"");
+        b.type="button"; b.title=slides[i].getAttribute("data-title") || ("Sección "+(i+1));
+        b.textContent=(i+1).toString().padStart(2,"0");
+        b.addEventListener("click",function(){go(i);});
+        rail.appendChild(b);
+      });
+    }
+    if(nav){
+      var prev=document.createElement("button");
+      prev.className="navbtn"; prev.type="button"; prev.innerHTML="←"; prev.title="Anterior";
+      prev.disabled=idx===0; prev.style.opacity=idx===0?".35":"1";
+      prev.addEventListener("click",function(){go(idx-1);});
+      var next=document.createElement("button");
+      next.className="navbtn"; next.type="button"; next.innerHTML=idx===total-1?"↥":"→"; next.title=idx===total-1?"Inicio":"Siguiente";
+      next.addEventListener("click",function(){idx===total-1?go(0):go(idx+1);});
+      nav.appendChild(prev); nav.appendChild(next);
+    }
+  });
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add("in-view");
+    });
+  },{threshold:.34});
+  slides.forEach(function(s){io.observe(s);});
+  function updateProgress(){
+    var i=current();
+    document.getElementById("progressBar").style.width=((i+1)/total*100)+"%";
+  }
+  window.addEventListener("scroll",updateProgress,{passive:true});
+  updateProgress();
+  document.addEventListener("keydown",function(e){
+    var i=current();
+    if(["ArrowRight","ArrowDown","PageDown"," "].indexOf(e.key)>-1){e.preventDefault();go(i+1);}
+    if(["ArrowLeft","ArrowUp","PageUp"].indexOf(e.key)>-1){e.preventDefault();go(i-1);}
+    if(e.key==="Home"){e.preventDefault();go(0);}
+    if(e.key==="End"){e.preventDefault();go(total-1);}
+  });
+})();
+</script>
+</body>
+</html>
