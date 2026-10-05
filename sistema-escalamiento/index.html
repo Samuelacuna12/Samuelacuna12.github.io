@@ -322,6 +322,286 @@
       .comparison{font-size:11px}.comparison th,.comparison td{padding:12px 8px}
       .portrait-panel{min-height:440px}.stat-stack{width:58%}.stat b{font-size:22px}
     }
+  
+    /* ===== Correcciones visuales v2 ===== */
+
+    /* HERO: la foto ahora llena el contenedor, como en la referencia */
+    .hero-visual{
+      min-height:560px;
+      background:linear-gradient(145deg,#9dc9ef,#dceeff 56%,#c3dcf4);
+    }
+    .hero-visual .portrait{
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:63% 35%;
+      filter:none;
+      z-index:1;
+    }
+    .hero-visual:after{
+      width:58%;
+      height:58%;
+      right:-15%;
+      bottom:-24%;
+      opacity:.55;
+      z-index:2;
+    }
+    .floating-card{z-index:4;max-width:310px}
+    .floating-card.top{top:28px;left:28px}
+    .floating-card.bottom{left:28px;bottom:28px}
+
+    /* MAPA: más aire y nodos realmente distribuidos */
+    .visual-map{
+      width:min(100%,560px);
+      max-width:560px;
+      aspect-ratio:1/1;
+      overflow:visible;
+      background:
+        radial-gradient(circle at center,rgba(255,255,255,.98) 0 17%,rgba(255,255,255,.64) 18% 41%,rgba(255,255,255,.25) 42% 61%,transparent 62%);
+      border:0;
+    }
+    .visual-map .core{
+      width:136px;height:136px;
+      font-size:12px;line-height:1.25;
+      z-index:2;
+    }
+    .node{
+      padding:11px 15px;
+      font-size:11px;
+      z-index:3;
+    }
+    .n1{top:0;left:50%;transform:translateX(-50%)}
+    .n2{top:18%;right:-1%}
+    .n3{top:50%;right:-7%;transform:translateY(-50%)}
+    .n4{bottom:16%;right:1%}
+    .n5{bottom:0;left:50%;transform:translateX(-50%)}
+    .n6{bottom:16%;left:1%}
+    .n7{top:50%;left:-7%;transform:translateY(-50%)}
+    .n8{top:18%;left:1%}
+
+    /* ADQUISICIÓN: reemplaza el bloque vacío por una visual de 1 → 5/7 canales */
+    .acquisition-visual{
+      min-height:520px;
+      position:relative;
+      border-radius:38px;
+      padding:34px;
+      display:grid;
+      grid-template-columns:.62fr auto 1.38fr;
+      align-items:center;
+      gap:18px;
+      background:rgba(255,255,255,.50);
+      border:1px solid rgba(255,255,255,.86);
+      box-shadow:0 24px 60px rgba(38,61,94,.12),inset 0 1px 0 rgba(255,255,255,.82);
+      overflow:hidden;
+    }
+    .acquisition-visual:before{
+      content:"";
+      position:absolute;
+      width:360px;height:360px;border-radius:50%;
+      right:-100px;bottom:-120px;
+      background:radial-gradient(circle,#fff 0%,rgba(174,213,249,.74) 48%,transparent 70%);
+      opacity:.8;
+    }
+    .acq-core{
+      position:relative;z-index:2;
+      border-radius:28px;
+      padding:24px 18px;
+      text-align:center;
+      background:rgba(255,255,255,.76);
+      border:1px solid rgba(255,255,255,.94);
+      box-shadow:0 16px 38px rgba(36,61,96,.10);
+    }
+    .acq-core strong,.acq-center strong{
+      display:block;
+      font-size:46px;
+      line-height:1;
+      letter-spacing:-.06em;
+      margin:8px 0;
+    }
+    .acq-core small,.acq-center small{font-size:11px;color:#5a6a7e;line-height:1.4}
+    .acq-label,.acq-center span{
+      display:block;
+      font-size:10px;
+      letter-spacing:.16em;
+      font-weight:800;
+      color:#58718a;
+    }
+    .acq-arrow{
+      position:relative;z-index:2;
+      font-size:48px;
+      font-weight:300;
+      color:#29435e;
+    }
+    .acq-network{
+      position:relative;z-index:2;
+      min-height:380px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(255,255,255,.95) 0 24%,rgba(255,255,255,.52) 25% 56%,rgba(255,255,255,.14) 57% 70%,transparent 71%);
+    }
+    .acq-center{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:154px;height:154px;border-radius:50%;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;
+      background:#fff;
+      box-shadow:0 18px 40px rgba(35,60,93,.13);
+      padding:18px;
+    }
+    .acq-pill{
+      position:absolute;
+      padding:10px 13px;
+      border-radius:999px;
+      background:rgba(255,255,255,.88);
+      border:1px solid rgba(255,255,255,.98);
+      box-shadow:0 10px 22px rgba(37,65,99,.10);
+      font-size:10px;font-weight:800;
+      white-space:nowrap;
+    }
+    .acq-pill.p1{top:2%;left:38%}
+    .acq-pill.p2{top:18%;right:2%}
+    .acq-pill.p3{top:48%;right:-1%}
+    .acq-pill.p4{bottom:14%;right:5%}
+    .acq-pill.p5{bottom:3%;left:35%}
+    .acq-pill.p6{bottom:18%;left:2%}
+    .acq-pill.p7{top:26%;left:-1%}
+    .acq-foot{
+      position:absolute;left:34px;right:34px;bottom:24px;z-index:2;
+      text-align:center;
+      font-size:10px;letter-spacing:.12em;font-weight:800;color:#536b82;
+    }
+
+    /* SAMUEL: imagen a sangre, sin el rectángulo rojo flotando dentro del azul */
+    .portrait-panel{
+      min-height:610px;
+      background:#bdd9f2;
+    }
+    .portrait-panel img{
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:62% 34%;
+    }
+    .portrait-panel:after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(90deg,rgba(10,18,29,.18),transparent 42% 100%);
+      pointer-events:none;
+    }
+    .stat-stack{
+      left:22px;
+      bottom:22px;
+      width:min(46%,310px);
+      gap:9px;
+      z-index:4;
+    }
+    .stat{
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.82);
+    }
+    .stat b{font-size:25px}
+    .stat span{font-size:10.5px;line-height:1.35}
+
+    @media (max-width:1050px){
+      .hero-visual{min-height:470px}
+      .portrait-panel{min-height:540px}
+      .visual-map{width:min(78vw,540px);margin:18px auto 10px}
+      .acquisition-visual{min-height:480px}
+    }
+
+    @media (max-width:700px){
+      .hero-card{padding:10px;border-radius:30px}
+      .hero-visual{min-height:520px;border-radius:24px}
+      .hero-visual .portrait{object-position:58% center}
+      .floating-card{max-width:72%;padding:16px;border-radius:20px}
+      .floating-card.top{top:16px;left:16px}
+      .floating-card.bottom{left:16px;bottom:16px}
+      .floating-card .big-num{font-size:40px}
+
+      .visual-map{
+        width:100%;
+        aspect-ratio:auto;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        padding:16px;
+        margin:10px 0 0;
+        border-radius:28px;
+        background:rgba(255,255,255,.38);
+        border:1px solid rgba(255,255,255,.72);
+        transform:none;
+      }
+      .visual-map .core{
+        position:static;
+        transform:none;
+        width:auto;height:auto;
+        grid-column:1/-1;
+        border-radius:20px;
+        padding:20px 14px;
+      }
+      .node,.n1,.n2,.n3,.n4,.n5,.n6,.n7,.n8{
+        position:static;
+        transform:none;
+        white-space:normal;
+        text-align:center;
+        display:grid;
+        place-items:center;
+        min-height:48px;
+        padding:10px 8px;
+      }
+
+      .acquisition-visual{
+        min-height:auto;
+        grid-template-columns:1fr;
+        gap:14px;
+        padding:18px;
+        border-radius:28px;
+      }
+      .acq-arrow{font-size:32px;text-align:center;transform:rotate(90deg)}
+      .acq-network{
+        min-height:auto;
+        border-radius:24px;
+        padding:16px;
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:9px;
+        background:rgba(255,255,255,.32);
+      }
+      .acq-center{
+        position:static;
+        transform:none;
+        width:auto;height:auto;
+        grid-column:1/-1;
+        border-radius:20px;
+        padding:18px;
+      }
+      .acq-pill,.acq-pill.p1,.acq-pill.p2,.acq-pill.p3,.acq-pill.p4,.acq-pill.p5,.acq-pill.p6,.acq-pill.p7{
+        position:static;
+        text-align:center;
+        white-space:normal;
+      }
+      .acq-foot{position:static;grid-column:1/-1;margin-top:2px}
+      .acquisition-visual:before{display:none}
+
+      .portrait-panel{
+        min-height:560px;
+      }
+      .portrait-panel img{
+        object-position:58% center;
+      }
+      .stat-stack{
+        width:calc(100% - 32px);
+        left:16px;bottom:16px;
+        grid-template-columns:repeat(3,1fr);
+        gap:6px;
+      }
+      .stat{padding:10px 9px;border-radius:14px}
+      .stat b{font-size:18px}
+      .stat span{font-size:8.5px}
+    }
+
   </style>
 </head>
 <body>
@@ -746,14 +1026,24 @@
           <p class="lead fade-up delay2">No significa abrir siete canales por abrirlos. Significa identificar, probar y desarrollar distintas fuentes de clientes para reducir dependencia y ampliar capacidad de crecimiento.</p>
           <div class="tagrow fade-up delay3"><span class="tag">Pauta</span><span class="tag">Contenido</span><span class="tag">Referidos</span><span class="tag">Bases de datos</span><span class="tag">Alianzas</span><span class="tag">Outbound</span><span class="tag">Recurrencia</span></div>
         </div>
-        <div class="hero-card fade-up delay2" style="min-height:480px">
-          <div class="hero-visual" style="min-height:442px;display:grid;place-items:center">
-            <div style="position:relative;z-index:3;text-align:center;padding:30px">
-              <div class="small">DEPENDENCIA DE UN SOLO CANAL</div>
-              <div class="big-num" style="font-size:82px;margin:8px 0">↓</div>
-              <div class="small">MENOR RIESGO · MÁS OPCIONES · MÁS DATOS</div>
-            </div>
+        <div class="acquisition-visual fade-up delay2">
+          <div class="acq-core">
+            <span class="acq-label">ANTES</span>
+            <strong>1 canal</strong>
+            <small>Alta dependencia</small>
           </div>
+          <div class="acq-arrow">→</div>
+          <div class="acq-network">
+            <div class="acq-center"><span>OBJETIVO</span><strong>5–7</strong><small>puntos potenciales de adquisición</small></div>
+            <span class="acq-pill p1">Pauta</span>
+            <span class="acq-pill p2">Contenido</span>
+            <span class="acq-pill p3">Referidos</span>
+            <span class="acq-pill p4">Bases</span>
+            <span class="acq-pill p5">Alianzas</span>
+            <span class="acq-pill p6">Outbound</span>
+            <span class="acq-pill p7">Recurrencia</span>
+          </div>
+          <div class="acq-foot">MENOR RIESGO · MÁS OPCIONES · MÁS DATOS</div>
         </div>
       </div>
       <div class="section-index">18 · PUNTOS DE ADQUISICIÓN</div><div class="footer-nav"></div>
