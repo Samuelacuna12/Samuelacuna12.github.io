@@ -1,4 +1,4 @@
-var sb=null;
+var sb=null;\nconst app=document.getElementById('app');
 var state={profile:null,mov:[],items:[],rates:[],tab:'resumen',draft:[],file:null};
 const SIZES=['S','M','L','XL','2XL','3XL','4XL'];
 const $=q=>document.querySelector(q);
