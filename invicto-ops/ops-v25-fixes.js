@@ -242,3 +242,77 @@ const hydrateBaseV25=window.hydrateOpsV13;
 window.hydrateOpsV13=async function(force=false){const r=await hydrateBaseV25(force);inventoryStampV25=localInventoryStampV25();installInventoryLiveV25();return r};
 const renderShellBaseV25=window.renderShell;
 window.renderShell=function(){renderShellBaseV25();installInventoryLiveV25();stripDirectWhatsAppV25(document);const foot=document.querySelector('.sidebar-foot');if(foot)foot.innerHTML=foot.innerHTML.replace(/Versión\s+[^<]+/,'Versión '+OPS_UI_VERSION_V25_FIXES)};
+
+
+/* v25.5 · stock selector strictly scoped to selected warehouse */
+v25AvailableVariants=function(k,size,warehouse=''){
+  const map=new Map();
+  (state.inventory||[])
+    .filter(r=>
+      v25RowMatchesCatalog(k,r)
+      && normalizeSize(r.size)===normalizeSize(size)
+      && (!warehouse||r.warehouse===warehouse)
+    )
+    .forEach(r=>{
+      const x=map.get(r.variantKey)||{
+        variantKey:r.variantKey,
+        design:r.design,
+        size:r.size,
+        physical:0,
+        reserved:0,
+        available:0,
+        row:r
+      };
+      x.physical+=Math.max(0,Number(r.stock||0));
+      x.reserved+=Math.max(0,Number(r.reserved||0));
+      x.available+=Math.max(0,Number(availableStock(r)||0));
+      x.row=r;
+      map.set(r.variantKey,x);
+    });
+  return [...map.values()]
+    .filter(x=>x.physical>0)
+    .sort((a,b)=>
+      ((b.available>0)-(a.available>0))
+      ||(b.available-a.available)
+      ||(b.physical-a.physical)
+      ||String(a.design).localeCompare(String(b.design),'es',{numeric:true})
+    );
+};
+
+v25UnitHtml=function(g,u,i,w){
+  const k=v25CatalogKeyFromUnit(g,u);
+  const p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey];
+  const size=p.sizes.includes(u.size)?u.size:(p.sizes.includes(g.size)?g.size:p.sizes[0]);
+  const vars=v25AvailableVariants(k,size,w);
+  const sel=vars.find(v=>v.variantKey===u.variantKey);
+  const physical=Number(sel?.physical||0);
+  const available=Number(sel?.available||0);
+  const st=!u.variantKey?'Sin definir':available>3?'OK':available>0?'Crítico':'RESERVADO';
+  const cls=st==='OK'?'green':st==='Crítico'?'amber':'red';
+  const print=p.style==='estampado';
+  const label=v=>{
+    const n=print?`Diseño #${v.design}`:v.design;
+    return `${n} · ${v.physical} físico · ${v.available} disp.`;
+  };
+  return `<div class="unit unit-v25"><span class="n">${i+1}</span><select onchange="v25ChangeUnitType('${g.id}',${i},this.value)">${v25AllowedTypes(g,u).map(x=>`<option value="${x}" ${x===k?'selected':''}>${esc(v25TypeLabel(x))}</option>`).join('')}</select><select onchange="v22ChangeUnitSize('${g.id}',${i},this.value)">${p.sizes.map(s=>`<option ${s===size?'selected':''}>${esc(s)}</option>`).join('')}</select><select onchange="v22ChangeUnit('${g.id}',${i},this.value)"><option value="">${print?'Seleccionar diseño':'Seleccionar color'}</option>${vars.map(v=>`<option value="${esc(v.variantKey)}" ${v.variantKey===u.variantKey?'selected':''}>${esc(label(v))}</option>`).join('')}</select><span class="${available<=3?'stock-low':'stock-ok'}">${u.variantKey?available:'—'}</span><span class="tag ${cls}">${st}</span></div>`;
+};
+
+window.v22ChangeUnit=function(id,i,vk){
+  const g=currentGroups.find(x=>x.id===id);if(!g)return;
+  const w=el('fWarehouse')?.value||'';
+  const r=(state.inventory||[]).find(x=>x.variantKey===vk&&(!w||x.warehouse===w))
+    ||(state.inventory||[]).find(x=>x.variantKey===vk);
+  const k=v25CatalogKeyFromRow(r)||v25CatalogKeyFromUnit(g,g.units?.[i]||{});
+  const p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey];
+  g.units[i]={
+    ...(g.units[i]||{}),
+    catalogKey:k,
+    variantKey:vk,
+    design:r?.design||'',
+    size:r?.size||g.units[i]?.size||g.size,
+    product:r?.product||p.product,
+    material:r?.material||p.material,
+    style:r?.style||p.style
+  };
+  v22RenderGroups();
+};
