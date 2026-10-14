@@ -2,9 +2,16 @@
 const OPS_UI_VERSION_V25_FIXES='25.1';
 const V25_ADULT_KEYS=['adulto_estampado','adulto_licra','adulto_algodon'];
 
+function v25RowMatchesCatalog(k,r){
+  const p=PRODUCT_CATALOG[k];
+  if(!p||!r)return false;
+  return cleanText(r.product)===cleanText(p.product)
+    && cleanText(r.material)===cleanText(p.material)
+    && cleanText(r.style)===cleanText(p.style);
+}
 function v25CatalogKeyFromRow(r){
   if(!r)return '';
-  const hit=Object.entries(PRODUCT_CATALOG).find(([,p])=>canonicalProductKey(p.product,p.material,p.style)===r.productKey);
+  const hit=Object.entries(PRODUCT_CATALOG).find(([k])=>v25RowMatchesCatalog(k,r));
   return hit?.[0]||'';
 }
 function v25CatalogKeyFromUnit(g,u){
@@ -22,7 +29,7 @@ function v25AllowedTypes(g,u){
 }
 function v25AvailableVariants(k,size,warehouse=''){
   const pk=catalogCanonicalKey(k),map=new Map();
-  (state.inventory||[]).filter(r=>r.productKey===pk&&normalizeSize(r.size)===normalizeSize(size)).forEach(r=>{
+  (state.inventory||[]).filter(r=>v25RowMatchesCatalog(k,r)&&normalizeSize(r.size)===normalizeSize(size)).forEach(r=>{
     const x=map.get(r.variantKey)||{variantKey:r.variantKey,design:r.design,size:r.size,available:0,totalAvailable:0,byWarehouse:{},row:r};
     const n=Math.max(0,Number(availableStock(r)||0));
     x.totalAvailable+=n;
@@ -58,7 +65,7 @@ window.v22WarehouseCoverage=function(w,groups){
   let have=0,need=0;const used=new Map();
   for(const g of groups){for(const u of g.units||[]){
     need++;const k=v25CatalogKeyFromUnit(g,u),p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey],size=p.sizes.includes(u.size)?u.size:p.sizes[0],bucket=`${catalogCanonicalKey(k)}@@${normalizeSize(size)}`;
-    const n=(state.inventory||[]).filter(r=>r.warehouse===w&&r.productKey===catalogCanonicalKey(k)&&normalizeSize(r.size)===normalizeSize(size)).reduce((a,r)=>a+availableStock(r),0),uN=(used.get(bucket)||0)+1;used.set(bucket,uN);if(n>=uN)have++;
+    const n=(state.inventory||[]).filter(r=>r.warehouse===w&&v25RowMatchesCatalog(k,r)&&normalizeSize(r.size)===normalizeSize(size)).reduce((a,r)=>a+availableStock(r),0),uN=(used.get(bucket)||0)+1;used.set(bucket,uN);if(n>=uN)have++;
   }}return {w,have,need};
 };
 window.v22BestWarehouse=function(city,groups){
