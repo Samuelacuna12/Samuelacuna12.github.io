@@ -22,10 +22,23 @@ function v25AllowedTypes(g,u){
 }
 function v25AvailableVariants(k,size,warehouse=''){
   const pk=catalogCanonicalKey(k),map=new Map();
-  (state.inventory||[]).filter(r=>r.productKey===pk&&normalizeSize(r.size)===normalizeSize(size)&&(!warehouse||r.warehouse===warehouse)).forEach(r=>{
-    const x=map.get(r.variantKey)||{variantKey:r.variantKey,design:r.design,size:r.size,available:0,row:r};x.available+=availableStock(r);map.set(r.variantKey,x);
+  (state.inventory||[]).filter(r=>r.productKey===pk&&normalizeSize(r.size)===normalizeSize(size)).forEach(r=>{
+    const x=map.get(r.variantKey)||{variantKey:r.variantKey,design:r.design,size:r.size,available:0,totalAvailable:0,byWarehouse:{},row:r};
+    const n=Math.max(0,Number(availableStock(r)||0));
+    x.totalAvailable+=n;
+    x.byWarehouse[r.warehouse]=(x.byWarehouse[r.warehouse]||0)+n;
+    if(!warehouse||r.warehouse===warehouse){x.available+=n;x.row=r}
+    map.set(r.variantKey,x);
   });
-  return [...map.values()].sort((a,b)=>(b.available-a.available)||String(a.design).localeCompare(String(b.design),'es',{numeric:true}));
+  return [...map.values()].map(x=>{
+    const ranked=Object.entries(x.byWarehouse).sort((a,b)=>Number(b[1])-Number(a[1]));
+    return {...x,bestWarehouse:ranked[0]?.[0]||'',bestWarehouseAvailable:Number(ranked[0]?.[1]||0)}
+  }).sort((a,b)=>
+    ((b.available>0)-(a.available>0))||
+    (b.available-a.available)||
+    (b.totalAvailable-a.totalAvailable)||
+    String(a.design).localeCompare(String(b.design),'es',{numeric:true})
+  );
 }
 
 const v22InitGroupsBaseV25=window.v22InitGroups;
@@ -70,8 +83,40 @@ window.v25ChangeUnitType=function(id,i,k){
 window.v22ChangeUnitSize=function(id,i,size){
   const g=currentGroups.find(x=>x.id===id);if(!g)return;const old=g.units?.[i]||{},k=v25CatalogKeyFromUnit(g,old),p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey];if(!p.sizes.includes(size))size=p.sizes[0];g.units[i]={...old,catalogKey:k,size,variantKey:'',design:'',product:p.product,material:p.material,style:p.style};v22RenderGroups();
 };
+function v25SelectedWarehouseCoverage(w){
+  const counts=new Map();
+  currentGroups.forEach(g=>(g.units||[]).forEach(u=>{if(u.variantKey)counts.set(u.variantKey,(counts.get(u.variantKey)||0)+1)}));
+  let need=0,covered=0;
+  for(const [vk,n] of counts){
+    const have=(state.inventory||[]).filter(r=>r.variantKey===vk&&r.warehouse===w).reduce((a,r)=>a+Math.max(0,Number(availableStock(r)||0)),0);
+    need+=n;covered+=Math.min(n,have);
+  }
+  return {w,need,covered,complete:need>0&&covered>=need};
+}
+function v25BestWarehouseForSelected(){
+  const city=el('fCity')?.value||'',c=cleanText(city);
+  const pref=/BUCARAMANGA|FLORIDABLANCA|GIRON|PIEDECUESTA/.test(c)?['Bucaramanga','Hoko Medellín','LogiGho Medellín','Hoko Bogotá']:/BOGOTA|SOACHA/.test(c)?['Hoko Bogotá','Hoko Medellín','LogiGho Medellín','Bucaramanga']:['Hoko Medellín','LogiGho Medellín','Hoko Bogotá','Bucaramanga'];
+  return pref.map(v25SelectedWarehouseCoverage).sort((a,b)=>Number(b.complete)-Number(a.complete)||b.covered-a.covered||pref.indexOf(a.w)-pref.indexOf(b.w))[0]||null;
+}
 window.v22ChangeUnit=function(id,i,vk){
-  const g=currentGroups.find(x=>x.id===id);if(!g)return;const r=(state.inventory||[]).find(x=>x.variantKey===vk),k=v25CatalogKeyFromRow(r)||v25CatalogKeyFromUnit(g,g.units?.[i]||{}),p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey];g.units[i]={...(g.units[i]||{}),catalogKey:k,variantKey:vk,design:r?.design||'',size:r?.size||g.units[i]?.size||g.size,product:r?.product||p.product,material:r?.material||p.material,style:r?.style||p.style};v22RenderGroups();
+  const g=currentGroups.find(x=>x.id===id);if(!g)return;
+  const r=(state.inventory||[]).find(x=>x.variantKey===vk),k=v25CatalogKeyFromRow(r)||v25CatalogKeyFromUnit(g,g.units?.[i]||{}),p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey];
+  g.units[i]={...(g.units[i]||{}),catalogKey:k,variantKey:vk,design:r?.design||'',size:r?.size||g.units[i]?.size||g.size,product:r?.product||p.product,material:r?.material||p.material,style:r?.style||p.style};
+  if(vk){
+    const current=el('fWarehouse')?.value||'';
+    const local=(state.inventory||[]).filter(x=>x.variantKey===vk&&x.warehouse===current).reduce((a,x)=>a+Math.max(0,Number(availableStock(x)||0)),0);
+    const total=(state.inventory||[]).filter(x=>x.variantKey===vk).reduce((a,x)=>a+Math.max(0,Number(availableStock(x)||0)),0);
+    if(local<=0&&total>0){
+      const best=v25BestWarehouseForSelected();
+      if(best?.complete&&best.w&&best.w!==current){
+        if(el('fWarehouse'))el('fWarehouse').value=best.w;
+        toast(`Referencia disponible en otra bodega. Se cambió a ${best.w}, que cubre el pedido seleccionado.`);
+      }else{
+        toast(`Esta referencia tiene ${total} unidad(es) en otras bodegas, pero el pedido completo no cabe todavía en una sola bodega.`);
+      }
+    }
+  }
+  v22RenderGroups();
 };
 window.v22ChangeGroup=function(id,key,val){
   const g=currentGroups.find(x=>x.id===id);if(!g)return;const oldUnits=(g.units||[]).map(x=>({...x}));
@@ -121,8 +166,18 @@ window.v25RemoveProductGroup=function(id){
 };
 
 function v25UnitHtml(g,u,i,w){
-  const k=v25CatalogKeyFromUnit(g,u),p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey],size=p.sizes.includes(u.size)?u.size:(p.sizes.includes(g.size)?g.size:p.sizes[0]),vars=v25AvailableVariants(k,size,w),sel=vars.find(v=>v.variantKey===u.variantKey),a=sel?.available||0,st=!u.variantKey?'Sin definir':a<=0?'SIN STOCK':a<=3?'Crítico':'OK',cls=st==='OK'?'green':st==='Crítico'?'amber':'red',print=p.style==='estampado';
-  return `<div class="unit unit-v25"><span class="n">${i+1}</span><select onchange="v25ChangeUnitType('${g.id}',${i},this.value)">${v25AllowedTypes(g,u).map(x=>`<option value="${x}" ${x===k?'selected':''}>${esc(v25TypeLabel(x))}</option>`).join('')}</select><select onchange="v22ChangeUnitSize('${g.id}',${i},this.value)">${p.sizes.map(s=>`<option ${s===size?'selected':''}>${esc(s)}</option>`).join('')}</select><select onchange="v22ChangeUnit('${g.id}',${i},this.value)"><option value="">${print?'Seleccionar diseño':'Seleccionar color'}</option>${vars.map(v=>`<option value="${esc(v.variantKey)}" ${v.variantKey===u.variantKey?'selected':''}>${esc(print?`Diseño #${v.design}`:v.design)} · ${v.available>0?v.available+' disp.':'SIN STOCK'}</option>`).join('')}</select><span class="${a<=3?'stock-low':'stock-ok'}">${u.variantKey?a:'—'}</span><span class="tag ${cls}">${st}</span></div>`;
+  const k=v25CatalogKeyFromUnit(g,u),p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey],size=p.sizes.includes(u.size)?u.size:(p.sizes.includes(g.size)?g.size:p.sizes[0]),vars=v25AvailableVariants(k,size,w),sel=vars.find(v=>v.variantKey===u.variantKey);
+  const local=Number(sel?.available||0),total=Number(sel?.totalAvailable||0);
+  const st=!u.variantKey?'Sin definir':local>3?'OK':local>0?'Crítico':total>0?'OTRA BODEGA':'SIN STOCK';
+  const cls=st==='OK'?'green':(st==='Crítico'||st==='OTRA BODEGA')?'amber':'red',print=p.style==='estampado';
+  const label=v=>{
+    const n=print?`Diseño #${v.design}`:v.design;
+    if(v.available>0)return `${n} · ${v.available} aquí${v.totalAvailable!==v.available?` / ${v.totalAvailable} total`:''}`;
+    if(v.totalAvailable>0)return `${n} · ${v.totalAvailable} total · ${v.bestWarehouse}`;
+    return `${n} · SIN STOCK`;
+  };
+  const shown=u.variantKey?(local>0?local:(total>0?`${total} total`:0)):'—';
+  return `<div class="unit unit-v25"><span class="n">${i+1}</span><select onchange="v25ChangeUnitType('${g.id}',${i},this.value)">${v25AllowedTypes(g,u).map(x=>`<option value="${x}" ${x===k?'selected':''}>${esc(v25TypeLabel(x))}</option>`).join('')}</select><select onchange="v22ChangeUnitSize('${g.id}',${i},this.value)">${p.sizes.map(s=>`<option ${s===size?'selected':''}>${esc(s)}</option>`).join('')}</select><select onchange="v22ChangeUnit('${g.id}',${i},this.value)"><option value="">${print?'Seleccionar diseño':'Seleccionar color'}</option>${vars.map(v=>`<option value="${esc(v.variantKey)}" ${v.variantKey===u.variantKey?'selected':''}>${esc(label(v))}</option>`).join('')}</select><span class="${local<=3?'stock-low':'stock-ok'}">${shown}</span><span class="tag ${cls}">${st}</span></div>`;
 }
 window.v22RenderGroups=function(){
   const host=el('productGroups');if(!host)return;const w=el('fWarehouse')?.value||'';
