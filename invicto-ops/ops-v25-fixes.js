@@ -87,13 +87,50 @@ window.v22ChangeGroup=function(id,key,val){
 window.v25HalfMix=function(id){
   const g=currentGroups.find(x=>x.id===id);if(!g)return;const n=Math.ceil((g.units||[]).length/2);g.units=(g.units||[]).map((u,i)=>{const k=i<n?'adulto_estampado':'adulto_licra',p=PRODUCT_CATALOG[k],size=p.sizes.includes(u.size)?u.size:(p.sizes.includes(g.size)?g.size:p.sizes[0]);return {...u,catalogKey:k,size,variantKey:'',design:'',product:p.product,material:p.material,style:p.style}});v22AutoFill(true);
 };
+window.v25AddProductGroup=function(preferredKey=''){
+  const keys=Object.keys(PRODUCT_CATALOG).filter(k=>PRODUCT_CATALOG[k]);
+  const key=(preferredKey&&PRODUCT_CATALOG[preferredKey])?preferredKey:(PRODUCT_CATALOG.medias?'medias':(keys[0]||'adulto_estampado'));
+  const p=PRODUCT_CATALOG[key]||PRODUCT_CATALOG.adulto_estampado;
+  const qty=Math.max(1,Number(p.quantities?.[0]||1));
+  const g={
+    id:groupId(),
+    catalogKey:key,
+    qty,
+    size:p.sizes?.[0]||'',
+    entryMode:'individual',
+    units:Array.from({length:qty},()=>({
+      catalogKey:key,
+      size:p.sizes?.[0]||'',
+      variantKey:'',
+      design:'',
+      product:p.product,
+      material:p.material,
+      style:p.style
+    }))
+  };
+  currentGroups.push(g);
+  v22AutoFill(true);
+  toast('Producto agregado. Puedes cambiarlo a hombre, dama, niño, brief o medias.');
+};
+window.v25RemoveProductGroup=function(id){
+  if(currentGroups.length<=1)return toast('Debe quedar al menos un producto en la venta');
+  currentGroups=currentGroups.filter(g=>g.id!==id);
+  v22RenderGroups();
+  if(typeof updateRecommendationV3==='function')updateRecommendationV3();
+  if(typeof checkBlockingV3==='function')checkBlockingV3();
+};
+
 function v25UnitHtml(g,u,i,w){
   const k=v25CatalogKeyFromUnit(g,u),p=PRODUCT_CATALOG[k]||PRODUCT_CATALOG[g.catalogKey],size=p.sizes.includes(u.size)?u.size:(p.sizes.includes(g.size)?g.size:p.sizes[0]),vars=v25AvailableVariants(k,size,w),sel=vars.find(v=>v.variantKey===u.variantKey),a=sel?.available||0,st=!u.variantKey?'Sin definir':a<=0?'SIN STOCK':a<=3?'Crítico':'OK',cls=st==='OK'?'green':st==='Crítico'?'amber':'red',print=p.style==='estampado';
   return `<div class="unit unit-v25"><span class="n">${i+1}</span><select onchange="v25ChangeUnitType('${g.id}',${i},this.value)">${v25AllowedTypes(g,u).map(x=>`<option value="${x}" ${x===k?'selected':''}>${esc(v25TypeLabel(x))}</option>`).join('')}</select><select onchange="v22ChangeUnitSize('${g.id}',${i},this.value)">${p.sizes.map(s=>`<option ${s===size?'selected':''}>${esc(s)}</option>`).join('')}</select><select onchange="v22ChangeUnit('${g.id}',${i},this.value)"><option value="">${print?'Seleccionar diseño':'Seleccionar color'}</option>${vars.map(v=>`<option value="${esc(v.variantKey)}" ${v.variantKey===u.variantKey?'selected':''}>${esc(print?`Diseño #${v.design}`:v.design)} · ${v.available>0?v.available+' disp.':'SIN STOCK'}</option>`).join('')}</select><span class="${a<=3?'stock-low':'stock-ok'}">${u.variantKey?a:'—'}</span><span class="tag ${cls}">${st}</span></div>`;
 }
 window.v22RenderGroups=function(){
   const host=el('productGroups');if(!host)return;const w=el('fWarehouse')?.value||'';
-  host.innerHTML=currentGroups.map((g,gi)=>{const p=PRODUCT_CATALOG[g.catalogKey]||PRODUCT_CATALOG.adulto_estampado,adult=V25_ADULT_KEYS.includes(g.catalogKey);return `<div class="product-group"><div class="product-group-head"><div><span class="group-number">${gi+1}</span><b>${adult?'Bóxer hombre · selección por unidad':esc(p.label)}</b><div class="muted">${Number(g.qty)} unidades · cada unidad puede tener su propio tipo, talla y diseño/color</div></div><div class="group-actions">${adult&&Number(g.qty)>1?`<button type="button" class="btn light sm" onclick="v25HalfMix('${g.id}')">½ Estampado / ½ Unicolor</button>`:''}</div></div><div class="group-config"><div class="field"><label>Tipo base</label><select onchange="v22ChangeGroup('${g.id}','catalogKey',this.value)">${Object.entries(PRODUCT_CATALOG).map(([k,x])=>`<option value="${k}" ${k===g.catalogKey?'selected':''}>${esc(x.label)}</option>`).join('')}</select></div><div class="field"><label>Cantidad total</label><input type="number" min="1" value="${Number(g.qty)}" onchange="v22ChangeGroup('${g.id}','qty',this.value)"></div><div class="field"><label>Talla base</label><select onchange="v22ChangeGroup('${g.id}','size',this.value)">${p.sizes.map(s=>`<option ${s===g.size?'selected':''}>${esc(s)}</option>`).join('')}</select></div></div><div class="unit-head unit-head-v25"><span>#</span><span>Tipo</span><span>Talla</span><span>Diseño / color</span><span>Disponible</span><span>Estado</span></div><div class="units">${(g.units||[]).map((u,i)=>v25UnitHtml(g,u,i,w)).join('')}</div></div>`}).join('');
+  host.innerHTML=currentGroups.map((g,gi)=>{
+    const p=PRODUCT_CATALOG[g.catalogKey]||PRODUCT_CATALOG.adulto_estampado,adult=V25_ADULT_KEYS.includes(g.catalogKey);
+    const title=adult?'Bóxer hombre · selección por unidad':esc(p.label);
+    return `<div class="product-group"><div class="product-group-head"><div><span class="group-number">${gi+1}</span><b>${title}</b><div class="muted">${Number(g.qty)} unidades · cada producto puede tener su propia talla y referencia</div></div><div class="group-actions">${adult&&Number(g.qty)>1?`<button type="button" class="btn light sm" onclick="v25HalfMix('${g.id}')">½ Estampado / ½ Unicolor</button>`:''}${currentGroups.length>1?`<button type="button" class="btn danger-lite sm" onclick="v25RemoveProductGroup('${g.id}')">Quitar producto</button>`:''}</div></div><div class="group-config"><div class="field"><label>Tipo base</label><select onchange="v22ChangeGroup('${g.id}','catalogKey',this.value)">${Object.entries(PRODUCT_CATALOG).map(([k,x])=>`<option value="${k}" ${k===g.catalogKey?'selected':''}>${esc(x.label)}</option>`).join('')}</select></div><div class="field"><label>Cantidad total</label><input type="number" min="1" value="${Number(g.qty)}" onchange="v22ChangeGroup('${g.id}','qty',this.value)"></div><div class="field"><label>Talla base</label><select onchange="v22ChangeGroup('${g.id}','size',this.value)">${p.sizes.map(s=>`<option ${s===g.size?'selected':''}>${esc(s)}</option>`).join('')}</select></div></div><div class="unit-head unit-head-v25"><span>#</span><span>Tipo</span><span>Talla</span><span>Diseño / color</span><span>Disponible</span><span>Estado</span></div><div class="units">${(g.units||[]).map((u,i)=>v25UnitHtml(g,u,i,w)).join('')}</div></div>`;
+  }).join('');
   if(el('orderQtyTotal'))el('orderQtyTotal').textContent=currentGroups.reduce((a,g)=>a+Number(g.qty||0),0);
 };
 window.summaryV20=function(){
