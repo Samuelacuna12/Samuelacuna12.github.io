@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f9f9f8">
+<meta name="description" content="ECOM Studio by Samuel Acuña: calculadora financiera para ecommerce, pauta, contraentrega, logística y rentabilidad real.">
+<title>ECOM Studio | Samuel Acuña</title>
+<style>
+:root{--bg:#f5f5f2;--paper:#fff;--paper2:#fbfbf9;--ink:#151a19;--ink2:#303a37;--sub:#69736e;--muted:#969e98;--stroke:#e6e9e4;--black:#181d1c;--dark2:#242b28;--accent:#d7ee9a;--mint:#a9e5c2;--green:#1e8660;--greenbg:#ecf7ef;--red:#c24e4c;--redbg:#fff0ee;--gold:#ad8247;--goldbg:#f9f2e4;--shadow:0 8px 35px rgba(25,35,27,.035);--r:21px;--r2:15px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}input,select{min-width:0}button{cursor:pointer}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #96bd90;outline-offset:2px}a{color:inherit}.ic{height:18px;width:18px;display:inline-block;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}.ic.sm{width:15px;height:15px}.ic.lg{width:22px;height:22px}
+.app{min-height:100vh;display:flex}.sidebar{position:sticky;top:0;height:100vh;flex:0 0 258px;width:258px;padding:30px 17px 22px;background:#181d1b;color:#f4f7f3;display:flex;flex-direction:column;z-index:6}.brand{padding:1px 14px 30px;display:flex;align-items:center;gap:11px}.brand-icon{width:42px;height:42px;border-radius:13px;background:var(--accent);color:#1a211c;display:grid;place-items:center;font-weight:930;font-size:18px;letter-spacing:-1.5px}.brand-title{font-size:16px;font-weight:810;letter-spacing:-.7px;line-height:1.3}.brand-title span{font-size:9px;display:block;color:#b1bdb5;font-weight:660;letter-spacing:2px;margin-top:3px}.side-caption{color:#808a83;font-size:10px;letter-spacing:2px;font-weight:770;padding:12px 14px;margin-top:13px}.side-nav{display:grid;gap:5px}.nav-btn{display:flex;width:100%;align-items:center;gap:13px;color:#aeb9b0;background:transparent;border:1px solid transparent;border-radius:13px;padding:12px 14px;font-size:13px;font-weight:630;transition:background .2s,color .2s;text-align:left}.nav-btn:hover{color:#fff;background:#ffffff0d}.nav-btn.active{color:#fff;background:#333a34;border-color:#5a6459}.nav-btn.active .ic{color:var(--accent)}.nav-btn .num{margin-left:auto;color:#8f9b91;font-size:10px}.nav-btn.active .num{color:var(--accent)}.sidebar-bottom{margin-top:auto;border-top:1px solid #39413c;padding:19px 13px 0}.mini-live{font-size:11px;display:flex;align-items:center;gap:9px;color:#deebde;font-weight:700}.pulse{width:7px;height:7px;border-radius:50%;background:#9ee1a4;box-shadow:0 0 0 4px #a3efad16}.sidebar-bottom p{color:#8f9b90;font-size:11px;line-height:1.7;margin:11px 0}.author{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#aab8a9}
+.main{flex:1;min-width:0;max-width:1750px;padding:27px clamp(22px,3vw,55px) 45px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:17px;margin-bottom:36px}.breadcrumb{color:#828c86;font-size:11px;font-weight:720;letter-spacing:1.3px;text-transform:uppercase}.breadcrumb strong{color:var(--ink)}.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.pill,.btn,.icon-btn{border:1px solid var(--stroke);background:var(--paper);color:var(--ink);min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:11px;padding:9px 14px;font-size:12px;font-weight:730;white-space:nowrap;transition:.15s}.pill{background:transparent;font-size:10px;text-transform:uppercase;letter-spacing:.8px;padding:7px 11px;min-height:30px}.pill .dot{height:6px;width:6px;background:var(--gold);border-radius:50%}.btn:hover,.icon-btn:hover{background:#eff2eb;border-color:#cbd5cb}.btn.primary{background:var(--black);color:#fff;border-color:var(--black)}.btn.primary:hover{background:#373f3b}.btn.mint{background:var(--accent);border-color:var(--accent);color:#21271e}.btn.mint:hover{background:#c7e783}.btn.minor{background:#f5f6f2}.btn.danger{color:var(--red);border-color:#efcbc7}.btn.compact{min-height:33px;padding:7px 11px;font-size:11px}.icon-btn{padding:9px;min-width:38px}.pill-select{position:relative;display:inline-flex;align-items:center}.pill-select select{border-radius:11px;border:1px solid var(--stroke);padding:9px 24px 9px 12px;appearance:none;background:var(--paper);color:var(--ink);font-size:12px;font-weight:730;min-height:38px}.pill-select svg{position:absolute;right:7px;pointer-events:none;height:12px;width:12px}
+.section{display:none;animation:enter .28s ease both}.section.active{display:block}@keyframes enter{from{opacity:.4;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}.view-header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:25px}.overline{color:#65736c;text-transform:uppercase;letter-spacing:2.2px;font-size:10px;font-weight:800;display:flex;gap:8px;align-items:center}.view-header h1{font-size:clamp(29px,3.1vw,43px);line-height:1.15;letter-spacing:-1.9px;margin:8px 0 8px;font-weight:760}.lede{color:var(--sub);font-size:13px;margin:0;max-width:690px}.hint-chip{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--stroke);border-radius:100px;padding:9px 12px;font-size:11px;color:var(--sub);font-weight:680;white-space:nowrap}.hint-chip .pulse{box-shadow:none;background:var(--green)}
+.grid{display:grid;gap:16px}.grid.cards4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid.two{grid-template-columns:1.35fr 1fr}.grid.equal{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.calc-layout{grid-template-columns:1.05fr .92fr}.panel{background:var(--paper);border:1px solid var(--stroke);border-radius:var(--r);padding:25px 27px;box-shadow:var(--shadow);min-width:0}.panel.flush{padding:0;overflow:hidden}.panel-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:24px}.panel-title h2{font-size:17px;line-height:1.2;letter-spacing:-.45px;font-weight:760;margin:0}.panel-title p{font-size:12px;color:var(--sub);margin:6px 0 0}.tiny-label{font-size:10px;text-transform:uppercase;letter-spacing:1.4px;color:#838d85;font-weight:780}.tiny-note{color:var(--muted);font-size:11px}.small-body{font-size:12px;color:var(--sub)}.ruled{height:1px;border:0;background:var(--stroke);margin:22px 0}
+.hero{background:#1b211f;color:#fff;position:relative;min-height:270px;border-radius:26px;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;padding:33px 38px;overflow:hidden;margin-bottom:16px;isolation:isolate}.hero:before{content:"";position:absolute;right:-155px;top:-290px;width:510px;height:510px;border:85px solid #d3eabf18;border-radius:50%;z-index:-1}.hero:after{content:"";position:absolute;right:120px;bottom:-215px;width:380px;height:380px;background:#a2be8c0b;border-radius:50%;filter:blur(3px);z-index:-1}.hero .hero-eyebrow{font-size:11px;letter-spacing:2px;color:#b3c1b6;text-transform:uppercase;font-weight:760}.hero-value{font-size:clamp(38px,4vw,63px);font-weight:740;letter-spacing:-3.5px;line-height:1.08;margin:14px 0 12px;white-space:nowrap}.hero-value.negative{color:#ffa29e}.hero-note{color:#bdc6bc;font-size:12px;max-width:410px}.hero-note strong{color:#e7f0e5}.hero-badges{display:flex;gap:8px;margin-top:24px;flex-wrap:wrap}.hero-badge{background:#ffffff14;border:1px solid #ffffff1e;border-radius:30px;padding:7px 11px;font-size:11px;color:#e1e8de;display:inline-flex;gap:6px;align-items:center}.hero-badge .green-dot{width:6px;height:6px;background:#c7e7ab;border-radius:50%}.hero-right{justify-self:end;width:100%;max-width:365px;position:relative}.hero-right .mini-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#b8c5b7;font-size:11px}.hero-progress{height:5px;background:#ffffff26;margin:15px 0 22px;border-radius:6px;overflow:hidden}.hero-progress div{height:100%;background:#cbeab2;border-radius:6px;transition:width .2s}.hero-metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.hero-mini{background:#ffffff0c;border:1px solid #ffffff16;border-radius:15px;padding:17px}.hero-mini label{display:block;color:#b8c3b7;font-size:10px;margin-bottom:10px}.hero-mini strong{display:block;font-size:22px;letter-spacing:-.8px;font-weight:760}.hero-mini small{display:block;color:#87998b;font-size:10px;margin-top:4px}
+.metric{min-height:130px;background:var(--paper);border:1px solid var(--stroke);border-radius:var(--r);padding:20px 20px 17px;box-shadow:var(--shadow)}.metric-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.metric-icon{width:31px;height:31px;background:#eff2ee;border-radius:10px;display:grid;place-items:center;color:#66746b}.metric-label{color:#78847b;letter-spacing:.2px;font-size:11px;font-weight:730}.metric-number{font-size:clamp(23px,2.15vw,31px);font-weight:750;letter-spacing:-1.2px;line-height:1.15;margin-top:13px;white-space:nowrap}.metric-number.good{color:#218965}.metric-number.bad{color:#be514f}.metric p{margin:8px 0 0;color:#9aa49b;font-size:10.5px}.dashboard-content{margin-top:16px;align-items:start}.cash-bars{display:grid;gap:16px}.cash-row{display:grid;grid-template-columns:125px minmax(0,1fr) 100px;align-items:center;gap:12px}.cash-row span{color:#6a756d;font-size:11px}.cash-row .track{height:8px;border-radius:30px;background:#eff1ed;overflow:hidden}.cash-row .fill{display:block;height:100%;background:#a4b3ab;border-radius:30px}.cash-row.first .fill{background:#202b25}.cash-row strong{font-size:11px;text-align:right;font-weight:720}.total-strip{margin-top:21px;padding:17px 19px;border-radius:15px;background:#edf4e8;display:flex;align-items:center;justify-content:space-between;gap:10px}.total-strip span{color:#54705d;font-size:12px;font-weight:770}.total-strip b{color:#1d6d4c;font-size:18px;letter-spacing:-.6px}.total-strip.loss{background:#fff0ee}.total-strip.loss b{color:var(--red)}.funnel{display:grid;gap:18px}.funnel-row{display:grid;grid-template-columns:91px minmax(0,1fr) 67px;gap:9px;align-items:center}.funnel-row .funnel-name{font-size:11px;color:#738077}.funnel-track{height:9px;background:#f0f2ed;border-radius:8px;overflow:hidden}.funnel-fill{display:block;height:100%;background:#b8cabe;border-radius:8px}.funnel-row:last-child .funnel-fill{background:#1c8962}.funnel-row b{text-align:right;font-size:11px}.intel-list{display:grid;gap:12px}.intel{background:#f8f9f6;border:1px solid #edf0ea;border-radius:14px;padding:14px;display:flex;gap:12px}.intel .badge-icon{border-radius:12px;display:grid;place-items:center;flex:0 0 34px;height:34px;background:#edf0e7;color:#55705c}.intel.danger .badge-icon{background:var(--redbg);color:var(--red)}.intel.warn .badge-icon{background:var(--goldbg);color:var(--gold)}.intel b{font-size:12px;font-weight:770}.intel p{margin:4px 0 0;color:#808b80;font-size:11px;line-height:1.55}.section-footer{padding:30px 3px 0;display:flex;justify-content:space-between;gap:16px;align-items:center;color:#9ba39d;font-size:10px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.field{min-width:0}.field.wide{grid-column:1/-1}.field label{display:block;font-size:11.5px;color:#505e55;font-weight:720;margin-bottom:7px}.field label small{display:block;color:#a0a8a0;font-weight:460;font-size:10px;margin-top:2px}.field .inputwrap{position:relative}.field input,.field select,.bare-input{width:100%;border:1px solid #e2e8df;border-radius:11px;background:#f9faf7;padding:12px 13px;min-height:45px;color:#19251e;font-size:14px;font-weight:720;transition:.2s}.field input:focus,.field select:focus,.bare-input:focus{outline:none;border-color:#9fb99c;background:#fff;box-shadow:0 0 0 3px #c7dfba55}.field input:invalid{border-color:#df9b97}.field input[type=number]{appearance:textfield;-moz-appearance:textfield}.field input[type=number]::-webkit-inner-spin-button,.field input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.field .suffix{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-weight:700;color:#8d988e;font-size:11px;pointer-events:none}.field .with-suffix{padding-right:53px}.block-h{display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:1.4px;color:#758178;text-transform:uppercase;font-weight:820;margin-bottom:19px}.block-h .seq{width:24px;height:24px;display:grid;place-items:center;border-radius:8px;background:#e9efdf;color:#5f7763;font-size:10px;letter-spacing:0}.subpanel{border:1px solid var(--stroke);background:#fcfdfa;border-radius:17px;padding:21px;margin-top:19px}.sep{height:1px;background:var(--stroke);margin:23px 0}.flex{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.space{justify-content:space-between}.right{text-align:right}.dark-panel{background:#202724;color:#f6f8f4;border-radius:var(--r);padding:27px 28px;border:1px solid #323a33}.dark-panel .panel-title h2{color:#fff}.dark-panel .panel-title p{color:#b2bdb4}.product-price{font-size:43px;letter-spacing:-2.1px;font-weight:760;line-height:1.1;margin:17px 0 5px}.product-result-caption{color:#a8b6ad;font-size:11px}.cost-list{margin-top:22px;display:grid;gap:13px}.cost-line{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px}.cost-line span{color:#adbaaf}.cost-line b{font-size:12px;font-weight:690}.dark-divider{height:1px;background:#39443d;margin:20px 0}.result-banner{border-radius:15px;padding:17px 19px;background:#d8e9ba;color:#1d3025;margin:24px 0 10px}.result-banner.loss{background:#f7d4d0;color:#6b292b}.result-banner span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;display:block}.result-banner strong{font-size:32px;font-weight:790;letter-spacing:-1px;display:block;margin:3px 0}.result-banner small{font-size:11px}.detail-caution{color:#96a89b;font-size:10px;line-height:1.6;margin:16px 0 0}.statbox{background:#f8f9f6;padding:18px;border:1px solid #e8ece6;border-radius:16px}.statbox .slabel{font-size:11px;color:#748075;font-weight:680}.statbox .svalue{font-size:27px;font-weight:760;letter-spacing:-1px;margin-top:8px;word-break:break-word}.statbox .sub{font-size:10px;color:#8e9a90;margin-top:6px}.mini-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.bar{height:10px;background:#eef1e9;border-radius:30px;display:flex;overflow:hidden}.bar-piece{height:100%;min-width:1px}.legend{display:flex;flex-wrap:wrap;gap:10px 17px;margin-top:17px}.legenditem{display:inline-flex;align-items:center;gap:7px;color:#69756e;font-size:11px}.legenditem:before{content:"";width:8px;height:8px;border-radius:3px;background:var(--c)}
+.table-scroll{width:100%;overflow:auto;overscroll-behavior-x:contain}.data-table{width:100%;border-collapse:collapse;text-align:left;min-width:685px}.data-table th{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:#9ba69c;font-weight:790;padding:13px 11px;border-bottom:1px solid var(--stroke);white-space:nowrap}.data-table td{font-size:12px;padding:17px 11px;border-bottom:1px solid #edf0ec;vertical-align:middle}.data-table tr:last-child td{border-bottom:none}.data-table td strong{font-size:12px}.data-table td small{color:#929d92;font-size:10px;display:block;margin-top:2px}.data-table .money-td{font-weight:780;white-space:nowrap}.data-table .positive{color:var(--green)}.data-table .negative{color:var(--red)}.tiny-pill{border-radius:30px;padding:5px 8px;background:#f1f3ec;color:#707c72;font-weight:730;font-size:10px}.tiny-pill.positive{background:var(--greenbg);color:var(--green)}.tiny-pill.negative{background:var(--redbg);color:var(--red)}.table-action{border:1px solid var(--stroke);background:#fff;border-radius:8px;min-height:30px;font-size:11px;padding:5px 9px;font-weight:680;color:#5d6b5f}.table-action:hover{border-color:#b7c8b7;color:#161e16}.table-action.danger{color:var(--red)}.empty{border:1px dashed #d5ded4;border-radius:15px;padding:27px;text-align:center;color:#8a958b;font-size:12px}.mixtrack{height:17px;display:flex;border-radius:25px;overflow:hidden;background:#eff2ec;margin-top:17px}.mixtrack span{height:100%;min-width:1px}.mix-legend{display:grid;gap:13px;margin-top:20px}.mixrow{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#57665a;font-size:12px}.mixrow .indicator{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:9px}.mixrow b{font-weight:760}
+.switch{display:inline-flex;gap:3px;background:#f1f3ef;border:1px solid var(--stroke);border-radius:12px;padding:4px}.switch button{background:transparent;border:0;color:#69766b;font-weight:730;padding:8px 13px;border-radius:9px;font-size:11px}.switch button.active{background:#fff;box-shadow:0 1px 4px #00000012;color:#17201a}.kicker-note{font-size:11px;color:var(--sub);margin:9px 0 0}.expenses{display:grid;gap:10px}.expense-line{display:flex;align-items:center;gap:10px;border:1px solid var(--stroke);padding:12px 14px;border-radius:12px;background:#fafbf8}.expense-line span{flex:1;font-size:12px;color:#59655c}.expense-line b{font-size:12px}.expense-line button{background:transparent;border:0;color:#a1a9a1;padding:5px}.expense-line button:hover{color:var(--red)}.add-expense{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) auto;gap:8px;align-items:center;margin-top:17px}.add-expense .bare-input{font-size:12px;min-height:42px}.totals-box{background:#edf5e7;padding:22px;border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:15px}.totals-box label{font-size:12px;color:#6b856f}.totals-box strong{font-size:25px;letter-spacing:-.8px;color:#28684b}.small-caps{font-size:10px;letter-spacing:1px;color:#849285;text-transform:uppercase;font-weight:780}
+.scenario-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:23px}.ranger{min-width:0}.ranger-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.ranger-top span{color:#6d796e;font-size:12px}.ranger-top strong{font-size:12px;color:#1f3024}.ranger input[type=range]{width:100%;accent-color:#252d28;cursor:pointer}.ranger .endpoints{display:flex;justify-content:space-between;font-size:10px;color:#a1a9a0}.compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.compare-item{border:1px solid #e8ede6;border-radius:18px;background:#fafbf9;padding:23px 19px}.compare-item.featured{background:#202723;color:white;border-color:#202723}.compare-item .compare-head{font-weight:750;letter-spacing:.2px;font-size:12px}.compare-item .compare-desc{font-size:10px;color:#8e9b8f;min-height:34px;margin-top:7px}.compare-item.featured .compare-desc{color:#a4b4a7}.compare-item .compare-val{font-size:clamp(20px,2.4vw,30px);font-weight:790;letter-spacing:-1.3px;margin:23px 0 13px;white-space:nowrap}.compare-item .compare-val.negative{color:#cf6259}.compare-item.featured .compare-val{color:#d5edbb}.compare-item .compare-line{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:10px;color:#8c988e;border-top:1px solid #e9eee8;padding-top:9px;margin-top:9px}.compare-item.featured .compare-line{border-color:#45524a;color:#a4b3a7}.compare-item .compare-line b{color:#252f28}.compare-item.featured .compare-line b{color:white}.heat-scroll{max-width:100%;overflow-x:auto}.heatmap{min-width:520px;display:grid;grid-template-columns:repeat(6,minmax(70px,1fr));gap:5px}.heat-cell{padding:13px 8px;border-radius:9px;font-size:10px;text-align:center;color:#34413b;background:#f3f6f1;font-weight:700}.heat-cell.hdr{background:transparent;color:#8f9a91;font-weight:740}.heat-cell.neg{background:#fbe7e4;color:#b34f4e}.heat-cell.mid{background:#f8edd9;color:#846536}.heat-cell.pos{background:#dcf4e7;color:#247a56}.heat-cell.current{outline:2px solid #242c26;outline-offset:-2px}
+.report-lines{display:grid}.report-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 2px;border-bottom:1px solid #ecefeb;font-size:12px;color:#78837b}.report-row strong{font-weight:770;color:#28332a}.report-row.heading{margin-top:10px;color:#242b27;font-weight:820;text-transform:uppercase;font-size:10px;letter-spacing:1.3px}.report-row.heading strong{color:inherit}.report-row.revenue{background:#f0f6ec;padding:17px 14px;border-radius:12px;margin-top:12px;color:#447252;font-weight:750}.report-row.revenue strong{color:#276943;font-size:15px}.report-row.net{background:#202723;color:#e3ede2;margin-top:16px;border-radius:14px;padding:18px 16px;font-weight:760;font-size:13px}.report-row.net strong{color:#d7eaa9;font-size:20px}.report-row.net.negative strong{color:#ffa49a}.report-row:last-child{border:0}.timeline{border:1px solid var(--stroke);border-radius:15px;overflow:hidden}.stage{display:flex;align-items:center;justify-content:space-between;padding:14px 15px;border-bottom:1px solid #edf0e9;gap:12px}.stage:last-child{border:0}.stage .left{display:flex;align-items:center;gap:12px}.stage .circle{display:grid;place-items:center;background:#eff3ea;border-radius:50%;font-size:10px;height:30px;width:30px;font-weight:800;color:#5f6e60}.stage b{font-size:12px}.stage small{display:block;font-size:10px;color:#9ca69c;margin-top:2px}.stage .right{font-size:15px;font-weight:780}.target-label{font-size:11px;color:#7c867c}.target-val{font-size:27px;font-weight:800;letter-spacing:-1px}.price-suggestion{display:flex;align-items:center;justify-content:space-between;gap:11px;padding:16px 0;border-bottom:1px solid var(--stroke)}.price-suggestion:last-child{border:0}.price-suggestion span{font-size:12px;color:#617064}.price-suggestion b{display:block;text-align:right;font-size:15px;color:#1b2d21}.price-suggestion small{display:block;text-align:right;font-size:10px;color:#a0aa9f;text-decoration:line-through}
+.chart-wrap{position:relative;width:100%;min-height:220px}.chart-wrap svg{width:100%;height:auto;display:block;overflow:visible}.chart-label{font-size:10px;fill:#9aa69b}.chart-label-strong{font-size:10px;fill:#6d786e;font-weight:700}.chart-cross{stroke:#d9e1d6;stroke-width:1}.chart-line{stroke:#31453a;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}.chart-area{fill:url(#chartFade)}.chart-zero{stroke:#d4b7b0;stroke-width:1;stroke-dasharray:4 5}
+.modal-back{position:fixed;z-index:50;inset:0;background:#0b120cb8;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px)}.modal-back.open{display:flex}.modal{width:min(100%,600px);max-height:86vh;overflow-y:auto;background:#fff;border-radius:23px;padding:26px;box-shadow:0 35px 100px #0004}.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:21px}.modal-header h2{font-size:22px;letter-spacing:-.7px;margin:0}.saved-list{display:grid;gap:9px;max-height:260px;overflow:auto;margin-top:20px}.saved-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--stroke);border-radius:12px;padding:12px 13px}.saved-row b{font-size:12px}.saved-row small{color:#9aa39a;display:block;font-size:10px;margin-top:4px}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,18px);background:#1c2420;color:#edf5ef;padding:13px 18px;border-radius:12px;box-shadow:0 15px 40px #0003;font-size:12px;font-weight:710;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:min(90vw,450px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.mobile-header,.mobile-dock{display:none}
+@media(max-width:1340px){.sidebar{flex-basis:229px;width:229px}.main{padding:26px 23px 40px}.hero{padding:30px}.panel{padding:21px}.grid.cards4{gap:12px}.metric{padding:17px}.metric-number{font-size:25px}.hero-value{font-size:50px}}
+@media(max-width:1130px){.grid.calc-layout{grid-template-columns:1fr}.grid.cards4{grid-template-columns:repeat(2,1fr)}.grid.two{grid-template-columns:1fr}.hero{min-height:240px}.grid.equal{grid-template-columns:1fr}.dashboard-content{grid-template-columns:1fr 1fr}.dashboard-content .panel{padding:20px}.cash-row{grid-template-columns:110px minmax(0,1fr) 90px}.metric-number{font-size:29px}}
+@media(max-width:880px){.sidebar{display:none}.main{width:100%;max-width:none;padding:18px 19px 105px}.topbar{margin-bottom:21px}.breadcrumb{display:none}.mobile-header{height:62px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--stroke);background:#fff;padding:0 21px}.mobile-brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:830;letter-spacing:-.5px}.mobile-brand span{font-size:10px;color:#99a49a;display:block;letter-spacing:1.1px}.mobile-brand .brand-icon{height:34px;width:34px;border-radius:10px;font-size:14px}.mobile-dock{position:fixed;left:50%;transform:translateX(-50%);bottom:max(13px,env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;justify-content:center;background:#1e2621;border-radius:20px;padding:7px;gap:3px;width:min(96%,510px);box-shadow:0 13px 40px #0004}.mobile-dock button{color:#aab8aa;flex:1;min-width:0;border:none;border-radius:15px;background:none;padding:10px 1px 8px;font-size:9px;display:grid;justify-items:center;gap:4px;line-height:1.1}.mobile-dock button.active{color:#172019;background:#d6ebb9;font-weight:800}.mobile-dock .ic{width:19px;height:19px}.section-footer{padding:24px 0}.top-actions .hide-mob{display:none}.topbar{justify-content:flex-end}.view-header{margin-bottom:20px}.view-header h1{font-size:35px}}
+@media(max-width:620px){.main{padding:14px 14px 108px}.mobile-header{padding:0 15px}.topbar{justify-content:space-between;gap:6px;margin-bottom:24px}.top-actions{gap:6px}.top-actions .btn{padding:8px 10px;min-height:35px;font-size:11px}.pill-select select{min-height:35px;padding:8px 21px 8px 10px}.view-header{align-items:flex-start}.view-header h1{font-size:30px;letter-spacing:-1.3px}.view-header .hint-chip{display:none}.lede{font-size:12px}.grid.cards4{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:14px;min-height:119px;border-radius:16px}.metric-number{font-size:clamp(20px,5.2vw,26px);letter-spacing:-.8px}.metric-icon{width:27px;height:27px;border-radius:8px}.metric-label{font-size:10px}.metric p{font-size:9px;line-height:1.4}.hero{padding:24px 20px;border-radius:22px;grid-template-columns:1fr;gap:21px}.hero-value{font-size:clamp(36px,10vw,49px);letter-spacing:-2px}.hero .hero-eyebrow{font-size:10px}.hero-right{max-width:none}.hero-mini{padding:12px}.hero-mini strong{font-size:19px}.hero-badges{margin-top:16px}.panel{padding:21px 18px;border-radius:18px}.panel-title{margin-bottom:19px}.grid.two,.grid.equal,.dashboard-content,.compare{grid-template-columns:1fr}.mini-grid{grid-template-columns:1fr 1fr}.fields{gap:14px}.field input,.field select{padding:11px;min-height:42px;font-size:13px}.cash-row{grid-template-columns:90px minmax(0,1fr) 83px;gap:8px}.cash-row span{font-size:10px}.cash-row strong{font-size:10px}.compare-item{padding:19px}.compare-item .compare-val{font-size:28px;margin:13px 0}.compare-item .compare-desc{min-height:0}.scenario-controls{gap:16px}.dark-panel{padding:22px}.top-actions .icon-text{display:none}.section-footer{flex-direction:column;align-items:flex-start;gap:4px}.chart-wrap{min-height:0}.chart-label{font-size:13px}.add-expense{grid-template-columns:1fr 1fr}.add-expense .btn{grid-column:1/-1}.modal{padding:21px}.saved-row{align-items:flex-start}.saved-row .flex{gap:5px}.top-actions .btn.compact{padding:7px 8px}}
+@media(max-width:375px){.metric-number{font-size:18px}.mobile-dock button{font-size:8px}.main{padding-left:10px;padding-right:10px}.view-header h1{font-size:27px}.hero-value{font-size:35px}.fields{grid-template-columns:1fr}.field.wide{grid-column:auto}}
+@media print{.sidebar,.mobile-header,.mobile-dock,.topbar,.view-header,.btn,.icon-btn,.section-footer,.no-print,.modal-back,.toast{display:none!important}.main{margin:0;padding:0;width:100%;max-width:none}.section{display:none!important}.section[data-view="report"]{display:block!important}.grid.two,.grid.equal{grid-template-columns:1fr 1fr!important}.panel{box-shadow:none;break-inside:avoid;border-color:#ddd;padding:14px}.report-row{padding:8px 0}body{background:white;color:#111}#reportPrintableHeader{display:block!important}.report-lines{font-size:10px}}
+
+/* ---------- ECOM STUDIO · SAMUEL ACUÑA / FINTECH EDITION ---------- */
+:root{
+  --bg:#f6f6f5;--paper:#fff;--paper2:#f9f9f8;--ink:#17181a;--ink2:#27282b;
+  --sub:#737579;--muted:#96989b;--stroke:#ebebeb;--black:#191a1d;
+  --dark2:#26272b;--accent:#e6e3ff;--mint:#e6e3ff;--green:#21836f;
+  --greenbg:#eaf7f0;--red:#b95258;--redbg:#fff1f0;--gold:#9b7854;
+  --goldbg:#f6f1e8;--shadow:none;--r:21px;--r2:13px;
+}
+html{scrollbar-color:#d1d1d1 transparent}
+body{background:var(--bg);color:var(--ink);font-family:"Inter","Inter Display",-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;letter-spacing:-.017em}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #b3aaff;outline-offset:2px}
+.app{align-items:stretch}
+.sidebar{background:#fff;color:#242424;border-right:1px solid #ededec;flex-basis:225px;width:225px;padding:32px 13px 18px}
+.brand{padding:2px 12px 34px;gap:10px}
+.brand-icon{border-radius:50%;height:36px;width:36px;background:#1b1b1d;color:#fff;font-size:13px;letter-spacing:-1px;font-weight:750;box-shadow:0 2px 4px #00000014}
+.brand-icon span{font-weight:300;color:#d3cdfb;margin:0 1px}
+.brand-title{font-size:15px;font-weight:730;letter-spacing:-.65px;color:#1b1b1d}
+.brand-title span{font-size:8px;letter-spacing:1.7px;margin-top:2px;font-weight:650;color:#97979b}
+.side-caption{font-size:9px;letter-spacing:1.7px;color:#b0b0b2;font-weight:750;padding:10px 17px;margin:19px 0 8px}
+.side-nav{gap:4px}
+.nav-btn{font-size:12px;min-height:43px;border-radius:11px;color:#717176;padding:11px 14px;gap:12px;font-weight:560;letter-spacing:-.02em}
+.nav-btn .ic{height:17px;width:17px;color:#85858b;stroke-width:1.7}
+.nav-btn:hover{background:#f5f5f4;color:#1d1d20}
+.nav-btn.active{background:#1c1c1f;color:#fff;border-color:#1c1c1f;font-weight:600}
+.nav-btn.active .ic{color:#eceaff}
+.nav-btn .num{font-weight:500;color:#c1c0c2;font-size:9px}
+.nav-btn.active .num{color:#aaa9b4}
+.sidebar-bottom{padding:17px 5px 2px;border-top:1px solid #eee}
+.sidebar-bottom p{font-size:10px;color:#b3b3b7;line-height:1.7;margin:14px 8px 4px}
+.identity-small{display:flex;align-items:center;gap:9px;padding:5px 1px}
+.identity-avatar{background:#e6e4fd;color:#282737;font-size:11px;font-weight:800;border-radius:50%;height:34px;width:34px;display:grid;place-items:center;flex-shrink:0}
+.identity-small strong{font-size:11px;line-height:1.2;display:block;color:#28282c;font-weight:720}
+.identity-small small{font-size:8px;letter-spacing:.6px;color:#a6a6aa;display:block;margin-top:4px}
+.identity-dots{font-weight:700;font-size:10px;color:#a1a1a4;margin-left:auto;letter-spacing:2px}
+.main{max-width:1650px;padding:27px clamp(25px,3.2vw,62px) 48px}
+.topbar{padding-bottom:23px;margin-bottom:25px;border-bottom:1px solid #e9e9e8}
+.breadcrumb{font-size:10px;letter-spacing:.16px;display:flex;align-items:center;gap:14px;font-weight:650}
+.breadcrumb-starter{color:#a5a5a7}
+.breadcrumb .ic{height:12px;width:12px;color:#bfc0c2}
+.breadcrumb strong{font-size:10px;color:#1e1e21;font-weight:700;letter-spacing:.55px}
+.top-dotlabel{display:inline-flex;align-items:center;gap:9px;margin-right:8px;color:#929396;font-size:10px}
+.top-dotlabel .pulse{height:6px;width:6px;background:#6fb39b;box-shadow:none}
+.top-actions{gap:8px}
+.btn,.icon-btn{min-height:38px;border-radius:11px;padding:9px 14px;border-color:#e9e9e8;font-size:11px;font-weight:660;letter-spacing:-.005em;background:white}
+.btn:hover,.icon-btn:hover{background:#f3f3f4;border-color:#d6d6d8}
+.btn.primary{background:#1a1a1e;border-color:#1a1a1e;color:white}
+.btn.primary:hover{background:#34343a}
+.btn.mint{background:#232327;color:#fff;border-color:#232327}
+.btn.mint:hover{background:#45454e}
+.btn.minor{background:#f7f7f7;border-color:#ededed}
+.pill{border-color:#ebebeb;background:#f8f8f8;color:#76777b;border-radius:100px;font-weight:660;font-size:9px;letter-spacing:.6px}
+.pill-select select{border-radius:10px;border-color:#e9e9e8;background:#fff;font-weight:650;font-size:11px;letter-spacing:-.005em}
+.view-header{margin-bottom:24px}
+.overline{font-size:9px;color:#8c8d91;letter-spacing:1.8px;font-weight:740}
+.view-header h1{font-size:clamp(30px,3vw,42px);font-weight:630;letter-spacing:-1.75px;margin:9px 0 8px}
+.lede{font-size:12px;color:#88888c;line-height:1.65}
+.home-intro{margin-bottom:31px;align-items:end}
+.home-intro h1{font-weight:595;font-size:clamp(36px,3.75vw,52px);letter-spacing:-2.5px;line-height:1.1;margin:11px 0 11px}
+.home-intro .lede{font-size:13px}
+.index-spot{height:7px;width:7px;background:#292830;display:inline-block;border-radius:100%;margin-right:2px}
+.overline-slash{color:#cbcbd0;margin:0 3px}
+.intro-cta{padding:12px 16px;border-radius:12px}
+.grid{gap:15px}
+.grid.cards4{gap:0}
+.grid.equal{gap:15px}
+.panel{background:#fff;border:1px solid #ededec;border-radius:20px;box-shadow:none;padding:26px 28px}
+.panel-title{margin-bottom:22px;align-items:center}
+.panel-title h2{font-size:16px;font-weight:680;letter-spacing:-.6px;color:#252528}
+.panel-title p{font-size:11px;color:#9a9a9d;margin-top:5px}
+.tiny-label{color:#a1a1a4;font-size:9px}
+.tiny-note{color:#a3a3a6;font-size:10px;line-height:1.65}
+.small-link{border:none;background:none;display:flex;align-items:center;gap:10px;font-size:11px;font-weight:670;color:#4f4f54;padding:8px;white-space:nowrap;cursor:pointer}
+.small-link:hover{color:#000;text-decoration:underline}
+.small-link .ic{width:14px}
+/* Dashboard's principal banking surface */
+.bank-frame{background:#fff;border:1px solid #ebebeb;border-radius:28px;overflow:hidden;box-shadow:0 13px 35px #10111508}
+.bank-upper{padding:29px 38px 27px}
+.bank-topline{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:31px}
+.bank-account{display:flex;align-items:center;gap:12px;color:#a4a4a8;font-size:9px;letter-spacing:1.4px;font-weight:700}
+.mini-monogram{width:26px;height:26px;background:#f0f0f0;border:1px solid #e8e8e8;border-radius:50%;color:#252529;display:grid;place-items:center;font-size:9px;font-weight:790;letter-spacing:-1px}
+.small-divider{color:#d1d1d1;margin:0 5px}
+.period-indicator{color:#98989b;letter-spacing:.65px;font-size:9px;font-weight:670;display:flex;align-items:center;gap:9px}
+.period-dot{height:6px;width:6px;display:inline-block;background:#8bc7a8;border-radius:50%}
+.bank-balance{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(235px,.8fr);gap:30px;align-items:center}
+.balance-label{color:#89898d;display:flex;align-items:center;gap:14px;font-size:12px;font-weight:510;letter-spacing:-.005em}
+.context-tag{font-size:9px;letter-spacing:.25px;color:#8179ad;background:#f1effe;padding:6px 9px;border-radius:100px;font-weight:680}
+.bank-primary{min-width:0}
+.home-view .hero-value{background:transparent;color:#19191b;line-height:1.06;font-size:clamp(39px,5vw,72px);font-weight:535;letter-spacing:-3.8px;margin:15px 0 13px;max-width:100%;white-space:nowrap}
+.home-view .hero-value.negative{color:#bb5555}
+.hero-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;color:#a3a3a5;font-size:11px}
+.balance-status{background:#ebf6ef;color:#327f5f;padding:6px 11px;border-radius:100px;display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;white-space:nowrap}
+.status-symbol{font-size:13px;line-height:1}
+.bank-info{display:grid;grid-template-columns:1fr 1fr;gap:11px;align-self:stretch;align-items:stretch}
+.bank-info-item{min-width:0;background:#f6f6f6;border:1px solid #f2f2f2;border-radius:15px;padding:16px 16px 13px;display:flex;flex-direction:column;justify-content:center}
+.bank-info-item span{font-size:11px;color:#98989c;margin-bottom:9px}
+.bank-info-item strong{font-size:clamp(19px,2.4vw,27px);font-weight:630;letter-spacing:-1.1px;line-height:1.2;color:#29292d;white-space:nowrap}
+.bank-info-item small{font-size:9px;color:#b0b0b2;line-height:1.45;margin-top:9px}
+.bank-bottomline{border-top:1px solid #f0f0f0;margin-top:30px;padding-top:19px;display:flex;align-items:center;gap:18px;color:#99999d;font-size:11px}
+.bank-bottomline span{white-space:nowrap}
+.bank-bottomline strong{font-size:12px;font-weight:720;color:#28282d;margin-left:auto}
+.bank-progress{height:5px;border-radius:20px;background:#eeeef0;flex:1;max-width:340px;overflow:hidden;margin-left:auto}
+.bank-progress>div{height:100%;background:#7770ad;border-radius:20px;transition:width .4s}
+.bank-mid{background:#19191c;color:white;padding:22px 37px 23px;position:relative}
+.bank-mid-label{display:flex;justify-content:space-between;gap:12px;color:#88888d;font-size:8px;letter-spacing:1.7px;font-weight:740}
+.bank-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:18px}
+.bank-action{border:1px solid #34343a;background:#232326;border-radius:14px;color:#f8f8fa;padding:15px;display:flex;align-items:center;gap:11px;text-align:left;min-width:0;font-size:11px;font-weight:590;transition:background .18s,transform .18s}
+.bank-action:hover{background:#37363e;transform:translateY(-1px)}
+.action-symbol{border:1px solid #65656b;background:#313136;flex:0 0 31px;width:31px;height:31px;border-radius:100%;display:grid;place-items:center}
+.action-symbol .ic{height:15px;width:15px}
+.action-arrow{margin-left:auto;color:#6c6b72;width:12px}
+.bank-bottom{padding:28px 38px 21px;background:#fff;border-radius:23px 23px 0 0;position:relative;margin-top:-1px}
+.bank-bottom-header{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px}
+.bank-bottom-header h2{font-size:15px;font-weight:710;margin:0;letter-spacing:-.55px}
+.bank-bottom-header p{font-size:10px;color:#a5a5a8;margin:5px 0 0}
+.bank-state{font-size:9px;color:#8a8a8f;background:#f7f7f7;border:1px solid #efefef;border-radius:100px;padding:6px 10px;display:flex;gap:8px;align-items:center}
+.bank-state .dot{height:6px;width:6px;border-radius:50%;background:#aaa4e4}
+.bank-stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:0 -16px}
+.bank-stats .metric{background:none;border:none;border-radius:0;box-shadow:none;min-height:0;padding:4px 23px 5px;position:relative}
+.bank-stats .metric:not(:first-child){border-left:1px solid #eee}
+.bank-stats .metric-icon{display:none}
+.bank-stats .metric-label{font-size:10px;color:#98989d;font-weight:550}
+.bank-stats .metric-number{font-size:clamp(22px,2.5vw,31px);font-weight:630;letter-spacing:-1.45px;margin-top:10px}
+.bank-stats .metric p{font-size:9px;line-height:1.45;margin-top:8px;color:#b4b4b6}
+.bank-bottom-note{border-top:1px solid #f1f1f1;padding-top:18px;margin-top:24px;display:flex;gap:8px;align-items:center;color:#929297;font-size:10px}
+.bank-bottom-note strong{color:#343437;font-weight:710}
+.notice-dot{width:6px;height:6px;border-radius:100%;background:#6fb794;display:inline-block;flex-shrink:0}
+/* Bank-like ledger and analytics */
+.under-heading{margin:43px 0 17px;display:flex;align-items:end;justify-content:space-between;gap:14px}
+.under-heading h2{font-size:23px;font-weight:625;letter-spacing:-.9px;margin:0}
+.under-heading p{font-size:11px;color:#949499;margin:5px 0 0}
+.under-heading-index{font-size:9px;color:#aaa9ae;letter-spacing:1.6px;font-weight:680;white-space:nowrap}
+.ledger-grid{display:grid;grid-template-columns:minmax(0,1.07fr) minmax(0,.93fr);gap:16px;margin-top:0;align-items:start}
+.right-stack{display:grid;gap:16px;min-width:0}
+.ledger-panel{padding:30px 29px}
+.ledger-headings{display:flex;justify-content:space-between;align-items:center;font-size:9px;letter-spacing:1.2px;font-weight:730;color:#b5b5b9;border-bottom:1px solid #eee;padding:7px 2px 15px}
+.ledger-panel .cash-bars{gap:0}
+.ledger-panel .cash-row{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr) minmax(102px,auto);column-gap:13px;align-items:center;min-height:68px;border-bottom:1px solid #f0f0f0;padding:9px 0}
+.ledger-panel .cash-row:last-child{border-bottom:0}
+.ledger-panel .cash-row:before{content:'↓';width:35px;height:35px;display:grid;place-items:center;background:#f2f2f2;color:#66666d;border-radius:10px;font-size:15px;font-weight:650;grid-column:1;grid-row:1/3}
+.ledger-panel .cash-row.first:before{content:'↗';background:#edeafb;color:#7970af}
+.ledger-panel .cash-row:nth-child(2):before{content:'▣';font-size:12px}
+.ledger-panel .cash-row:nth-child(3):before{content:'◉';font-size:13px}
+.ledger-panel .cash-row:nth-child(4):before{content:'↔';font-size:14px}
+.ledger-panel .cash-row:nth-child(5):before{content:'⌑';font-size:17px}
+.ledger-panel .cash-row:nth-child(6):before{content:'◇';font-size:18px}
+.ledger-panel .cash-row:nth-child(7):before{content:'▤';font-size:15px}
+.ledger-panel .cash-row>span:first-child{font-size:11px;font-weight:660;color:#353539;line-height:1.35;grid-column:2;grid-row:1/3}
+.ledger-panel .cash-row>span:first-child:after{content:'Costo de la operación';display:block;color:#aaaab0;font-size:9px;font-weight:420;margin-top:5px}
+.ledger-panel .cash-row:first-child>span:first-child:after{content:'Ventas entregadas y cobradas'}
+.ledger-panel .cash-row:nth-child(2)>span:first-child:after{content:'Costo de los productos vendidos'}
+.ledger-panel .cash-row:nth-child(3)>span:first-child:after{content:'Adquisición de clientes'}
+.ledger-panel .cash-row:nth-child(4)>span:first-child:after{content:'Despachos y devoluciones'}
+.ledger-panel .cash-row:nth-child(5)>span:first-child:after{content:'Empaques y operación comercial'}
+.ledger-panel .cash-row:nth-child(6)>span:first-child:after{content:'Cargos y medios de pago'}
+.ledger-panel .cash-row:nth-child(7)>span:first-child:after{content:'Administración mensual'}
+.ledger-panel .cash-row .track{display:none}
+.ledger-panel .cash-row strong{grid-column:3;text-align:right;font-size:12px;font-weight:690;color:#55555a;white-space:nowrap}
+.ledger-panel .cash-row.first strong{color:#25252a}
+.ledger-panel .total-strip{background:#f0effd;border-radius:13px;color:#514b82;padding:20px 19px;margin-top:23px;font-size:11px}
+.ledger-panel .total-strip b{font-size:18px;color:#37324f;font-weight:735;letter-spacing:-.6px}
+.ledger-panel .total-strip.loss{background:#fdf0ef;color:#b45154}
+.ledger-panel .total-strip.loss b{color:#b45154}
+.projection-panel,.funnel-panel{padding:25px 27px}
+.projection-panel .chart-wrap{min-height:0}
+.projection-panel .chart-wrap svg{width:100%;max-height:230px}
+.chart-label{fill:#aaaab0;font-size:10px}
+.chart-label-strong{fill:#62626e}
+.chart-cross{stroke:#ececef}
+.chart-line{stroke:#62617d;stroke-width:2.5}
+.chart-zero{stroke:#dfd1d2}
+.chart-disclaimer{color:#b0b0b4;font-size:9px;line-height:1.6;margin:5px 0 0}
+.funnel{gap:15px}
+.funnel-row{grid-template-columns:95px minmax(0,1fr) 54px;gap:10px}
+.funnel-row .funnel-name{color:#8d8d93;font-size:10px}
+.funnel-track{height:6px;background:#f0f0f2}
+.funnel-fill{background:#d0cceb}
+.funnel-row:last-child .funnel-fill{background:#75709a}
+.funnel-row b{font-size:10px;font-weight:690;color:#34343a}
+.light-pill{border:0!important;background:#f1efff!important;color:#6d67a7!important}
+.funnel-panel #funnelFoot{margin:21px 0 0;line-height:1.7}
+.watch-panel{margin-top:16px;padding:26px 28px}
+.radar-tag{font-size:9px;letter-spacing:1px;color:#97969e;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.radar-tag span{width:6px;height:6px;background:#b4aeee;border-radius:50%}
+.watch-panel .intel-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.watch-panel .intel{padding:10px 17px 10px 0;background:none;border:0;border-radius:0}
+.watch-panel .intel:not(:last-child){border-right:1px solid #eee;margin-right:16px}
+.watch-panel .intel .badge-icon{width:33px;height:33px;flex:0 0 33px;border-radius:10px;background:#f1f1f1;color:#6f6f78}
+.watch-panel .intel b{font-size:11px;color:#2b2b31;font-weight:670}
+.watch-panel .intel p{font-size:10px;color:#9a9aa0;line-height:1.55}
+.watch-panel .intel.warn .badge-icon{color:var(--gold);background:var(--goldbg)}
+.watch-panel .intel.danger .badge-icon{color:var(--red);background:var(--redbg)}
+/* Functional tool pages — same calculation engine, redesigned controls */
+.section:not(.home-view) .view-header{margin-bottom:26px}
+.section:not(.home-view) .view-header h1{font-size:clamp(33px,3.3vw,43px);font-weight:620;letter-spacing:-2px}
+.section:not(.home-view) .overline{color:#97979d}
+.grid.calc-layout{grid-template-columns:1.02fr .98fr;gap:17px}
+.panel-title h2{font-weight:680}
+.block-h{color:#8b8b93;font-size:10px;letter-spacing:1.25px;font-weight:740}
+.block-h .seq{background:#f0effd;color:#6c63a0;border-radius:50%;height:25px;width:25px;display:grid;place-items:center;letter-spacing:0}
+.field label{font-size:11px;color:#606068;font-weight:650}
+.field label small{color:#a2a2a8;font-size:10px;font-weight:420}
+.field input,.field select,.bare-input{background:#f8f8f8;border-color:#ededed;border-radius:11px;min-height:47px;font-weight:620;color:#27272d;font-size:14px}
+.field input:focus,.field select:focus,.bare-input:focus{background:white;border-color:#bbb4eb;box-shadow:0 0 0 3px #e4dfff75}
+.field .suffix{color:#99989d}
+.sep{background:#f0f0f0}
+.statbox{background:#f8f8f8;border-color:#f1f1f1;border-radius:12px;padding:16px}
+.statbox .slabel{color:#9a9aa0;font-weight:570;font-size:10px}
+.statbox .svalue{color:#2b2b30;font-size:24px;font-weight:670}
+.statbox .sub{color:#aaaab1}
+.dark-panel{background:#1c1c1f;border-color:#1c1c1f;border-radius:21px;padding:30px}
+.dark-panel .panel-title p{color:#99999f}
+.dark-panel .tiny-label{color:#a4a4ac!important}
+.dark-panel .product-price{font-weight:560;letter-spacing:-2px}
+.dark-panel .product-result-caption{color:#8e8e97}
+.dark-panel .dark-divider{background:#39393e}
+.dark-panel .cost-line span{color:#a5a5ae}
+.dark-panel .result-banner{background:#e6e3ff;color:#2c2a43;border-radius:15px;padding:22px;margin-top:28px}
+.dark-panel .result-banner strong{font-size:37px;font-weight:660;letter-spacing:-1.7px}
+.dark-panel .result-banner.loss{background:#ffdcd9;color:#7c353d}
+.dark-panel .detail-caution{color:#93929a}
+.totals-box{background:#f3f1ff;border-radius:14px}
+.totals-box label{color:#8984a5}
+.totals-box strong{color:#393457;font-weight:650}
+.switch{background:#f2f2f2;border-color:#eee}
+.switch button{color:#7d7e84}
+.switch button.active{background:#222227;color:#fff;box-shadow:none}
+.expense-line{background:#fafafa;border-color:#eee}
+.expense-line span{color:#55555e}
+.scenario-controls{gap:24px}
+.ranger input[type=range]{accent-color:#7971ae}
+.ranger-top span{color:#818188}
+.ranger-top strong{color:#33333d}
+.compare-item{border-color:#eaeaec;background:#fafafa;border-radius:17px}
+.compare-item.featured{background:#1b1b1e;border-color:#1b1b1e}
+.compare-item.featured .compare-val{color:#e8e4ff}
+.compare-item .compare-val{font-weight:670}
+.data-table th{color:#a9a9af;font-weight:680}
+.data-table td{border-color:#f0f0f0}
+.table-action{border-color:#ebebeb;color:#6d6d76}
+.mixtrack{border-radius:50px}
+.report-row{color:#818189;border-color:#efefef}
+.report-row strong{color:#2d2d33}
+.report-row.revenue{background:#f6f6f6;color:#454549}
+.report-row.revenue strong{color:#2b2b31}
+.report-row.net{background:#212126;color:#f6f6f7}
+.report-row.net strong{color:#e1ddff}
+.timeline,.stage{border-color:#ededed}
+.stage .circle{background:#f0efff;color:#827bae}
+.modal-back{background:#17171ab9}
+.modal{border-radius:22px}
+.toast{background:#1a1a1c;color:#fff}
+.section-footer{color:#b7b7ba}
+/* mobile / tablet */
+@media(max-width:1350px){
+ .main{padding:26px 26px 45px}.sidebar{width:208px;flex-basis:208px}
+ .bank-upper{padding:28px 29px 24px}.bank-bottom{padding:25px 29px 20px}
+ .bank-mid{padding:20px 29px}.bank-actions{gap:9px}.bank-action{padding:12px 10px}
+ .bank-info-item{padding:13px}.bank-info-item strong{font-size:23px}
+ .ledger-grid{grid-template-columns:1.03fr .97fr}.ledger-panel{padding:24px 22px}
+ .watch-panel .intel-list{grid-template-columns:1fr 1fr;gap:9px}.watch-panel .intel:not(:last-child){border-right:0;margin-right:0}
+}
+@media(max-width:1100px){
+ .bank-balance{grid-template-columns:1fr;gap:25px}.bank-primary{max-width:100%}
+ .bank-info{max-width:100%}
+ .bank-info-item{padding:16px}
+ .ledger-grid{grid-template-columns:1fr}.bank-stats .metric-number{font-size:25px}
+ .grid.calc-layout{grid-template-columns:1fr}
+ .watch-panel .intel-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:880px){
+ .sidebar{display:none}
+ .mobile-header{background:#fff;border-bottom:1px solid #f0f0f0;padding:0 21px;height:68px;display:flex}
+ .mobile-brand{font-size:14px;font-weight:700;gap:10px;color:#222}
+ .mobile-brand .brand-icon{height:36px;width:36px;border-radius:50%;font-size:12px}
+ .mobile-brand span{font-size:9px;color:#a2a2a8;letter-spacing:1px;margin-top:1px}
+ .mobile-more{font-size:10px;letter-spacing:1px;color:#88898d;font-weight:680;display:flex;align-items:center;gap:8px}
+ .mobile-more .pulse{height:6px;width:6px;background:#85bba5;box-shadow:none}
+ .main{max-width:none;padding:19px 21px 120px}
+ .topbar{margin-bottom:24px;padding-bottom:0;border:0}
+ .breadcrumb{display:none}
+ .topbar{justify-content:flex-end}
+ .top-actions .hide-mob{display:none}
+ .mobile-dock{background:#1b1b1f;box-shadow:0 15px 40px #00000027;border:1px solid #3e3d40;border-radius:19px;padding:7px 6px;bottom:max(14px,env(safe-area-inset-bottom));width:min(96%,520px);gap:1px}
+ .mobile-dock button{color:#a4a4ab;font-weight:540;font-size:9px;border-radius:13px;gap:4px;padding:9px 0 7px}
+ .mobile-dock button .ic{height:18px;width:18px}
+ .mobile-dock button.active{background:#e6e3ff;color:#272538;font-weight:700}
+ .home-intro{margin-bottom:21px}
+ .home-intro h1{font-size:37px}
+ .ledger-grid{grid-template-columns:1fr}
+ .bank-balance{grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:20px}
+ .bank-info{grid-template-columns:1fr}
+ .bank-info-item small{display:none}
+ .bank-info-item strong{font-size:21px}
+ .bank-bottomline{margin-top:27px}
+ .bank-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:620px){
+ body{background:#f7f7f6}
+ .main{padding:14px 14px 117px}
+ .mobile-header{height:63px;padding:0 17px}
+ .topbar{margin-bottom:18px}
+ .top-actions{gap:8px}
+ .top-actions .btn{height:35px;min-height:35px;padding:7px 11px;font-size:10px}
+ .pill-select select{height:35px;min-height:35px}
+ .home-intro{align-items:start;gap:15px;margin-bottom:20px}
+ .home-intro .intro-cta{display:none}
+ .home-intro h1{font-size:33px;line-height:1.08;letter-spacing:-1.5px;margin:11px 0}
+ .home-intro .lede{font-size:11px}
+ .overline{font-size:8px;letter-spacing:1.25px}
+ .bank-frame{border-radius:24px;box-shadow:none}
+ .bank-upper{padding:23px 22px 23px}
+ .bank-topline{margin-bottom:22px}
+ .bank-account{font-size:8px;letter-spacing:.7px;gap:8px}
+ .mini-monogram{height:24px;width:24px;font-size:9px}
+ .period-indicator{font-size:0;gap:0}
+ .period-dot{height:7px;width:7px}
+ .bank-balance{grid-template-columns:1fr;gap:23px}
+ .balance-label{font-size:11px}
+ .context-tag{font-size:9px;padding:4px 8px}
+ .home-view .hero-value{font-size:clamp(36px,9vw,49px);margin:13px 0 13px;letter-spacing:-2.5px;font-weight:565}
+ .hero-meta{gap:10px;font-size:10px}
+ .hero-meta>span:last-child{line-height:1.4}
+ .bank-info{grid-template-columns:1fr 1fr;gap:9px}
+ .bank-info-item{min-height:86px;padding:14px 11px;border-radius:13px}
+ .bank-info-item span{font-size:9px;line-height:1.3;margin-bottom:7px}
+ .bank-info-item strong{font-size:clamp(18px,5.2vw,23px);letter-spacing:-1px}
+ .bank-bottomline{margin-top:22px;padding-top:15px;gap:8px;font-size:10px}
+ .bank-bottomline span{max-width:123px;white-space:normal;line-height:1.35}
+ .bank-progress{margin-left:0;min-width:30px}
+ .bank-mid{padding:19px 18px 23px}
+ .bank-mid-label{font-size:8px}
+ .bank-actions{grid-template-columns:repeat(4,1fr);gap:3px;margin-top:16px}
+ .bank-action{border:none;display:flex;flex-direction:column;padding:0 1px;background:none;gap:9px;border-radius:0;text-align:center;color:#e9e9ec;font-size:9px;font-weight:560;line-height:1.4}
+ .bank-action:hover{background:none;transform:none}
+ .action-symbol{width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid #4c4c53;background:#29292d}
+ .action-symbol .ic{height:18px;width:18px}
+ .action-arrow{display:none}
+ .bank-bottom{padding:24px 21px 22px;border-radius:20px 20px 0 0}
+ .bank-bottom-header{margin-bottom:18px;gap:7px}
+ .bank-bottom-header h2{font-size:13px}
+ .bank-bottom-header p{font-size:9px}
+ .bank-state{font-size:8px;padding:5px 8px}
+ .bank-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:0 -6px}
+ .bank-stats .metric{padding:13px 12px 13px;min-height:90px}
+ .bank-stats .metric:nth-child(3){border-left:0}
+ .bank-stats .metric:nth-child(n+3){border-top:1px solid #ededed}
+ .bank-stats .metric-label{font-size:9px}
+ .bank-stats .metric-number{font-size:clamp(21px,6vw,26px);letter-spacing:-1px;margin-top:6px}
+ .bank-stats .metric p{font-size:9px;margin:4px 0 0}
+ .bank-bottom-note{font-size:9px;padding-top:15px;margin-top:11px}
+ .under-heading{margin:30px 0 15px}
+ .under-heading h2{font-size:21px;letter-spacing:-1px}
+ .under-heading p{font-size:10px;max-width:270px}
+ .under-heading-index{display:none}
+ .ledger-grid,.right-stack{gap:12px}
+ .panel{padding:20px 18px;border-radius:18px}
+ .panel-title{margin-bottom:18px}
+ .panel-title h2{font-size:14px;letter-spacing:-.3px}
+ .panel-title p{font-size:10px}
+ .small-link{font-size:10px;gap:4px;padding:5px}
+ .ledger-headings{font-size:8px;padding-bottom:12px}
+ .ledger-panel .cash-row{min-height:64px;grid-template-columns:35px minmax(0,1fr) minmax(88px,auto);gap:10px}
+ .ledger-panel .cash-row::before{width:33px;height:33px}
+ .ledger-panel .cash-row>span:first-child{font-size:10px}
+ .ledger-panel .cash-row>span:first-child:after{font-size:9px;line-height:1.35;margin-top:3px}
+ .ledger-panel .cash-row strong{font-size:10px;letter-spacing:-.3px}
+ .ledger-panel .total-strip{padding:16px 14px}
+ .ledger-panel .total-strip b{font-size:15px}
+ .funnel-row{grid-template-columns:88px 1fr 50px}
+ .watch-panel{margin-top:12px}
+ .watch-panel .intel-list{grid-template-columns:1fr}
+ .watch-panel .intel{padding:12px 0;border-top:1px solid #efefef}
+ .watch-panel .intel:first-child{border:0}
+ .watch-panel .intel:not(:last-child){border-right:none;margin:0}
+ .radar-tag{font-size:8px}
+ .section:not(.home-view) .view-header h1{font-size:31px;letter-spacing:-1.55px}
+ .fields{gap:12px}
+ .field input,.field select{min-height:46px}
+ .grid.cards4:not(.bank-stats){grid-template-columns:1fr 1fr;gap:10px}
+ .grid.cards4:not(.bank-stats) .metric{min-height:110px;border-radius:14px;border:1px solid #ededed;padding:17px}
+ .grid.cards4:not(.bank-stats) .metric-number{font-size:24px}
+ .compare{grid-template-columns:1fr}
+ .statbox{padding:14px}
+ .dark-panel{padding:22px}
+ .dark-panel .product-price{font-size:37px}
+ .mobile-dock{width:min(96%,500px)}
+}
+@media(max-width:375px){
+ .home-view .hero-value{font-size:34px}
+ .bank-info-item strong{font-size:18px}
+ .bank-action{font-size:8px}
+ .bank-bottomline span{max-width:105px}
+ .main{padding-left:11px;padding-right:11px}
+ .fields{grid-template-columns:1fr}
+ .field.wide{grid-column:auto}
+}
+@media print{
+ .sidebar,.mobile-header,.mobile-dock,.topbar,.home-view,.btn,.bank-frame,.under-heading{display:none!important}
+ .main{max-width:none!important;padding:0!important}
+ .section:not([data-view="report"]){display:none!important}
+ .section[data-view="report"]{display:block!important}
+ .grid.two,.grid.equal{grid-template-columns:1fr 1fr!important}
+}
+
+
+/* refined final details */
+.ledger-panel .total-strip span{color:#514b82;font-weight:690}
+.ledger-panel .total-strip.loss span{color:#a34b50}
+.home-view .balance-status{font-weight:650}
+.sidebar-bottom .identity-small{margin:0 0 5px}
+@media(min-width:881px){.sidebar-bottom{margin-top:auto}}
+@media(max-width:620px){.bank-actions .bank-action{align-self:start}.bank-actions .bank-action>span:nth-child(2){display:block;min-height:25px}}
+
+
+/* mobile: preserve primary quick actions above the persistent tab bar */
+@media(max-width:620px){
+ .bank-upper{padding:19px 18px 17px}
+ .bank-topline{margin-bottom:15px}
+ .bank-balance{gap:15px}
+ .home-view .hero-value{margin:10px 0 9px}
+ .hero-meta>span:last-child{display:none}
+ .bank-info-item{min-height:71px;padding:11px 10px}
+ .bank-info-item strong{font-size:19px}
+ .bank-bottomline{margin-top:16px;padding-top:12px}
+ .bank-mid{padding:16px 16px 15px}
+ .bank-mid-label{display:none}
+ .bank-actions{margin-top:0}
+ .bank-action{gap:7px}
+ .action-symbol{width:39px;height:39px;flex-basis:39px}
+}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;visibility:hidden" aria-hidden="true">
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
+<symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8 6.5h8M8 11h2M14 11h2M8 15.5h2M14 15.5h2M8 19h2M14 19h2"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M3 9V5a2 2 0 0 1 2-2h12"/><path d="M17 13h4v4h-4a2 2 0 0 1 0-4Z"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 17V9M12 17V4M17 17v-6"/></symbol>
+<symbol id="i-report" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M8 12h8M8 16h8"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v14m-6-6 6 6 6-6M4 21h16"/></symbol>
+<symbol id="i-save" viewBox="0 0 24 24"><path d="M4 3h14l3 3v15H3V3zM7 3v7h10V3M7 21v-8h10v8"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-trending" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8M15 7h6v6"/></symbol>
+<symbol id="i-downtrend" viewBox="0 0 24 24"><path d="m3 7 6 6 4-4 8 8M15 17h6v-6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 6M20 5v6h-6"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14M10 11v6M14 11v6"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7L12 2Z"/></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h12v12H2zM14 10h4l4 4v4h-8M6 18a2 2 0 1 0 4 0M17 18a2 2 0 1 0 4 0"/></symbol>
+<symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 8H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H9M12 6v12"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+</svg>
+<div class="mobile-header"><div class="mobile-brand"><div class="brand-icon">s<span>/</span>a</div><div>ECOM Studio<span>SAMUEL ACUÑA</span></div></div><span class="mobile-more"><span class="pulse"></span> LIVE</span></div>
+<div class="app"><aside class="sidebar">
+ <div class="brand"><div class="brand-icon">s<span>/</span>a</div><div class="brand-title">ECOM Studio<span>SAMUEL ACUÑA</span></div></div>
+ <div class="side-caption">TU ESPACIO</div>
+ <nav class="side-nav" aria-label="Navegación principal">
+  <button type="button" data-nav="home" class="nav-btn active"><svg class="ic"><use href="#i-grid"/></svg>Inicio<span class="num">01</span></button>
+  <button type="button" data-nav="calculator" class="nav-btn"><svg class="ic"><use href="#i-calc"/></svg>Calculadora<span class="num">02</span></button>
+  <button type="button" data-nav="portfolio" class="nav-btn"><svg class="ic"><use href="#i-layers"/></svg>Mis productos<span class="num">03</span></button>
+  <button type="button" data-nav="operations" class="nav-btn"><svg class="ic"><use href="#i-wallet"/></svg>Costos & operación<span class="num">04</span></button>
+  <button type="button" data-nav="simulator" class="nav-btn"><svg class="ic"><use href="#i-chart"/></svg>Simulador<span class="num">05</span></button>
+  <button type="button" data-nav="report" class="nav-btn"><svg class="ic"><use href="#i-report"/></svg>Informes<span class="num">06</span></button>
+ </nav>
+ <div class="sidebar-bottom">
+<div class="identity-small"><div class="identity-avatar">SA</div><div><strong>Samuel Acuña</strong><small>CREATOR · ECOM STUDIO</small></div><span class="identity-dots">•••</span></div>
+<p>Datos guardados en este navegador.<br>Sin cuentas ni suscripciones.</p>
+</div>
+</aside>
+<main class="main">
+ <div class="topbar"><div class="breadcrumb"><span class="breadcrumb-starter">ESCRITORIO</span><svg class="ic sm"><use href="#i-arrow"></use></svg><strong id="breadcrumbCurrent">DASHBOARD</strong></div><div class="top-actions">
+<span class="top-dotlabel hide-mob"><span class="pulse"></span> Guardado en este navegador</span>
+  <div class="pill-select"><select id="currency" aria-label="Moneda"><option value="COP">COP · $</option><option value="USD">USD · $</option><option value="VES">VES · Bs.</option></select><svg class="ic"><use href="#i-chevron"/></svg></div>
+  <button type="button" class="btn hide-mob" id="btnSaved"><svg class="ic sm"><use href="#i-save"/></svg> Guardar</button>
+  <button type="button" class="btn primary" id="btnExport"><svg class="ic sm"><use href="#i-down"/></svg><span class="icon-text">Exportar</span><span class="hide-mob"> reporte</span></button>
+ </div></div>
+<!-- HOME -->
+<section class="section active home-view" data-view="home">
+  <div class="view-header home-intro">
+    <div>
+      <div class="overline"><span class="index-spot"></span> TU CENTRO DE CONTROL <span class="overline-slash">/</span> RENTABILIDAD</div>
+      <h1>Todo claro. Todo en números.</h1>
+      <p class="lede">Tus ventas, tus costos y tu ganancia real. Sin complicaciones.</p>
+    </div>
+    <button class="btn primary intro-cta" type="button" data-go="calculator"><svg class="ic sm"><use href="#i-plus"></use></svg> Nuevo análisis <svg class="ic sm"><use href="#i-arrow"></use></svg></button>
+  </div>
+
+  <div class="bank-frame">
+    <div class="bank-upper">
+      <div class="bank-topline"><div class="bank-account"><span class="mini-monogram">S/A</span><span>ECOM STUDIO <span class="small-divider">/</span> MI NEGOCIO</span></div><span class="period-indicator"><span class="period-dot"></span> ACTUALIZADO EN TIEMPO REAL</span></div>
+      <div class="bank-balance">
+        <div class="bank-primary">
+          <div class="balance-label">Utilidad neta proyectada <span class="context-tag">Mensual</span></div>
+          <div class="hero-value" id="heroProfit">—</div>
+          <div class="hero-meta"><span class="balance-status"><span class="status-symbol">↗</span><span id="profitStatus">Calculando</span></span><span>Después de mercancía, pauta, operación y devoluciones.</span></div>
+        </div>
+        <div class="bank-info">
+          <div class="bank-info-item"><span>Ingresos recaudados</span><strong id="heroRevenue">—</strong><small>Facturación efectivamente cobrada</small></div>
+          <div class="bank-info-item"><span>CPA real por cobro</span><strong id="heroCPA">—</strong><small>Inversión publicitaria por venta cobrada</small></div>
+        </div>
+      </div>
+      <div class="bank-bottomline"><span>Margen neto de tu operación</span><div class="bank-progress"><div id="heroMarginBar" style="width:0"></div></div><strong id="heroMargin">—</strong></div>
+    </div>
+
+    <div class="bank-mid">
+      <div class="bank-mid-label"><span>ACCESOS DIRECTOS</span><span>GESTIONA TUS NÚMEROS</span></div>
+      <div class="bank-actions">
+        <button type="button" data-go="calculator" class="bank-action"><span class="action-symbol"><svg class="ic"><use href="#i-calc"></use></svg></span><span>Calcular venta</span><svg class="ic sm action-arrow"><use href="#i-arrow"></use></svg></button>
+        <button type="button" data-go="operations" class="bank-action"><span class="action-symbol"><svg class="ic"><use href="#i-wallet"></use></svg></span><span>Mis costos</span><svg class="ic sm action-arrow"><use href="#i-arrow"></use></svg></button>
+        <button type="button" data-go="simulator" class="bank-action"><span class="action-symbol"><svg class="ic"><use href="#i-chart"></use></svg></span><span>Simular ventas</span><svg class="ic sm action-arrow"><use href="#i-arrow"></use></svg></button>
+        <button type="button" data-go="report" class="bank-action"><span class="action-symbol"><svg class="ic"><use href="#i-report"></use></svg></span><span>Ver informes</span><svg class="ic sm action-arrow"><use href="#i-arrow"></use></svg></button>
+      </div>
+    </div>
+
+    <div class="bank-bottom">
+      <div class="bank-bottom-header"><div><h2>Tu operación de un vistazo</h2><p>Indicadores clave de tu negocio</p></div><div class="bank-state"><span class="dot"></span> <span id="demoBadge">Ejemplo</span></div></div>
+      <div class="grid cards4 bank-stats" id="topMetrics">
+        <div class="metric"><div class="metric-top"><span class="metric-label">Pedidos generados</span><span class="metric-icon"><svg class="ic sm"><use href="#i-layers"></use></svg></span></div><div class="metric-number" id="mOrders">—</div><p>Antes de confirmación</p></div>
+        <div class="metric"><div class="metric-top"><span class="metric-label">Efectividad de recaudo</span><span class="metric-icon"><svg class="ic sm"><use href="#i-check"></use></svg></span></div><div class="metric-number" id="mEfficiency">—</div><p>De generados a cobrados</p></div>
+        <div class="metric"><div class="metric-top"><span class="metric-label">CPA máximo viable</span><span class="metric-icon"><svg class="ic sm"><use href="#i-target"></use></svg></span></div><div class="metric-number" id="mMaxCPA">—</div><p>Para no perder dinero</p></div>
+        <div class="metric"><div class="metric-top"><span class="metric-label">Punto de equilibrio</span><span class="metric-icon"><svg class="ic sm"><use href="#i-trending"></use></svg></span></div><div class="metric-number" id="mBreakEven">—</div><p>Pedidos necesarios por mes</p></div>
+      </div>
+      <div class="bank-bottom-note"><span class="notice-dot"></span><strong id="heroPaid">—</strong> ventas efectivamente cobradas en la proyección actual</div>
+    </div>
+  </div>
+
+  <div class="under-heading"><div><h2>Tu dinero, en detalle.</h2><p>Desglose de la operación mensual y proyección de rentabilidad.</p></div><span class="under-heading-index">01 — ANÁLISIS</span></div>
+  <div class="dashboard-content ledger-grid">
+    <div class="panel ledger-panel">
+      <div class="panel-title"><div><h2>Movimientos del negocio</h2><p>Cómo entra y sale el dinero de tu operación.</p></div><button class="small-link" type="button" data-go="report">Ver todos <svg class="ic sm"><use href="#i-arrow"></use></svg></button></div>
+      <div class="ledger-headings"><span>CONCEPTO</span><span>VALOR ESTIMADO</span></div>
+      <div class="cash-bars" id="cashBars"></div>
+      <div class="total-strip" id="totalStrip"><span>Resultado neto después de gastos</span><b id="cashProfit">—</b></div>
+    </div>
+    <div class="right-stack">
+      <div class="panel projection-panel">
+        <div class="panel-title"><div><h2>Potencial de crecimiento</h2><p>¿Qué ocurre si vendes más o menos?</p></div><button class="small-link" type="button" data-go="simulator">Simular <svg class="ic sm"><use href="#i-arrow"></use></svg></button></div>
+        <div class="chart-wrap" id="volumeChart" aria-label="Proyección de rentabilidad según volumen de pedidos"></div>
+        <p class="chart-disclaimer">Estimación manteniendo constantes las tasas y el costo publicitario.</p>
+      </div>
+      <div class="panel funnel-panel">
+        <div class="panel-title"><div><h2>De pedido a recaudo</h2><p>Tu embudo logístico y comercial.</p></div><span class="pill light-pill" id="funnelEndRate">—</span></div>
+        <div class="funnel" id="funnelRows"></div><p class="tiny-note" id="funnelFoot"></p>
+      </div>
+    </div>
+  </div>
+  <div class="panel watch-panel"><div class="panel-title"><div><h2>En el radar</h2><p>Lo que tus números te están diciendo.</p></div><span class="radar-tag"><span></span> RECOMENDACIONES</span></div><div class="intel-list" id="insights"></div></div>
+</section>
+<!-- CALCULATOR -->
+<section class="section" data-view="calculator"><div class="view-header"><div><div class="overline">02 / Rentabilidad por producto</div><h1>Calculadora de producto.</h1><p class="lede">Modifica precios y costos. Mira cuánto deja una venta cobrada, incluyendo fallidos y costos fijos.</p></div></div>
+ <div class="grid two calc-layout" style="align-items:start"><div class="panel"><div class="panel-title"><div><h2 id="draftTitle">Nuevo análisis</h2><p>Los resultados cambian mientras escribes.</p></div><span class="pill" id="productModePill">NUEVO</span></div>
+ <div class="block-h"><span class="seq">01</span> Datos del producto</div><div class="fields">
+ <div class="field wide"><label for="pName">Nombre del producto</label><input id="pName" data-draft="name" type="text" maxlength="75" placeholder="Ej. Pack de 12 bóxers algodón"></div>
+ <div class="field"><label for="pPrice">Precio de venta</label><div class="inputwrap"><input id="pPrice" data-draft="price" type="number" min="0" step="100" inputmode="decimal"></div></div>
+ <div class="field"><label for="pCost">Costo total del producto <small>De todo el paquete, no por unidad</small></label><div class="inputwrap"><input id="pCost" data-draft="cost" type="number" min="0" step="100" inputmode="decimal"></div></div>
+ <div class="field"><label for="pUnits">Cantidad de unidades</label><input id="pUnits" data-draft="units" type="number" min="1" step="1" inputmode="numeric"></div>
+ <div class="field"><label for="pMix">Participación estimada <small>Porcentaje de pedidos de este producto</small></label><div class="inputwrap"><input id="pMix" data-draft="mix" type="number" min="0" max="100" step="1" inputmode="decimal" class="with-suffix"><span class="suffix">%</span></div></div>
+ </div><div class="sep"></div><div class="block-h"><span class="seq">02</span> Costos compartidos</div><div class="grid equal" style="gap:10px"><div class="statbox"><div class="slabel">Costo por flete de ida</div><div class="svalue" id="pShipLabel">—</div><div class="sub">Cada despacho</div></div><div class="statbox"><div class="slabel">Gastos fijos por venta cobrada</div><div class="svalue" id="pAdminLabel">—</div><div class="sub">Total fijo / entregas cobradas</div></div></div>
+ <p class="kicker-note">Estos costos se configuran en <strong>Costos & operación</strong>, junto con CPA, tasas logísticas y comisiones.</p>
+ <div class="btn-row"><button type="button" class="btn mint" id="saveProduct"><svg class="ic sm"><use href="#i-plus"/></svg> Agregar al informe</button><button type="button" class="btn" id="resetProduct"><svg class="ic sm"><use href="#i-refresh"/></svg> Nuevo cálculo</button><button type="button" class="btn minor" data-go="operations">Ajustar costos <svg class="ic sm"><use href="#i-arrow"/></svg></button></div></div>
+ <div class="grid" style="gap:16px"><div class="dark-panel"><div class="panel-title"><div><h2>Desglose de la venta</h2><p>Promedio por pedido efectivamente cobrado.</p></div><svg class="ic" style="color:#aaa4df"><use href="#i-calc"/></svg></div><div class="tiny-label" style="color:#a1b2a4">Ingreso cobrado neto de descuentos</div><div class="product-price" id="pResultPrice">—</div><div class="product-result-caption">Precio efectivo por este paquete</div><div class="dark-divider"></div><div class="cost-list" id="pCostList"></div><div class="result-banner" id="pResultBanner"><span>Ganancia neta por venta cobrada</span><strong id="pResultProfit">—</strong><small id="pResultMargin">—</small></div><div class="detail-caution">Esta cifra reparte los gastos de pedidos fallidos y la estructura fija entre las ventas cobradas. No equivale al margen de un despacho aislado.</div></div>
+ <div class="panel"><div class="panel-title"><div><h2>Precio ideal</h2><p>Encuentra el precio que permite tu margen objetivo.</p></div><svg class="ic" style="color:#8c89a8"><use href="#i-target"/></svg></div><div class="field"><label for="targetMargin">Margen neto deseado (%)</label><div class="inputwrap"><input type="number" id="targetMargin" data-state="targetMargin" min="0" max="90" step="1" class="with-suffix"><span class="suffix">%</span></div></div><div class="totals-box" style="margin-top:17px"><div><label>Precio de venta sugerido</label><div class="tiny-note">Con la operación actual</div></div><strong id="pSuggested">—</strong></div><p class="tiny-note" id="pSuggestedFoot" style="margin:13px 0 0">—</p></div></div></div>
+</section>
+<!-- PORTFOLIO -->
+<section class="section" data-view="portfolio"><div class="view-header"><div><div class="overline">03 / Catálogo y mix</div><h1>Tus productos, tus márgenes.</h1><p class="lede">Compara paquetes, descubre cuál aporta más utilidad y optimiza el precio de cada uno.</p></div><button class="btn primary" data-go="calculator" id="newFromPortfolio"><svg class="ic sm"><use href="#i-plus"/></svg> Nuevo producto</button></div>
+ <div class="grid cards4" style="margin-bottom:16px"><div class="metric"><div class="metric-top"><span class="metric-label">Productos en informe</span><span class="metric-icon"><svg class="ic sm"><use href="#i-layers"/></svg></span></div><div class="metric-number" id="catTotal">—</div><p>Productos disponibles</p></div><div class="metric"><div class="metric-top"><span class="metric-label">Ticket promedio</span><span class="metric-icon"><svg class="ic sm"><use href="#i-coin"/></svg></span></div><div class="metric-number" id="catTicket">—</div><p>Mix ponderado y descuento</p></div><div class="metric"><div class="metric-top"><span class="metric-label">Costo producto promedio</span><span class="metric-icon"><svg class="ic sm"><use href="#i-wallet"/></svg></span></div><div class="metric-number" id="catCogs">—</div><p>Costo de los paquetes por venta</p></div><div class="metric"><div class="metric-top"><span class="metric-label">Utilidad por venta cobrada</span><span class="metric-icon"><svg class="ic sm"><use href="#i-trending"/></svg></span></div><div class="metric-number" id="catProfitPer">—</div><p>Incluye logística y gastos fijos</p></div></div>
+ <div class="panel" style="margin-bottom:16px"><div class="panel-title"><div><h2>Informe de productos</h2><p>La utilidad individual incorpora el promedio de gastos compartidos y fallidos.</p></div><button class="btn compact" id="downloadProducts"><svg class="ic sm"><use href="#i-down"/></svg> Descargar CSV</button></div><div class="table-scroll"><table class="data-table"><thead><tr><th>Producto</th><th>Precio</th><th>Costo producto</th><th>Mix*</th><th>Utilidad/venta</th><th>Margen</th><th>Utilidad/mes</th><th>Acciones</th></tr></thead><tbody id="productRows"></tbody></table></div><p class="tiny-note" id="mixNotice" style="margin:16px 0 0"></p></div>
+ <div class="grid equal"><div class="panel"><div class="panel-title"><div><h2>Participación comercial</h2><p>El mix determina cuánto pesa cada producto en el negocio.</p></div></div><div class="mixtrack" id="mixBar"></div><div class="mix-legend" id="mixLegend"></div></div><div class="panel"><div class="panel-title"><div><h2>Optimizador de precios</h2><p>Precios teóricos para alcanzar el margen neto elegido.</p></div><span class="pill"><span id="portfolioTarget">20</span>% META</span></div><div id="portfolioSuggestions"></div><p class="tiny-note" style="margin-top:15px">Si hay varios productos, los precios se calculan con el resto del catálogo constante. La mezcla de ventas afecta el resultado.</p></div></div>
+</section>
+<!-- OPERATIONS -->
+<section class="section" data-view="operations"><div class="view-header"><div><div class="overline">04 / Tu negocio detrás de cada venta</div><h1>Costos & operación.</h1><p class="lede">Los errores de rentabilidad suelen esconderse en la pauta, los despachos fallidos y los gastos fijos.</p></div></div>
+<div class="grid equal" style="align-items:start"><div class="grid" style="gap:16px"><div class="panel"><div class="panel-title"><div><h2>01. Gastos administrativos</h2><p>Todos los costos mensuales que debes cubrir, vendas o no.</p></div><svg class="ic" style="color:#8c89a8"><use href="#i-wallet"/></svg></div><div class="fields">
+ <div class="field"><label for="salaries">Nómina y salarios</label><input id="salaries" data-state="salaries" type="number" min="0" step="1000"></div>
+ <div class="field"><label for="rent">Arriendo / instalaciones</label><input id="rent" data-state="rent" type="number" min="0" step="1000"></div>
+ <div class="field"><label for="tools">Software y herramientas</label><input id="tools" data-state="tools" type="number" min="0" step="1000"></div>
+ <div class="field"><label for="recharge">Servicios y recargas</label><input id="recharge" data-state="recharge" type="number" min="0" step="1000"></div>
+ </div><div class="sep"></div><div class="block-h"><span class="seq">+</span> Otros gastos mensuales</div><div class="expenses" id="expenseRows"></div><div class="add-expense"><input id="newExpenseName" class="bare-input" type="text" maxlength="50" placeholder="Ej. Contabilidad" aria-label="Nombre del gasto nuevo"><input id="newExpenseAmount" class="bare-input" type="number" min="0" step="100" placeholder="Valor" aria-label="Valor del gasto nuevo"><button class="btn primary" id="btnAddExpense"><svg class="ic sm"><use href="#i-plus"/></svg> Añadir</button></div><div class="totals-box" style="margin-top:23px"><div><label>Total gastos fijos / mes</label><div class="tiny-note">Sumatoria de la estructura</div></div><strong id="fixedTotal">—</strong></div></div>
+<div class="panel"><div class="panel-title"><div><h2>02. Pedidos y conversión</h2><p>Porcentajes encadenados: cada tasa aplica sobre la fase anterior.</p></div></div><div class="fields"><div class="field wide"><label for="orders">Pedidos generados al mes</label><input type="number" min="0" step="1" data-state="orders" id="orders"></div><div class="field"><label for="confirm">Confirmación <small>De pedidos generados</small></label><div class="inputwrap"><input type="number" min="0" max="100" step="1" data-state="confirm" id="confirm" class="with-suffix"><span class="suffix">%</span></div></div><div class="field"><label for="dispatch">Despacho <small>De pedidos confirmados</small></label><div class="inputwrap"><input type="number" min="0" max="100" step="1" data-state="dispatch" id="dispatch" class="with-suffix"><span class="suffix">%</span></div></div><div class="field"><label for="delivery">Entrega exitosa <small>De pedidos despachados</small></label><div class="inputwrap"><input type="number" min="0" max="100" step="1" data-state="delivery" id="delivery" class="with-suffix"><span class="suffix">%</span></div></div><div class="field"><label for="collection">Recaudo efectivo <small>De pedidos entregados</small></label><div class="inputwrap"><input type="number" min="0" max="100" step="1" data-state="collection" id="collection" class="with-suffix"><span class="suffix">%</span></div></div></div></div></div>
+<div class="grid" style="gap:16px"><div class="panel"><div class="panel-title"><div><h2>03. Inversión publicitaria</h2><p>Elige un solo método para evitar contar dos veces la pauta.</p></div></div><div class="switch" role="group" aria-label="Método de cálculo publicitario"><button type="button" data-admode="cpa" class="active">CPA por pedido</button><button type="button" data-admode="percent">% de recaudo</button></div><div id="adCPAFields" style="margin-top:18px" class="fields"><div class="field wide"><label for="cpa">Costo por pedido generado <small>Se paga incluso si se cancela o devuelve</small></label><input type="number" id="cpa" min="0" step="100" data-state="cpa"></div></div><div id="adPctFields" style="margin-top:18px;display:none" class="fields"><div class="field wide"><label for="adPct">Publicidad sobre ingresos efectivamente cobrados</label><div class="inputwrap"><input type="number" id="adPct" min="0" max="100" step=".5" data-state="adPct" class="with-suffix"><span class="suffix">%</span></div></div></div><div class="fields" style="margin-top:17px"><div class="field wide"><label for="adExtra">Recargos publicitarios adicionales <small>Solo si aplican a tu facturación de anuncios</small></label><div class="inputwrap"><input type="number" id="adExtra" min="0" max="100" step=".1" data-state="adExtra" class="with-suffix"><span class="suffix">%</span></div></div></div><div class="totals-box" style="margin-top:20px"><div><label>Inversión total estimada</label><div class="tiny-note" id="adsExplanation">Pedidos generados × CPA</div></div><strong id="adsTotal">—</strong></div></div>
+<div class="panel"><div class="panel-title"><div><h2>04. Logística y devoluciones</h2><p>El costo de un pedido devuelto también reduce tu rentabilidad.</p></div></div><div class="fields"><div class="field"><label for="shipOut">Flete de ida <small>Por pedido despachado</small></label><input id="shipOut" type="number" min="0" step="100" data-state="shipOut"></div><div class="field"><label for="shipBack">Flete de retorno <small>Por despacho fallido</small></label><input id="shipBack" type="number" min="0" step="100" data-state="shipBack"></div><div class="field"><label for="packaging">Empaque y alistamiento <small>Por despacho</small></label><input id="packaging" type="number" min="0" step="100" data-state="packaging"></div><div class="field"><label for="opsCost">Costo comercial <small>Por pedido generado</small></label><input id="opsCost" type="number" min="0" step="100" data-state="opsCost"></div><div class="field wide"><label for="lost">Pérdida de mercancía por devolución <small>Porcentaje de costo de producto en envíos fallidos</small></label><div class="inputwrap"><input type="number" id="lost" data-state="lost" min="0" max="100" step="1" class="with-suffix"><span class="suffix">%</span></div></div></div></div>
+<div class="panel"><div class="panel-title"><div><h2>05. Comisiones, descuentos y tributos</h2><p>Configura únicamente cargos que efectivamente correspondan.</p></div></div><div class="fields"><div class="field"><label for="platform">Comisión plataforma <small>Sobre recaudo</small></label><div class="inputwrap"><input id="platform" data-state="platform" type="number" min="0" max="100" step=".1" class="with-suffix"><span class="suffix">%</span></div></div><div class="field"><label for="payment">Pasarela / cobro <small>Sobre recaudo</small></label><div class="inputwrap"><input id="payment" data-state="payment" type="number" min="0" max="100" step=".1" class="with-suffix"><span class="suffix">%</span></div></div><div class="field"><label for="otherTax">Otros tributos / cargos <small>Sobre recaudo, si aplican</small></label><div class="inputwrap"><input id="otherTax" data-state="otherTax" type="number" min="0" max="100" step=".1" class="with-suffix"><span class="suffix">%</span></div></div><div class="field"><label for="flatFee">Tarifa fija por cobro</label><input type="number" min="0" step="100" id="flatFee" data-state="flatFee"></div><div class="field wide"><label for="discount">Descuento comercial general <small>Se descuenta del precio cobrado</small></label><div class="inputwrap"><input data-state="discount" type="number" min="0" max="100" step="1" id="discount" class="with-suffix"><span class="suffix">%</span></div></div></div><p class="tiny-note" style="margin:19px 0 0">Esta herramienta no presume IVA, retenciones ni un tratamiento tributario específico; introduce solo tus obligaciones efectivas.</p></div>
+</div><div class="panel" style="margin-top:16px"><div class="panel-title"><div><h2>Resumen de la operación</h2><p>Así evolucionan tus pedidos con los porcentajes definidos.</p></div></div><div class="mini-grid" id="operationsSummary"></div></div>
+</section>
+<!-- SIMULATOR -->
+<section class="section" data-view="simulator"><div class="view-header"><div><div class="overline">05 / Escenarios y estrategia</div><h1>Decide antes de invertir.</h1><p class="lede">Cambia tus hipótesis y evalúa su efecto en la utilidad. No son resultados garantizados.</p></div></div>
+ <div class="grid equal"><div class="panel"><div class="panel-title"><div><h2>Simulador en tiempo real</h2><p>Variaciones respecto al escenario actual.</p></div><div class="flex"><button id="saveFromSim" class="btn compact"><svg class="ic sm"><use href="#i-save"/></svg> Guardar</button><button id="resetSimulation" class="btn compact"><svg class="ic sm"><use href="#i-refresh"/></svg> Reiniciar</button></div></div>
+ <div class="scenario-controls">
+  <div class="ranger"><div class="ranger-top"><span>Volumen de pedidos</span><strong id="scaleOrdersLabel">100%</strong></div><input id="scaleOrders" data-sim="ordersScale" type="range" min="50" max="200" step="5"><div class="endpoints"><span>50%</span><span>200%</span></div></div>
+  <div class="ranger"><div class="ranger-top"><span>Costo de publicidad</span><strong id="scaleCPALabel">100%</strong></div><input id="scaleCPA" data-sim="cpaScale" type="range" min="50" max="180" step="5"><div class="endpoints"><span>50%</span><span>180%</span></div></div>
+  <div class="ranger"><div class="ranger-top"><span>Mejora de entregas</span><strong id="deliveryDiffLabel">+0 p.p.</strong></div><input id="deliveryDiff" data-sim="deliveryDiff" type="range" min="-20" max="20" step="1"><div class="endpoints"><span>-20 p.p.</span><span>+20 p.p.</span></div></div>
+  <div class="ranger"><div class="ranger-top"><span>Ajuste de precios</span><strong id="scalePriceLabel">100%</strong></div><input id="scalePrice" data-sim="priceScale" type="range" min="75" max="140" step="1"><div class="endpoints"><span>75%</span><span>140%</span></div></div>
+ </div><div class="btn-row"><button class="btn primary" id="applySimulation"><svg class="ic sm"><use href="#i-check"/></svg> Aplicar cambios a mi negocio</button></div></div>
+ <div class="dark-panel"><div class="panel-title"><div><h2>Resultado simulado</h2><p>Comparado con tu configuración actual.</p></div><svg class="ic" style="color:#d2e6b4"><use href="#i-trending"/></svg></div><div class="tiny-label" style="color:#a0b0a3">Utilidad neta proyectada</div><div class="product-price" id="simProfit">—</div><div class="flex" style="margin-top:12px"><span class="hero-badge" id="simDelta">—</span><span class="hero-badge" id="simMargin">—</span></div><div class="dark-divider"></div><div class="cost-line"><span>Ventas efectivamente cobradas</span><b id="simPaid">—</b></div><div class="cost-line" style="margin-top:12px"><span>Ingresos efectivamente recaudados</span><b id="simRevenue">—</b></div><div class="cost-line" style="margin-top:12px"><span>Inversión en pauta</span><b id="simAds">—</b></div><div class="dark-divider"></div><p class="detail-caution">Las tasas de despacho y recaudo permanecen constantes; solo cambian las variables seleccionadas. Las devoluciones se recalculan automáticamente.</p></div></div>
+ <div class="panel" style="margin-top:16px"><div class="panel-title"><div><h2>Comparación de escenarios</h2><p>Conservador, actual y optimista usando las mismas fórmulas financieras.</p></div><button type="button" class="btn compact" id="exportScenarios"><svg class="ic sm"><use href="#i-down"/></svg> CSV</button></div><div class="compare" id="scenarioCompare"></div></div>
+ <div class="grid equal" style="margin-top:16px"><div class="panel"><div class="panel-title"><div><h2>Sensibilidad CPA × entregas</h2><p>Utilidad mensual para diferentes eficiencias y costos de captación.</p></div></div><div class="heat-scroll"><div class="heatmap" id="heatmap"></div></div><p class="tiny-note">Columnas: entrega exitosa. Filas: multiplicador de gasto publicitario.</p></div><div class="panel"><div class="panel-title"><div><h2>¿Cuánto necesitas vender?</h2><p>Meta de utilidad neta después de gastos fijos.</p></div></div><div class="field"><label for="goalProfit">Utilidad mensual deseada</label><input id="goalProfit" type="number" data-state="goalProfit" min="0" step="100000"></div><div class="totals-box" style="margin-top:17px"><div><label>Pedidos generados necesarios</label><div class="tiny-note">Con la rentabilidad por pedido actual</div></div><strong id="ordersGoal">—</strong></div><p class="tiny-note" id="goalFoot" style="margin-top:15px">—</p></div></div>
+</section>
+<!-- REPORT -->
+<section class="section" data-view="report"><div id="reportPrintableHeader" style="display:none;margin-bottom:20px"><h1 style="margin-bottom:4px">ECOM Studio · Samuel Acuña</h1><p id="printStamp"></p></div><div class="view-header"><div><div class="overline">06 / Cierre financiero</div><h1>Informe de rentabilidad.</h1><p class="lede">Estado de resultados estimado por mes, con detalle de costos, métricas comerciales y márgenes.</p></div><button class="btn primary no-print" id="printReport"><svg class="ic sm"><use href="#i-report"/></svg> Imprimir / PDF</button></div>
+<div class="grid cards4" style="margin-bottom:16px"><div class="metric"><div class="metric-top"><span class="metric-label">Facturación cobrada</span><span class="metric-icon"><svg class="ic sm"><use href="#i-coin"/></svg></span></div><div class="metric-number" id="reportRevenue">—</div><p>Sin pedidos no cobrados</p></div><div class="metric"><div class="metric-top"><span class="metric-label">Inversión en publicidad</span><span class="metric-icon"><svg class="ic sm"><use href="#i-trending"/></svg></span></div><div class="metric-number" id="reportAds">—</div><p>Incluye recargos configurados</p></div><div class="metric"><div class="metric-top"><span class="metric-label">ROAS sobre recaudo</span><span class="metric-icon"><svg class="ic sm"><use href="#i-target"/></svg></span></div><div class="metric-number" id="reportROAS">—</div><p>Ingresos reales / gasto publicitario</p></div><div class="metric"><div class="metric-top"><span class="metric-label">Margen neto</span><span class="metric-icon"><svg class="ic sm"><use href="#i-chart"/></svg></span></div><div class="metric-number" id="reportMargin">—</div><p>Utilidad neta / recaudo</p></div></div>
+ <div class="grid two" style="align-items:start"><div class="panel"><div class="panel-title"><div><h2>Estado de resultados mensual</h2><p>Desde ingresos efectivos hasta utilidad después de operación.</p></div><span class="pill">P&L ESTIMADO</span></div><div class="report-lines" id="reportLines"></div><div class="btn-row no-print"><button id="reportCSV" class="btn"><svg class="ic sm"><use href="#i-down"/></svg> Excel / CSV</button><button id="reportJSON" class="btn"><svg class="ic sm"><use href="#i-save"/></svg> Respaldo JSON</button><button id="reportCopy" class="btn"><svg class="ic sm"><use href="#i-copy"/></svg> Copiar resumen</button></div></div>
+ <div class="grid" style="gap:16px"><div class="panel"><div class="panel-title"><div><h2>Resumen de pedidos</h2><p>Cada cantidad representa una etapa distinta.</p></div></div><div class="timeline" id="reportTimeline"></div></div><div class="panel"><div class="panel-title"><div><h2>Indicadores clave</h2><p>Para optimizar decisiones y fijación de precios.</p></div></div><div class="grid equal" style="gap:11px" id="reportIndicators"></div></div><div class="panel no-print"><div class="panel-title"><div><h2>Datos y privacidad</h2><p>Información bajo tu control.</p></div></div><p class="small-body">La información se guarda automáticamente en <strong>este navegador y dispositivo</strong>. No se sincroniza entre celulares o computadores. Descarga un JSON para conservar o trasladar tus datos.</p><div class="btn-row"><button class="btn" id="importBackup"><svg class="ic sm"><use href="#i-plus"/></svg> Importar JSON</button><button class="btn danger" id="resetDemo"><svg class="ic sm"><use href="#i-refresh"/></svg> Restaurar ejemplo</button></div></div></div></div>
+</section>
+<div class="section-footer"><span>© <span data-year>2026</span> <strong>Samuel Acuña</strong> · ECOM Studio</span><span>Motor financiero orientativo · Datos guardados únicamente en tu navegador</span></div>
+</main></div>
+<nav class="mobile-dock" aria-label="Navegación móvil"><button data-nav="home" class="active"><svg class="ic"><use href="#i-grid"/></svg>Inicio</button><button data-nav="calculator"><svg class="ic"><use href="#i-calc"/></svg>Calcular</button><button data-nav="portfolio"><svg class="ic"><use href="#i-layers"/></svg>Productos</button><button data-nav="operations"><svg class="ic"><use href="#i-wallet"/></svg>Costos</button><button data-nav="simulator"><svg class="ic"><use href="#i-chart"/></svg>Simular</button><button data-nav="report"><svg class="ic"><use href="#i-report"/></svg>Reporte</button></nav>
+<div class="modal-back" id="savedModal" role="dialog" aria-modal="true" aria-labelledby="savedModalTitle"><div class="modal"><div class="modal-header"><div><h2 id="savedModalTitle">Escenarios guardados</h2><p class="tiny-note">Puedes guardar hasta 30 versiones y compararlas después.</p></div><button type="button" class="icon-btn" id="closeModal" aria-label="Cerrar"><svg class="ic"><use href="#i-close"/></svg></button></div><div class="field"><label for="saveName">Nombre para esta configuración</label><input id="saveName" type="text" maxlength="65" placeholder="Ej. Campaña octubre - CPA 15.000"></div><div class="btn-row" style="margin-top:13px"><button class="btn mint" id="saveSnapshot"><svg class="ic sm"><use href="#i-save"/></svg> Guardar configuración actual</button><button class="btn" id="exportBackupModal"><svg class="ic sm"><use href="#i-down"/></svg> Exportar archivo</button></div><div class="saved-list" id="savedList"></div></div></div>
+<input id="backupFile" type="file" accept="application/json,.json" hidden>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+(()=>{
+const $=id=>document.getElementById(id), $$=q=>Array.from(document.querySelectorAll(q));
+const key='sa_ecom_studio_v2_data', savesKey='sa_ecom_studio_v2_saves';
+const cl=(x,lo,hi)=>Math.max(lo,Math.min(hi,Number.isFinite(x)?x:lo));
+const number=(v,def=0)=>Number.isFinite(+v)?+v:def;
+const esc=t=>String(t??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const uid=()=> 'id'+Math.random().toString(36).slice(2,10);
+const icons=name=>`<svg class="ic sm"><use href="#i-${name}"/></svg>`;
+const fresh=()=>({currency:'COP',orders:2300,confirm:80,dispatch:100,delivery:80,collection:100,adMode:'cpa',cpa:15000,adPct:15,adExtra:0,shipOut:18500,shipBack:8500,packaging:1100,opsCost:500,lost:3,platform:1.2,payment:0,otherTax:0,flatFee:0,discount:0,salaries:5000000,rent:2000000,tools:500000,recharge:200000,expenses:[{id:'e1',name:'Contabilidad y gestión',amount:400000}],products:[{id:'p1',name:'Pack 3 unidades',units:3,price:99900,cost:19000,mix:30},{id:'p2',name:'Pack 6 unidades',units:6,price:149900,cost:38000,mix:30},{id:'p3',name:'Pack 12 unidades',units:12,price:199900,cost:74000,mix:40}],targetMargin:20,goalProfit:30000000,isDemo:true});
+const numericKeys={orders:1,confirm:100,dispatch:100,delivery:100,collection:100,cpa:1e11,adPct:100,adExtra:100,shipOut:1e11,shipBack:1e11,packaging:1e11,opsCost:1e11,lost:100,platform:100,payment:100,otherTax:100,flatFee:1e11,discount:100,salaries:1e12,rent:1e12,tools:1e12,recharge:1e12,targetMargin:90,goalProfit:1e13};
+function sanitize(raw){const base=fresh(),out={...base};if(!raw||typeof raw!=='object')return out;for(const k of Object.keys(numericKeys)){if(raw[k]!==undefined)out[k]=cl(number(raw[k]),0,numericKeys[k]===1?1e8:numericKeys[k]);} // Pedidos admits a wider range than percentages.
+ if(['COP','USD','VES'].includes(raw.currency))out.currency=raw.currency;
+ if(['cpa','percent'].includes(raw.adMode))out.adMode=raw.adMode;
+ if(typeof raw.isDemo==='boolean')out.isDemo=raw.isDemo;
+ if(Array.isArray(raw.products))out.products=raw.products.slice(0,40).map((p,i)=>({id:String(p.id||uid()).slice(0,48),name:String(p.name||`Producto ${i+1}`).slice(0,75),units:cl(number(p.units,1),1,9999),price:cl(number(p.price),0,1e12),cost:cl(number(p.cost),0,1e12),mix:cl(number(p.mix),0,1e5)}));
+ if(Array.isArray(raw.expenses))out.expenses=raw.expenses.slice(0,60).map(e=>({id:String(e.id||uid()).slice(0,48),name:String(e.name||'Gasto sin nombre').slice(0,60),amount:cl(number(e.amount),0,1e12)}));
+ return out;}
+function load(){try{const x=JSON.parse(localStorage.getItem(key));return x?sanitize(x):fresh()}catch{return fresh()}}
+let S=load(),draft={name:'',units:1,price:139900,cost:66000,mix:15},editId=null,sim={ordersScale:100,cpaScale:100,deliveryDiff:0,priceScale:100},currentView='home',last=null;
+const nf=(v,d=0)=>new Intl.NumberFormat('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d}).format(Number.isFinite(v)?v:0);
+const curr=()=>S.currency==='VES'?'Bs.':'$';
+const money=(v,short=false)=>{if(v===null||v===undefined||!Number.isFinite(v))return '—';const abs=Math.abs(v),sign=v<0?'−':'';if(short&&abs>=1e9)return sign+curr()+nf(abs/1e9,2)+' mil M';if(short&&abs>=1e6)return sign+curr()+nf(abs/1e6,2)+' M';if(short&&abs>=1e3)return sign+curr()+nf(abs/1e3,abs<10000?1:0)+' mil';return sign+curr()+nf(abs,S.currency==='COP'?0:2)};
+const pct=(v,d=1)=>v===null||!Number.isFinite(v)?'—':nf(v,d)+'%';
+const compactN=v=>nf(v,Number.isInteger(v)?0:1);
+function fixedCost(x){return x.salaries+x.rent+x.tools+x.recharge+x.expenses.reduce((a,e)=>a+e.amount,0)}
+function productsInfo(x){let ps=x.products.filter(p=>p!==null);if(!ps.length)return[];let total=ps.reduce((v,p)=>v+Math.max(0,p.mix),0);return ps.map(p=>({...p,share:total>0?Math.max(0,p.mix)/total:1/ps.length}));}
+function calc(raw){const x=sanitize(raw),ps=productsInfo(x),avgPrice=ps.reduce((v,p)=>v+p.price*p.share,0)*(1-x.discount/100),avgCost=ps.reduce((v,p)=>v+p.cost*p.share,0),created=x.orders,confirmed=created*x.confirm/100,shipped=confirmed*x.dispatch/100,delivered=shipped*x.delivery/100,paid=delivered*x.collection/100,failed=shipped-delivered,unpaid=delivered-paid,rev=paid*avgPrice,product=delivered*avgCost+failed*avgCost*x.lost/100,freight=shipped*x.shipOut,returnFreight=failed*x.shipBack,pack=shipped*x.packaging,salesOps=created*x.opsCost,feeRate=(x.platform+x.payment+x.otherTax)/100,fees=rev*feeRate+paid*x.flatFee,adsBase=x.adMode==='cpa'?created*x.cpa:rev*x.adPct/100,adsExtra=adsBase*x.adExtra/100,ads=adsBase+adsExtra,fixed=fixedCost(x),otherVariable=product+freight+returnFreight+pack+salesOps+fees,profit=rev-otherVariable-ads-fixed,margin=rev>0?profit/rev*100:null,contribution=rev-otherVariable-ads,contributionPerGenerated=created>0?contribution/created:0,payRate=created>0?paid/created:0,realCPA=paid>0?ads/paid:null,maxBase=created>0?(rev-otherVariable-fixed)/(created*(1+x.adExtra/100)):null,roas=ads>0?rev/ads:null,roasBreakEven=(rev-otherVariable-fixed)>0&&rev>0?rev/(rev-otherVariable-fixed):null,breakEven=contributionPerGenerated>0?Math.ceil(fixed/contributionPerGenerated):(fixed===0?0:null),failedCost=failed*(x.shipOut+x.shipBack+x.packaging+avgCost*x.lost/100),finalCost=otherVariable+ads+fixed;
+return{...x,ps,avgPrice,avgCost,created,confirmed,shipped,delivered,paid,failed,unpaid,rev,product,freight,returnFreight,pack,salesOps,feeRate,fees,adsBase,adsExtra,ads,fixed,otherVariable,finalCost,profit,margin,contribution,contributionPerGenerated,payRate,realCPA,maxBase,roas,roasBreakEven,breakEven,failedCost};}
+function detail(p,r){if(r.paid<=0)return null;const price=p.price*(1-r.discount/100),cogs=p.cost*(r.delivered+r.failed*r.lost/100)/r.paid,logistic=(r.freight+r.returnFreight+r.pack+r.salesOps)/r.paid,overhead=r.fixed/r.paid,ads=r.adMode==='cpa'?r.ads/r.paid:price*r.adPct/100*(1+r.adExtra/100),fees=price*r.feeRate+r.flatFee,profit=price-cogs-logistic-overhead-ads-fees;return{price,cogs,logistic,overhead,ads,fees,profit,margin:price>0?profit/price*100:null};}
+function recommendedPrice(p,r,goal){if(r.paid<=0)return null;let d=detail(p,r);if(!d)return null;const retention=1-r.discount/100,feeFactor=1-r.feeRate-(r.adMode==='percent'?r.adPct/100*(1+r.adExtra/100):0),contrib=feeFactor-goal/100;
+ if(contrib<=0||retention<=0)return null;const fixedComponents=d.cogs+d.logistic+d.overhead+(r.adMode==='cpa'?d.ads:0)+r.flatFee;return fixedComponents/(contrib*retention);}
+function scaledSim(x,options){const next={...x,orders:x.orders*options.ordersScale/100,delivery:cl(x.delivery+options.deliveryDiff,0,100),cpa:x.cpa*options.cpaScale/100,adPct:x.adPct*options.cpaScale/100,products:x.products.map(p=>({...p,price:p.price*options.priceScale/100}))};return next;}
+function persist(){try{localStorage.setItem(key,JSON.stringify(S))}catch(e){}}
+function text(id,value){if($(id))$(id).textContent=value}
+function view(name){if(!['home','calculator','portfolio','operations','simulator','report'].includes(name))return;currentView=name;$$('.section').forEach(el=>el.classList.toggle('active',el.dataset.view===name));$$('[data-nav]').forEach(b=>{const active=b.dataset.nav===name;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const names={home:'DASHBOARD',calculator:'CALCULADORA',portfolio:'MIS PRODUCTOS',operations:'COSTOS Y OPERACIÓN',simulator:'SIMULADOR',report:'INFORMES'};text('breadcrumbCurrent',names[name]);window.scrollTo({top:0,behavior:'instant'});}
+function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toast.handle);toast.handle=setTimeout(()=>el.classList.remove('show'),3300)}
+function inputSync(){for(const el of $$('[data-state]')){if(document.activeElement!==el)el.value=S[el.dataset.state]}for(const el of $$('[data-draft]')){if(document.activeElement!==el)el.value=draft[el.dataset.draft]}$('currency').value=S.currency;$$('[data-admode]').forEach(el=>el.classList.toggle('active',el.dataset.admode===S.adMode));$('adCPAFields').style.display=S.adMode==='cpa'?'grid':'none';$('adPctFields').style.display=S.adMode==='percent'?'grid':'none';}
+function renderHome(r){text('heroProfit',money(r.profit));$('heroProfit').classList.toggle('negative',r.profit<0);text('profitStatus',r.paid===0?'Sin pedidos cobrados':r.profit<0?'Pérdida estimada':r.profit===0?'Punto de equilibrio':'Operación rentable');text('heroPaid',nf(r.paid,0));text('heroMargin',pct(r.margin));$('heroMarginBar').style.width=cl(r.margin||0,0,100)+'%';text('heroRevenue',money(r.rev,true));text('heroCPA',money(r.realCPA,true));text('mOrders',nf(r.created,0));text('mEfficiency',pct(r.payRate*100));text('mMaxCPA',money(r.maxBase,true));text('mBreakEven',r.breakEven===null?'No viable':nf(r.breakEven,0));text('demoBadge',S.isDemo?'Ejemplo':'Personalizados');
+ const data=[['Recaudo efectivo',r.rev,'first'],['Producto y mercancía',r.product],['Pauta + recargos',r.ads],['Logística ida y retorno',r.freight+r.returnFreight],['Empaques y gestión',r.pack+r.salesOps],['Comisiones',r.fees],['Estructura fija',r.fixed]];const max=Math.max(1,...data.map(d=>d[1]));$('cashBars').innerHTML=data.map(([name,val,c])=>`<div class="cash-row ${c||''}"><span>${name}</span><div class="track"><span class="fill" style="width:${cl(val/max*100,0,100).toFixed(2)}%"></span></div><strong>${money(val,true)}</strong></div>`).join('');text('cashProfit',money(r.profit));$('totalStrip').classList.toggle('loss',r.profit<0);
+ const steps=[['Generados',r.created],['Confirmados',r.confirmed],['Despachados',r.shipped],['Entregados',r.delivered],['Cobrados',r.paid]];$('funnelRows').innerHTML=steps.map(([label,val])=>`<div class="funnel-row"><span class="funnel-name">${label}</span><div class="funnel-track"><span class="funnel-fill" style="width:${r.created>0?cl(val/r.created*100,0,100):0}%"></span></div><b>${nf(val,0)}</b></div>`).join('');text('funnelEndRate',pct(r.payRate*100)+' FINAL');text('funnelFoot',`${nf(r.failed,0)} envíos fallidos · ${nf(r.unpaid,0)} entregas pendientes de cobro. Las cifras son valores esperados; pueden incluir decimales antes de redondearse.`);
+ const deltaDelivery=calc({...S,delivery:cl(S.delivery+5,0,100)}).profit-r.profit;const insights=[{type:r.failedCost>r.profit?'warn':'normal',icon:'truck',title:'Costo de fallidos: '+money(r.failedCost,true),body:`${nf(r.failed,0)} envíos sin entrega. Incluye fletes, empaque y pérdida de producto configurada.`},{type:r.maxBase!==null&&S.adMode==='cpa'&&S.cpa>r.maxBase?'danger':'normal',icon:'target',title:r.maxBase!==null?'CPA máximo viable: '+money(r.maxBase,true):'CPA pendiente de calcular',body:r.maxBase===null?'Necesitas pedidos generados para calcular el límite de adquisición.':S.adMode==='cpa'&&S.cpa>r.maxBase?'El CPA configurado supera el máximo para punto de equilibrio, incluidos costos fijos.':'Puedes comparar este límite con tu costo real de adquirir pedidos.'},{type:'normal',icon:'trending',title:'Si entregaras 5 p.p. más',body:`La utilidad mensual variaría en ${deltaDelivery>=0?'+':''}${money(deltaDelivery,true)}, sin cambiar el volumen ni la inversión publicitaria.`}];
+ if(r.profit<0){insights.unshift({type:'danger',icon:'downtrend',title:'Alerta de pérdida mensual',body:'No aumentes el presupuesto de forma automática: el modelo estima una operación no rentable.'});}
+ $('insights').innerHTML=insights.slice(0,4).map(a=>`<div class="intel ${a.type}"><div class="badge-icon">${icons(a.icon)}</div><div><b>${esc(a.title)}</b><p>${esc(a.body)}</p></div></div>`).join('');renderVolumeChart(r);
+}
+function renderVolumeChart(r){const small=window.innerWidth<620,ratios=small?[.5,.75,1,1.5,2]:[.25,.5,.75,1,1.25,1.5,1.75,2],values=ratios.map(ratio=>calc({...S,orders:S.orders*ratio}).profit),w=small?460:720,h=240,L=small?96:74,R=13,T=18,B=36,plotW=w-L-R,plotH=h-T-B,min=Math.min(0,...values),max=Math.max(0,...values),pad=Math.max(1,(max-min)*.1),lo=min-pad,hi=max+pad,rx=i=>L+i*plotW/(ratios.length-1),ry=v=>T+(hi-v)/(hi-lo)*plotH,points=values.map((v,i)=>[rx(i),ry(v)]),line=points.map(([x,y],i)=>(i===0?'M':'L')+x.toFixed(1)+' '+y.toFixed(1)).join(' '),baseY=ry(lo),area=line+' L'+rx(ratios.length-1)+' '+baseY+' L'+rx(0)+' '+baseY+' Z',zeroY=ry(0),ticks=[0,.33,.66,1].map(fr=>hi-(hi-lo)*fr);$('volumeChart').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Utilidad según volumen de pedidos"><defs><linearGradient id="chartFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfcaff" stop-opacity=".5"/><stop offset="1" stop-color="#cfcaff" stop-opacity=".02"/></linearGradient></defs>${ticks.map(v=>`<line x1="${L}" y1="${ry(v)}" x2="${w-R}" y2="${ry(v)}" class="chart-cross"/><text x="${L-11}" y="${ry(v)+4}" text-anchor="end" class="chart-label">${esc(money(v,true))}</text>`).join('')}<line x1="${L}" x2="${w-R}" y1="${zeroY}" y2="${zeroY}" class="chart-zero"/><path d="${area}" class="chart-area"/><path d="${line}" class="chart-line"/>${points.map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i===(small?2:3)?'6':'4'}" fill="${i===(small?2:3)?'#d3cdff':'#fff'}" stroke="#272830" stroke-width="${i===(small?2:3)?'3':'2'}"><title>${Math.round(S.orders*ratios[i])} pedidos: ${money(values[i])}</title></circle><text x="${x}" y="${h-9}" text-anchor="middle" class="chart-label${i===(small?2:3)?'-strong':''}">${nf(ratios[i]*100,0)}%</text>`).join('')}</svg>`;}
+function renderDraft(r){text('draftTitle',editId?'Editar producto':'Nuevo análisis');text('productModePill',editId?'EDITANDO':'NUEVO');$('saveProduct').innerHTML=icons(editId?'check':'plus')+(editId?' Guardar cambios':' Agregar al informe');text('pShipLabel',money(S.shipOut));text('pAdminLabel',r.paid>0?money(r.fixed/r.paid):'—');const p={...draft,price:cl(number(draft.price),0,1e12),cost:cl(number(draft.cost),0,1e12)},d=detail(p,r);text('pResultPrice',money(p.price*(1-r.discount/100)));
+ if(!d){$('pCostList').innerHTML='<div class="cost-line"><span>Se necesitan pedidos cobrados para asignar gastos.</span><b>—</b></div>';text('pResultProfit','—');text('pResultMargin','Sin pedidos cobrados; revisa las tasas de operación.');$('pResultBanner').classList.remove('loss');text('pSuggested','—');text('pSuggestedFoot','No se puede calcular el precio sin pedidos cobrados.');return;}
+ $('pCostList').innerHTML=[['Costo producto y merma',d.cogs],['Logística (fallidos incluidos)',d.logistic],['Pauta publicitaria asignada',d.ads],['Comisiones y cobro',d.fees],['Gastos fijos administrativos',d.overhead]].map(([name,v])=>`<div class="cost-line"><span>${esc(name)}</span><b>− ${money(v)}</b></div>`).join('');text('pResultProfit',money(d.profit));text('pResultMargin',`${pct(d.margin)} margen neto · ${nf(r.payRate*100,1)}% de recaudo final`);$('pResultBanner').classList.toggle('loss',d.profit<0);
+ const sug=recommendedPrice(p,r,S.targetMargin);text('pSuggested',sug===null?'No viable':money(Math.ceil(sug/(S.currency==='COP'?100:1))*(S.currency==='COP'?100:1)));text('pSuggestedFoot',sug===null?'Con las comisiones, descuentos y el objetivo actuales no existe un precio finito viable.':sug>p.price?'Es el precio teórico mínimo para el margen fijado, si los demás parámetros no cambian.':'Tus precios actuales ya cumplen la meta; se muestra el mínimo teórico.');}
+const palette=['#18191b','#cbc6f4','#9193a3','#b3abb2','#b7bec0','#ebe6da','#9499c6','#dedbd6'];
+function renderPortfolio(r){text('catTotal',nf(r.ps.length));text('catTicket',money(r.avgPrice,true));text('catCogs',money(r.avgCost,true));text('catProfitPer',r.paid>0?money(r.profit/r.paid,true):'—');text('portfolioTarget',nf(S.targetMargin,0));const mixSum=r.ps.reduce((a,p)=>a+p.mix,0);text('mixNotice',mixSum===100?'* El mix suma 100%. Cada producto representa su proporción de los pedidos.':`* La suma del mix es ${nf(mixSum,1)}%. Se normaliza automáticamente para que los cálculos sumen 100%.`);
+ if(!r.ps.length){$('productRows').innerHTML='<tr><td colspan="8"><div class="empty">No tienes productos guardados. Crea uno desde la calculadora.</div></td></tr>'; $('mixBar').innerHTML='';$('mixLegend').innerHTML='<p class="tiny-note">Tu distribución aparecerá aquí.</p>';$('portfolioSuggestions').innerHTML='';return;}
+ $('productRows').innerHTML=r.ps.map(p=>{const d=detail(p,r),pr=d?d.profit:null,margin=d?d.margin:null,monthly=pr!==null?pr*r.paid*p.share:null;return `<tr><td><strong>${esc(p.name)}</strong><small>${nf(p.units,0)} unidades</small></td><td class="money-td">${money(p.price)}</td><td>${money(p.cost)}</td><td>${pct(p.share*100)}</td><td class="money-td ${pr===null?'':pr<0?'negative':'positive'}">${money(pr)}</td><td><span class="tiny-pill ${margin===null?'':margin<0?'negative':'positive'}">${pct(margin)}</span></td><td class="money-td ${monthly===null?'':monthly<0?'negative':'positive'}">${money(monthly,true)}</td><td><div class="flex" style="gap:5px;flex-wrap:nowrap"><button type="button" class="table-action" data-edit-product="${esc(p.id)}">Editar</button><button type="button" class="table-action" data-copy-product="${esc(p.id)}">Duplicar</button><button type="button" class="table-action danger" data-delete-product="${esc(p.id)}" aria-label="Eliminar ${esc(p.name)}">×</button></div></td></tr>`}).join('');
+ $('mixBar').innerHTML=r.ps.map((p,i)=>`<span style="width:${(p.share*100).toFixed(4)}%;background:${palette[i%palette.length]}" title="${esc(p.name)}: ${pct(p.share*100)}"></span>`).join('');$('mixLegend').innerHTML=r.ps.map((p,i)=>`<div class="mixrow"><span><span class="indicator" style="background:${palette[i%palette.length]}"></span>${esc(p.name)}</span><b>${pct(p.share*100)}</b></div>`).join('');$('portfolioSuggestions').innerHTML=r.ps.map(p=>{const suggested=recommendedPrice(p,r,S.targetMargin),rounded=suggested===null?null:Math.ceil(suggested/(S.currency==='COP'?100:1))*(S.currency==='COP'?100:1);return `<div class="price-suggestion"><span>${esc(p.name)}</span><div><b>${suggested===null?'No viable':money(rounded)}</b><small>${money(p.price)}</small></div></div>`}).join('');}
+function renderOperations(r){const extras=$('expenseRows');extras.innerHTML=S.expenses.length?S.expenses.map(e=>`<div class="expense-line"><span>${esc(e.name)}</span><b>${money(e.amount)}</b><button type="button" data-delete-expense="${esc(e.id)}" aria-label="Eliminar gasto ${esc(e.name)}">${icons('trash')}</button></div>`).join(''):'<div class="tiny-note">Sin gastos adicionales.</div>';text('fixedTotal',money(r.fixed));text('adsTotal',money(r.ads));text('adsExplanation',S.adMode==='cpa'?'Pedidos generados × CPA, más recargos':'Ingresos cobrados × porcentaje de pauta, más recargos');
+ const metrics=[['Generados',r.created],['Confirmados',r.confirmed],['Despachados',r.shipped],['Entregados',r.delivered],['Devueltos / fallidos',r.failed],['Cobrados',r.paid]];$('operationsSummary').innerHTML=metrics.map(([name,v])=>`<div class="statbox"><div class="slabel">${name}</div><div class="svalue">${nf(v,0)}</div><div class="sub">${r.created>0?pct(v/r.created*100):'—'} de generados</div></div>`).join('');}
+function variant(name,options,r){const rr=calc({...S,...options,products:options.products||S.products});const delta=rr.profit-r.profit;return `<div class="compare-item ${name==='Actual'?'featured':''}"><div class="compare-head">${name}</div><p class="compare-desc">${name==='Conservador'?'−20% pedidos · +20% pauta · −8 p.p. entregas':name==='Actual'?'Parámetros configurados para tu negocio':'+20% pedidos · −12% pauta · +7 p.p. entregas'}</p><div class="compare-val ${rr.profit<0?'negative':''}">${money(rr.profit,true)}</div><div class="compare-line"><span>Margen neto</span><b>${pct(rr.margin)}</b></div><div class="compare-line"><span>Ventas cobradas</span><b>${nf(rr.paid,0)}</b></div><div class="compare-line"><span>Dif. vs. actual</span><b>${delta>=0?'+':''}${money(delta,true)}</b></div></div>`}
+function scenarioVariants(){return[{name:'Conservador',options:{orders:S.orders*.8,delivery:cl(S.delivery-8,0,100),confirm:cl(S.confirm-3,0,100),cpa:S.cpa*1.2,adPct:S.adPct*1.2}},{name:'Actual',options:{}},{name:'Optimista',options:{orders:S.orders*1.2,delivery:cl(S.delivery+7,0,100),confirm:cl(S.confirm+2,0,100),cpa:S.cpa*.88,adPct:S.adPct*.88}}];}
+function renderSimulator(r){const x=scaledSim(S,sim),f=calc(x),difference=f.profit-r.profit;text('simProfit',money(f.profit));text('simDelta',`${difference>=0?'+':''}${money(difference,true)} vs. actual`);text('simMargin',pct(f.margin)+' margen');text('simPaid',nf(f.paid,0));text('simRevenue',money(f.rev));text('simAds',money(f.ads));
+ text('scaleOrdersLabel',sim.ordersScale+'%');text('scaleCPALabel',sim.cpaScale+'%');text('deliveryDiffLabel',(sim.deliveryDiff>=0?'+':'')+sim.deliveryDiff+' p.p.');text('scalePriceLabel',sim.priceScale+'%');
+ $('scenarioCompare').innerHTML=scenarioVariants().map(o=>variant(o.name,o.options,r)).join('');const delRates=[65,72,80,88,95],adMultipliers=[.7,.85,1,1.15,1.3];let cells='<div class="heat-cell hdr">Pauta ↓</div>'+delRates.map(rate=>`<div class="heat-cell hdr">${rate}% entrega</div>`).join('');for(const ad of adMultipliers){cells+=`<div class="heat-cell hdr">×${nf(ad,2)}</div>`;for(const delivery of delRates){const y=calc({...S,delivery,cpa:S.cpa*ad,adPct:S.adPct*ad}).profit,cls=y<0?'neg':y<r.fixed*.15?'mid':'pos',cur=Math.abs(ad-1)<.001&&Math.abs(delivery-S.delivery)<1?' current':'';cells+=`<div title="${delivery}% entrega · pauta ×${ad}: ${money(y)}" class="heat-cell ${cls}${cur}">${money(y,true)}</div>`;}}$('heatmap').innerHTML=cells;
+ const needed=r.contributionPerGenerated>0?Math.ceil((S.goalProfit+r.fixed)/r.contributionPerGenerated):null;text('ordersGoal',needed===null?'Inviable':nf(needed,0));text('goalFoot',needed===null?'El margen de contribución por pedido generado no es positivo. Primero mejora precio, CPA o efectividad.':`Para una utilidad de ${money(S.goalProfit)}, el modelo requiere aproximadamente ${nf(needed,0)} pedidos generados; esto no garantiza el volumen comercial.`);
+}
+function reportItem(title,val,kind='',desc=''){return `<div class="report-row ${kind}"><span>${esc(title)}${desc?` <small>(${esc(desc)})</small>`:''}</span><strong>${typeof val==='number'?money(val):esc(val)}</strong></div>`;}
+function renderReport(r){text('reportRevenue',money(r.rev,true));text('reportAds',money(r.ads,true));text('reportROAS',r.roas===null?'—':nf(r.roas,2)+'x');text('reportMargin',pct(r.margin));$('reportLines').innerHTML=[reportItem('Ingresos efectivamente cobrados',r.rev,'revenue'),reportItem('Costos variables','', 'heading'),reportItem('Costo de mercancía y merma',-r.product),reportItem('Publicidad y recargos',-r.ads),reportItem('Envíos de ida',-r.freight),reportItem('Retornos de envíos fallidos',-r.returnFreight),reportItem('Empaques y alistamiento',-r.pack),reportItem('Gestión comercial de pedidos',-r.salesOps),reportItem('Pasarelas, tienda y tributos',-r.fees),reportItem('Total costos variables',-(r.otherVariable+r.ads),'heading'),reportItem('Contribución antes de gastos fijos',r.contribution),reportItem('Estructura fija',-r.fixed),reportItem('Utilidad neta proyectada',r.profit,'net'+(r.profit<0?' negative':''))].join('');const stages=[['Pedidos generados','Base de publicidad y operación',r.created],['Confirmados','Pedidos generados × confirmación',r.confirmed],['Despachados','Confirmados × despacho',r.shipped],['Entregados','Despachados × entrega',r.delivered],['Fallidos / devueltos','Despachados que no se entregaron',r.failed],['Cobrados','Entregados × recaudo',r.paid]];$('reportTimeline').innerHTML=stages.map(([name,desc,n],i)=>`<div class="stage"><div class="left"><div class="circle">${i+1}</div><div><b>${name}</b><small>${desc}</small></div></div><div class="right">${nf(n,0)}</div></div>`).join('');const stats=[['CPA máximo por generado',money(r.maxBase)],['ROAS de equilibrio',r.roasBreakEven===null?'No viable':nf(r.roasBreakEven,2)+'x'],['Ganancia neta por venta cobrada',r.paid>0?money(r.profit/r.paid):'—'],['Pérdida logística fallidos',money(r.failedCost)],['Costo fijo por cobro',r.paid>0?money(r.fixed/r.paid):'—'],['Valor promedio cobrado',money(r.avgPrice)]];$('reportIndicators').innerHTML=stats.map(([name,v])=>`<div class="statbox"><div class="slabel">${esc(name)}</div><div class="svalue" style="font-size:22px">${esc(v)}</div></div>`).join('');}
+function render(){last=calc(S);renderHome(last);renderDraft(last);renderPortfolio(last);renderOperations(last);renderSimulator(last);renderReport(last);persist();}
+function newProduct(){editId=null;draft={name:'',units:1,price:S.currency==='COP'?139900:35,cost:S.currency==='COP'?66000:15,mix:15};inputSync();renderDraft(last||calc(S));}
+function saveProduct(){const v={id:editId||uid(),name:String(draft.name||'').trim(),units:cl(number(draft.units,1),1,9999),price:cl(number(draft.price),0,1e12),cost:cl(number(draft.cost),0,1e12),mix:cl(number(draft.mix),0,1e5)};if(!v.name){$('pName').focus();toast('Escribe un nombre para guardar este producto.');return}if(v.price<=0){$('pPrice').focus();toast('El precio de venta debe ser mayor que cero.');return}if(editId){const idx=S.products.findIndex(p=>p.id===editId);if(idx<0){toast('No se encontró el producto que quieres editar.');newProduct();return}S.products[idx]=v;}else{if(S.products.length>=40){toast('Máximo 40 productos por escenario.');return}S.products.push(v);}const wasEditing=!!editId;S.isDemo=false;newProduct();render();view('portfolio');toast(wasEditing?'Producto actualizado.':'Producto agregado al informe.');}
+function addExpense(){let name=$('newExpenseName').value.trim(),amount=number($('newExpenseAmount').value,-1);if(!name){$('newExpenseName').focus();toast('Escribe el nombre del gasto.');return}if(!Number.isFinite(amount)||amount<0||$('newExpenseAmount').value===''){toast('Ingresa un valor válido para el gasto.');return}S.expenses.push({id:uid(),name:name.slice(0,60),amount:cl(amount,0,1e12)});S.isDemo=false;$('newExpenseName').value='';$('newExpenseAmount').value='';render();toast('Gasto mensual agregado.');}
+function updateNumber(k,val){if(!(k in numericKeys))return;const hi=numericKeys[k]===1?1e8:numericKeys[k];S[k]=cl(number(val),0,hi);S.isDemo=false;render();}
+function fileDownload(filename,contents,mime){const blob=new Blob([contents],{type:mime}),link=document.createElement('a'),url=URL.createObjectURL(blob);link.href=url;link.download=filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function csvCell(x){let v=String(x??'');if(/^[=+@\-\t\r]/.test(v) && typeof x==='string')v="'"+v;return /[;"\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function csv(rows){return '\ufeff'+rows.map(row=>row.map(csvCell).join(';')).join('\r\n')}
+function csvReport(){const r=calc(S),rows=[['SAMUEL ACUÑA · ECOM STUDIO','INFORME MENSUAL'],['Campo','Valor'],['Moneda',S.currency],['Pedidos generados',r.created],['Confirmados',r.confirmed],['Despachados',r.shipped],['Entregados',r.delivered],['Devueltos',r.failed],['Cobrados',r.paid],['Recaudo real',r.rev],['Costo mercancía',r.product],['Publicidad',r.ads],['Flete de ida',r.freight],['Flete de retorno',r.returnFreight],['Empaques',r.pack],['Gestión comercial',r.salesOps],['Comisiones',r.fees],['Gastos fijos',r.fixed],['Utilidad',r.profit],['Margen %',r.margin??'N/D'],['CPA máximo por generado',r.maxBase??'N/D'],['ROAS efectivo',r.roas??'N/D'],['Punto de equilibrio pedidos',r.breakEven??'Inviable'],[],['PRODUCTOS',''],['Nombre','Precio','Costo paquete','Mix (%)','Pedidos cobrados','Utilidad/venta','Utilidad/mes']];for(const p of r.ps){const d=detail(p,r);rows.push([p.name,p.price,p.cost,p.share*100,r.paid*p.share,d?.profit??'',(d?.profit??0)*r.paid*p.share]);}fileDownload('Samuel_Acuna_Estudio_Ecommerce_Informe.csv',csv(rows),'text/csv;charset=utf-8');toast('Informe CSV generado.');}
+function csvProducts(){const r=calc(S),rows=[['Nombre','Unidades','Precio','Costo total','Mix (%)','Unidades cobradas','Utilidad por venta','Margen (%)','Utilidad mensual'],...r.ps.map(p=>{const d=detail(p,r);return[p.name,p.units,p.price,p.cost,p.share*100,r.paid*p.share,d?.profit??'',d?.margin??'',d?d.profit*r.paid*p.share:'']})];fileDownload('Samuel_Acuna_Productos_Ecommerce.csv',csv(rows),'text/csv;charset=utf-8');toast('Productos exportados en CSV.');}
+function csvScenarios(){const rows=[['Escenario','Pedidos','Entrega (%)','Inversión en pauta','Cobrados','Ingresos','Utilidad','Margen (%)'],...scenarioVariants().map(o=>{const r=calc({...S,...o.options});return[o.name,r.created,r.delivery,r.ads,r.paid,r.rev,r.profit,r.margin??'N/D']})];fileDownload('Samuel_Acuna_Escenarios.csv',csv(rows),'text/csv;charset=utf-8');toast('Comparativo de escenarios exportado.');}
+function exportJSON(){fileDownload('Samuel_Acuna_ECOM_Studio_Respaldo.json',JSON.stringify({product:'ECOM Studio',author:'Samuel Acuña',version:2,exportedAt:new Date().toISOString(),state:S},null,2),'application/json;charset=utf-8');toast('Respaldo JSON descargado.');}
+function summaryText(){const r=calc(S);return `ECOM STUDIO / SAMUEL ACUÑA\nMoneda: ${S.currency}\nPedidos generados: ${nf(r.created,0)}\nConfirmados: ${nf(r.confirmed,0)}\nDespachados: ${nf(r.shipped,0)}\nEntregados: ${nf(r.delivered,0)}\nFallidos: ${nf(r.failed,0)}\nCobrados: ${nf(r.paid,0)}\n\nRecaudo: ${money(r.rev)}\nCosto mercancía: ${money(r.product)}\nPublicidad: ${money(r.ads)}\nLogística: ${money(r.freight+r.returnFreight)}\nEmpaques y gestión: ${money(r.pack+r.salesOps)}\nComisiones: ${money(r.fees)}\nGastos fijos: ${money(r.fixed)}\n\nUTILIDAD NETA: ${money(r.profit)}\nMARGEN: ${pct(r.margin)}\nCPA máximo: ${money(r.maxBase)}\nROAS: ${r.roas===null?'N/D':nf(r.roas,2)+'x'}\n\nProyección operativa; no reemplaza contabilidad ni asesoría tributaria.`}
+async function copySummary(){const val=summaryText();try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(val)}else{const el=document.createElement('textarea');el.value=val;el.style.position='absolute';el.style.left='-9999px';document.body.appendChild(el);el.select();if(!document.execCommand('copy'))throw Error('copy');el.remove()}toast('Resumen financiero copiado.')}catch(e){toast('No se pudo copiar. Puedes descargar el CSV.')}}
+function oldFormat(raw){if(!Array.isArray(raw.packs))return raw;const d=fresh();return{...d,currency:raw.currency||'COP',orders:raw.orders??d.orders,confirm:raw.confirm??d.confirm,dispatch:raw.ship??d.dispatch,delivery:raw.delivery??d.delivery,collection:raw.collection??d.collection,cpa:raw.cpa??d.cpa,adExtra:raw.adTax??d.adExtra,shipOut:raw.shipCost??d.shipOut,shipBack:raw.returnCost??d.shipBack,packaging:raw.packCost??d.packaging,opsCost:raw.opsCost??d.opsCost,lost:raw.lostProduct??d.lost,platform:raw.platformFee??d.platform,payment:raw.paymentFee??d.payment,otherTax:raw.salesTax??d.otherTax,flatFee:raw.paymentFixed??d.flatFee,discount:raw.discount??d.discount,salaries:raw.fixed??d.salaries,rent:0,tools:0,recharge:0,expenses:[],targetMargin:raw.targetMargin??d.targetMargin,products:raw.packs.map((p,i)=>({id:uid(),name:p.name||`Producto ${i+1}`,units:p.units||1,price:p.price,cost:(p.cost||0)*(p.units||1),mix:p.mix||0})),isDemo:false};}
+function importBackup(file){const reader=new FileReader();reader.onload=()=>{try{let data=JSON.parse(reader.result),src=data.state||data.data||data;if(!src.products&&!src.packs)throw Error('sin productos');src=oldFormat(src);if(!window.confirm('¿Reemplazar todos los datos actuales con este respaldo?'))return;S=sanitize(src);S.isDemo=false;newProduct();inputSync();render();toast('Respaldo importado correctamente.')}catch(e){toast('Archivo inválido. Usa un respaldo JSON generado por la calculadora.')}};reader.readAsText(file);}
+function savedGet(){try{const val=JSON.parse(localStorage.getItem(savesKey));return Array.isArray(val)?val:[]}catch{return[]}}
+function savedSet(val){try{localStorage.setItem(savesKey,JSON.stringify(val));return true}catch(e){toast('Sin espacio disponible para guardar más escenarios.');return false}}
+function savedRender(){const vals=savedGet();$('savedList').innerHTML=vals.length?vals.map((item,i)=>`<div class="saved-row"><div><b>${esc(item.name)}</b><small>${new Date(item.date).toLocaleString('es-CO')} · ${esc(item.data.currency)}</small></div><div class="flex"><button class="btn compact" data-load-saved="${i}">Cargar</button><button class="btn compact danger" data-remove-saved="${i}">Eliminar</button></div></div>`).join(''):'<div class="empty">Aún no hay escenarios guardados en este navegador.</div>'}
+function modal(open){$('savedModal').classList.toggle('open',open);document.body.style.overflow=open?'hidden':'';if(open){savedRender();$('saveName').focus();}}
+function snapshot(){const name=$('saveName').value.trim()||`Escenario ${new Date().toLocaleDateString('es-CO')}`,list=savedGet();list.unshift({name:name.slice(0,65),date:new Date().toISOString(),data:JSON.parse(JSON.stringify(S))});if(list.length>30)list.length=30;if(savedSet(list)){savedRender();$('saveName').value='';toast('Escenario guardado en este navegador.')}}
+function resetSimulation(){sim={ordersScale:100,cpaScale:100,deliveryDiff:0,priceScale:100};$$('[data-sim]').forEach(inp=>inp.value=sim[inp.dataset.sim]);renderSimulator(last||calc(S));}
+function applySimulation(){const v=scaledSim(S,sim);if(!confirm('¿Aplicar los cambios de la simulación a tu negocio actual?'))return;S=sanitize({...v,isDemo:false});resetSimulation();inputSync();render();view('home');toast('Simulación aplicada a los datos principales.');}
+function printOut(){text('printStamp',new Date().toLocaleDateString('es-CO',{day:'2-digit',month:'long',year:'numeric'})+' · Valores estimados en '+S.currency);view('report');window.print();}
+// Navigation and accessible actions.
+$$('[data-nav],[data-go]').forEach(button=>button.addEventListener('click',()=>view(button.dataset.nav||button.dataset.go)));
+$$('[data-state]').forEach(inp=>inp.addEventListener('input',()=>updateNumber(inp.dataset.state,inp.value)));
+$$('[data-draft]').forEach(inp=>inp.addEventListener('input',()=>{const k=inp.dataset.draft;draft[k]=k==='name'?inp.value:cl(number(inp.value),0,k==='mix'?100:1e12);renderDraft(last||calc(S));}));
+$('currency').addEventListener('change',e=>{const selected=e.target.value;if(!confirm(`¿Mostrar los valores en ${selected}?\n\nEsto cambia la etiqueta de moneda, NO convierte los importes. Revisa los números antes de usarlos.`)){e.target.value=S.currency;return}S.currency=selected;S.isDemo=false;render();});
+$$('[data-admode]').forEach(btn=>btn.addEventListener('click',()=>{S.adMode=btn.dataset.admode;S.isDemo=false;inputSync();render()}));
+$('newFromPortfolio').addEventListener('click',newProduct);$('saveProduct').addEventListener('click',saveProduct);$('resetProduct').addEventListener('click',()=>{newProduct();toast('Nuevo cálculo listo.')});$('btnAddExpense').addEventListener('click',addExpense);$('newExpenseAmount').addEventListener('keydown',e=>{if(e.key==='Enter')addExpense()});
+$('expenseRows').addEventListener('click',e=>{const b=e.target.closest('[data-delete-expense]');if(!b)return;S.expenses=S.expenses.filter(x=>x.id!==b.dataset.deleteExpense);S.isDemo=false;render();toast('Gasto eliminado.')});
+$('productRows').addEventListener('click',e=>{const edit=e.target.closest('[data-edit-product]'),copy=e.target.closest('[data-copy-product]'),del=e.target.closest('[data-delete-product]');if(edit){const p=S.products.find(p=>p.id===edit.dataset.editProduct);if(!p)return;editId=p.id;draft={...p};inputSync();renderDraft(last||calc(S));view('calculator')}if(copy){const p=S.products.find(p=>p.id===copy.dataset.copyProduct);if(!p)return;editId=null;draft={...p,id:uid(),name:p.name+' (copia)'};inputSync();renderDraft(last||calc(S));view('calculator');toast('Puedes editar la copia antes de guardarla.')}if(del){const p=S.products.find(p=>p.id===del.dataset.deleteProduct);if(!p)return;if(!confirm(`¿Eliminar ${p.name} del informe?`))return;S.products=S.products.filter(x=>x.id!==p.id);S.isDemo=false;if(editId===p.id)newProduct();render();toast('Producto eliminado.')}});
+$$('[data-sim]').forEach(inp=>{inp.addEventListener('input',()=>{sim[inp.dataset.sim]=Number(inp.value);renderSimulator(last||calc(S))})});$('resetSimulation').addEventListener('click',resetSimulation);$('applySimulation').addEventListener('click',applySimulation);
+$('btnSaved').addEventListener('click',()=>modal(true));$('saveFromSim').addEventListener('click',()=>modal(true));$('closeModal').addEventListener('click',()=>modal(false));$('savedModal').addEventListener('click',e=>{if(e.target===$('savedModal'))modal(false)});window.addEventListener('keydown',e=>{if(e.key==='Escape')modal(false)});$('saveSnapshot').addEventListener('click',snapshot);$('exportBackupModal').addEventListener('click',exportJSON);
+$('savedList').addEventListener('click',e=>{const load=e.target.closest('[data-load-saved]'),del=e.target.closest('[data-remove-saved]');if(load){const item=savedGet()[Number(load.dataset.loadSaved)];if(!item)return;S=sanitize(item.data);newProduct();inputSync();render();modal(false);view('home');toast('Escenario cargado.')}if(del){const list=savedGet();list.splice(Number(del.dataset.removeSaved),1);savedSet(list);savedRender();toast('Escenario eliminado.')}});
+$('btnExport').addEventListener('click',csvReport);$('reportCSV').addEventListener('click',csvReport);$('downloadProducts').addEventListener('click',csvProducts);$('exportScenarios').addEventListener('click',csvScenarios);$('reportJSON').addEventListener('click',exportJSON);$('reportCopy').addEventListener('click',copySummary);$('printReport').addEventListener('click',printOut);$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);e.target.value=''});
+$('resetDemo').addEventListener('click',()=>{if(!confirm('¿Restaurar los datos de ejemplo? Se reemplazarán los datos actuales. Descarga un respaldo antes si los necesitas.'))return;S=fresh();newProduct();resetSimulation();inputSync();render();view('home');toast('Ejemplo restaurado.');});
+$$('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());$$('[data-sim]').forEach(el=>el.value=sim[el.dataset.sim]);newProduct();inputSync();render();
+// Exposed solely for non-mutating financial consistency tests.
+window.__ecomStudioTest={calculate:(input)=>calc(input),details:(p,r)=>detail(p,r),getState:()=>JSON.parse(JSON.stringify(S)),setState:(input)=>{S=sanitize(input);newProduct();inputSync();render()},recommendedPrice:(p,r,g)=>recommendedPrice(p,r,g)};
+})();
+</script>
+</body>
+</html>
