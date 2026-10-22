@@ -7,7 +7,7 @@ create or replace function public.cuentas_invicto_shortcut_add(
   p_description text,
   p_owner text,
   p_category text default 'Otros',
-  p_apply_tax boolean default false
+  p_apply_tax boolean default true
 )
 returns jsonb
 language plpgsql
@@ -53,7 +53,8 @@ begin
   if v_category is null then
     raise exception using errcode = '22023', message = 'Selecciona una categoría válida';
   end if;
-  v_tax := case when v_type = 'expense' and coalesce(p_apply_tax, false)
+  -- Retain p_apply_tax for API compatibility; every expense includes 4x1000.
+  v_tax := case when v_type = 'expense'
     then round(p_amount * 0.004)::bigint else 0 end;
   perform public.cuentas_invicto_upsert_many(p_workspace_hash, jsonb_build_array(
     jsonb_build_object(
@@ -73,5 +74,5 @@ grant execute on function public.cuentas_invicto_shortcut_add(text,text,numeric,
   to anon, authenticated, service_role;
 
 comment on function public.cuentas_invicto_shortcut_add(text,text,numeric,text,text,text,boolean)
-  is 'Apple Shortcuts: validates one movement and uses existing workspace-scoped RPC. Defaults to today in Colombia, Otros and no 4x1000.';
+  is 'Apple Shortcuts: validates one movement and uses existing workspace-scoped RPC. Defaults to today in Colombia and Otros. Always applies 4x1000 to expenses; never to income.';
 notify pgrst, 'reload schema';
