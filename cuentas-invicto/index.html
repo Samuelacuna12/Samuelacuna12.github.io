@@ -288,7 +288,15 @@ function exportCSV(){
  const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='cuentas-invicto-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(a.href);toast('CSV exportado');
 }
-window.addEventListener('resize',drawChart);initCloud();
+// Open the existing movement form from an iPhone Shortcut.
+function openQuickEntry(){
+ const requested=new URLSearchParams(location.search).get('registrar');
+ if(!['1','ingreso','gasto'].includes(requested))return;
+ const now=new Date();
+ $('date').value=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
+ openMove(requested==='gasto'?'expense':'income');
+}
+window.addEventListener('resize',drawChart);initCloud();openQuickEntry();
 </script>
 </body>
 </html>
