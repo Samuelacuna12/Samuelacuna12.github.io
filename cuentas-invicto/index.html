@@ -204,7 +204,7 @@ async function initCloud(){
   const remote=await rpc('cuentas_invicto_list',{p_workspace_hash:cloudHash});
   const remoteData=remoteToLocal(remote);
   const merged=new Map(remoteData.map(x=>[String(x.id),x]));
-  data.forEach(x=>merged.set(String(x.id),x));
+  data.forEach(x=>{if(!merged.has(String(x.id)))merged.set(String(x.id),x)});
   data=Array.from(merged.values()).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
   saveLocal();
   if(data.length){
