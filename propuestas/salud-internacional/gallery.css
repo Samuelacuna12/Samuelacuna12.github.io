@@ -4,3 +4,6 @@
 
 /* RELEASE V4 */
 .current-links{display:flex;gap:20px;flex-wrap:wrap;align-items:center;font-size:11px}.current-links>a{text-decoration:underline;text-underline-offset:4px}.current-links>span{font-size:9px;color:#587361;flex-basis:100%;margin-top:0}.new-website{font-weight:600}
+
+/* EDITORIAL V5 */
+.web-preview{display:block;margin:-32px -32px 28px;aspect-ratio:1.76;overflow:hidden;background:#e6ede5;border-bottom:1px solid #dae4d5}.web-preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s}.web-preview:hover img{transform:scale(1.025)}.current-links>span{line-height:1.6}.proposal-card h2{margin-top:20px}@media(max-width:760px){.web-preview{margin:-25px -25px 24px}}@media(prefers-reduced-motion:reduce){.web-preview img{transition:none}}
