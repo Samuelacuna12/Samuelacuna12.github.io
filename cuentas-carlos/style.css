@@ -120,3 +120,11 @@ button:hover{transform:translateY(-1px)}
   .tx{grid-template-columns:auto 1fr auto}.tx .mini{display:none}.form{grid-template-columns:1fr}.span2{grid-column:auto}
   .login-card{grid-template-columns:1fr}.login-art{display:none}.login-form{padding:30px 24px}.draftrow{grid-template-columns:1fr 1fr}.draftrow>*:last-child{grid-column:1/-1}.user small{display:none}
 }
+/* Editing and discussion use the existing account's surfaces and controls. */
+.tx-note{font-size:11px;line-height:1.5;color:#62625e;margin:7px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.comment{padding:15px;background:#fff;border:1px solid var(--line);border-radius:14px;margin:10px 0}
+.comment time{font-size:11px;color:#62625e}.comment p{font-size:13px;line-height:1.6;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0}
+.comment-list{max-height:38vh;overflow:auto}.draftrow label{font-size:10px;color:#62625e;min-width:0}.draftrow select{width:100%;min-height:36px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-top:5px}.draftrow input{margin-top:5px;min-height:36px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #398c48;outline-offset:3px}
+button:disabled{opacity:.55;cursor:wait;transform:none}.modal .mini{display:inline-block}
+@media(max-width:800px){.tx .mini{display:inline-block;min-height:36px;font-size:11px}.tx>.row{grid-column:2/-1;gap:6px}.tx-main small{font-size:11px;overflow-wrap:anywhere}.modalback{padding:10px}.modal{padding:20px;max-height:94dvh}.draftrow{grid-template-columns:1fr 1fr}.tx-note{font-size:12px}}

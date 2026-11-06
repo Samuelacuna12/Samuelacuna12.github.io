@@ -2,7 +2,7 @@ const app=document.getElementById('app');
 const SB_URL='https://ntafomzqtjdfslanggak.supabase.co';
 const SB_KEY='sb_publishable_IBdKw7gD078zjvB38UWcVQ_dyV4lI9s';
 const sb=supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
-const state={mov:[],items:[],rates:[],tab:'resumen',draft:[],file:null};
+const state={mov:[],items:[],rates:[],comments:[],tab:'resumen',draft:[],file:null};
 const SIZES=['S','M','L','XL','2XL','3XL','4XL'];
 const $=q=>document.querySelector(q);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
@@ -14,7 +14,9 @@ function totals(){const paid=state.mov.filter(x=>x.movement_type==='payment').re
 function balanceText(v){return v>0?'Carlos debe entregar '+money(v)+' en mercancía a Invicto.':v<0?'Invicto debe pagarle '+money(Math.abs(v))+' a Carlos.':'Invicto y Carlos están al día.'}
 
 async function loadData(){
-  const r=await sb.rpc('carlos_public_state');
+  const [r,c]=await Promise.all([sb.rpc('carlos_public_state'),sb.from('carlos_comments').select('*').order('created_at')]);
+  if(c.error)throw c.error;
+  state.comments=c.data||[];
   if(r.error)throw r.error;
   const d=r.data||{};
   state.mov=Array.isArray(d.movements)?d.movements:[];
@@ -38,8 +40,9 @@ function tab(x){state.tab=x;render()}
 function content(){if(state.tab==='mov')return movementPanel();if(state.tab==='prod')return productionPanel();if(state.tab==='rates')return ratesPanel();return summaryPanel()}
 function summaryPanel(){const a=state.mov.slice(0,8);return '<div class="panel"><div class="panel-head"><h2>Actividad reciente</h2><span>'+state.mov.length+' movimientos</span></div><div class="panel-body">'+(a.length?a.map(txRow).join(''):'<div class="empty">Todavía no hay movimientos registrados.</div>')+'</div></div>'}
 function txRow(x){
+  const count=state.comments.filter(c=>c.movement_id===x.id).length;
   const p=x.movement_type==='payment', doc=x.document_path&&String(x.document_path).startsWith('db:');
-  return '<div class="tx"><div class="tx-ico">'+(p?'↗':'↙')+'</div><div class="tx-main"><b>'+(p?'Consignación a Carlos':'Entrega de producción')+'</b><small>'+esc(x.movement_date)+' · '+esc(x.reference||'Sin referencia')+'</small></div><div class="tx-val '+(p?'pos':'neg')+'">'+(p?'+':'−')+' '+money(x.amount)+'</div><div class="row">'+(doc?'<button class="mini" onclick="openDoc(\''+esc(String(x.document_path).slice(3))+'\')">Soporte</button>':'')+'<button class="mini danger" onclick="delMovement(\''+esc(x.id)+'\')">Eliminar</button></div></div>';
+  return '<div class="tx"><div class="tx-ico">'+(p?'↗':'↙')+'</div><div class="tx-main"><b>'+(p?'Consignación a Carlos':'Entrega de producción')+'</b><small>'+esc(x.movement_date)+' · '+esc(x.reference||'Sin referencia')+'</small>'+(x.notes?'<p class="tx-note">'+esc(x.notes)+'</p>':'')+'</div><div class="tx-val '+(p?'pos':'neg')+'">'+(p?'+':'−')+' '+money(x.amount)+'</div><div class="row">'+(doc?'<button class="mini" onclick="openDoc(\''+esc(String(x.document_path).slice(3))+'\')">Soporte</button>':'')+'<button class="mini" onclick="editMovement(\''+esc(x.id)+'\')">Editar</button><button class="mini" onclick="commentsModal(\''+esc(x.id)+'\')">Comentarios'+(count?' ('+count+')':'')+'</button><button class="mini danger" onclick="delMovement(\''+esc(x.id)+'\')">Eliminar</button></div></div>';
 }
 function movementPanel(){return '<div class="panel"><div class="panel-head"><h2>Todos los movimientos</h2><span>'+state.mov.length+' registros</span></div><div class="panel-body">'+(state.mov.length?state.mov.map(txRow).join(''):'<div class="empty">No hay movimientos.</div>')+'</div></div>'}
 function productionPanel(){

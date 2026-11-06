@@ -26,15 +26,17 @@ function deliveryModal(){
 }
 function addDraft(){
   const p=$('#dp').value,d=$('#dg').value,m=$('#dm').value,s=$('#ds').value,q=Number($('#dq').value||0),c=Number($('#dc').value||0)||rateFor(p,d,m,s);
-  if(q<=0)return toast('Ingresa una cantidad válida');
+  if(!Number.isInteger(q)||q<=0)return toast('Ingresa una cantidad entera válida');
   state.draft.push({product_type:p,design_type:d,material:m,size:s,quantity:q,unit_cost:c});
   $('#dq').value='';$('#dc').value='';drawDraft();
 }
+function draftOptions(options,value){return options.map(v=>'<option'+(v===value?' selected':'')+'>'+esc(v)+'</option>').join('')}
 function drawDraft(){
-  const h=$('#draft');if(!h)return;
-  if(!state.draft.length){h.innerHTML='<div class="empty">Agrega líneas o importa un archivo.</div>';return}
-  h.innerHTML=state.draft.map((x,i)=>'<div class="draftrow"><b>'+esc(x.product_type)+'</b><span>'+esc(x.design_type)+'</span><span>'+esc(x.material)+'</span><b>'+esc(x.size)+'</b><span>'+x.quantity+' und.</span><input type="number" min="0" value="'+(x.unit_cost||'')+'" onchange="state.draft['+i+'].unit_cost=Number(this.value||0);drawDraft()"><button class="mini danger" onclick="state.draft.splice('+i+',1);drawDraft()">Quitar</button></div>').join('')+'<div style="text-align:right;margin-top:12px;font-weight:800">Total entrega: '+money(state.draft.reduce((a,x)=>a+x.quantity*x.unit_cost,0))+'</div>';
+ const h=$('#draft');if(!h)return;
+ if(!state.draft.length){h.innerHTML='<div class="empty">Agrega líneas o importa un archivo.</div>';return}
+ h.innerHTML=state.draft.map((x,i)=>'<div class="draftrow">'+[['product_type','Producto',['Boxer','Brief']],['design_type','Diseño',['Unicolor','Estampado']],['material','Material',['Algodón','Licra','Otro']],['size','Talla',SIZES]].map(([k,label,options])=>'<label>'+label+'<select aria-label="'+label+' línea '+(i+1)+'" onchange="state.draft['+i+'][\''+k+'\']=this.value">'+draftOptions(options,x[k])+'</select></label>').join('')+'<label>Cantidad<input aria-label="Cantidad línea '+(i+1)+'" type="number" min="1" step="1" value="'+Number(x.quantity)+'" onchange="state.draft['+i+'].quantity=Number(this.value);drawDraft()"></label><label>Costo / unidad<input aria-label="Costo línea '+(i+1)+'" type="number" min="0.01" step="0.01" value="'+Number(x.unit_cost)+'" onchange="state.draft['+i+'].unit_cost=Number(this.value);drawDraft()"></label><button class="mini danger" type="button" onclick="state.draft.splice('+i+',1);drawDraft()">Quitar</button></div>').join('')+'<div style="text-align:right;margin-top:12px;font-weight:800">Total entrega: '+money(state.draft.reduce((a,x)=>a+x.quantity*x.unit_cost,0))+'</div>';
 }
+
 function key(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
 function pick(r,w){for(const k of Object.keys(r)){const z=key(k);if(w.some(x=>z===x||z.includes(x)))return r[k]}}
 function pSize(v){let z=String(v||'').toUpperCase().replace(/\s+/g,'').replace('XXXXL','4XL').replace('XXXL','3XL').replace('XXL','2XL');return SIZES.includes(z)?z:null}
@@ -66,7 +68,7 @@ async function fileToBase64(file){
 }
 async function saveDelivery(){
   if(!state.draft.length)return toast('Agrega al menos una línea');
-  if(state.draft.some(x=>Number(x.unit_cost)<=0))return toast('Hay líneas sin costo unitario');
+  if(state.draft.some(x=>!Number.isInteger(Number(x.quantity))||x.quantity<=0||!Number.isFinite(Number(x.unit_cost))||x.unit_cost<=0))return toast('Revisa las cantidades y costos de la entrega');
   try{
     const amount=state.draft.reduce((a,x)=>a+x.quantity*x.unit_cost,0);
     const b64=state.file?await fileToBase64(state.file):null;
@@ -97,4 +99,51 @@ async function saveRate(e){
   });
   if(r.error)return toast(r.error.message);
   toast('Tarifa guardada');closeModal();await loadData();render();
+}
+function editMovement(id){
+  const x=state.mov.find(m=>m.id===id);if(!x)return;
+  if(x.movement_type==='delivery'){
+    deliveryModal();
+    state.draft=state.items.filter(i=>i.movement_id===id).map(i=>({...i}));
+    $('#modal h2').textContent='Editar entrega';
+    $('#modal p').textContent='Corrige el detalle. El total y el saldo se recalcularán al guardar.';
+    $('#dd').value=x.movement_date;$('#dr').value=x.reference||'';
+    const file=$('#modal input[type=file]');
+    file.closest('.field').innerHTML='<label for="en">NOTA</label><textarea id="en"></textarea>';
+    $('#en').value=x.notes||'';
+    const save=$('#modal button[onclick="saveDelivery()"]');
+    save.textContent='Guardar cambios';save.onclick=()=>saveMovement(id);
+    drawDraft();
+  }else{
+    modal('<button class="close" aria-label="Cerrar" onclick="closeModal()">×</button><h2>Editar consignación</h2><p>El saldo se recalculará con el valor corregido.</p><form class="form" onsubmit="saveMovement(\''+esc(id)+'\',event)"><div class="field"><label for="ed">FECHA</label><input id="ed" type="date" required></div><div class="field"><label for="ea">VALOR CONSIGNADO</label><input id="ea" type="number" min="0.01" step="0.01" required></div><div class="field span2"><label for="er">REFERENCIA / COMPROBANTE</label><input id="er"></div><div class="field span2"><label for="en">NOTA</label><textarea id="en"></textarea></div><div class="span2 row"><button class="primary">Guardar cambios</button><button class="secondary" type="button" onclick="closeModal()">Cancelar</button></div></form>');
+    $('#ed').value=x.movement_date;$('#ea').value=x.amount;$('#er').value=x.reference||'';$('#en').value=x.notes||'';
+  }
+}
+async function saveMovement(id,event){
+  event?.preventDefault();if(state.saving)return;
+  const x=state.mov.find(m=>m.id===id),delivery=x.movement_type==='delivery';
+  if(delivery&&(!state.draft.length||state.draft.some(i=>!Number.isInteger(Number(i.quantity))||i.quantity<=0||!Number.isFinite(Number(i.unit_cost))||i.unit_cost<=0)))return toast('Revisa las cantidades y costos de la entrega');
+  const date=$(delivery?'#dd':'#ed').value,amount=delivery?0:Number($('#ea').value);
+  if(!date||!Number.isFinite(amount)||(!delivery&&amount<=0))return toast('Revisa la fecha y el valor');
+  state.saving=true;
+  const button=$('#modal .primary');button.disabled=true;button.textContent='Guardando…';
+  try{
+    const r=await sb.rpc('carlos_public_edit_movement',{p_id:id,p_date:date,p_amount:amount,p_reference:$(delivery?'#dr':'#er').value.trim()||null,p_notes:$('#en').value.trim()||null,p_items:delivery?state.draft:null,p_expected_updated_at:x.updated_at});
+    if(r.error)throw r.error;
+    closeModal();await loadData();render();toast('Cambios guardados. Saldo actualizado');
+  }catch(e){toast(e.message||'No se pudieron guardar los cambios')}finally{state.saving=false;button.disabled=false;button.textContent='Guardar cambios'}
+}
+function commentsModal(id){
+  const x=state.mov.find(m=>m.id===id);if(!x)return;
+  const comments=state.comments.filter(c=>c.movement_id===id);
+  modal('<button class="close" aria-label="Cerrar" onclick="closeModal()">×</button><h2>Comentarios</h2><p>'+esc(x.movement_date)+' · '+esc(x.reference||'Sin referencia')+' · '+money(x.amount)+'</p>'+(x.notes?'<div class="comment"><b>Nota del movimiento</b><p>'+esc(x.notes)+'</p></div>':'')+'<div class="comment-list">'+(comments.length?comments.map(c=>'<article class="comment"><time>'+esc(new Intl.DateTimeFormat('es-CO',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Bogota'}).format(new Date(c.created_at)))+'</time><p>'+esc(c.body)+'</p></article>').join(''):'<div class="empty">Todavía no hay comentarios en esta transacción.</div>')+'</div><form class="form" onsubmit="saveComment(\''+esc(id)+'\',event)"><div class="field span2"><label for="comment-body">NUEVO COMENTARIO</label><textarea id="comment-body" required maxlength="2000" placeholder="Escribe una aclaración o seguimiento…"></textarea></div><div class="span2 row"><button class="primary">Guardar comentario</button><button class="secondary" type="button" onclick="closeModal()">Cerrar</button></div></form>');
+}
+async function saveComment(id,event){
+  event.preventDefault();if(state.saving)return;
+  const body=$('#comment-body').value.trim();if(!body)return toast('Escribe un comentario');
+  state.saving=true;const button=$('#modal .primary');button.disabled=true;button.textContent='Guardando…';
+  try{
+    const r=await sb.from('carlos_comments').insert({movement_id:id,body});if(r.error)throw r.error;
+    await loadData();render();closeModal();commentsModal(id);toast('Comentario guardado');
+  }catch(e){toast(e.message||'No se pudo guardar el comentario')}finally{state.saving=false;button.disabled=false;button.textContent='Guardar comentario'}
 }
