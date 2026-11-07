@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Demo independiente de agenda y asistente de citas para barberías.">
+<title>Turno — agenda para barberías</title>
+<style>
+:root{--ink:#101212;--paper:#f3f1ea;--lime:#d5f36a;--muted:#70746d;--line:#d8d7cf;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{padding:20px clamp(20px,5vw,72px);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.brand{font-weight:900;letter-spacing:-.06em;font-size:24px}.brand span{display:inline-block;background:var(--lime);padding:0 6px;transform:rotate(-2deg)}
+.badge{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);text-align:right}
+main{max-width:1180px;margin:auto;padding:48px 24px 72px}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding:30px 0 56px}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.18em;font-weight:800;color:#61665d}
+h1{font-size:clamp(46px,7vw,88px);line-height:.94;letter-spacing:-.075em;margin:16px 0 22px;max-width:700px}
+h1 em{font-style:normal;color:#657a22}.intro{font-size:18px;color:#50544e;max-width:560px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 14px 36px #171b1210}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.stat{background:#f7f7f2;padding:16px;border-radius:12px}.stat b{font-size:22px;display:block;letter-spacing:-.04em}.stat small{color:var(--muted)}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.section-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:20px}.section-head h2{font-size:24px;letter-spacing:-.05em;margin:0}.step{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+label{display:block;font-size:13px;font-weight:700;margin:15px 0 7px}input,select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink)}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.time{border:1px solid var(--line);border-radius:9px;padding:10px 4px;background:#fff;cursor:pointer;font:inherit;font-size:13px}.time.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+button.primary{border:0;background:var(--lime);color:var(--ink);padding:14px 18px;border-radius:10px;font-weight:850;cursor:pointer;width:100%;margin-top:20px;font:inherit;font-weight:800}
+.note{font-size:12px;color:var(--muted);margin-top:12px}.chat{display:flex;flex-direction:column;min-height:410px}.chatlog{display:flex;flex-direction:column;gap:10px;flex:1;overflow:auto;padding:10px 0}.bubble{max-width:88%;padding:11px 13px;border-radius:13px;background:#f2f3ed;font-size:14px}.bubble.bot{align-self:flex-start}.bubble.user{align-self:flex-end;background:var(--ink);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 12px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font:inherit;font-size:12px;cursor:pointer}
+.chat-entry{display:flex;gap:8px}.chat-entry input{min-width:0}.chat-entry button{border:0;border-radius:10px;padding:0 15px;background:var(--ink);color:#fff;font-weight:700;cursor:pointer}
+.confirm{display:none;margin-top:14px;background:#eff7d7;border:1px solid #d6e8a2;padding:14px;border-radius:11px;font-size:14px}.confirm.show{display:block}
+footer{border-top:1px solid var(--line);padding:20px 24px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:820px){.hero,.layout{grid-template-columns:1fr}.hero{gap:24px;padding:12px 0 35px}.chat{min-height:360px}main{padding-top:32px}.badge{max-width:160px}}
+</style></head>
+<body>
+<header><div class="brand">turno<span>.</span></div><div class="badge">Prototipo interactivo<br>Agenda + asistente</div></header>
+<main>
+<section class="hero"><div><div class="kicker">Una idea para tu barbería</div><h1>Menos vueltas.<br><em>Más citas listas.</em></h1><p class="intro">Un cliente elige el servicio, mira horarios disponibles y deja sus datos. El asistente responde preguntas frecuentes y lo guía para pedir una cita.</p><div class="stats"><div class="stat"><b>01</b><small>Elige servicio y horario</small></div><div class="stat"><b>02</b><small>Confirma la solicitud</small></div></div></div><div class="card"><div class="kicker">Así se vería en el celular</div><p style="font-size:20px;line-height:1.2;letter-spacing:-.04em;margin:12px 0">El cliente puede revisar la agenda sin esperar una respuesta manual.</p><p style="color:var(--muted);margin:0">Este prototipo ilustra el flujo. Los horarios, servicios, personal y reglas se configurarían con cada barbería.</p></div></section>
+<section class="layout">
+<div class="card"><div class="section-head"><div><div class="step">Reserva de prueba</div><h2>Escoge tu turno</h2></div><div class="step">01 / 02</div></div>
+<label for="service">Servicio</label><select id="service"><option>Corte clásico · 35 min</option><option>Corte + barba · 55 min</option><option>Perfilado de barba · 25 min</option><option>Diseño + corte · 45 min</option></select>
+<label for="date">Día</label><input id="date" type="date">
+<label>Hora disponible</label><div class="times" id="times"></div>
+<label for="client">Tu nombre</label><input id="client" placeholder="Ej. Mateo" autocomplete="name">
+<label for="phone">Celular para confirmar</label><input id="phone" placeholder="300 000 0000" inputmode="tel" autocomplete="tel">
+<button class="primary" id="book">Solicitar esta cita ↗</button>
+<div class="confirm" id="confirm"></div>
+<p class="note">Demostración: esta reserva se guarda solo en este navegador. No se envía al negocio ni bloquea una hora real.</p>
+</div>
+<div class="card chat"><div class="section-head"><div><div class="step">Asistente de muestra</div><h2>¿Qué necesitas?</h2></div><div class="step">Chat simulado</div></div>
+<div class="chatlog" id="chatlog"><div class="bubble bot">¡Hola! Puedo ayudarte a revisar servicios, duración y cómo pedir una cita. ¿Qué quieres saber?</div></div>
+<div class="chips"><button class="chip" data-q="servicios">Ver servicios</button><button class="chip" data-q="duracion">¿Cuánto dura?</button><button class="chip" data-q="cita">Pedir una cita</button><button class="chip" data-q="humano">Hablar con el equipo</button></div>
+<div class="chat-entry"><input id="question" placeholder="Escribe una pregunta…" aria-label="Escribe una pregunta"><button id="ask">Enviar</button></div>
+<p class="note">Respuestas de ejemplo, predefinidas. No es un modelo de IA ni está conectado a WhatsApp.</p></div>
+</section>
+</main><footer>Demo independiente de Samuel Acuña · No es el sitio oficial de ninguna barbería.</footer>
+<script>
+const times=["9:00","10:00","11:30","12:30","14:00","15:00","16:30","17:30"];let chosen=times[0];
+const timeWrap=document.querySelector("#times");function drawTimes(){timeWrap.innerHTML="";times.forEach(t=>{const b=document.createElement("button");b.className="time"+(t===chosen?" active":"");b.textContent=t;b.onclick=()=>{chosen=t;drawTimes()};timeWrap.appendChild(b)})}drawTimes();
+const date=document.querySelector("#date"), today=new Date();today.setMinutes(today.getMinutes()-today.getTimezoneOffset());date.min=today.toISOString().slice(0,10);date.value=date.min;
+document.querySelector("#book").onclick=()=>{const name=document.querySelector("#client").value.trim(),phone=document.querySelector("#phone").value.trim();if(!name||!phone||!date.value){document.querySelector("#confirm").textContent="Completa tu nombre, celular, día y hora para ver la confirmación de ejemplo.";document.querySelector("#confirm").classList.add("show");return}const service=document.querySelector("#service").value.split(" · ")[0];const item={name,phone,service,date:date.value,time:chosen,created:new Date().toISOString()};const key="turno-demo-reservations";const all=JSON.parse(localStorage.getItem(key)||"[]");all.unshift(item);localStorage.setItem(key,JSON.stringify(all));const box=document.querySelector("#confirm");box.innerHTML="<b>Solicitud de prueba registrada.</b><br>"+service+" · "+date.value+" · "+chosen+"<br><small>Queda guardada en este navegador. El negocio no recibió estos datos.</small>";box.classList.add("show")};
+const log=document.querySelector("#chatlog");function bubble(text,who){const d=document.createElement("div");d.className="bubble "+who;d.textContent=text;log.appendChild(d);log.scrollTop=log.scrollHeight}
+function answer(q){const s=q.toLowerCase();if(/servicio|corte|barba/.test(s))return "En esta demo: corte clásico (35 min), corte + barba (55 min), perfilado (25 min) y diseño + corte (45 min). Cada negocio configuraría aquí sus servicios reales.";if(/dura|tiempo/.test(s))return "La duración depende del servicio. En el ejemplo, un corte toma 35 minutos y corte + barba 55. Son datos ficticios para mostrar el flujo.";if(/cita|agenda|reserv/.test(s))return "Puedes usar el formulario de la izquierda: eliges servicio, fecha y hora, pones tus datos y ves una confirmación de prueba.";if(/humano|persona|equipo/.test(s))return "En una implementación se puede incluir una opción para pasar la conversación al equipo. Esta demo no envía mensajes, así que aquí no transfiere el chat.";return "Este asistente de muestra responde preguntas frecuentes preparadas. Para algo más específico, el negocio definiría sus respuestas y cuándo pasar la conversación a una persona."}
+function send(q){q=q.trim();if(!q)return;bubble(q,"user");setTimeout(()=>bubble(answer(q),"bot"),180)}
+document.querySelector("#ask").onclick=()=>{const i=document.querySelector("#question");send(i.value);i.value=""};document.querySelector("#question").addEventListener("keydown",e=>{if(e.key==="Enter")document.querySelector("#ask").click()});document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>send(b.textContent));
+</script></body></html>
