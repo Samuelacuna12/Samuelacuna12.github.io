@@ -1,0 +1,26 @@
+{
+  "company": "Plicata S.A.S.",
+  "country": "Colombia",
+  "city": "Medellín",
+  "language": "es",
+  "reviewedAt": "2026-11-07",
+  "evidence": [
+    {"claim":"Marca colombiana de diseño, producción y venta de ropa femenina; dirección en Laureles, Medellín.","source":"https://plicata.com.co/","checked":"2026-11-07"},
+    {"claim":"Catálogo oficial lista Jean Bota Ancha Azul Oscuro, Jean Mom Fit y Jean Baggy Con Lavado; fichas muestran precio de $83.993 cuando se consultaron.","source":"https://plicata.com.co/collections/jeans","checked":"2026-11-07"},
+    {"claim":"El jean bota ancha se describe como índigo 100% algodón; el Mom Fit como índigo algodón 100%; el Baggy con lavado como índigo algodón 100%.","source":"https://plicata.com.co/collections/jeans","checked":"2026-11-07"},
+    {"claim":"La tienda publica envío nacional, envío gratis sobre $250.000 y contacto comercial visible.","source":"https://plicata.com.co/","checked":"2026-11-07"},
+    {"claim":"Plicata mantiene una sección mayorista con beneficios publicados y un CTA para solicitar información mayorista.","source":"https://plicata.com.co/pages/mayorista","checked":"2026-11-07"}
+  ],
+  "proposalHypothesis": {
+    "web": "Guía de elección de corte que dirige a fichas oficiales y deja talla/disponibilidad a la tienda oficial.",
+    "automation": "Enrutamiento sencillo por preferencia de corte; demo local que filtra tres referencias y abre su ficha.",
+    "bot": "Flujo de botones cerrados para clasificar la preferencia y recomendar enlaces. No es IA abierta ni está integrado a Plicata."
+  },
+  "knownContact": {"phone":"+573156600504","email":"ventasplicata@gmail.com","source":"https://plicata.com.co/","status":"public_on_official_site"},
+  "limitations": [
+    "No conexión a Shopify, inventario, CRM, WhatsApp ni analítica de Plicata.",
+    "Los precios se observan en la página oficial y pueden variar; disponibilidad y tallas deben confirmarse allí.",
+    "Las composiciones de producto de esta demo son gráficos de concepto, no fotografías de prendas oficiales.",
+    "La recomendación es determinista y por opciones predefinidas; no es un agente de IA."
+  ]
+}
