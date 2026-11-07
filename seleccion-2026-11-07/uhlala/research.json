@@ -1,0 +1,25 @@
+{
+  "company": "Uhlala Beauty",
+  "country": "México",
+  "city": "Zapotlanejo, Jalisco (envíos desde); venta online",
+  "language": "es-MX",
+  "researchedAt": "2026-11-07",
+  "sources": [
+    {"url":"https://www.uhlala.mx/pages/nosotros","supports":["Tienda online de cosméticos, skincare y belleza","declara atención personalizada y recomendaciones de rutina","fundadora Ale De La Torre"]},
+    {"url":"https://www.uhlala.mx/collections/huda-beauty","supports":["colección Huda Beauty y productos visibles en el catálogo"]},
+    {"url":"https://www.uhlala.mx/collections/sueros-y-tratamientos","supports":["colección de sueros y tratamientos"]},
+    {"url":"https://www.uhlala.mx/collections/perfumes","supports":["colección de perfumes y productos de fragancia"]},
+    {"url":"https://www.uhlala.mx/pages/pedidos-especiales","supports":["pedido especial: compartir referencia, confirmar disponibilidad y precio; condiciones de pago y plazos publicadas"]},
+    {"url":"https://www.uhlala.mx/pages/preguntas-frecuentes","supports":["envío estándar $139 MXN; gratis sobre $3,500 MXN; procesamiento hasta 48 horas hábiles; paquetería y plazos sujetos a cobertura"]},
+    {"url":"https://www.uhlala.mx/pages/contact","supports":["Instagram @uhlala.mx, WhatsApp +52 33 2205 5037, correo hola@uhlala.mx"]}
+  ],
+  "demo": {
+    "type":"independent static prototype",
+    "web":"category discovery cards link to the official store collections; no order or checkout",
+    "automation":"local simulated shipping-question routing from publicly listed FAQ, no messaging, tracking, CRM, inventory, or Shopify integration",
+    "bot":"deterministic buttons and fixed replies; not generative AI; no diagnosis or medical advice",
+    "data":"no user data collected or transmitted"
+  },
+  "salesEvidence":"Monthly sales not verified; do not infer from catalogue, reviews or social audience.",
+  "notOfficial":"Independent demo by Samuel Acuña; no Uhlala partnership or active integration."
+}
