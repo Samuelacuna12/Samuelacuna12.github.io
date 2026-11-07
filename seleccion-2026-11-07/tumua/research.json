@@ -1,0 +1,44 @@
+{
+  "prospect": "Tumua Store",
+  "reviewedAt": "2026-11-07",
+  "officialSources": [
+    "https://www.tumua.co/",
+    "https://www.tumua.co/product-page/camiseta-oversize-negra"
+  ],
+  "verifiedFacts": {
+    "location": "Carrera 47a #91-62, La Castellana, Bogotá, Colombia",
+    "manufacturer": true,
+    "materials": "The official homepage says its garments are 100% cotton.",
+    "customProducts": ["hoodies", "crewneck sweatshirts", "t-shirts", "caps"],
+    "customizationMethods": ["DTF", "embroidery", "heat-transfer vinyl", "printing"],
+    "publishedPublicContacts": {
+      "general": "+57 301 520 9962",
+      "wholesale": "+57 313 354 0679"
+    },
+    "catalogExamples": [
+      {"name":"Polo blanca", "displayedPriceCOP":52000, "source":"https://www.tumua.co/"},
+      {"name":"Polo mujer blanca", "displayedPriceCOP":49900, "source":"https://www.tumua.co/"},
+      {"name":"Oversize negra", "displayedPriceCOP":59900, "source":"https://www.tumua.co/product-page/camiseta-oversize-negra", "availabilityAtReview":"Agotado"}
+    ]
+  },
+  "designConcept": "Independent product experience focused on turning a custom garment idea into a quote-ready request. Warm technical-green paper, deep ink typography, fluorescent citron for interactive moments, and garment shapes as simple illustrations rather than stock people. A single page narrative moves from product choice to structured brief.",
+  "decisionLedger": [
+    {"decision":"Prominent custom-order path", "source":"Tumua homepage personalization section", "reason":"The custom garment offer differentiates the shop from ordinary product discovery."},
+    {"decision":"Collect garment, marking method, quantity and brief before contact", "source":"Tumua's published customization methods", "reason":"These fields are necessary to start a relevant quotation; no unsupported price estimate is shown."},
+    {"decision":"Use no human photos; use simple garment silhouettes plus one official product image", "source":"Business context and official product page", "reason":"Keeps the preview product-led without inventing campaign photography."},
+    {"decision":"Label bot as a rules-based prototype", "source":"Implementation limitation", "reason":"No connected AI, product catalog API or business systems are available."}
+  ],
+  "prototypeFunctions": [
+    "Product cards prefill the customization request form.",
+    "Form validates quantity, composes a WhatsApp draft addressed to Tumua's publicly listed wholesale number, and requires the visitor to confirm sending in WhatsApp.",
+    "Assistant demo answers a limited set of product and customization questions using deterministic rules.",
+    "Responsive layout with a compact navigation toggle on mobile."
+  ],
+  "limitations": [
+    "Not Tumua's official site and not affiliated with Tumua.",
+    "No live stock, size, price or custom quote lookup.",
+    "The chatbot is deterministic; it is not generative AI and is not connected to WhatsApp.",
+    "The WhatsApp draft is not sent by the prototype; the visitor must review and send it.",
+    "The example official product image may represent a sold-out listing; the page identifies it as a catalog reference, not a current offer."
+  ]
+}
