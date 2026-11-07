@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Prototipo independiente de experiencia de compra para Plicata.">
+  <title>Plicata — Tu próximo fit</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="notice">HECHO EN COLOMBIA · ENVÍOS A TODO EL PAÍS · ENVÍO GRATIS DESDE $250.000*</div>
+  <header class="nav"><a class="wordmark" href="#inicio">PLICATA<span>®</span></a><nav><a href="#denim">DENIM</a><a href="#elige">ENCUENTRA TU FIT</a><a href="#bot">ASESORA DIGITAL</a></nav><a class="bag" href="#elige">TU SELECCIÓN <b id="bagCount">0</b></a></header>
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero-copy"><p class="eyebrow">DENIM, A TU MANERA <i>01 / 03</i></p><h1>Encuentra<br>tu <em>fit.</em></h1><p class="intro">Una selección rápida para llegar al corte que buscas. Elige cómo te gusta vestir y mira opciones reales del catálogo.</p><a class="button button-light" href="#elige">ENCONTRAR MI FIT <span>↘</span></a></div>
+      <div class="hero-art" aria-label="Composición gráfica inspirada en denim índigo"><div class="fabric fabric-back"></div><div class="fabric fabric-front"><span>DENIM<br>STUDY<br>COLOMBIA</span></div><div class="stitch"></div><div class="tag">P / 01<br>100% COLOMBIANO</div></div>
+      <div class="hero-foot"><span>MEDELLÍN · COLOMBIA</span><span>ESTE PROTOTIPO NO ES UNA TIENDA OFICIAL</span></div>
+    </section>
+    <section class="intro-strip"><span class="tiny-label">PROPUESTA DE EXPERIENCIA</span><p>Menos vueltas entre categorías.<br><strong>Más claridad para elegir.</strong></p><span class="tiny-label right">DESLIZA PARA EXPLORAR ↓</span></section>
+    <section class="chooser" id="elige">
+      <div class="section-head"><div><p class="eyebrow">01 — EXPLORADOR DE DENIM</p><h2>¿Qué corte<br>te provoca?</h2></div><p class="section-note">Una guía interactiva sugiere prendas según el corte que elijas. No consulta tallas ni inventario en vivo.</p></div>
+      <div class="fit-options" role="group" aria-label="Elige tu corte">
+        <button class="fit-option selected" data-fit="wide"><span>01</span><strong>BOTA ANCHA</strong><small>Más amplitud desde la cadera</small></button>
+        <button class="fit-option" data-fit="mom"><span>02</span><strong>MOM FIT</strong><small>Una silueta clásica de tiro alto</small></button>
+        <button class="fit-option" data-fit="baggy"><span>03</span><strong>BAGGY</strong><small>Volumen relajado y lavado</small></button>
+      </div>
+      <div class="recommendation" id="recommendation" aria-live="polite"></div>
+    </section>
+    <section class="products" id="denim">
+      <div class="products-top"><p class="eyebrow">02 — SELECCIÓN DEL CATÁLOGO</p><a href="https://plicata.com.co/collections/all" target="_blank" rel="noreferrer">VER CATÁLOGO OFICIAL ↗</a></div>
+      <div class="product-grid">
+        <article class="product-card"><a class="product-image img-wide" href="https://plicata.com.co/products/jean-bota-ancha-azul-claro-2" target="_blank" rel="noreferrer"><span>DENIM<br>WIDE</span><b>01 / 03</b></a><div class="product-info"><div><p>JEAN · CORTE AMPLIO</p><h3>Jean bota ancha</h3></div><strong>$83.993*</strong></div><a class="product-link" href="https://plicata.com.co/products/jean-bota-ancha-azul-claro-2" target="_blank" rel="noreferrer">VER EN PLICATA ↗</a></article>
+        <article class="product-card"><a class="product-image img-mom" href="https://plicata.com.co/products/jean-mom-fit-4" target="_blank" rel="noreferrer"><span>DENIM<br>MOM</span><b>02 / 03</b></a><div class="product-info"><div><p>JEAN · FIT CLÁSICO</p><h3>Jean mom fit</h3></div><strong>$83.993*</strong></div><a class="product-link" href="https://plicata.com.co/products/jean-mom-fit-4" target="_blank" rel="noreferrer">VER EN PLICATA ↗</a></article>
+        <article class="product-card"><a class="product-image img-baggy" href="https://plicata.com.co/products/jean-baggy-con-lavado" target="_blank" rel="noreferrer"><span>DENIM<br>BAGGY</span><b>03 / 03</b></a><div class="product-info"><div><p>JEAN · LAVADO</p><h3>Jean baggy</h3></div><strong>$83.993*</strong></div><a class="product-link" href="https://plicata.com.co/products/jean-baggy-con-lavado" target="_blank" rel="noreferrer">VER EN PLICATA ↗</a></article>
+      </div><p class="price-note">*Precios observados en páginas oficiales durante la investigación; pueden cambiar. La disponibilidad por talla se confirma en Plicata.</p>
+    </section>
+    <section class="automation" id="automation"><div class="auto-head"><p class="eyebrow">03 — AUTOMATIZACIÓN PROPUESTA</p><h2>Del “me gusta”<br>al producto correcto.</h2><p>Un flujo de orientación puede convertir una preferencia en una lista corta de prendas y abrir el catálogo oficial. Aquí se simula en el navegador: no guarda datos ni se conecta a la tienda.</p></div><div class="flow"><div class="flow-step"><span>01</span><b>La persona elige un corte</b><small>Bota ancha, mom fit o baggy.</small></div><div class="flow-step"><span>02</span><b>El sistema filtra el catálogo</b><small>Muestra solo referencias de esa selección.</small></div><div class="flow-step"><span>03</span><b>Continúa en la tienda</b><small>Abre la ficha oficial para revisar talla y disponibilidad.</small></div><div class="flow-status"><i></i> DEMO LOCAL · SIN DATOS PERSONALES</div></div></section>
+    <section class="bot-section" id="bot"><div class="bot-title"><p class="eyebrow">04 — PROTOTIPO CONVERSACIONAL</p><h2>Una asesora<br><em>para elegir.</em></h2><p>Flujo de botones predefinidos para esta demostración. No es IA ni responde preguntas abiertas.</p></div><div class="chat-shell"><div class="chat-top"><span class="avatar">P</span><div><b>Asesora Plicata</b><small>Prototipo independiente · sin conexión</small></div><i class="online"></i></div><div class="chat-body" id="chatBody"><p class="bubble bot-bubble">¡Hola! ¿Qué tipo de jean quieres explorar?</p><div class="quick-replies"><button data-chat="wide">Bota ancha</button><button data-chat="mom">Mom fit</button><button data-chat="baggy">Baggy</button></div></div><div class="chat-bottom"><span>Respuestas de demostración</span><button id="resetChat" aria-label="Reiniciar conversación">↻</button></div></div></section>
+    <footer><a class="wordmark" href="#inicio">PLICATA<span>®</span></a><div>DEMO CONCEPTUAL HECHA POR SAMUEL ACUÑA<br>NO ES SITIO OFICIAL NI INTEGRACIÓN ACTIVA</div><a href="https://plicata.com.co/" target="_blank" rel="noreferrer">IR A PLICATA ↗</a></footer>
+  </main>
+  <script src="app.js"></script>
+</body></html>
