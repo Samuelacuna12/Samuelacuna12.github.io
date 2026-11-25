@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#141413">
+<meta name="description" content="Guía para elegir entre pago anticipado y contraentrega. Compara margen y caja, usa la calculadora en pesos colombianos y aplica diez estrategias de ecommerce.">
+<link rel="canonical" href="https://samuelacuna12.github.io/guia-pago-anticipado-contraentrega/">
+<title>Pago anticipado o contraentrega | Guía de ecommerce</title>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #f4f3ee;
+  --surface: #fffefa;
+  --ink: #171716;
+  --muted: #524f4a;
+  --line: #d5d2ca;
+  --orange: #fa561e;
+  --orange-dark: #a5310c;
+  --inverse: #fcfaf4;
+  --dark: #141413;
+  --dark-line: #46433e;
+  --dark-muted: #c2bdb2;
+  --wrap: 1240px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-padding-top: 28px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 1rem/1.65 "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-underline-offset: .24em; }
+a:hover { text-decoration-thickness: 2px; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: .65; }
+:focus-visible {
+  outline: 3px solid #1765b0;
+  outline-offset: 4px;
+}
+.site-header :focus-visible, .hero :focus-visible, .site-footer :focus-visible { outline-color: #ffb292; }
+[hidden] { display: none !important; }
+.skip {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 5;
+  transform: translateY(-160%);
+  padding: 10px 16px;
+  background: var(--surface);
+}
+.skip:focus { transform: translateY(0); }
+.wrap { width: min(calc(100% - 96px), var(--wrap)); margin-inline: auto; }
+.site-header, .hero, .site-footer { background: var(--dark); color: var(--inverse); }
+.site-header { border-bottom: 1px solid var(--dark-line); }
+.topbar, .footer-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: inline-flex; gap: 11px; align-items: center; font-size: .88rem; font-weight: 750; text-decoration: none; }
+.monogram {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--dark);
+  background: var(--inverse);
+  border-radius: 5px;
+  font-size: .72rem;
+  font-weight: 850;
+  letter-spacing: -.04em;
+}
+.header-link, .footer-inner > a:last-child { font-size: .86rem; font-weight: 650; }
+.header-link { display: inline-flex; align-items: center; min-height: 44px; gap: .6em; }
+.hero { padding-block: clamp(65px, 9vw, 125px) clamp(70px, 10vw, 135px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.48fr) minmax(0, 1fr); align-items: end; gap: clamp(30px, 5vw, 76px); }
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.4;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.eyebrow::before { width: 8px; height: 8px; background: var(--orange-dark); content: ""; }
+.hero .eyebrow { color: var(--dark-muted); }
+.hero .eyebrow::before { background: var(--orange); }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+h1 {
+  margin: 0 0 24px;
+  font-size: clamp(3rem, 6.4vw, 6.65rem);
+  line-height: .97;
+  font-weight: 820;
+  letter-spacing: -.054em;
+}
+.period { color: var(--orange); }
+.hero-lead { max-width: 31em; color: var(--dark-muted); font-size: clamp(1rem, 1.6vw, 1.22rem); line-height: 1.55; }
+.hero-actions, .calc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 28px; }
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 9px 17px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: .86rem;
+  font-weight: 790;
+  line-height: 1.2;
+}
+.button-primary { background: var(--orange); color: #1a100c; }
+.button-primary:hover { background: #ff6c3a; }
+.button-hero { border-color: #77736c; color: var(--inverse); }
+.button-hero:hover { background: #302d29; }
+.button-secondary { background: var(--surface); border-color: #a6a29b; color: var(--ink); }
+.button-secondary:hover { background: var(--paper); }
+.chart { min-width: 0; align-self: end; margin: 0; border: 1px solid var(--dark-line); background: #1d1c19; }
+.chart-header, .chart-body, .chart figcaption { padding-inline: clamp(16px, 2.1vw, 28px); }
+.chart-header { display: flex; justify-content: space-between; gap: 13px; padding-block: 16px; border-bottom: 1px solid var(--dark-line); font-size: .76rem; line-height: 1.35; font-weight: 720; }
+.chart-header span:last-child { flex-shrink: 0; color: var(--dark-muted); }
+.chart-body { display: grid; gap: 20px; padding-block: 22px; }
+.chart-label { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 2px 9px; font-size: .87rem; }
+.chart-label strong { font-size: clamp(1.2rem, 2.5vw, 1.95rem); font-weight: 760; line-height: 1.1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.chart-track { height: 9px; margin-block: 9px 6px; background: #3a3733; }
+.chart-bar { height: 100%; }
+.chart-bar.prepaid { width: 90.342857%; background: var(--orange); }
+.chart-bar.cod { width: 81.942857%; background: #d0c9bb; }
+.chart-row p, .chart figcaption { color: var(--dark-muted); font-size: .78rem; line-height: 1.5; }
+.chart figcaption { border-top: 1px solid var(--dark-line); padding-block: 13px; }
+.guide-layout { display: grid; grid-template-columns: minmax(170px, 225px) minmax(0, 1fr); gap: clamp(38px, 6.2vw, 96px); }
+.contents { min-width: 0; padding-block: 67px 32px; }
+.contents nav { position: sticky; top: 32px; display: grid; border-top: 2px solid var(--ink); }
+.contents h2 { padding: 13px 0 7px; font-size: .76rem; text-transform: uppercase; letter-spacing: .11em; }
+.contents a { padding-block: 8px; color: var(--muted); font-size: .88rem; line-height: 1.4; text-decoration: none; }
+.contents a:hover { color: var(--orange-dark); text-decoration: underline; }
+.guide-content { min-width: 0; }
+.guide-section, .calculator-section { padding-block: 67px; border-bottom: 1px solid var(--line); }
+.guide-content h2 { max-width: 17em; margin-bottom: 15px; font-size: clamp(2rem, 4.3vw, 3.9rem); font-weight: 810; line-height: 1.04; letter-spacing: -.049em; }
+.guide-content h3 { margin-bottom: 10px; font-size: clamp(1.19rem, 2.2vw, 1.65rem); font-weight: 780; line-height: 1.23; letter-spacing: -.036em; }
+.guide-content p { max-width: 72ch; }
+.guide-content p + p { margin-top: 12px; }
+.guide-content p + h3, .glossary + h3, .pilot-list + h3 { margin-top: 30px; }
+.section-lead, #calc-intro { margin-bottom: 26px; color: var(--muted); font-size: clamp(1.04rem, 1.6vw, 1.19rem); line-height: 1.55; }
+.definitions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 27px 0 14px; border: 1px solid var(--line); background: var(--line); }
+.definitions > div { padding: 19px; background: var(--surface); }
+dt { font-weight: 780; }
+dd { margin: .22em 0 0; color: var(--muted); }
+.decision-list article { padding-block: 20px; border-bottom: 1px solid var(--line); }
+.decision-list article:last-child { border-bottom: 0; }
+.callout {
+  margin-top: 24px;
+  padding: 15px 19px;
+  border-left: 3px solid var(--orange-dark);
+  background: #f9eadd;
+}
+.callout > strong { display: block; margin-bottom: 4px; }
+.formula { margin-block: 26px; padding: 21px 23px; color: var(--inverse); background: var(--dark); }
+.formula p:first-child { color: var(--dark-muted); font-size: .83rem; }
+.formula p + p { margin-top: 7px; font-size: clamp(1.05rem, 2vw, 1.28rem); }
+.glossary { margin-block: 20px; }
+.glossary > div { display: grid; grid-template-columns: minmax(130px, 1fr) minmax(0, 3fr); gap: 18px; border-bottom: 1px solid var(--line); padding-block: 14px; }
+.glossary > div:first-child { border-top: 1px solid var(--line); }
+.glossary dd { margin: 0; }
+.calculator-section h2 { max-width: 14em; }
+.calculator-shell { background: var(--surface); border: 1px solid var(--line); padding: clamp(12px, 3vw, 28px); }
+.calc-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.calc-table th, .calc-table td { border-bottom: 1px solid var(--line); padding: 11px 10px; text-align: left; vertical-align: middle; }
+.calc-table th:first-child { width: 43%; padding-left: 0; }
+.calc-table th:last-child, .calc-table td:last-child { padding-right: 0; }
+.calc-table thead th { border-bottom: 2px solid var(--ink); padding-top: 3px; font-size: .87rem; overflow-wrap: anywhere; }
+.calc-table tbody th { font-size: .9rem; line-height: 1.38; font-weight: 750; }
+.calc-table th small { display: block; margin-top: 4px; color: var(--muted); font-size: .78rem; font-weight: 450; }
+.calc-table input { width: 100%; min-width: 0; min-height: 44px; padding: 7px 9px; border: 1px solid #99968e; border-radius: 4px; background: #fff; color: var(--ink); font-variant-numeric: tabular-nums; }
+.calc-table input:user-invalid { border-color: #ac291c; }
+.calc-actions { margin-block: 19px; }
+.calc-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.calc-result { display: grid; gap: 6px; align-content: start; background: var(--paper); border-top: 3px solid var(--orange-dark); padding: clamp(10px, 2vw, 16px); }
+.calc-result:nth-child(2) { border-top-color: #5e5952; }
+.calc-result span { color: var(--muted); font-size: .82rem; font-weight: 720; line-height: 1.35; }
+.calc-result strong { font-size: clamp(1rem, 3.4vw, 2.4rem); line-height: 1.1; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.calc-verdict, .calc-note { grid-column: 1 / -1; }
+.calc-verdict { margin-top: 3px; font-weight: 750; }
+.calc-note { color: var(--muted); font-size: .88rem; }
+#calc-pendiente { margin-bottom: 9px; }
+.strategy-list { border-top: 2px solid var(--ink); }
+.strategy { display: grid; grid-template-columns: 55px minmax(0, 1fr); gap: 18px; padding-block: 30px; border-bottom: 1px solid var(--line); }
+.strategy:last-child { border-bottom: 0; padding-bottom: 0; }
+.strategy-number { align-self: start; color: var(--orange-dark); font-variant-numeric: tabular-nums; font-size: clamp(1.15rem, 2.9vw, 2rem); line-height: 1.18; letter-spacing: -.05em; font-weight: 790; }
+.strategy ol { margin: 13px 0 17px; padding-left: 1.4em; }
+.strategy li + li { margin-top: .36em; }
+.strategy .metric { margin-top: 15px; color: var(--muted); }
+.metric strong { color: var(--ink); }
+blockquote { max-width: 72ch; margin: 13px 0; padding: 13px 16px; border-left: 2px solid var(--orange-dark); background: var(--surface); }
+.pilot-list { padding-left: 1.5em; }
+.pilot-list li { max-width: 72ch; margin-bottom: 12px; padding-left: .25em; }
+.pilot-list li::marker { color: var(--orange-dark); font-weight: 790; }
+.sources { border-bottom: 0; }
+.sources h2 { font-size: clamp(1.7rem, 3.5vw, 2.7rem); }
+.sources ul { padding-left: 1.3em; }
+.sources li { margin-bottom: 7px; }
+.site-footer { padding-block: 12px; }
+@media (max-width: 1000px) {
+  .wrap { width: min(calc(100% - 64px), var(--wrap)); }
+  .hero-grid { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+  .guide-layout { gap: 35px; grid-template-columns: minmax(155px, 185px) minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .wrap { width: calc(100% - 40px); }
+  .topbar { min-height: 60px; }
+  .hero { padding-block: 56px 43px; }
+  .hero-grid, .guide-layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .hero-grid { gap: 31px; }
+  h1 { font-size: clamp(2.7rem, 10.4vw, 4.8rem); margin-bottom: 17px; }
+  .desktop-break { display: none; }
+  .hero-actions { margin-top: 21px; }
+  .chart { max-width: 490px; }
+  .contents { padding-block: 28px 0; }
+  .contents nav { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 10px; }
+  .contents h2 { grid-column: 1 / -1; }
+  .contents a { min-height: 44px; display: flex; align-items: center; }
+  .guide-section, .calculator-section { padding-block: 43px; }
+  .strategy { grid-template-columns: 27px minmax(0, 1fr); gap: 9px; }
+}
+@media (max-width: 430px) {
+  .wrap { width: calc(100% - 32px); }
+  .definitions { grid-template-columns: minmax(0, 1fr); }
+  .glossary > div { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  .calc-table th, .calc-table td { padding-inline: 3px; }
+  .calc-table th:first-child { width: 36%; }
+  .calc-table thead th { font-size: .77rem; }
+  .calc-table input { padding-inline: 4px; }
+  .calc-table th small { font-size: .75rem; }
+  .calc-table tbody th { overflow-wrap: anywhere; }
+  .button { padding-inline: 11px; }
+}
+@media print {
+  :root { --paper: #fff; }
+  .site-header, .site-footer, .contents, .hero-actions, .calc-actions, .skip { display: none; }
+  .wrap { width: 100%; }
+  .hero, .formula, .chart { background: #fff; color: #171716; }
+  .hero { padding-block: 15px; }
+  .hero-lead, .hero .eyebrow, .formula p:first-child, .chart figcaption, .chart-header span:last-child, .chart-row p { color: #42403b; }
+  .hero-grid, .guide-layout { display: block; }
+  .chart { margin-top: 10px; }
+  .chart-track { display: none; }
+  .guide-section, .calculator-section { padding-block: 24px; }
+  h2, h3 { break-after: avoid; }
+  .calc-result, blockquote, .callout { break-inside: avoid; }
+}
+</style>
+</head>
+<body id="inicio">
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+  <div class="wrap topbar">
+    <a class="brand" href="https://samuelacuna12.github.io/"><span class="monogram" aria-hidden="true">SA</span> Samuel Acuña</a>
+    <a class="header-link" href="#indice">Índice <span aria-hidden="true">↓</span></a>
+  </div>
+</header>
+<main id="contenido">
+  <section class="hero" aria-labelledby="titulo">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Guía de ecommerce</p>
+        <h1 id="titulo">Pago anticipado<br class="desktop-break"> o contraentrega<span class="period">.</span></h1>
+        <p class="hero-lead">Decide cómo cobrar según lo que deja cada venta, cuánto tarda en entrar el dinero y cuántos pedidos puedes sostener.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#diagnostico">Elegir modalidad <span aria-hidden="true">↓</span></a>
+          <a class="button button-hero" href="#calculadora">Abrir calculadora <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <figure class="chart">
+        <div class="chart-header"><span>Contribución por modalidad</span><span>Ejemplo · COP</span></div>
+        <div class="chart-body">
+          <div class="chart-row">
+            <div class="chart-label"><span>Pago anticipado</span><strong>$3.162.000</strong></div>
+            <div class="chart-track" aria-hidden="true"><div class="chart-bar prepaid"></div></div>
+            <p>90 despachos por cada 1.000 contactos</p>
+          </div>
+          <div class="chart-row">
+            <div class="chart-label"><span>Contraentrega</span><strong>$2.868.000</strong></div>
+            <div class="chart-track" aria-hidden="true"><div class="chart-bar cod"></div></div>
+            <p>130 despachos por cada 1.000 contactos</p>
+          </div>
+        </div>
+        <figcaption>La contraentrega despacha 40 pedidos más. El pago anticipado deja $294.000 más de contribución.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="wrap guide-layout">
+    <aside class="contents" aria-label="Índice de la guía">
+      <nav id="indice" aria-labelledby="indice-titulo">
+        <h2 id="indice-titulo">En esta guía</h2>
+        <a href="#diagnostico">Cómo elegir</a>
+        <a href="#numeros">Margen y caja</a>
+        <a href="#calculadora">Calculadora</a>
+        <a href="#anticipado">5 estrategias de anticipado</a>
+        <a href="#contraentrega">5 estrategias de contraentrega</a>
+        <a href="#piloto">Plan piloto</a>
+        <a href="#fuentes">Fuentes operativas</a>
+      </nav>
+    </aside>
+    <div class="guide-content">
+      <section id="diagnostico" class="guide-section" aria-labelledby="diagnostico-titulo">
+        <p class="eyebrow">Decisión comercial</p>
+        <h2 id="diagnostico-titulo">¿Cuál te conviene?</h2>
+        <p class="section-lead">Elige una política de cobro por producto, zona y canal. Puedes empezar con una regla sencilla y cambiarla cuando tengas suficiente evidencia de ventas, costos y caja.</p>
+        <dl class="definitions">
+          <div><dt>Pago anticipado</dt><dd>El cliente paga todo el pedido antes del despacho. Verificas el pago en la pasarela o en el banco y luego preparas el envío.</dd></div>
+          <div><dt>Contraentrega</dt><dd>El cliente paga al recibir el pedido con el medio que admite el operador. Si el operador recauda, revisas también cuándo te gira el dinero y cuánto te descuenta.</dd></div>
+        </dl>
+        <div class="decision-list">
+          <article><h3>Empieza con anticipado</h3><p>Si comprar o personalizar el producto antes de venderlo te deja expuesto, si recuperar una unidad cuesta mucho o si necesitas cobrar pronto para sostener la operación. Cobra solo con stock confirmado o una fecha de entrega explícita si trabajas por encargo. Si los clientes desconfían, prueba primero mejoras en la página de pago y en la promesa de entrega.</p></article>
+          <article><h3>Prueba contraentrega con cupo</h3><p>Si la gente entiende el producto y el precio, pero abandona por temor a pagar antes de recibir. Empieza en una zona que puedas atender bien, con un artículo recuperable y un operador que te informe los rechazos y permita conciliar el recaudo por guía. Calcula cuánto perderías si fallara un lote completo.</p></article>
+          <article><h3>Ofrece ambas cuando haya diferencias claras</h3><p>Si los clientes nuevos responden bien a la contraentrega y los recurrentes pagan por adelantado, o si unas rutas son rentables y otras tienen devoluciones caras. Configura las opciones que realmente puedes cumplir y muéstralas antes de confirmar. Mide qué pasa al ofrecer las dos, porque parte de quienes elijan contraentrega quizá habrían pagado por adelantado.</p></article>
+        </div>
+        <div class="callout"><strong>Pregunta de diagnóstico</strong><p>En tus conversaciones recientes, separa las objeciones por causa. «No confío en pagar primero» justifica probar contraentrega. «El envío es muy caro», «no sé qué talla pedir» y «lo necesito mañana» indican problemas que puedes resolver directamente.</p></div>
+      </section>
+
+      <section id="numeros" class="guide-section" aria-labelledby="numeros-titulo">
+        <p class="eyebrow">Economía del pedido</p>
+        <h2 id="numeros-titulo">Calcula margen y caja</h2>
+        <p class="section-lead">Usa la misma unidad antes de mostrar el método de pago, como 1.000 visitantes elegibles de la tienda o 1.000 contactos válidos de WhatsApp. Incluye en el total a quienes abandonaron, rechazaron el pago o cancelaron antes del envío.</p>
+        <div class="formula">
+          <p>Contribución por cada 1.000 contactos</p>
+          <p><strong>(Ventas finales × margen por venta) − (Despachos fallidos × pérdida por fracaso) − costos previos al despacho</strong></p>
+        </div>
+        <dl class="glossary">
+          <div><dt>Ventas finales</dt><dd>Pedidos entregados, cobrados, conciliados y conservados al cierre de la ventana que definiste. Reporta los pendientes aparte y actualiza las cohortes cuando se resuelvan.</dd></div>
+          <div><dt>Margen por venta final</dt><dd>Toma lo que cobras por producto y envío, descuenta promociones y ajustes que correspondan, y resta costo del producto, empaque, flete, comisiones y atención variable posterior al despacho. Usa un criterio tributario consistente.</dd></div>
+          <div><dt>Pérdida por despacho fallido</dt><dd>Suma flete de ida, retorno, empaque, manejo, comisiones sin reintegro y merma del producto. Si el artículo vuelve vendible, registra los gastos de regreso y alistamiento y descuenta el valor recuperado del producto si cargaste su costo. Para reembolsos parciales, resta el dinero que retuviste legalmente y registra el resultado real.</dd></div>
+          <div><dt>Costos antes del despacho</dt><dd>Pauta, confirmación, soporte de venta y costos variables de intentos cancelados o fallidos. Incluye cada rubro una vez. Reparte los costos compartidos con la misma regla en ambos grupos.</dd></div>
+        </dl>
+        <h3>Ejemplo con los mismos costos de adquisición</h3>
+        <p>Por cada 1.000 contactos, el anticipado despacha 90 y conserva el 96 % como ventas finales, con $55.000 de margen por éxito y $25.000 de pérdida media por fracaso. La contraentrega despacha 130 y conserva el 77 %, con $52.000 de margen y $28.000 de pérdida. Si cada grupo cuesta $1.500.000 en adquisición y gestión previa, quedan $3.162.000 y $2.868.000, respectivamente.</p>
+        <p>Con esos despachos y costos, la contraentrega necesita elevar su tasa de éxito al <strong>79,83 %</strong> aproximadamente para igualar al anticipado. Si llegara al 82 %, dejaría <strong>$3.388.000</strong>, siempre que el volumen y los demás costos se mantengan. Son cifras hipotéticas para probar la sensibilidad del resultado.</p>
+        <p>Para calcular la tasa objetivo a mano, suma a la contribución que quieres alcanzar el costo previo al despacho y la pérdida de un escenario donde fallen todos los envíos. Divide ese total entre el número de despachos multiplicado por lo que mejora el resultado al pasar de un fracaso a una venta final (margen más pérdida evitada). Si buscas el punto de equilibrio, usa cero como contribución objetivo. Esta cuenta supone despachos constantes y que una venta final mejora el resultado.</p>
+        <h3>Calcula el efectivo que necesitas adelantar</h3>
+        <p>En una tabla por día, resta compras de inventario, pauta, fletes y devoluciones de los abonos que ya puedes usar. En anticipado toma la fecha del abono bancario de la pasarela. En contraentrega toma la fecha del giro, que puede ser posterior a la entrega. El saldo acumulado más bajo indica el efectivo mínimo que necesitas para financiar ese lote si partes de cero.</p>
+        <p>Ejemplo: pagas $1.800.000 el lunes, $600.000 el miércoles y recibes un abono neto de $2.900.000 el viernes. El déficit máximo es de <strong>$2.400.000</strong>. Si el giro se aplaza al martes y pagas $700.000 de un nuevo lote el lunes, sube a <strong>$3.100.000</strong>. Proyecta esos cruces antes de subir la pauta.</p>
+      </section>
+
+      <section id="calculadora" class="calculator-section" aria-labelledby="titulo-calculadora">
+        <p class="eyebrow">Calculadora en COP</p>
+        <h2 id="titulo-calculadora">Simula tu margen por cada 1.000 contactos</h2>
+        <p id="calc-intro">Usa contactos, visitas o conversaciones que cumplan el mismo criterio de entrada en ambas modalidades. Ingresa los costos en pesos colombianos. Los valores iniciales corresponden al ejemplo de la guía.</p>
+        <div class="calculator-shell">
+          <form class="calc-form" id="comparador-pagos" aria-describedby="calc-intro">
+            <div class="calc-scroll">
+              <table class="calc-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Dato</th>
+                    <th scope="col" id="calc-anticipado">Anticipado</th>
+                    <th scope="col" id="calc-contraentrega">Contraentrega</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><span id="calc-despachos">Pedidos despachados</span><small id="calc-despachos-ayuda">De los 1.000 contactos elegibles.</small></th>
+                    <td><input type="number" name="a-despachos" min="0" max="1000" step="1" value="90" inputmode="numeric" required aria-labelledby="calc-despachos calc-anticipado" aria-describedby="calc-despachos-ayuda"></td>
+                    <td><input type="number" name="c-despachos" min="0" max="1000" step="1" value="130" inputmode="numeric" required aria-labelledby="calc-despachos calc-contraentrega" aria-describedby="calc-despachos-ayuda"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><span id="calc-tasa">Ventas finales (%)</span><small id="calc-tasa-ayuda">Entregadas, cobradas, conciliadas y conservadas, sobre el total despachado.</small></th>
+                    <td><input type="number" name="a-tasa" min="0" max="100" step="any" value="96" inputmode="decimal" required aria-labelledby="calc-tasa calc-anticipado" aria-describedby="calc-tasa-ayuda"></td>
+                    <td><input type="number" name="c-tasa" min="0" max="100" step="any" value="77" inputmode="decimal" required aria-labelledby="calc-tasa calc-contraentrega" aria-describedby="calc-tasa-ayuda"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><span id="calc-margen">Margen por venta final</span><small id="calc-margen-ayuda">Ingreso neto menos costos variables de ese pedido, antes de adquisición y gestión previa al envío.</small></th>
+                    <td><input type="number" name="a-margen" step="any" value="55000" inputmode="decimal" required aria-labelledby="calc-margen calc-anticipado" aria-describedby="calc-margen-ayuda"></td>
+                    <td><input type="number" name="c-margen" step="any" value="52000" inputmode="decimal" required aria-labelledby="calc-margen calc-contraentrega" aria-describedby="calc-margen-ayuda"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><span id="calc-perdida">Pérdida por envío fallido</span><small id="calc-perdida-ayuda">Promedio neto por envío que no termina en una venta final. Ingresa un valor positivo o cero.</small></th>
+                    <td><input type="number" name="a-perdida" min="0" step="any" value="25000" inputmode="decimal" required aria-labelledby="calc-perdida calc-anticipado" aria-describedby="calc-perdida-ayuda"></td>
+                    <td><input type="number" name="c-perdida" min="0" step="any" value="28000" inputmode="decimal" required aria-labelledby="calc-perdida calc-contraentrega" aria-describedby="calc-perdida-ayuda"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><span id="calc-costo">Adquisición y gestión previa</span><small id="calc-costo-ayuda">Costo total de los 1.000 contactos, incluidos los que no generaron un envío. Evita repetir costos de las dos filas anteriores.</small></th>
+                    <td><input type="number" name="a-costo" min="0" step="any" value="1500000" inputmode="decimal" required aria-labelledby="calc-costo calc-anticipado" aria-describedby="calc-costo-ayuda"></td>
+                    <td><input type="number" name="c-costo" min="0" step="any" value="1500000" inputmode="decimal" required aria-labelledby="calc-costo calc-contraentrega" aria-describedby="calc-costo-ayuda"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="calc-actions">
+              <button class="button button-primary" type="submit" disabled>Calcular resultado</button>
+              <button class="button button-secondary" type="button" id="calc-restaurar" disabled>Cargar ejemplo</button>
+            </div>
+          </form>
+          <p class="calc-note" id="calc-pendiente" role="status" hidden>Los datos cambiaron. Calcula el resultado para actualizar la comparación.</p>
+          <noscript><p class="calc-note">Activa JavaScript para simular tus cifras. Abajo se muestra el resultado del ejemplo.</p></noscript>
+          <div class="calc-results" id="calc-resultados" aria-live="polite" aria-atomic="true">
+            <div class="calc-result"><span>Pago anticipado</span><strong id="calc-resultado-a">$ 3.162.000</strong></div>
+            <div class="calc-result"><span>Contraentrega</span><strong id="calc-resultado-c">$ 2.868.000</strong></div>
+            <p class="calc-verdict" id="calc-veredicto">El pago anticipado aporta $ 294.000 más por cada 1.000 contactos.</p>
+            <p class="calc-note" id="calc-umbral">Con estos costos y despachos, la contraentrega necesita al menos 79,83 % de ventas finales para alcanzar la contribución del pago anticipado.</p>
+          </div>
+        </div>
+      </section>
+      <section id="anticipado" class="guide-section" aria-labelledby="anticipado-titulo">
+        <p class="eyebrow">Pago anticipado</p>
+        <h2 id="anticipado-titulo">Cinco estrategias para cobrar antes</h2>
+        <p class="section-lead">Trabaja desde la primera duda del cliente hasta el cierre del pedido. Empieza por la estrategia que responda a la causa más frecuente de abandono o devolución.</p>
+        <div class="strategy-list">
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">01</span><div>
+              <h3>Pon la información de confianza junto al botón de pago</h3>
+              <p>Revisa dónde aparecen las dudas sobre identidad de la tienda, entrega o devoluciones. En la ficha y en el resumen del pedido muestra el total con envío, el plazo real para esa zona, quién vende y cómo obtener ayuda. Usa reseñas reales junto al artículo correspondiente. Si vendes tallas, añade medidas del producto y cómo tomarlas antes de que el cliente llegue a pagar.</p>
+              <ol>
+                <li>Lee una muestra de chats y etiqueta las dudas que precedieron a un abandono.</li>
+                <li>Responde las dos más frecuentes en el lugar donde el usuario las necesita. Abre la página desde móvil, con una dirección real de prueba, y comprueba que el total y la promesa coincidan con el resumen.</li>
+                <li>Escoge una ficha con tráfico y compara el porcentaje de inicios de pago, compras finales y consultas repetidas antes y después, controlando cambios de oferta o tráfico.</li>
+              </ol>
+              <p class="metric"><strong>Decisión.</strong> Conserva los cambios si mejoran las ventas finales y la contribución sin trasladar la confusión a reclamos posteriores.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">02</span><div>
+              <h3>Corrige fallos de pago y evita cobros duplicados</h3>
+              <p>Haz una compra de prueba con los medios que realmente usan tus clientes. Permite corregir errores sin perder el carrito, deja comprar como invitado si tu operación lo permite y muestra qué hacer si el pago sigue pendiente. Da una alternativa cuando haya un rechazo confirmado.</p>
+              <ol>
+                <li>Une el pedido con sus intentos de pago mediante un identificador único y guarda el estado, medio, valor y motivo de rechazo disponible.</li>
+                <li>Antes de generar otro cobro, confirma el estado del intento anterior. En pedidos por chat, usa un enlace oficial individual con el monto y el número de pedido.</li>
+                <li>Libera el despacho cuando el proveedor o el banco confirme el pago esperado y coincidan referencia y monto. Si automatizas, valida las notificaciones del proveedor y procesa cada confirmación una sola vez.</li>
+              </ol>
+              <p class="metric"><strong>Decisión.</strong> Ordena los fallos por medio y dispositivo. Prioriza el problema que pierde más compras y vigila aprobación, cobros duplicados y pendientes sin resolver.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">03</span><div>
+              <h3>Ofrece un incentivo que se pague con ventas adicionales</h3>
+              <p>Prueba subsidiar una parte del envío o incluir un accesorio de bajo costo. Empieza por un solo beneficio, para una zona o un producto concreto, y compáralo con la misma oferta sin el incentivo.</p>
+              <ol>
+                <li>Calcula el costo efectivo del beneficio por venta, incluido el flete adicional o el costo del accesorio.</li>
+                <li>Carga ese costo a todos los pedidos que lo usan. Supón que pasas de 50 a 55 ventas, con $50.000 de margen original y un beneficio de $6.000 por venta. Las cinco ventas extra aportan $250.000, mientras el incentivo cuesta $330.000. Pierdes $80.000 de contribución con los demás costos constantes.</li>
+                <li>Compara la contribución por contacto entre grupos e incluye cualquier cambio en devoluciones, comisiones y mezcla de productos. Si el resultado es débil, prueba un costo menor o una zona donde la barrera esté comprobada.</li>
+              </ol>
+              <p class="metric"><strong>Decisión.</strong> Mantén el incentivo si aumenta la contribución frente al grupo de comparación y puedes financiarlo al volumen previsto.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">04</span><div>
+              <h3>Recupera pagos abandonados con un mensaje útil</h3>
+              <p>Actúa cuando puedas resolver una causa concreta. Para un error de medio de pago, ofrece el medio alternativo. Para una duda sobre entrega, aclara el plazo. Verifica el estado antes de contactar y usa un canal autorizado por el cliente.</p>
+              <blockquote>Hola, [nombre]. Tu pedido #[número] quedó sin pago confirmado. El total es [valor] y la entrega estimada es [rango]. Si quieres retomarlo, este es el enlace oficial [enlace]. Si ya pagaste, responde para que revisemos el estado antes de otro intento.</blockquote>
+              <p>Interrumpe el seguimiento cuando la compra se complete, el cliente desista o pida dejar de recibir mensajes. Usa el dominio oficial y evita pedir claves, códigos o datos de tarjeta. Si el pago está pendiente, informa el estado y revísalo antes de enviar otro enlace.</p>
+              <p class="metric"><strong>Decisión.</strong> Deja un grupo elegible sin recordatorio y compara compras finales incrementales, costo de atención y solicitudes de baja. Usa el resultado para elegir el momento y la cantidad de mensajes.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">05</span><div>
+              <h3>Cumple la promesa después de cobrar</h3>
+              <p>Define quién toma el pedido entre pago, alistamiento y entrega. Reserva inventario al confirmar el cobro, envía el resumen de compra de inmediato y comparte la guía cuando esté disponible. Crea una alerta para pedidos pagados que se acerquen a la fecha de despacho prometida sin movimiento.</p>
+              <ol>
+                <li>Si hay retraso o quiebre de inventario, contacta al comprador con una nueva fecha verificable y explica las opciones que apliquen.</li>
+                <li>Registra entrega, contactos, reembolso y respuesta a disputas en el mismo pedido. Concilia por separado el monto cobrado, los ajustes y lo abonado en el banco.</li>
+                <li>Revisa cada semana los reclamos por causa. Si el mayor problema es un producto distinto al anunciado, corrige la ficha y el control de alistamiento.</li>
+              </ol>
+              <p class="metric"><strong>Decisión.</strong> Sigue despachos dentro de plazo, reembolsos, contracargos y tiempo de resolución. Ajusta capacidad o promesa si el volumen deteriora estas métricas.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contraentrega" class="guide-section" aria-labelledby="contraentrega-titulo">
+        <p class="eyebrow">Pago al recibir</p>
+        <h2 id="contraentrega-titulo">Cinco estrategias para vender contraentrega</h2>
+        <p class="section-lead">Cada despacho compromete flete, tiempo e inventario. Controla la cobertura, la confirmación y el giro antes de aumentar el volumen.</p>
+        <div class="strategy-list">
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">01</span><div>
+              <h3>Activa la modalidad por ruta y producto</h3>
+              <p>Arma una tabla por ciudad o zona, transportadora y grupo de productos. Anota cobertura, medios de recaudo, costo de ida y retorno, comisión, plazo de giro, valor máximo de recaudo y costo si el artículo vuelve averiado. Confirma cada dato con la tarifa y el contrato aplicables a tu cuenta.</p>
+              <ol>
+                <li>Comienza con uno o dos segmentos operables. Define un cupo de envíos y cuánto puedes perder si el piloto sale mal.</li>
+                <li>Usa el resultado económico de cada segmento para decidir cobertura. Si tienes pocos envíos maduros, conserva el cupo y calcula qué pasa si fallan algunos más.</li>
+                <li>En rutas fuera de cobertura, muestra el prepago si puedes cumplir el envío. Para productos de difícil reventa, incorpora la pérdida de inventario antes de habilitarlos.</li>
+              </ol>
+              <p class="metric"><strong>Decisión.</strong> Amplía cuando la contribución por contacto y la caja soporten más volumen. Revisa zonas con altos costos de retorno aunque su tasa de entrega parezca buena.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">02</span><div>
+              <h3>Confirma el pedido antes de emitir la guía</h3>
+              <p>Envía un resumen fácil de responder con producto, variante, dirección, precio total, fecha estimada y medios aceptados. Pide corregir o cancelar en el mismo canal. Si la dirección es confusa, valida la referencia necesaria y evita pedir datos que el repartidor no necesita.</p>
+              <blockquote>Hola, [nombre]. Tu pedido #[número] es [producto y variante]. Lo entregaríamos en [dirección] entre [fechas]. Pagas [total] al recibir con [medio disponible]. Responde CONFIRMO si los datos están bien, CAMBIO si hay que corregirlos o CANCELAR si ya no lo necesitas.</blockquote>
+              <p>Define cuánto tiempo reservas inventario y quién resuelve pedidos sin respuesta, duplicados o direcciones incompletas. Vincula la confirmación al ID original para que una respuesta repetida no genere dos envíos.</p>
+              <p class="metric"><strong>Decisión.</strong> Mide confirmados sobre pedidos creados, despachos sobre confirmados y ventas finales sobre la audiencia asignada. Reduce pasos si la confirmación elimina más ventas de las que salva.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">03</span><div>
+              <h3>Acorta el tiempo y avisa cuándo hay reparto</h3>
+              <p>Fija horarios de corte y mantén visible el stock real. Da una ventana por destino basada en los tiempos que sí cumples. Cuando el operador confirme salida a reparto, informa el monto exacto, los medios permitidos y cómo avisar una ausencia. Evita horarios específicos cuando el operador solo ofrece un rango amplio.</p>
+              <ol>
+                <li>Registra hora de confirmación, despacho y primer intento, más la promesa que recibió el cliente.</li>
+                <li>Separa demora de alistamiento y demora del transportador. Si el cuello está antes del despacho, mueve el corte o prepara inventario del producto más vendido.</li>
+                <li>Compara entregas al primer intento en pedidos dentro y fuera de la promesa. Si una ruta falla de forma persistente, ajusta el plazo o prueba otro operador con cupo.</li>
+              </ol>
+              <p class="metric"><strong>Decisión.</strong> Controla tiempo hasta el primer intento, entregas a tiempo y razones de ausencia. Conserva los avisos que recuperen contribución y ayuden al cliente a recibir.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">04</span><div>
+              <h3>Reintenta solo las entregas que puedas recuperar</h3>
+              <p>Separa las novedades en motivos accionables: ausencia, dirección corregible, medio de pago no disponible, retraso, rechazo o pedido desconocido. Contacta a quien aún quiere recibir y confirma una ventana que el operador pueda cumplir. Si el cliente cancela, tramita el retorno.</p>
+              <p>Valora el segundo intento frente a devolver ahora. Supón que entregar en el nuevo intento mejoraría el resultado en $70.000 frente al retorno, antes del cargo por reintento. Si ese cargo es $10.000 con cualquier desenlace y el fracaso termina en el mismo retorno, necesitas superar una probabilidad de éxito de 14,29 % aproximadamente. Usa tus tasas por motivo y agrega el costo de gestión, los días extra de inventario y cualquier recargo real.</p>
+              <p class="metric"><strong>Decisión.</strong> Mide ventas recuperadas, contribución incremental y costo por causal. Si el problema se repite por un producto o ruta, corrige esa causa antes de seguir pagando reintentos.</p>
+            </div>
+          </article>
+          <article class="strategy">
+            <span class="strategy-number" aria-hidden="true">05</span><div>
+              <h3>Concilia el recaudo y controla el dinero pendiente</h3>
+              <p>Cruza pedidos, guías, reportes de la transportadora y abonos bancarios. Por guía registra monto esperado, monto cobrado, descuentos pactados, fecha límite de giro, fecha de abono y diferencia. Si recibes un giro agrupado, guarda el identificador del lote y asócialo a todas las guías que cubre.</p>
+              <ol>
+                <li>Abre una incidencia con el operador cuando falte un cobro, un giro esté vencido o exista una deducción sin soporte. Asigna responsable y fecha de revisión.</li>
+                <li>Inspecciona los retornos y actualiza inventario vendible, merma y costo de reacondicionar cada unidad.</li>
+                <li>Pausa la ampliación si los giros vencidos o el efectivo comprometido superan los límites que fijaste antes del piloto.</li>
+              </ol>
+              <p class="metric"><strong>Decisión.</strong> Monitorea saldo pendiente, saldo vencido, días hasta el abono y diferencias por operador. Aumenta cupo cuando el siguiente lote tenga financiación y la conciliación esté al día.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="piloto" class="guide-section" aria-labelledby="piloto-titulo">
+        <p class="eyebrow">Implementación</p>
+        <h2 id="piloto-titulo">Diseña un piloto que puedas cerrar</h2>
+        <ol class="pilot-list">
+          <li><strong>Delimita la prueba.</strong> Escoge producto, zona, fuente de tráfico y una unidad elegible. Define presupuesto, pérdida máxima, efectivo a comprometer y mejora mínima que justificaría cambiar tu operación.</li>
+          <li><strong>Asigna antes de mostrar el cobro.</strong> Reparte simultáneamente personas o contactos entre grupos y conserva la asignación si vuelven. Mantén precio, promoción, stock y condiciones de entrega equivalentes si quieres medir el cambio de modalidad. Si vas a probar ofrecer las dos, trata esa oferta como una política completa y evalúala frente al grupo asignado a la política actual.</li>
+          <li><strong>Ensaya el recorrido.</strong> Verifica un pedido exitoso, un pago pendiente, una cancelación y un retorno de prueba según corresponda. Asegúrate de que aparezcan en el reporte que usarás para decidir.</li>
+          <li><strong>Cierra por cohorte.</strong> Agrupa por fecha de asignación y espera el plazo de entrega, devolución y conciliación previsto. Reporta pedidos abiertos, saldos vencidos y ajustes tardíos. Si una incidencia puede cambiar el resultado, calcula qué ocurre en ambos escenarios y mantén el cupo.</li>
+          <li><strong>Decide por segmento.</strong> Escala si la contribución es positiva, mejora lo suficiente y la caja sostiene el ritmo. Si las dos modalidades pierden, corrige costos, oferta o conversión dentro del cupo. Limita a los productos, zonas o canales que pasan la prueba. Si los grupos son pequeños o el ganador cambia con pocos pedidos, amplía la observación dentro del presupuesto.</li>
+        </ol>
+        <h3>Plantilla mínima de seguimiento</h3>
+        <p>Usa una fila por contacto elegible en la tabla del piloto y una fila por pedido en el registro operativo. Conecta ambos registros por ID. Si un contacto hace varios pedidos, suma su contribución en el análisis general. Para varios pedidos por contacto, aplica directamente la fórmula al registro. La calculadora admite hasta 1.000 despachos por cada 1.000 contactos.</p>
+        <dl class="glossary tracking">
+          <div><dt>Asignación</dt><dd>ID interno, fecha, grupo, canal, producto de entrada y zona. Registra también a quienes nunca compraron.</dd></div>
+          <div><dt>Pedido y logística</dt><dd>ID del pedido, modalidad elegida, guía, estados de pago y envío, causa de cancelación o devolución, fecha de primer intento y fecha de entrega.</dd></div>
+          <div><dt>Dinero</dt><dd>Precio neto, fletes, producto, empaque, gestión variable, comisión, reembolso, valor recuperado, monto cobrado, monto abonado y fecha de giro.</dd></div>
+          <div><dt>Cierre semanal</dt><dd>Contactos, despachos, ventas finales, pendientes, contribución por 1.000 contactos y déficit máximo de caja por grupo. Mantén los datos personales en tu sistema privado.</dd></div>
+        </dl>
+        <div class="callout"><strong>Primer paso</strong><p>Toma un producto que ya vendas, cruza sus pedidos recientes con gastos y abonos, e ingresa los datos en la <a href="#calculadora">calculadora</a>. Elige una sola estrategia para corregir la mayor fuga antes de probar más volumen.</p></div>
+      </section>
+
+      <section id="fuentes" class="guide-section sources" aria-labelledby="fuentes-titulo">
+        <h2 id="fuentes-titulo">Fuentes operativas</h2>
+        <p>Confirma disponibilidad, tarifas y plazos con tus proveedores. En Colombia, consulta la guía de la SIC para distinguir retracto y reversión de pagos y atender las solicitudes que correspondan.</p>
+        <ul>
+          <li>Estados y verificación de transacciones en una pasarela colombiana. <a href="https://docs.wompi.co/docs/colombia/transacciones/">Wompi · Transacciones</a></li>
+          <li>Ejemplo de un operador que ofrece pago contraentrega en Colombia. <a href="https://envia.co/services">envía · Servicios</a></li>
+          <li>Orientaciones oficiales sobre derechos del consumidor. <a href="https://sedeelectronica.sic.gov.co/noticias/se-arrepintio-de-una-compra-y-no-sabe-que-hacer">SIC · Retracto</a> y <a href="https://sedeelectronica.sic.gov.co/atencion-y-servicios-a-la-ciudadania/glosario/reversion-del-pago">SIC · Reversión del pago</a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <a class="brand" href="https://samuelacuna12.github.io/"><span class="monogram" aria-hidden="true">SA</span> Samuel Acuña</a>
+    <a href="#inicio">Volver arriba <span aria-hidden="true">↑</span></a>
+  </div>
+</footer>
+<script>
+(() => {
+  const form = document.querySelector('#comparador-pagos');
+  const resetButton = document.querySelector('#calc-restaurar');
+  const pending = document.querySelector('#calc-pendiente');
+  const outputAdvance = document.querySelector('#calc-resultado-a');
+  const outputDelivery = document.querySelector('#calc-resultado-c');
+  const verdict = document.querySelector('#calc-veredicto');
+  const threshold = document.querySelector('#calc-umbral');
+  const pesos = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  });
+  const percent = new Intl.NumberFormat('es-CO', {
+    style: 'percent',
+    maximumFractionDigits: 2
+  });
+
+  function readModel(prefix) {
+    const read = (name) => form.elements.namedItem(`${prefix}-${name}`).valueAsNumber;
+    return {
+      shipments: read('despachos'),
+      closeRate: read('tasa') / 100,
+      margin: read('margen'),
+      loss: read('perdida'),
+      acquisition: read('costo')
+    };
+  }
+
+  function contribution(model, closeRate = model.closeRate) {
+    // Net contribution for 1,000 eligible contacts, including those with no shipment.
+    return model.shipments * (closeRate * model.margin - (1 - closeRate) * model.loss) - model.acquisition;
+  }
+
+  function thresholdMessage(model, target) {
+    if (model.shipments === 0) {
+      return 'La contraentrega tiene cero despachos. Su contribución depende del costo de adquisición y gestión previa, por lo que la tasa de ventas finales queda sin definir.';
+    }
+
+    const atZero = contribution(model, 0);
+    const atFull = contribution(model, 1);
+    if (atZero >= target) {
+      const decreasing = atFull < atZero ? ' El margen por venta final hace que cada venta adicional reduzca la contribución de este escenario.' : '';
+      return `Con 0 % de ventas finales, la contraentrega alcanza o supera la referencia del pago anticipado.${decreasing}`;
+    }
+    if (atFull < target) {
+      return 'Con estos costos y despachos, ninguna tasa de ventas finales entre 0 % y 100 % permite a la contraentrega alcanzar la contribución del pago anticipado.';
+    }
+
+    // Solve the linear contribution equation for the rate that matches the target.
+    const required = (target - atZero) / (atFull - atZero);
+    // Round upward to the displayed precision so the shown rate still reaches the target.
+    const displayed = Math.min(1, Math.ceil(required * 10000 - 1e-9) / 10000);
+    return `Con estos costos y despachos, la contraentrega necesita al menos ${percent.format(displayed)} de ventas finales para alcanzar la contribución del pago anticipado.`;
+  }
+
+  function render() {
+    pending.hidden = true;
+    const advance = readModel('a');
+    const delivery = readModel('c');
+    const advanceTotal = contribution(advance);
+    const deliveryTotal = contribution(delivery);
+    if (![advanceTotal, deliveryTotal, contribution(delivery, 0), contribution(delivery, 1)].every(Number.isFinite)) {
+      outputAdvance.textContent = '—';
+      outputDelivery.textContent = '—';
+      verdict.textContent = 'Reduce las cifras ingresadas para obtener un resultado válido.';
+      threshold.textContent = '';
+      return;
+    }
+
+    outputAdvance.textContent = pesos.format(advanceTotal);
+    outputDelivery.textContent = pesos.format(deliveryTotal);
+    const gap = Number((advanceTotal - deliveryTotal).toFixed(2));
+    const lossMessage = advanceTotal < 0 && deliveryTotal < 0 ? ' Ambas modalidades pierden dinero en este escenario.' : '';
+    if (gap === 0) {
+      verdict.textContent = `Las dos modalidades tienen la misma contribución por cada 1.000 contactos, al redondear la diferencia a dos decimales.${lossMessage}`;
+    } else {
+      const winner = gap > 0 ? 'El pago anticipado' : 'La contraentrega';
+      verdict.textContent = `${winner} aporta ${pesos.format(Math.abs(gap))} más por cada 1.000 contactos.${lossMessage}`;
+    }
+    threshold.textContent = thresholdMessage(delivery, advanceTotal);
+  }
+
+  form.addEventListener('input', () => {
+    pending.hidden = false;
+  });
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    render();
+  });
+  resetButton.addEventListener('click', () => {
+    form.reset();
+    render();
+  });
+  form.querySelector('button[type="submit"]').disabled = false;
+  resetButton.disabled = false;
+  render();
+})();
+</script>
+</body>
+</html>
