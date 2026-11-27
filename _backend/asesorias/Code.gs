@@ -14,13 +14,11 @@ function row_(n, values) {
 }
 function xmlFile_(name,body) { return Utilities.newBlob(body,'application/xml',name); }
 function pack_(parts) { return Utilities.zip(parts,FILE_NAME).setContentType(MIME); }
-function setupExcel() {
-  const props = PropertiesService.getScriptProperties();
-  if (props.getProperty('WORKBOOK')) return;
+function workbook_(rows) {
   const ns = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
   const rel = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
   const pkg = 'http://schemas.openxmlformats.org/package/2006/relationships';
-  const sheets = '<worksheet xmlns="'+ns+'"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="1" width="38" hidden="1" customWidth="1"/><col min="2" max="19" width="32" customWidth="1"/></cols><sheetData>'+row_(1,HEADERS)+'</sheetData><autoFilter ref="A1:S1"/></worksheet>';
+  const sheets = '<worksheet xmlns="'+ns+'"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="1" width="38" hidden="1" customWidth="1"/><col min="2" max="19" width="32" customWidth="1"/></cols><sheetData>'+rows.map((cells,i)=>row_(i+1,cells)).join('')+'</sheetData><autoFilter ref="A1:S'+rows.length+'"/></worksheet>';
   const parts = [
     xmlFile_('[Content_Types].xml','<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>'),
     xmlFile_('_rels/.rels','<Relationships xmlns="'+pkg+'"><Relationship Id="rId1" Type="'+rel+'/officeDocument" Target="xl/workbook.xml"/></Relationships>'),
@@ -28,27 +26,38 @@ function setupExcel() {
     xmlFile_('xl/_rels/workbook.xml.rels','<Relationships xmlns="'+pkg+'"><Relationship Id="rId1" Type="'+rel+'/worksheet" Target="worksheets/sheet1.xml"/></Relationships>'),
     xmlFile_('xl/worksheets/sheet1.xml',sheets)
   ];
-  const file = Drive.Files.create({name:FILE_NAME,mimeType:MIME},pack_(parts),{fields:'id,webViewLink'});
-  props.setProperty('WORKBOOK',file.id);
-  console.log(file.webViewLink);
+  return pack_(parts);
+}
+function setupExcel() {
+  const props=PropertiesService.getScriptProperties();
+  if (!props.getProperty('REGISTER')) {
+    const ss=Sheets.Spreadsheets.create({properties:{title:'Registro interno de asesorías — Samuel Acuña'},sheets:[{properties:{title:'Solicitudes'}}]});
+    Sheets.Spreadsheets.Values.update({values:[HEADERS]},ss.spreadsheetId,'Solicitudes!A1:S1',{valueInputOption:'RAW'});
+    props.setProperty('REGISTER',ss.spreadsheetId);
+  }
+  if (!props.getProperty('WORKBOOK')) {
+    const file=Drive.Files.create({name:FILE_NAME,mimeType:MIME},workbook_([HEADERS]),{fields:'id,webViewLink'});
+    props.setProperty('WORKBOOK',file.id);
+    console.log(file.webViewLink);
+  }
 }
 function append_(id,values) {
   const lock=LockService.getScriptLock();
   lock.waitLock(25000);
   try {
-    const file=PropertiesService.getScriptProperties().getProperty('WORKBOOK');
-    if (!file) throw Error('Workbook missing');
-    const response=UrlFetchApp.fetch('https://www.googleapis.com/drive/v3/files/'+file+'?alt=media',{headers:{Authorization:'Bearer '+ScriptApp.getOAuthToken()}});
-    const parts=Utilities.unzip(response.getBlob().setContentType('application/zip'));
-    const sheet=parts.find(part=>part.getName()==='xl/worksheets/sheet1.xml');
-    const body=sheet.getDataAsString('UTF-8');
-    if (body.includes('<t xml:space="preserve">'+id+'</t>')) return;
-    const last=Array.from(body.matchAll(/<row\b[^>]*\br="(\d+)"/g)).reduce((n,m)=>Math.max(n,Number(m[1])),0);
-    if (!last || !body.includes('</sheetData>')) throw Error('Unexpected workbook');
-    const date=Utilities.formatDate(new Date(),'America/Bogota','yyyy-MM-dd HH:mm:ss');
-    const added=row_(last+1,[id,date].concat(values));
-    sheet.setDataFromString(body.replace('</sheetData>',()=>added+'</sheetData>').replace(/<autoFilter ref="A1:S\d+"\s*\/>/,'<autoFilter ref="A1:S'+(last+1)+'"/>'),'UTF-8');
-    Drive.Files.update({},file,pack_(parts),{fields:'id'});
+    const props=PropertiesService.getScriptProperties();
+    const db=props.getProperty('REGISTER'), file=props.getProperty('WORKBOOK');
+    if (!db || !file) throw Error('Not configured');
+    const range='Solicitudes!A:S';
+    const rows=Sheets.Spreadsheets.Values.get(db,range).values;
+    if (!rows.some(row=>row[0]===id)) {
+      const date=Utilities.formatDate(new Date(),'America/Bogota','yyyy-MM-dd HH:mm:ss');
+      const row=[id,date].concat(values);
+      Sheets.Spreadsheets.Values.append({values:[row]},db,range,{valueInputOption:'RAW',insertDataOption:'INSERT_ROWS'});
+      rows.push(row);
+    }
+    // Refresh the same private XLSX, including on a retry after a failed export.
+    Drive.Files.update({},file,workbook_(rows),{fields:'id'});
   } finally {lock.releaseLock();}
 }
 function doPost(e) {
