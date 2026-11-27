@@ -1,2 +1,1 @@
-// Public submission destination. No access to the workbook is granted here.
-window.ASESORIAS_RECEPCION = '';
+window.ASESORIAS_RECEPCION = 'https://script.google.com/macros/s/AKfycbxDpRSOnC61ceyar6UIv7VvwrN1ShKbsckMYofui8e3063odAa3dKXsbQgecJZlotI5/exec';
