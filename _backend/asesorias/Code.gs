@@ -72,5 +72,7 @@ function doPost(e) {
     ok=true;
   } catch(err) {console.warn('Intake could not be saved: '+err.name);}
   const content=JSON.stringify({type:'asesoria-receipt',id:/^[0-9a-f-]{36}$/i.test(id)?id:'',ok:ok});
-  return HtmlService.createHtmlOutput('<script>window.top.postMessage('+content+',"'+ORIGIN+'");</script>').setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  // The portfolio itself can be embedded. Send only to ancestors with its exact origin.
+  const notify = 'let w=window;while(w!==w.parent){w=w.parent;w.postMessage(' + content + ',' + JSON.stringify(ORIGIN) + ');}';
+  return HtmlService.createHtmlOutput('<script>' + notify + '</script>').setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
